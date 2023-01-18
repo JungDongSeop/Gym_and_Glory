@@ -1,7 +1,0 @@
-study
-
-
-
-udemy
-
-hello

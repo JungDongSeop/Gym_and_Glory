@@ -6,6 +6,7 @@ const Main = () => {
   // custom react hook
   const navigate = useNavigate();
 
+
   return (
     <div className={classes.main}>
       {/* 로그인하지 않은 유저에게 표시되는 화면 */}

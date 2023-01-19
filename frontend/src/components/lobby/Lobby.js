@@ -1,4 +1,4 @@
-import SideBar from "../UI/side_bar/SideBar";
+import SideBar from '../layout/side_bar/SideBar'
 import RoomList from "./room_list/RoomList";
 
 const Lobby = () => {

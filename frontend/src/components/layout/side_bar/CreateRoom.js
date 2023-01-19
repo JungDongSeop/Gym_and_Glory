@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Modal from '../modal/Modal';
+import Modal from '../../UI/modal/Modal';
 import { useNavigate } from "react-router-dom";
 
 const CreateRoom = () => {

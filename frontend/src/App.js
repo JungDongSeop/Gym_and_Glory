@@ -11,16 +11,18 @@ import "./App.css";
 
 function App() {
   return (
-    
-    <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/find-pwd" element={<FindPwd />} />
-      <Route path="/lobby" element={<Lobby />} />
-      <Route path="/mypage/:username" element={<MyPage />} />
-      <Route path="/board/notice" element={<NoticeBoard />} />
-    </Routes>
+    <div>
+      
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/find-pwd" element={<FindPwd />} />
+        <Route path="/lobby" element={<Lobby />} />
+        <Route path="/mypage/:username" element={<MyPage />} />
+        <Route path="/board/notice" element={<NoticeBoard />} />
+      </Routes>
+    </div>
   );
 }
 

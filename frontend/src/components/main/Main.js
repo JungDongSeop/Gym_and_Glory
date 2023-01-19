@@ -2,6 +2,10 @@ import classes from "./Main.module.css";
 import { Link } from "react-router-dom";
 
 const Main = () => {
+  const ButtonToggleHandler = () => {
+    console.log("hello");
+  };
+
   return (
     <div className={classes.main}>
       <h1>메인 페이지. 제일 처음 보이는 화면입니다.</h1>

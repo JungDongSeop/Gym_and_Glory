@@ -12,7 +12,6 @@ const Main = () => {
   // 캐러셀 페이지 넘기기
   const carouselRef = React.createRef();
 
-
   return (
     <div className={classes.main}>
       {/* 로그인하지 않은 유저에게 표시되는 화면 */}
@@ -26,8 +25,8 @@ const Main = () => {
             <p>푸쉬업, 플랭크, 런지, 버피 Let`s Go</p>
             <button onClick={() => navigate("/login")}>로그인 버튼</button>
             <br/>
-            <Button onClick={() => {carouselRef.current.prev()}}>스토리</Button>
-            <Button onClick={() => {carouselRef.current.next()}}>가이드</Button>
+            <Button onClick={() => {carouselRef.current.prev();}}>가이드</Button>
+            <Button onClick={() => {carouselRef.current.next();}}>스토리</Button>
           </span>
         </div>
         <div>
@@ -35,8 +34,8 @@ const Main = () => {
             <h2>스토리</h2>
             <p>옛날 옛적에 ...</p>
             <br/>
-            <Button onClick={() => {carouselRef.current.prev()}}>가이드</Button>
-            <Button onClick={() => {carouselRef.current.next()}}>시작</Button>
+            <Button onClick={() => {carouselRef.current.prev();}}>시작</Button>
+            <Button onClick={() => {carouselRef.current.next();}}>가이드</Button>
           </span>
         </div>
         <div>
@@ -44,8 +43,8 @@ const Main = () => {
             <h2>가이드</h2>
             <p>이래 저래 하세요</p>
             <br/>
-            <Button onClick={() => {carouselRef.current.prev()}}>시작</Button>
-            <Button onClick={() => {carouselRef.current.next()}}>스토리</Button>
+            <Button onClick={() => {carouselRef.current.prev();}}>스토리</Button>
+            <Button onClick={() => {carouselRef.current.next();}}>시작</Button>
           </span>
         </div>
 
@@ -56,11 +55,7 @@ const Main = () => {
 
       <hr/>
 
-      {/* 로그인한 유저에게 표시되는 화면  */}
       <button onClick={() => navigate("/lobby")}>로그인 완료. 로비로 이동</button>
-
-      {/* <p><Link to="/mypage/dongsum">동섬 마이페이지</Link></p> */}
-      {/* <p><Link to="/board/">게시판</Link></p> */}
     </div>
   );
 };

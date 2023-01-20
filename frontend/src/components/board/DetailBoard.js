@@ -1,45 +1,44 @@
-// import React, { useState, useEffect } from 'react';
-// import { Button } from 'antd';
-// import { Link, useParams } from'react-router-dom';
-// import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useParams } from'react-router-dom';
+import Review from './Review';
+import axios from 'axios';
 
-// // 게시판 상세페이지
+// 게시판 상세페이지
+// 이후 notice, getTeam, report 등으로 분리할 예정
 
-// const DetailBoard = () => {
-//   // URL의 params를 쓰기 위한 state
-//   const params = useParams();
-  
-//   // axios 요청을 위한 state
-//   const [data, setData] = useState([]);
+const DetailBoard = () => {
+  // URL의 params를 쓰기 위한 state
+  const { id } = useParams();
 
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const result = await axios('https://jsonplaceholder.typicode.com/users/');
-//       setData(result.data);
-//       console.log(result.data);
-//       console.log(params);
+  // axios 요청을 위한 state
+  // data : 게시판 정보를 담은 변수
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(`https://jsonplaceholder.typicode.com/users/${id}`);
+      setData(result.data);        
+    };
+    fetchData();
+  }, [id]);
+
+  // 게시글 상세 정보를 담은 변수
+
+  return (
+    <div>
+      <h1>게시판 상세페이지 입니다.</h1>      
+
+      {/* 게시판  */}
+      <p>제목 : </p>
+      <p>{data.id}</p>
+      <p>내용 : </p>
+      <p>{data.name}</p>
       
-//     };
-//     fetchData();
-//   }, []);
+      {/* 댓글 */}
+      <Review />
+    </div>
+  );
+};
 
-//   // 게시글 상세 정보를 담은 변수
-
-//   return (
-//     <div>
-//       <h1>게시판 상세페이지 입니다.</h1>      
-
-//       <p>제목 : </p>
-//       <p>{data[0].id}</p>
-//       <p>내용 : </p>
-//       <p>{data[0].name}</p>
-      
-//       {/* 글 제출 */}
-//       <Link to="/board/create"><Button type="primary">글 작성</Button></Link>
-
-//     </div>
-//   );
-// };
-
-// export default DetailBoard;
-// ;
+export default DetailBoard;
+;

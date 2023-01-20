@@ -1,5 +1,6 @@
 import CreateRoom from "./CreateRoom";
 import FriendList from "./FriendList";
+import classes from './SideBar.module.css';
 import { Link } from "react-router-dom";
 
 
@@ -7,7 +8,7 @@ const SideBar = () => {
 
   // 사이드바 안에는 1. 유저 프로필, 2. 방 생성, 3. 친구 목록, 4. 랭킹  이 표시됨
   return (
-    <div>
+    <div className={classes.sidebar}>
       <p>
         로비 페이지의 사이드 바입니다.
       </p>

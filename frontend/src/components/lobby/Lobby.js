@@ -1,12 +1,11 @@
 import SideBar from '../layout/side_bar/SideBar'
+import classes from './Lobby.module.css'
 import RoomList from "./room_list/RoomList";
 
 const Lobby = () => {
   return (
-    <div>
-      <h1>
-        로비 페이지. 게임방이 나타나는 화면입니다.
-      </h1>
+    <div className={classes.lobby}>
+
       {/* 사이드바 */}
       <SideBar/>
 

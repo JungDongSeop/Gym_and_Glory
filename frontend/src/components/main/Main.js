@@ -3,6 +3,7 @@ import classes from "./Main.module.css";
 import { useNavigate } from "react-router-dom";
 import { Carousel } from 'antd';
 import Logo from "../../assets/logo.png";
+import Button from "../../components/UI/Button";
 
 const Main = () => {
   // custom react hook
@@ -25,8 +26,8 @@ const Main = () => {
             <p>푸쉬업, 플랭크, 런지, 버피 Let`s Go</p>
             <button onClick={() => navigate("/login")}>로그인 버튼</button>
             <br/>
-            <button onClick={() => {carouselRef.current.prev()}}>스토리</button>
-            <button onClick={() => {carouselRef.current.next()}}>가이드</button>
+            <Button onClick={() => {carouselRef.current.prev()}}>스토리</Button>
+            <Button onClick={() => {carouselRef.current.next()}}>가이드</Button>
           </span>
         </div>
         <div>
@@ -34,8 +35,8 @@ const Main = () => {
             <h2>스토리</h2>
             <p>옛날 옛적에 ...</p>
             <br/>
-            <button onClick={() => {carouselRef.current.prev()}}>가이드</button>
-            <button onClick={() => {carouselRef.current.next()}}>시작</button>
+            <Button onClick={() => {carouselRef.current.prev()}}>가이드</Button>
+            <Button onClick={() => {carouselRef.current.next()}}>시작</Button>
           </span>
         </div>
         <div>
@@ -43,8 +44,8 @@ const Main = () => {
             <h2>가이드</h2>
             <p>이래 저래 하세요</p>
             <br/>
-            <button onClick={() => {carouselRef.current.prev()}}>시작</button>
-            <button onClick={() => {carouselRef.current.next()}}>스토리</button>
+            <Button onClick={() => {carouselRef.current.prev()}}>시작</Button>
+            <Button onClick={() => {carouselRef.current.next()}}>스토리</Button>
           </span>
         </div>
 

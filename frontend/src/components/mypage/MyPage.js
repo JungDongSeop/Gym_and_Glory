@@ -31,4 +31,4 @@ const MyPage = () => {
   );
 };
 
-export default WithNavBarAndSideBar(MyPage);
+export default WithNavBarAndSideBar(MyPage, true);

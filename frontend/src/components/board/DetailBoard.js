@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from'react-router-dom';
 import Review from './Review';
+import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import axios from 'axios';
 
 // 게시판 상세페이지
@@ -25,7 +26,7 @@ const DetailBoard = () => {
   // 게시글 상세 정보를 담은 변수
 
   return (
-    <div>
+    <main>
       <h1>게시판 상세페이지 입니다.</h1>      
 
       {/* 게시판  */}
@@ -36,9 +37,9 @@ const DetailBoard = () => {
       
       {/* 댓글 */}
       <Review />
-    </div>
+    </main>
   );
 };
 
-export default DetailBoard;
+export default WithNavBarAndSideBar(DetailBoard);
 ;

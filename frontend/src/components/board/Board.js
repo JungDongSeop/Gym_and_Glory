@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
 import { Link, useNavigate } from'react-router-dom';
+import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import classes from './Board.module.css';
 import axios from 'axios';
 
@@ -8,7 +9,7 @@ import axios from 'axios';
 // 버튼을 누를 경우 다른 게시판 정보를 axios 요청
 // 이후 url 안에 type params를 추가해서 url로 구분되게 하는 편이 좋을 듯?
 
-const FreeBoard = () => {
+const Board = () => {
   // url 이동을 위한 함수.
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ const FreeBoard = () => {
   }, []);
 
   return (
-    <div>
+    <main>
       {/* 게시판 종류 선택. navigate 써서 페이지 갱신하는 게 좋을 듯 */}
       <Button>공지사항</Button>
       <Button>자유게시판</Button>
@@ -47,9 +48,10 @@ const FreeBoard = () => {
           ))}
         </tbody>
       </table>
-    </div>
+    </main>
   );
 };
 
-export default FreeBoard;
+export default WithNavBarAndSideBar(Board);
+;
 ;

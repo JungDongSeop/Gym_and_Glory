@@ -1,6 +1,8 @@
+import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
+
 const CreateBoard = () => {
   return (
-    <div>
+    <main>
       <h1>Create Board</h1>
       <form>
         <p>제목</p>
@@ -11,8 +13,8 @@ const CreateBoard = () => {
         <button>Create Board</button>
       </form>
 
-    </div>
+    </main>
   );
 };
 
-export default CreateBoard;
+export default WithNavBarAndSideBar(CreateBoard);

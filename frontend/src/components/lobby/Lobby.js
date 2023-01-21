@@ -1,13 +1,10 @@
-import SideBar from '../layout/side_bar/SideBar'
 import classes from './Lobby.module.css'
 import RoomList from "./room_list/RoomList";
+import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 
 const Lobby = () => {
   return (
-    <div className={classes.lobby}>
-
-      {/* 사이드바 */}
-      <SideBar/>
+    <main className={classes.lobby}>
 
       {/* 방 검색 + 방 목록 */}
       <div>
@@ -21,8 +18,9 @@ const Lobby = () => {
 
 
 
-    </div>
+    </main>
   );
 };
 
-export default Lobby;
+export default WithNavBarAndSideBar(Lobby);
+

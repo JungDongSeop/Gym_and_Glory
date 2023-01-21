@@ -19,6 +19,7 @@ const Main = () => {
 
       {/* 캐러셀 넣기 */}
       <Carousel className={classes.carousel} ref={carouselRef}>
+        {/* 로그인 캐러셀 */}
         <div>
           <span className={classes.carouselBox}>
             <img src={Logo} alt={Logo}></img>
@@ -29,6 +30,7 @@ const Main = () => {
             <Button onClick={() => {carouselRef.current.next();}}>스토리</Button>
           </span>
         </div>
+        {/* 스토리 캐러셀 */}
         <div>
           <span className={classes.carouselBox}>
             <h2>스토리</h2>
@@ -38,6 +40,7 @@ const Main = () => {
             <Button onClick={() => {carouselRef.current.next();}}>가이드</Button>
           </span>
         </div>
+        {/* 가이드 캐러셀 */}
         <div>
           <span className={classes.carouselBox}>
             <h2>가이드</h2>
@@ -49,9 +52,6 @@ const Main = () => {
         </div>
 
       </Carousel>
-      
-      <button onClick={() => navigate("/signup")}>회원가입 버튼</button>
-      <button onClick={() => navigate("/find-pwd")}>비밀번호 찾기 버튼</button>
 
       <hr/>
 

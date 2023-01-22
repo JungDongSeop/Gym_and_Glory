@@ -1,5 +1,5 @@
-import CreateRoom from "./CreateRoom";
-import FriendList from "./FriendList";
+import CreateRoomModal from "./CreateRoomModal";
+import FriendListModal from "./FriendListModal";
 import './SideBar.module.css';
 import { Link } from "react-router-dom";
 
@@ -21,10 +21,10 @@ const SideBar = () => {
       </p>
 
       {/* 방 생성 모달 */}
-      <CreateRoom />
+      <CreateRoomModal />
 
       {/* 친구 목록 모달 */}
-      <FriendList />
+      <FriendListModal />
 
       {/* 실시간 랭킹 */}
       

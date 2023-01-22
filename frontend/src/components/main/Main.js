@@ -15,7 +15,6 @@ const Main = () => {
   return (
     <div className={classes.main}>
       {/* 로그인하지 않은 유저에게 표시되는 화면 */}
-      <h1>메인 페이지. 제일 처음 보이는 화면입니다.</h1>
 
       {/* 캐러셀 넣기 */}
       <Carousel className={classes.carousel} ref={carouselRef}>

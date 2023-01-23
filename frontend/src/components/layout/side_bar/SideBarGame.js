@@ -10,15 +10,11 @@ const SideBar = () => {
 
   return (
     <aside>
-      <p>
-        로비 페이지의 사이드 바입니다.
-      </p>
-
       {/* 유저 프로필 */}
       <p>
-        유저의 정보가 표시됩니다.
-        <Link to="/mypage/dongsum">LV.25 정동섬</Link>
+        유저의 웹캠이 표시됩니다.
       </p>
+      <Link to="/mypage/dongsum">LV.25 정동섬</Link>
 
       {/* 방 생성 모달 */}
       <CreateRoomModal />

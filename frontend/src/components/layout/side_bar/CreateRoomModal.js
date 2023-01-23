@@ -17,7 +17,6 @@ const CreateRoom = () => {
   };
 
 
-  // 
   return (
     <div>
       {/* 방 생성 모달 */}

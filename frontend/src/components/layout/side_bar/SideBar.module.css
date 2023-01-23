@@ -1,14 +1,22 @@
 aside {
-  margin-top: 50px;
-  width: 200px;
-  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 70px;
+  width: 300px;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: #fa3c3c72;
+  background-color: rgba(45, 46, 6, 0.75);;
 }
 
 main {
-  margin-left: 200px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+  background-clip: padding-box;
+  margin-left: 300px;
+  padding: 50px;
 }

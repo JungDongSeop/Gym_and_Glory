@@ -1,0 +1,31 @@
+/* Navigation Bar Styles */
+
+nav {
+  background-color: rgba(45, 46, 6, 0.75);;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 70px;  
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin-right: 1rem;
+  align-items: center;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+nav img {
+  height: 70px;
+}

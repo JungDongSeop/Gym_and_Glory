@@ -3,9 +3,15 @@ import Main from "./components/main/Main";
 import Login from "./components/auth/login/Login";
 import Signup from "./components/auth/signup/Signup";
 import FindPwd from "./components/auth/find_pwd/FindPwd";
+import UpdateUser from "./components/auth/update/Update";
+import DeleteUser from "./components/auth/delete/Delete";
 import Lobby from "./components/lobby/Lobby";
 import MyPage from "./components/mypage/MyPage";
-import NoticeBoard from "./components/board/NoticeBoard";
+import Board from "./components/board/Board";
+import CreateBoard from "./components/board/CreateBoard";
+import DetailBoard from "./components/board/DetailBoard";
+
+
 
 import "./App.css";
 
@@ -18,9 +24,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/find-pwd" element={<FindPwd />} />
+        <Route path="/update" element={<UpdateUser />} />
+        <Route path="/delete" element={<DeleteUser />} />
         <Route path="/lobby" element={<Lobby />} />
         <Route path="/mypage/:username" element={<MyPage />} />
-        <Route path="/board/notice" element={<NoticeBoard />} />
+        <Route path="/board" element={<Board />} />
+        <Route path="/board/create" element={<CreateBoard />} />
+        <Route path="/board/:id" element={<DetailBoard />} />
       </Routes>
     </div>
   );

@@ -18,7 +18,7 @@ const Modal = (props) => {
               &times;
             </button>
           </header>
-          <main>{props.children}</main>
+          <div>{props.children}</div>
           {/* footer 조건에 따라 없애기 */}
           { isfooter
             ? <footer>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Modal from '../../UI/Modal';
+import Button from '../../UI/Button'
 import { useNavigate } from "react-router-dom";
 
 const FriendList = () => {
@@ -21,7 +22,7 @@ const FriendList = () => {
   return (
     <div>
       {/* 방 생성 모달 */}
-      <button onClick={openModal}>친구 목록</button>
+      <Button onClick={openModal}>친구 목록</Button>
       <Modal open={modalOpen} close={closeModal} header="게임 방 생성" isfooter="true">
         {/* Modal.js <main> {props.children} </main>에 내용이 입력된다. 리액트 함수형 모달 */}
         <p>친구 목록 출력</p>

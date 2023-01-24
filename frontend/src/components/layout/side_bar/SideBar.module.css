@@ -2,7 +2,6 @@ aside {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   margin-top: 70px;
   width: 300px;
@@ -13,8 +12,18 @@ aside {
   background-color: rgba(45, 46, 6, 0.75);;
 }
 
+aside a {
+  font-size: xx-large;
+  text-decoration: none;
+  color: white;
+}
+
+aside button {
+  margin: 10px
+}
+
 main {
-  height: 100%;
+  height: calc(100vh - 170px);
   background-color: rgba(255, 255, 255, 0.4);
   background-clip: padding-box;
   margin-left: 300px;

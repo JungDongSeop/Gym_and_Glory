@@ -1,14 +1,57 @@
-.main {
-  background-color: aqua;
-}
-
 .carousel {
-  width: 500px;
-  height: 700px;
+  width: 50%;
+  height: 100%;
+  object-fit: contain;
   margin: 0 auto;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 .carouselBox {
   text-align: center;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
 }
+
+.carouselBox img {
+  margin: auto;
+}
+
+.carouselBox button {
+  margin: auto;
+  text-align: start;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+}
+
+.carousel .smallLogo {
+  width: 10rem;
+  height: 10rem;
+  margin: 0;
+}
+
+.carouselBox .leftword {
+  color: #8F1010;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  position: absolute;
+  bottom: 0;
+  font-size: xx-large;
+  cursor: pointer;
+  bottom: 0;
+  left: 0;
+}
+
+.carouselBox .rightword {
+  color: #8F1010;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  position: absolute;
+  bottom: 0;
+  font-size: xx-large;
+  cursor: pointer;
+  bottom: 0;
+  right: 0;
+}
+

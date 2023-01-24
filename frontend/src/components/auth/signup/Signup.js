@@ -1,30 +1,34 @@
 import { useNavigate } from "react-router-dom";
+import Logo from '../../../assets/logo.svg';
+import classes from './Signup.module.css';
 import Button from "../../UI/Button";
 
 const Signup = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h2>
-        회원가입 기능 구현합시다.
-      </h2>
-      <p>아이디</p>
-      <input type="text"/>
+    <div className={classes.whiteBox}>
+      <img className={classes.logoSmall} src={Logo} alt="logo-small" />
       <br />
-      <p>비밀번호</p>
-      <input type="password" />
+      <input className={classes.inputText} type="text" placeholder="아이디(e-mail)" />
       <br />
-      <p>비밀번호 확인</p>
-      <input type="password" />
+      <input className={classes.inputText} type="password" placeholder="비밀번호" />
       <br />
-      <span>닉네임
-        <Button>중복 확인</Button>
-      </span>
+      <input className={classes.inputText} type="password" placeholder="비밀번호 확인" />
       <br />
+      <input className={classes.inputText} type="text" placeholder="닉네임" />
+      <br />
+      <div class="gender-checkbox">
+        <input type="radio" id="male" name="gender" value="male"/>
+        <label for="male">남</label>
+        
+        <input type="radio" id="female" name="gender" value="female"/>
+        <label for="female">여</label>
+      </div>      
+    <Button onClick={() => navigate("/lobby")}>로그인</Button>
 
-      <Button onClick={() => navigate("/lobby")}>로그인</Button>
     </div>
+
   );
 };
 

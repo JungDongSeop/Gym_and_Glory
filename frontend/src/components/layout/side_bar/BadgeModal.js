@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Modal from '../../UI/Modal';
+import BadgeImages from '../../../assets/badges/BadgeImages'
 
 const BadgeModal = () => {
 
@@ -18,7 +19,7 @@ const BadgeModal = () => {
       {/* 방 생성 모달 */}
       <button onClick={openModal}>뱃지 목록</button>
       <Modal open={modalOpen} close={closeModal} header="뱃지 목록" isfooter={false}>
-        <p>뱃지 사진 띄웁시다</p>
+        <BadgeImages />
       </Modal>
     </div>
   );

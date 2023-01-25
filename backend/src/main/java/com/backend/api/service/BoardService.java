@@ -24,9 +24,9 @@ public class BoardService {
 
 
     @Transactional
-    public List<BoardArticle> getAllList(Integer userSequence) {
+    public List<BoardArticle> getAllList(Integer div) {
 
-        List<BoardArticle> test = boardRepository.findAll();
+        List<BoardArticle> test = boardRepository.findByDiv(div);
         return boardRepository.findAll();
     }
 

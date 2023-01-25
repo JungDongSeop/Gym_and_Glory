@@ -50,4 +50,8 @@ public class CommentService {
         cur = Comment.builder().goodCount(cur.getGoodCount()+1).build();
         commentRepository.save(cur);
     }
+
+    public int deleteComment(int commentSequence) {
+        return commentRepository.deleteByCommentSequence(commentSequence);
+    }
 }

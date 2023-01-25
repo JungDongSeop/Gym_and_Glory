@@ -62,9 +62,9 @@ public class BoardController {
             return new ResponseEntity("삭제 실패",HttpStatus.OK);
     }
 
-    @GetMapping("/{userSequence}")
-    public List<BoardArticle> getList(@PathVariable Integer userSequence){
-        List<BoardArticle> boardList = boardService.getAllList(userSequence);
+    @GetMapping("/list/{div}")
+    public List<BoardArticle> getList(@PathVariable Integer div){
+        List<BoardArticle> boardList = boardService.getAllList(div);
         return boardList;
     }
 

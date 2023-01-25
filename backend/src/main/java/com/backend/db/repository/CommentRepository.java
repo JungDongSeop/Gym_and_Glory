@@ -13,5 +13,6 @@ CommentRepository extends JpaRepository<Comment, String> {
 
     int deleteByArticleSequence(int articleSequence);
 
-//    Comment findByArticleSequnceAndCommentSeqeunce(int noticeSequence, int commentSequence);
+    int deleteByCommentSequence(int commentSequence);
+
 }

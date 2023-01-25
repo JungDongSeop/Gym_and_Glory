@@ -1,12 +1,20 @@
-.table {
+ul {
   border-collapse: collapse;
   width: 100%;
 }
 
-th, td {
+li {
   border: 1px solid black;
   padding: 8px;
   text-align: left;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.white {
+  background-color: white;
 }
 
 .odd {

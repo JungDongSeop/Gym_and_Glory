@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo.svg";
 import classes from "./Signup.module.css";

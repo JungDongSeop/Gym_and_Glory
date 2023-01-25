@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -43,12 +44,16 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardArticle writeNotice(WriteReq writeReq) {
+    public BoardArticle writeArticle(WriteReq writeReq) {
 
         BoardArticle boardArticle = BoardArticle.builder()
                 .title(writeReq.getTitle())
                 .userSequence(writeReq.getUserSequence())
-                .contents(writeReq.getContents()).build();
+                .contents(writeReq.getContents())
+                .registerTime(String.valueOf(LocalDateTime.now()))
+                .modify_time(String.valueOf(LocalDateTime.now()))
+                .views(0).goodCount(0).div(writeReq.getDiv()).
+                build();
 
         return boardRepository.save(boardArticle);
     }

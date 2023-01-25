@@ -43,7 +43,6 @@ public class User implements UserDetails {
     @Column(name = "profile_image_path")
     private String imagePath;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

@@ -32,7 +32,8 @@ public class BoardController {
 
     @PostMapping
     public ResponseEntity write(@RequestBody WriteReq writeReq){
-        boardService.writeNotice(writeReq);
+        System.out.println("된다:============================================="+writeReq);
+        boardService.writeArticle(writeReq);
 
         return new ResponseEntity(HttpStatus.OK);
     }

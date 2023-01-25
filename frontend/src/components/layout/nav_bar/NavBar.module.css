@@ -4,24 +4,21 @@ nav {
   background-color: rgba(45, 46, 6, 0.75);;
   color: #fff;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   height: 70px;  
 }
 
-nav ul {
+nav div {
+  color: #333;
+  text-decoration: none;
   display: flex;
-  list-style: none;
   align-items: center;
-  margin: 0;
-  padding: 0;
-}
-
-nav li {
-  margin-right: 1rem;
-  align-items: center;
+  margin-right: 10px;
 }
 
 nav a {
+  margin: 0 10px;
   color: #fff;
   text-decoration: none;
 }

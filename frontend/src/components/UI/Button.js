@@ -8,9 +8,11 @@ function Button({ onClick, children, size }) {
       fontSize: '12px',
       padding: '5px 10px'
     },
-    medium: {
-      fontSize: '16px',
-      padding: '10px 20px'
+    sideBar: {
+      height: '60px',
+      width: '250px',
+      fontSize: '30px',
+      padding: '10px 20px',
     },
     large: {
       fontSize: '20px',
@@ -26,7 +28,7 @@ function Button({ onClick, children, size }) {
 }
 
 Button.defaultProps = {
-  size: 'medium'
+  size: 'sideBar'
 };
 
 export default Button;

@@ -11,10 +11,12 @@ const SideBar = () => {
   return (
     <aside>
       {/* 유저 프로필 */}
-      <p>
-        유저의 웹캠이 표시됩니다.
-      </p>
-      <Link to="/mypage/dongsum">LV.25 정동섬</Link>
+      <div>
+        <p>
+          유저의 웹캠이 표시됩니다.
+        </p>
+        <Link to="/mypage/dongsum">LV.25 정동섬</Link>
+      </div>
 
       {/* 방 생성 모달 */}
       <CreateRoomModal />
@@ -23,7 +25,11 @@ const SideBar = () => {
       <FriendListModal />
 
       {/* 실시간 랭킹 */}
-      
+      <div>
+        <p>
+          실시간 랭킹
+        </p>
+      </div>
       
 
 

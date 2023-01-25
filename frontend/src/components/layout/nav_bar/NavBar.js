@@ -7,20 +7,19 @@ import './NavBar.module.css';
 const Navbar = () => {
   return (
     <nav>
-      <ul>
-        <li>
-          <Link to="/"><img className='logo' src={Logo} alt="홈으로" /></Link>
-        </li>
-        <li>
-          <Link to="/lobby">로비</Link>
-        </li>
-        <li>
-          <Link to="/">랭킹</Link>
-        </li>
-        <li>
-          <Link to="/board">게시판</Link>
-        </li>
-      </ul>
+      {/* 네브바 왼쪽 */}
+      <div>
+        <Link to="/"><img className='logo' src={Logo} alt="홈으로" /></Link>
+        <Link to="/lobby">로비</Link>
+        <Link to="/ranking">랭킹</Link>
+        <Link to="/board">게시판</Link>
+      </div>
+
+      {/* 네브바 오른쪽 */}
+      <div>
+        <Link t0="/">로그아웃</Link>
+        <Link to="/mypage"><img className='logo' src={Logo} alt="마이페이지로" /></Link>
+      </div>
     </nav>
   );
 }

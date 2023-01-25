@@ -15,5 +15,6 @@ public class WriteReq {
     private Integer userSequence;
     private String title;
     private String contents;
+    private Integer div;
 
 }

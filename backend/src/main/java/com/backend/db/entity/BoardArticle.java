@@ -26,10 +26,10 @@ public class BoardArticle {
     private String contents;
 
     @Column(name = "register_time")
-    private Timestamp registerTime;
+    private String registerTime;
 
     @Column(name = "modify_time")
-    private Timestamp modify_time;
+    private String modify_time;
 
     private Integer views;
 

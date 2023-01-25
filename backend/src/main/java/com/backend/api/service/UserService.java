@@ -1,23 +1,28 @@
 package com.backend.api.service;
 
 import com.backend.api.request.SignUpReq;
+import com.backend.db.entity.FileUser;
 import com.backend.db.entity.User;
 import com.backend.db.repository.UserRepository;
+import com.backend.util.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-
+    private final FileHandler fileHandler;
     @Autowired
-    public UserService(UserRepository userRepository) {
-
+    public UserService(UserRepository userRepository,FileHandler fileHandler) {
         this.userRepository = userRepository;
+        this.fileHandler = fileHandler;
     }
 
 
@@ -47,6 +52,20 @@ public class UserService {
         //작업 넣어주고 userSeuqence빼주고 사진을 넣어주면
         //imgpath sequnce바탕으로 경로 짜줘야함
         return userRepository.save(user);
+    }
+
+    public void addPicture(Integer userSequence, List<MultipartFile> files) throws Exception{
+        List<FileUser> list = fileHandler.parseFileInfo(userSequence, files);
+        if (list.isEmpty()){
+            // TODO : 파일이 없을 땐 어떻게 해야할까.. 고민을 해보아야 할 것
+        }
+        // 파일에 대해 DB에 저장하고 가지고 있을 것
+        else{
+            List<FileUser> pictureBeans = new ArrayList<>();
+            for (FileUser fileUsers : list) {
+                pictureBeans.add(userRepository.save(fileUsers));
+            }
+        }
     }
 
 

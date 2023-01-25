@@ -27,7 +27,7 @@ public class BoardService {
     public List<BoardArticle> getAllList(Integer div) {
 
         List<BoardArticle> test = boardRepository.findByDiv(div);
-        return boardRepository.findAll();
+        return test;
     }
 
     @Transactional

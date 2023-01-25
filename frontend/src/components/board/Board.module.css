@@ -1,20 +1,49 @@
-.table {
-  border-collapse: collapse;
-  width: 100%;
+
+
+.createButton {
+  right: 0;
+  margin-bottom: 5px;
 }
 
-th, td {
-  border: 1px solid black;
+.boardUl {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.boardUl li {
+  border: 0px solid black;
   padding: 8px;
+  cursor: pointer;
   text-align: left;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* .boardUl li div {
+  background-color: #eee;
+} */
+
+.blue {
+  background-color: blue;
+}
+
+.white {
+  background-color: white;
 }
 
 .odd {
-  background-color: red;
+  background-color: white;
 }
 
 .even {
-  background-color: yellow;
+  background-color: gray;
 }
 
+.pagination {
+  color: white;
+}
 

@@ -12,7 +12,7 @@ const Navbar = () => {
         <Link to="/"><img className='logo' src={Logo} alt="홈으로" /></Link>
         <Link to="/lobby">로비</Link>
         <Link to="/ranking">랭킹</Link>
-        <Link to="/board">게시판</Link>
+        <Link to="/board/notice">게시판</Link>
       </div>
 
       {/* 네브바 오른쪽 */}

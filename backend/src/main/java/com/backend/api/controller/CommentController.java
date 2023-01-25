@@ -30,23 +30,15 @@ public class CommentController {
         this.goodService = goodService;
     }
 
-    @PutMapping("/{articleSequence}/{commentSequence}")
-    public ResponseEntity heartPlus(@PathVariable int articleSequence, @PathVariable int commentSequence) {
-//        Comment cur = commentService.getOne(articleSequence, commentSequence);
-//        commentService.modify(cur);
-
-        return new ResponseEntity("하트 추가 완료", HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity write(@RequestBody CommentReq commentReq) {
         commentService.writeComment(commentReq);
         return new ResponseEntity("글쓰기 완료", HttpStatus.OK);
     }
 
-    @DeleteMapping("/{articleSequence}")
-    public ResponseEntity deleteAll(@PathVariable int articleSequence) {
-        int flag = commentService.deleteCommentAll(articleSequence);
+    @DeleteMapping("/{commentSequence}")
+    public ResponseEntity delete(@PathVariable int commentSequence) {
+        int flag = commentService.deleteComment(commentSequence);
         if (flag == 1)
             return new ResponseEntity("삭제 완료", HttpStatus.OK);
         else
@@ -54,7 +46,7 @@ public class CommentController {
     }
 
     @GetMapping("/{articleSequence}")
-    public List getList(@PathVariable int articleSequence) {
+    public List<Comment> getList(@PathVariable int articleSequence) {
         List<Comment> commentList = commentService.getAllList(articleSequence);
         return commentList;
     }

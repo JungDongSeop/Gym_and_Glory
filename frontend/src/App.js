@@ -8,6 +8,7 @@ import DeleteUser from "./components/auth/delete/Delete";
 import Lobby from "./components/lobby/Lobby";
 import MyPage from "./components/mypage/MyPage";
 import Board from "./components/board/Board";
+import Ranking from "./components/ranking/Ranking";
 import CreateBoard from "./components/board/CreateBoard";
 import DetailBoard from "./components/board/DetailBoard";
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/update" element={<UpdateUser />} />
         <Route path="/delete" element={<DeleteUser />} />
         <Route path="/lobby" element={<Lobby />} />
+        <Route path="/ranking" element={<Ranking />} />
         <Route path="/mypage/:username" element={<MyPage />} />
         <Route path="/board" element={<Board />} />
         <Route path="/board/create" element={<CreateBoard />} />

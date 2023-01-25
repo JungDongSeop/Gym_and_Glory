@@ -43,8 +43,6 @@ public class User implements UserDetails {
     @Column(name = "profile_image_path")
     private String imagePath;
 
-    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
-    private List<Attachment> attachedFiles = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -54,7 +54,6 @@ const Main = () => {
 
       </Carousel>
 
-      {/* <button onClick={() => navigate("/lobby")}>로그인 완료. 로비로 이동</button> */}
     </div>
   );
 };

@@ -76,7 +76,7 @@ public class FileHandler {
                         .userSequence(userID)
                         .originalFileName(multipartFile.getOriginalFilename())
                         .storedFileName(path + "/" + new_file_name)
-                        .fileSize(multipartFile.getSize())
+                        .fileSize((int)multipartFile.getSize())
                         .build();
                 fileList.add(fileUser);
 

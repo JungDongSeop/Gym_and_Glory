@@ -32,7 +32,7 @@ function App() {
         <Route path="/mypage/:username" element={<MyPage />} />
         <Route path="/board/:type" element={<Board />} />
         <Route path="/board/:type/create" element={<CreateBoard />} />
-        <Route path="/board/:id" element={<DetailBoard />} />
+        <Route path="/board/:type/:articleSequence" element={<DetailBoard />} />
       </Routes>
     </div>
   );

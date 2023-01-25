@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const DetailBoard = () => {
   // URL의 params를 쓰기 위한 state
-  const { id } = useParams();
+  const { articleSequence } = useParams();
 
   // axios 요청을 위한 state
   // data : 게시판 정보를 담은 변수
@@ -17,11 +17,11 @@ const DetailBoard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(`https://jsonplaceholder.typicode.com/users/${id}`);
+      const result = await axios(`http://localhost:8080/board/${articleSequence}`);
       setData(result.data);        
     };
     fetchData();
-  }, [id]);
+  }, [articleSequence]);
 
   // 게시글 상세 정보를 담은 변수
 
@@ -31,9 +31,14 @@ const DetailBoard = () => {
 
       {/* 게시판  */}
       <p>제목 : </p>
-      <p>{data.id}</p>
+      <p>{data.title}</p>
       <p>내용 : </p>
-      <p>{data.name}</p>
+      <p>{data.contents}</p>
+
+      <br />
+      <form>
+        <button>게시글 수정</button>
+      </form>
       
       {/* 댓글 */}
       <Review />

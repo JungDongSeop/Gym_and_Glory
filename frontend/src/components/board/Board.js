@@ -4,6 +4,7 @@ import { useNavigate, useParams } from'react-router-dom';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import classes from './Board.module.css';
 import axios from 'axios';
+import { Pagination } from 'antd';
 
 // 기본적으로 공지사항 게시판이 표시
 // 버튼을 누를 경우 다른 게시판 정보를 axios 요청
@@ -15,17 +16,18 @@ const Board = () => {
 
   // url params의 notice를 가져오기 (게시판 분류)
   const { type = 'notice' } = useParams();
-
+  
   // axios 요청을 위한 state
   // data : 게시판 정보가 담긴 변수
   const [data, setData] = useState([]);
   useEffect(() => {    
+    const types = {'notice': 1, 'free': 2, 'party': 3}
     const fetchData = async () => {
-      const result = await axios('https://jsonplaceholder.typicode.com/users/');
+      const result = await axios(`http://localhost:8080/board/list/${types[type]}`);
       setData(result.data);
     };
     fetchData();
-  }, []);
+  }, [type]);
 
   return (
     <main>
@@ -38,20 +40,32 @@ const Board = () => {
       <br />
       
       {/* 글 작성 버튼 */}
-      <Button type="primary" onClick={() => navigate(`/board/${type}/create`)}>글 작성</Button>
+      <Button className={classes.createButton} type="primary" onClick={() => navigate(`/board/${type}/create`)}>글 작성</Button>
 
       {/* 게시판 내용 */}
-      <ul>
-        {data.map((item, index) => (
-          <li key={index} className={index % 2 === 0 ? classes.odd : classes.even} onClick={() => navigate('/board/'+item.id)}>
-            {item.name} |||| {item.email}
+      <ul className={classes.boardUl}>
+        {data.slice(0, 10).map((item, index) => (
+          <li key={index} className={index % 2 === 0 ? classes.odd : classes.even} onClick={() => navigate(`/board/${type}/${item.articleSequence}`)}>
+            {/* 제목 */}
+            <div>
+              {item.title}
+            </div>
+            {/* 작성자 */}
+            <div>
+              {item.userSequence}
+            </div>
+            {/* 기타 정보 */}
+            <div>
+              ❤{item.goodCount}
+              👀{item.views}
+              🕒{item.modify_time.slice(0, 11)}
+            </div>            
           </li>
         ))}
       </ul>
+      <Pagination className={classes.pagination} defaultCurrent={1} total={50} />
     </main>
   );
 };
 
 export default WithNavBarAndSideBar(Board);
-;
-;

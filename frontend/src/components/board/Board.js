@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
-import { Link, useNavigate, useParams } from'react-router-dom';
+import { useNavigate, useParams } from'react-router-dom';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import classes from './Board.module.css';
 import axios from 'axios';
@@ -30,15 +30,15 @@ const Board = () => {
   return (
     <main>
       {/* 게시판 종류 선택. navigate 써서 페이지 갱신하는 게 좋을 듯 */}
-      <Button className={type==='notice'? classes.blue : classes.white}>공지사항</Button>
-      <Button className={type==='free'? classes.blue : classes.white}>자유게시판</Button>
-      <Button className={type==='free'? classes.blue : classes.white}>팀원 모집</Button>
+      <Button className={type==='notice'? classes.blue : classes.white} onClick={() => navigate('/board/notice')}>공지사항</Button>
+      <Button className={type==='free'? classes.blue : classes.white} onClick={() => navigate('/board/free')}>자유게시판</Button>
+      <Button className={type==='party'? classes.blue : classes.white} onClick={() => navigate('/board/party')}>팀원 모집</Button>
       <Button>신고게시판</Button>
 
       <br />
       
       {/* 글 작성 버튼 */}
-      <Link to="/board/:type/create"><Button type="primary">글 작성</Button></Link>
+      <Button type="primary" onClick={() => navigate(`/board/${type}/create`)}>글 작성</Button>
 
       {/* 게시판 내용 */}
       <ul>

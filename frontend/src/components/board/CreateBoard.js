@@ -15,13 +15,10 @@ const CreateBoard = () => {
     console.log(title, contents);
     try {
       await axios.post('http://localhost:8080/board', {
-        "userSequence":"1",
+        "userSequence":1,
         "title":title,
         "contents":contents,
-        "div":"1",
-        "headers": {
-          "Content-Type": "application/json"
-        }
+        "div":1,
       });
       setTitle('');
       setContents('');

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Modal from '../../UI/Modal';
+import Button from '../../UI/Button'
 import { useNavigate } from "react-router-dom";
 
 const CreateRoom = () => {
@@ -20,7 +21,7 @@ const CreateRoom = () => {
   return (
     <div>
       {/* 방 생성 모달 */}
-      <button onClick={openModal}>방 생성</button>
+      <Button onClick={openModal}>방 생성</Button>
       <Modal open={modalOpen} close={closeModal} header="게임 방 생성" isfooter={false}>
         {/* Modal.js <main> {props.children} </main>에 내용이 입력된다. 리액트 함수형 모달 */}
         <p>방 제목 : <input type="text" /></p>

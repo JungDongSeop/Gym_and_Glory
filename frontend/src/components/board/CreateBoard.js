@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
+import NavigateButtons from './NavigateButtons';
+import axios from 'axios';
 import { useParams, useNavigate } from 'react-router';
 
 const CreateBoard = () => {
   const navigate = useNavigate();
   
   // 
-  const { type } = useParams();
+  const { type } = useParams('notice');
   const types = {'notice': 1, 'free': 2, 'party': 3}  
 
   // 게시판에 쓴 글들을 저장할 변수
@@ -19,7 +20,6 @@ const CreateBoard = () => {
   // 게시판 제출 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(type);
     
     try {
       await axios.post('http://localhost:8080/board', {
@@ -39,8 +39,10 @@ const CreateBoard = () => {
 
   return (
     <main>
-      <h1>Create Board</h1>
+      {/* 게시판 종류 선택 버튼 */}
+      <NavigateButtons type={type}/>
 
+      {/* 게시판 제출 */}
       <form onSubmit={handleSubmit}>
         <label>
           Title:
@@ -51,6 +53,7 @@ const CreateBoard = () => {
           Contents:
           <textarea value={contents} onChange={e => setContents(e.target.value)} />
         </label>
+        <br />
         <button type="submit">제출</button>      
       </form>
 

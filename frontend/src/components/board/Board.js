@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'antd';
 import { useNavigate, useParams } from'react-router-dom';
+import NavigateButtons from './NavigateButtons';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
-import classes from './Board.module.css';
 import axios from 'axios';
+import classes from './Board.module.css';
+import { Button } from 'antd';
 import { Pagination } from 'antd';
 
 // 기본적으로 공지사항 게시판이 표시
@@ -18,24 +19,32 @@ const Board = () => {
   const { type = 'notice' } = useParams();
   
   // axios 요청을 위한 state
-  // data : 게시판 정보가 담긴 변수
+  // data : 게시판 정보가 담긴 변수. 최신 글이 위로 오도록
   const [data, setData] = useState([]);
   useEffect(() => {    
     const types = {'notice': 1, 'free': 2, 'party': 3}
     const fetchData = async () => {
       const result = await axios(`http://localhost:8080/board/list/${types[type]}`);
-      setData(result.data);
+      setData(result.data.reverse());
     };
     fetchData();
   }, [type]);
 
+  // 페이지네이션을 위한 변수
+  const [currentPage, setCurrentPage] = useState(1);
+  // 페이지네이션을 위한 함수
+  const onChangePage = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <main>
-      {/* 게시판 종류 선택. navigate 써서 페이지 갱신하는 게 좋을 듯 */}
+      {/* 게시판 종류 선택. navigate 써서 페이지 갱신하는 게 좋을 듯
       <Button className={type==='notice'? classes.blue : classes.white} onClick={() => navigate('/board/notice')}>공지사항</Button>
       <Button className={type==='free'? classes.blue : classes.white} onClick={() => navigate('/board/free')}>자유게시판</Button>
       <Button className={type==='party'? classes.blue : classes.white} onClick={() => navigate('/board/party')}>팀원 모집</Button>
-      <Button>신고게시판</Button>
+      <Button>신고게시판</Button> */}
+      <NavigateButtons type={type}/>
 
       <br />
       
@@ -44,7 +53,7 @@ const Board = () => {
 
       {/* 게시판 내용 */}
       <ul className={classes.boardUl}>
-        {data.slice(0, 10).map((item, index) => (
+        {data.slice(currentPage*10-10, currentPage*10).map((item, index) => (
           <li key={index} className={index % 2 === 0 ? classes.odd : classes.even} onClick={() => navigate(`/board/${type}/${item.articleSequence}`)}>
             {/* 제목 */}
             <div>
@@ -52,7 +61,7 @@ const Board = () => {
             </div>
             {/* 작성자 */}
             <div>
-              {item.userSequence}
+              작성자 : {item.userSequence}
             </div>
             {/* 기타 정보 */}
             <div>
@@ -63,7 +72,7 @@ const Board = () => {
           </li>
         ))}
       </ul>
-      <Pagination className={classes.pagination} defaultCurrent={1} total={50} />
+      <Pagination className={classes.pagination} current={currentPage} onChange={onChangePage} total={Object.keys(data).length} />
     </main>
   );
 };

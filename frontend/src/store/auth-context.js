@@ -8,17 +8,21 @@ const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = (props) => {
-  const [token, setToken] = useState(null);
+  const initialToken = localStorage.getItem("token");
+
+  const [token, setToken] = useState(initialToken);
   // 로그인 여부 (토큰 여부)
   const userIsLoggedIn = !!token;
 
   const loginHandler = (token) => {
     // 로그인 할 때는 토큰을 인자로 받아 저장
     setToken(token);
+    localStorage.setItem("token", token);
   };
 
   const logoutHandler = () => {
     setToken(null);
+    localStorage.removeItem("token");
   };
 
   const contextValue = {

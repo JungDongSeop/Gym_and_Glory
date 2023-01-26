@@ -75,4 +75,10 @@ public class UserController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @GetMapping("/user/{userSequence}")
+    public String getNick(@PathVariable Integer userSequence){
+        return userService.getNick(userSequence);
+    }
+
 }

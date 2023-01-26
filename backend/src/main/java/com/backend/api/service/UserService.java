@@ -54,19 +54,19 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void addPicture(Integer userSequence, List<MultipartFile> files) throws Exception{
-        List<FileUser> list = fileHandler.parseFileInfo(userSequence, files);
-        if (list.isEmpty()){
-            // TODO : 파일이 없을 땐 어떻게 해야할까.. 고민을 해보아야 할 것
-        }
-        // 파일에 대해 DB에 저장하고 가지고 있을 것
-        else{
-            List<FileUser> pictureBeans = new ArrayList<>();
-            for (FileUser fileUsers : list) {
-                pictureBeans.add(userRepository.save(fileUsers));
-            }
-        }
-    }
+//    public void addPicture(Integer userSequence, List<MultipartFile> files) throws Exception{
+//        List<FileUser> list = fileHandler.parseFileInfo(userSequence, files);
+//        if (list.isEmpty()){
+//            // TODO : 파일이 없을 땐 어떻게 해야할까.. 고민을 해보아야 할 것
+//        }
+//        // 파일에 대해 DB에 저장하고 가지고 있을 것
+//        else{
+//            List<FileUser> pictureBeans = new ArrayList<>();
+//            for (FileUser fileUsers : list) {
+//                pictureBeans.add(userRepository.save(fileUsers));
+//            }
+//        }
+//    }
 
 
     public User findUserByEmail(String email) {
@@ -96,5 +96,10 @@ public class UserService {
     public void deleteUser(int userSequence) {
         System.out.println(userSequence);
         userRepository.deleteByUserSequence(userSequence);
+    }
+
+    public String getNick(Integer userSequence) {
+        User user = userRepository.findByUserSequence(userSequence);
+        return user.getNickname();
     }
 }

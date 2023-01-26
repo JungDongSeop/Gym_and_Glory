@@ -10,7 +10,7 @@ const NavigateButtons = (props) => {
   const navigate = useNavigate();
 
   // url params의 notice를 가져오기 (게시판 분류)
-  const type = props.type ? 'notice' : props.type
+  const type = props.type ? props.type : 'notice'
   // const { type = 'notice' } = useParams('notice');
   
   return (

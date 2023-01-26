@@ -78,11 +78,11 @@ const Login = () => {
       <br />
       {/* 로그인 폼 */}
       <form onSubmit={submitHandler}>
-        <div>
+        <div className={classes.control}>
           <label htmlFor="email">아이디 입력</label>
           <input type="email" id="email" required ref={emailInputRef} />
         </div>
-        <div>
+        <div className={classes.control}>
           <label htmlFor="password">비밀번호 입력</label>
           <input
             type="password"
@@ -94,12 +94,12 @@ const Login = () => {
         <div>
           {!isLoading && (
             // <Button onClick={() => navigate("/lobby")}>로그인</Button>
-            <button>로그인</button>
+            <Button>로그인</Button>
           )}
           {isLoading && <p>로그인중...</p>}
         </div>
       </form>
-      <br />
+      <hr />
       <br />
       <Button onClick={() => navigate("/signup")}>회원가입</Button>
       <br />

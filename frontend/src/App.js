@@ -40,12 +40,18 @@ function App() {
         {authCtx.isLoggedIn && <Route path="/mypage" element={<MyPage />} />}
         {authCtx.isLoggedIn && <Route path="/ranking" element={<Ranking />} />}
         {authCtx.isLoggedIn && (
-          <Route path="/create_board" element={<CreateBoard />} />
+          <Route path="/board/:type/create" element={<CreateBoard />} />
         )}
         {authCtx.isLoggedIn && (
-          <Route path="/detail_board" element={<DetailBoard />} />
+          <Route
+            path="/board/:type/:articleSequence"
+            element={<DetailBoard />}
+          />
         )}
-        {authCtx.isLoggedIn && <Route path="/board" element={<Board />} />}
+        {authCtx.isLoggedIn && (
+          <Route path="/board/:type" element={<Board />} />
+        )}
+
         {/* <Route path="/signup" element={<Signup />} />
         <Route path="/find-pwd" element={<FindPwd />} />
         <Route path="/update" element={<UpdateUser />} /> */}

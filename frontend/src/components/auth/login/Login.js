@@ -1,4 +1,5 @@
 import { useState, useRef, useContext } from "react";
+
 import AuthContext from "../../../store/auth-context";
 import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
@@ -64,6 +65,7 @@ const Login = () => {
       .then((data) => {
         console.log(data);
         authCtx.login(data.idToken);
+        navigate("/");
       })
       .catch((err) => {
         alert(err.message);

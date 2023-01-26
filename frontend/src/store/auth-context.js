@@ -13,7 +13,6 @@ export const AuthContextProvider = (props) => {
   const userIsLoggedIn = !!token;
 
   const loginHandler = (token) => {
-    4;
     // 로그인 할 때는 토큰을 인자로 받아 저장
     setToken(token);
   };

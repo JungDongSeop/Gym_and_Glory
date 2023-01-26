@@ -5,15 +5,20 @@ import Logo from "../../../assets/logo.svg";
 import classes from "./Signup.module.css";
 import Button from "../../UI/Button";
 
+// API_KEY
+const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
+// 회원가입 api 주소
+const URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
 const Signup = () => {
   const navigate = useNavigate();
 
   // 입력한 아이디 비밀번호값 확인
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  const passwordCheckInputRef = useRef();
-  const nicknameInputRef = useRef();
+  // const passwordCheckInputRef = useRef();
+  // const nicknameInputRef = useRef();
 
+  // api요청 보낼 때 응답 대기
   const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = (event) => {
@@ -25,8 +30,43 @@ const Signup = () => {
 
     // 유효성 검증 추가 할 수 있음
 
+    // 회원가입 api요청 보내기
     setIsLoading(true);
-    // let url;
+
+    fetch(URL, {
+      method: "POST",
+      // json 형태로 넘겨줘야하고 email과 아이디를 넘겨준다. 추후 닉네임, 성별도 추가 예정
+      body: JSON.stringify({
+        email: enteredEmail,
+        password: enteredPassword,
+        returnSecureToken: true,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      // 응답이 성공적이라면
+      .then((res) => {
+        // 로딩상태 제거
+        setIsLoading(false);
+        if (res.ok) {
+          // ...
+          // console.log("회원가입 성공");
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            // 오류 모달 띄워야 한다.
+            let errorMessage = "형식 오류입니다. 다시 작성하세요";
+            throw new Error(errorMessage);
+          });
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
   return (
     <section className={classes.whiteBox}>
@@ -55,7 +95,7 @@ const Signup = () => {
           />
         </div>
         {/* 2차 비밀번호 입력 */}
-        <div className={classes.control}>
+        {/* <div className={classes.control}>
           <label htmlFor="passwordcheck">비밀번호 확인</label>
           <input
             type="password"
@@ -63,20 +103,17 @@ const Signup = () => {
             required
             ref={passwordCheckInputRef}
           />
-        </div>
+        </div> */}
+
         {/* 닉네임 */}
-        <div>
+        {/* <div>
           <div className={classes.control}>
             <label htmlFor="nickname">닉네임</label>
             <input type="text" id="nickname" required ref={nicknameInputRef} />
           </div>
-          {/* 중복확인 */}
-          <div>
-            <button>중복확인</button>
-          </div>
-        </div>
+        </div> */}
         {/* 성별 확인 */}
-        <div className={classes.gender}>
+        {/* <div className={classes.gender}>
           <div>
             <label for="male">남</label>
             <input type="radio" id="male" name="gender" value="male" />
@@ -85,7 +122,7 @@ const Signup = () => {
             <label for="female">여</label>
             <input type="radio" id="female" name="gender" value="female" />
           </div>
-        </div>
+        </div> */}
         {/* 회원가입 버튼 */}
         <div className={classes.actions}>
           {!isLoading && <button className={classes.toggle}>회원가입</button>}

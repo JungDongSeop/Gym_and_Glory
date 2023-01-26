@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 const AuthContext = React.createContext({
   token: "",
-  // 토큰 유무로 로그인 판단할 수 있지만 일단 만들어 놓음
   isLoggedIn: false,
   login: (token) => {},
   logout: () => {},
@@ -10,27 +9,26 @@ const AuthContext = React.createContext({
 
 export const AuthContextProvider = (props) => {
   const [token, setToken] = useState(null);
-
-  // 로컬스토리지에 토큰이 있는지 판단
-  // const initialToken = localStorage.getItem("token");
-
+  // 로그인 여부 (토큰 여부)
   const userIsLoggedIn = !!token;
+
+  const loginHandler = (token) => {
+    4;
+    // 로그인 할 때는 토큰을 인자로 받아 저장
+    setToken(token);
+  };
 
   const logoutHandler = () => {
     setToken(null);
-    localStorage.removeItem("token");
   };
 
-  const loginHandler = (token) => {
-    setToken(token);
-    localStorage.setItem("token");
-  };
   const contextValue = {
     token: token,
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,
   };
+  // 다른 컴포넌트가 위의 내용들을 사용할 수 있도록 감싼다.
   return (
     <AuthContext.Provider value={contextValue}>
       {props.children}

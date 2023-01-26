@@ -1,23 +1,28 @@
 package com.backend.api.service;
 
 import com.backend.api.request.SignUpReq;
+import com.backend.db.entity.FileUser;
 import com.backend.db.entity.User;
 import com.backend.db.repository.UserRepository;
+import com.backend.util.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-
+    private final FileHandler fileHandler;
     @Autowired
-    public UserService(UserRepository userRepository) {
-
+    public UserService(UserRepository userRepository,FileHandler fileHandler) {
         this.userRepository = userRepository;
+        this.fileHandler = fileHandler;
     }
 
 
@@ -50,6 +55,8 @@ public class UserService {
     }
 
 
+
+
     public User findUserByEmail(String email) {
         User user = userRepository.findOneByEmail(email);
         return user;
@@ -77,5 +84,10 @@ public class UserService {
     public void deleteUser(int userSequence) {
         System.out.println(userSequence);
         userRepository.deleteByUserSequence(userSequence);
+    }
+
+    public String getNick(Integer userSequence) {
+        User user = userRepository.findByUserSequence(userSequence);
+        return user.getNickname();
     }
 }

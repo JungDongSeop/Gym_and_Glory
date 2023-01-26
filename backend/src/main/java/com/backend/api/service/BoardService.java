@@ -27,7 +27,7 @@ public class BoardService {
     public List<BoardArticle> getAllList(Integer div) {
 
         List<BoardArticle> test = boardRepository.findByDiv(div);
-        return boardRepository.findAll();
+        return test;
     }
 
     @Transactional
@@ -68,6 +68,7 @@ public class BoardService {
 
     public void addGoodArticle(Integer articleSequence) {
         BoardArticle cur = boardRepository.findOneByArticleSequence(articleSequence);
-        cur = BoardArticle.builder().goodCount(cur.getGoodCount()+1).build();
+        cur.setGoodCount(cur.getGoodCount()+1);
+        boardRepository.save(cur);
     }
 }

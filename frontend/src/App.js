@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import AuthContext from "./store/auth-context";
-import { Routes, Route, Redirect } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Main from "./components/main/Main";
 import Login from "./components/auth/login/Login";
 import Signup from "./components/auth/signup/Signup";

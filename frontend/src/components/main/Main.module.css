@@ -3,7 +3,7 @@
   height: 100%;
   object-fit: contain;
   margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .carouselBox {
@@ -12,19 +12,20 @@
   position: relative;
   display: flex;
   flex-direction: column;
-
 }
 
 .carouselBox img {
-  margin: auto;
+  margin: 0 auto;
+  width: 30vw;
 }
 
 .carouselBox button {
   margin: auto;
-  text-align: start;
+  text-align: center;
   cursor: pointer;
   display: block;
   margin: auto;
+  width: 20vw;
 }
 
 .carousel .smallLogo {
@@ -34,8 +35,8 @@
 }
 
 .carouselBox .leftword {
-  color: #8F1010;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #8f1010;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   position: absolute;
   bottom: 0;
   font-size: xx-large;
@@ -45,8 +46,8 @@
 }
 
 .carouselBox .rightword {
-  color: #8F1010;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #8f1010;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   position: absolute;
   bottom: 0;
   font-size: xx-large;
@@ -54,4 +55,3 @@
   bottom: 0;
   right: 0;
 }
-

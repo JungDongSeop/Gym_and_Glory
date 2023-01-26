@@ -26,7 +26,9 @@ const Main = () => {
             <img src={Logo} alt={Logo}></img>
             <p>푸쉬업, 플랭크, 런지, 버피 Let`s Go</p>
             {!isLoggedIn && (
-              <Button onClick={() => navigate("/login")}>로그인 버튼</Button>
+              <div>
+                <Button onClick={() => navigate("/login")}>로그인</Button>
+              </div>
             )}
             {isLoggedIn && (
               <Button onClick={() => navigate("/lobby")}>게임시작</Button>

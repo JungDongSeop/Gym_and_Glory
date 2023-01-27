@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableWebSecurity
+@EnableWebSecurity//스프링 시큐리티 필터가 스프링 필터체인에 등록이 됩니다.
 public class SecurityConfiguration {
 
     @Bean

@@ -62,10 +62,12 @@ const Login = () => {
           });
         }
       })
+      // 요청이 성공적으로 응답하면 (firebase에 정상적으로 로그인)
       .then((data) => {
         console.log(data);
-        authCtx.login(data.idToken);
+        authCtx.login(data.idToken, data.email);
         navigate("/");
+        
       })
       .catch((err) => {
         alert(err.message);

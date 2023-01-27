@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import CommentDetail from './CommentDetail';
 import axios from 'axios';
+import './Comment.module.css';
 // import { useNavigate } from 'react-router-dom';
 
 const Comment = () => {
@@ -21,32 +23,42 @@ const Comment = () => {
 
 
   // 댓글 read axios 요청
-  useEffect(() => {
-      axios.get(`/board/comment/${articleSequence}`)
+  const commentRead = (articleSequence) => {
+    axios.get(`/board/comment/${articleSequence}`)
       .then(response => {
-        setComments(response.data);
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+      setComments(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  ;}
+  useEffect(() => {
+    commentRead(articleSequence);
   }, [articleSequence]);
 
   // 댓글 create axios 요청
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    axios.post(`/board/comment`, newComment)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("댓글이 작성되었습니다.")
+
+    axios.post(`/board/comment`, {
+      "userSequence": user.pk,
+      "articleSequence": articleSequence,
+      "contents": newComment.contents
+    })
     .then(response => {
       setComments([...comments, response.data]);
       setNewComment({title: '', text: ''});
+      commentRead(articleSequence);
     })
     .catch(error => {
       console.log(error);
     });
   }
 
-  const handleChange = (event) => {
-    setNewComment({...newComment, [event.target.name]: event.target.value});
+  // 댓글 입력 값 변경 시 작동
+  const handleChange = (e) => {
+    setNewComment({...newComment, [e.target.name]: e.target.value});
   }
 
   return (
@@ -68,7 +80,7 @@ const Comment = () => {
       {/* 댓글 목록 axios 요청 */}
       {comments.map((comment, index) => (
         <ul key={index}>
-          <li>{comment.contents}</li>
+          <CommentDetail comment={comment} />
         </ul>
       ))}
 

@@ -28,6 +28,10 @@
   width: 20vw;
 }
 
+.carouselBox h1 {
+  margin: 0;
+}
+
 .carousel .smallLogo {
   width: 10rem;
   height: 10rem;
@@ -36,10 +40,10 @@
 
 .carouselBox .leftword {
   color: #8f1010;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: 'Dokdo', cursive;
   position: absolute;
   bottom: 0;
-  font-size: xx-large;
+  font-size: 50px;
   cursor: pointer;
   bottom: 0;
   left: 0;
@@ -47,10 +51,10 @@
 
 .carouselBox .rightword {
   color: #8f1010;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: 'Dokdo', cursive;
   position: absolute;
   bottom: 0;
-  font-size: xx-large;
+  font-size: 50px;
   cursor: pointer;
   bottom: 0;
   right: 0;

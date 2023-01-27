@@ -29,7 +29,7 @@ public class CommentService {
     @PrePersist // 데이터 생성이 이루어질때 사전 작업
     public void writeComment(CommentReq commentReq) {
         Comment comment = Comment.builder()
-                .nickname(commentReq.getNickname())
+                .userSequence(commentReq.getUserSequence())
                 .articleSequence(commentReq.getArticleSequence())
                 .contents(commentReq.getContents())
                 .goodCount(0)

@@ -24,7 +24,8 @@ const Main = () => {
         <div>
           <span className={classes.carouselBox}>
             <img src={Logo} alt={Logo}></img>
-            <p>푸쉬업, 플랭크, 런지, 버피 Let`s Go</p>
+            <h1>푸쉬업, 플랭크, 런지, 버피 </h1>
+              <h1>Let`s Go</h1>
             {!isLoggedIn && (
               <div>
                 <Button onClick={() => navigate("/login")}>로그인</Button>

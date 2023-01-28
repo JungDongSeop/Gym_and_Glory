@@ -14,7 +14,7 @@ const data = {
 
 const MyPage = () => {
   const params = useParams();
-  const profile = data[params.username];
+  const profile = data[params.nickname];
 
   return (
     <main>

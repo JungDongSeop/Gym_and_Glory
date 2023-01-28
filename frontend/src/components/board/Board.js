@@ -83,6 +83,8 @@ const Board = () => {
             </li>
           ))}
       </ul>
+
+      {/* 페이지네이션 */}
       <Pagination
         className={classes.pagination}
         current={currentPage}

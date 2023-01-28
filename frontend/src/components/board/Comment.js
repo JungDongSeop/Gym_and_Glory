@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import CommentDetail from './CommentDetail';
 import axios from 'axios';
 import './Comment.module.css';
 // import { useNavigate } from 'react-router-dom';
@@ -20,7 +19,6 @@ const Comment = () => {
   const [comments, setComments] = useState([]);
   // 댓글 쓰기 위한 state
   const [newComment, setNewComment] = useState({'userSequence': user.pk, contents: ''});
-
 
   // 댓글 read axios 요청
   const commentRead = (articleSequence) => {
@@ -56,7 +54,30 @@ const Comment = () => {
     });
   }
 
-  // 댓글 입력 값 변경 시 작동
+  const handleGood = async (commentSequence) => {
+    try {
+      await axios(`/board/comment/good/${user.pk}/${commentSequence}`);
+      alert('댓글을 추천하였습니다.')
+      // Show a success message or refresh the comments list
+      commentRead(articleSequence);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // 댓글 지우기
+  const handleDelete = async (commentSequence) => {
+    try {
+      await axios.delete(`/board/comment/${commentSequence}`);
+      alert('댓글이 삭제되었습니다.')
+      // Show a success message or refresh the comments list
+      commentRead(articleSequence);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // 댓글 input 값 변경 시 작동
   const handleChange = (e) => {
     setNewComment({...newComment, [e.target.name]: e.target.value});
   }
@@ -80,11 +101,13 @@ const Comment = () => {
       {/* 댓글 목록 axios 요청 */}
       {comments.map((comment, index) => (
         <ul key={index}>
-          <CommentDetail comment={comment} />
+          {/* 댓글 상세 표시, 댓글 좋아요, 댓글 삭제 */}
+          <h1>{comment.commentSequence}, 내용 : {comment.contents} 작성자 : {comment.userSequence}</h1>
+          추천 : {comment.goodCount}. <button onClick={() => handleGood(comment.commentSequence)}>❤</button>
+          <button onClick={() => handleDelete(comment.commentSequence)}>삭제</button>
+      
         </ul>
       ))}
-
-
     </div>
   );
 };

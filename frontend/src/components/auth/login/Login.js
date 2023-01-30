@@ -66,8 +66,8 @@ const Login = () => {
       .then(async (data) => {
         console.log(data);
         try {
-          await axios.post(
-            "http://localhost:3000/api/login",
+          const response = await axios.post(
+            "http://localhost:8080/api/login",
             {
               email: data.email,
             },
@@ -77,11 +77,14 @@ const Login = () => {
               },
             }
           );
+          console.log(response);
+
           authCtx.login(data.idToken, data.email, data.displayName);
           navigate("/");
         } catch (err) {
           console.log(err);
         }
+
         // authCtx.login(data.idToken, data.email, data.displayName);
         // navigate("/");
       })

@@ -15,7 +15,7 @@ const SideBar = () => {
         <p>
           유저의 웹캠이 표시됩니다.
         </p>
-        <Link to="/mypage/dongsum">LV.25 정동섬</Link>
+        <Link to="/mypage">LV.25 정동섬</Link>
       </div>
 
       {/* 방 생성 모달 */}

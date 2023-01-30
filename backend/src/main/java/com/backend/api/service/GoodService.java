@@ -31,7 +31,7 @@ public class GoodService {
 
     public void addGoodBoard(Integer userSequence, Integer articleSequence) {
         System.out.println("여기들어오나?");
-        BoardGood boardGood = new BoardGood(userSequence,articleSequence);
+        BoardGood boardGood = BoardGood.builder().userSequence(userSequence).articleSequence(articleSequence).build();
         boardGoodRepository.save(boardGood);
     }
 
@@ -40,7 +40,7 @@ public class GoodService {
     }
 
     public void addGoodComment(Integer userSequence, Integer commentSequence) {
-        CommentGood commentGood = new CommentGood(userSequence,commentSequence);
+        CommentGood commentGood = CommentGood.builder().userSequence(userSequence).commentSequence(commentSequence).build();
         Comment comment = commentRepository.findByCommentSequence(commentSequence);
         comment.setGoodCount(comment.getGoodCount()+1);
         commentRepository.save(comment);

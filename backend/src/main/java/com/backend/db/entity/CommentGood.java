@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -17,7 +14,12 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name ="comment_good")
 public class CommentGood {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_good_sequence")
+    private Integer commentGoodSequence;
+
     @Column(name = "user_sequence")
     private Integer userSequence;
 

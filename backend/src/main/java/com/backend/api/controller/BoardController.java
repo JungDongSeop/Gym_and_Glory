@@ -48,8 +48,7 @@ public class BoardController {
     @Transactional
     @PutMapping
     public ResponseEntity<?> modify(@RequestBody BoardPostReq boardPostReq){
-        BoardArticle cur =  boardService.getOne(boardPostReq.getArticleSequence());
-        boardService.modify(cur,boardPostReq);
+        boardService.modify(boardPostReq);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

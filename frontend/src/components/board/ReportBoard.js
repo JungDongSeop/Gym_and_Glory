@@ -45,7 +45,7 @@ const ReportBoard = () => {
       <h1>{isAdmin}</h1>
       {isAdmin ? (
         <div>
-          <h2>관리자님, 반갑습니다.</h2>
+          <h2>관리자의 신고페이지.</h2>
           <ul className={classes.boardUl}>
             {adminBoard.map((report, index) => (
               <li 
@@ -62,6 +62,7 @@ const ReportBoard = () => {
       ) : (
         <div>
           <h2>유저들의 신고페이지</h2>
+          <p>이후 특정 유저의 신고 내역 api 완성되면 추가</p>
           {/* <ul>
             {userBoard.map((report) => (
               <li key={report.id}>

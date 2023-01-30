@@ -64,19 +64,20 @@ const Login = () => {
       })
       // 요청이 성공적으로 응답하면 (firebase에 정상적으로 로그인)
       .then(async (data) => {
-        console.log(data);
+        console.log("데이터",data);
         try {
-          await axios.post(
-            "http://localhost:3000/api/login",
+          const response = await axios.post(
+            "http://localhost:8080/api/login",
             {
               email: data.email,
             },
             {
               headers: {
-                Authorization: `Bearer ${data.idToken}`,
+                authentication: `Bearer ${data.idToken}`,
               },
             }
           );
+          console.log("리스폰스 객체",response);
           authCtx.login(data.idToken, data.email, data.displayName);
           navigate("/");
         } catch (err) {

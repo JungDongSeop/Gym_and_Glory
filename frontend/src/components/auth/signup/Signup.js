@@ -79,10 +79,10 @@ const Signup = () => {
         }
       })
       .then(async (data) => {
-        console.log(data);
+        console.log(data,'hjjkkj');
         try {
           await axios.post(
-            "http://localhost:3000/api/signup",
+            "http://localhost:8080/api/signup",
             {
               email: data.email,
               nickname: enteredNickname,

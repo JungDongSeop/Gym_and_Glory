@@ -14,8 +14,8 @@ const BadgeImages = () => {
 
   return (
     <div>
-      {items.map((item) => (
-        <img className={classes.badge} src={item} alt="badge" />
+      {items.map((item, index) => (
+        <img key={index} className={classes.badge} src={item} alt="badge" />
       ))}
     </div>
   )

@@ -36,6 +36,7 @@ public class BoardArticle {
     @Column(name = "good_count")
     private Integer goodCount;
 
+
     private Integer div;
 
 }

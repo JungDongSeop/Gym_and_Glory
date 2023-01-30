@@ -33,8 +33,6 @@ public class BoardService {
     @Transactional
     public BoardArticle getOne(Integer articleSeqeunce) {
 
-        BoardArticle boardArticle = boardRepository.findOneByArticleSequence(articleSeqeunce);
-        boardRepository.save(boardArticle);
         return boardRepository.findOneByArticleSequence(articleSeqeunce);
     }
 
@@ -58,11 +56,13 @@ public class BoardService {
         return boardRepository.save(boardArticle);
     }
 
-    public void modify(BoardArticle cur, BoardPostReq boardPostReq) {
-        cur = BoardArticle.builder()
-                .articleSequence(boardPostReq.getArticleSequence())
-                .title(boardPostReq.getTitle())
-                .contents(boardPostReq.getContents()).build();
+    public void modify( BoardPostReq boardPostReq) {
+        BoardArticle cur = boardRepository.findOneByArticleSequence(boardPostReq.getArticleSequence());
+        if(boardPostReq.getTitle().length()>0)
+            cur.setTitle(boardPostReq.getTitle());
+        if(boardPostReq.getContents().length()>0)
+            cur.setContents(boardPostReq.getContents());
+        cur.setRegisterTime(String.valueOf(LocalDateTime.now()));
         boardRepository.save(cur);
     }
 

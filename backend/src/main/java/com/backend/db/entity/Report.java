@@ -34,4 +34,6 @@ public class Report {
     @Column(name = "register_time")
     private String registerTime;
 
+    private Integer confirmation;
+
 }

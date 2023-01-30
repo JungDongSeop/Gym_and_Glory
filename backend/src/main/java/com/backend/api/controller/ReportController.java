@@ -38,6 +38,18 @@ public class ReportController {
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
+    @GetMapping("/user/{userSequence}")
+    public ResponseEntity<?> getListByUser(@PathVariable Integer userSequence){
+        List<Report> list = reportService.getListByUser(userSequence);
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
+    @GetMapping("/confirm/{reportSequence}")
+    public ResponseEntity<?> confirm(@PathVariable Integer reportSequence){
+        reportService.confirmReport(reportSequence);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/{reportSequence}")
     public ResponseEntity<?> getDetail(@PathVariable Integer reportSequence){
         Report report = reportService.getOne(reportSequence);

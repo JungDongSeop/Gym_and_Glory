@@ -77,12 +77,18 @@ const Login = () => {
               },
             }
           );
+<<<<<<< HEAD
           console.log("리스폰스 객체",response);
+=======
+          console.log(response);
+
+>>>>>>> 189d5f79d3efa6dd677e09b0c7861d62f4c69d9c
           authCtx.login(data.idToken, data.email, data.displayName);
           navigate("/");
         } catch (err) {
           console.log(err);
         }
+
         // authCtx.login(data.idToken, data.email, data.displayName);
         // navigate("/");
       })

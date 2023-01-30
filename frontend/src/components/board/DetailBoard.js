@@ -55,8 +55,8 @@ const DetailBoard = () => {
       <p>{data.contents}</p>
 
       <br />
-      {/* 게시글 수정은 일단 create 페이지로 이동하도록 작성했음. 이후 update 페이지 별도 제작 */}
-      <button onClick={() => navigate(`/board/${type}/create`)}>게시글 수정</button>
+      {/* 게시글 수정 구현 */}
+      <button onClick={() => navigate(`/board/${type}/update/${articleSequence}`)}>게시글 수정</button>
       {/* 게시글 좋아요 구현 */}
       <button onClick={() => goodClick()}>좋아요</button>
       {/* 게시글 삭제 구현 */}

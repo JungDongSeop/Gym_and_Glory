@@ -13,6 +13,9 @@ import Board from "./components/board/Board";
 import Ranking from "./components/ranking/Ranking";
 import CreateBoard from "./components/board/CreateBoard";
 import DetailBoard from "./components/board/DetailBoard";
+import UpdateBoard from "./components/board/UpdateBoard";
+import ReportBoard from "./components/board/ReportBoard";
+import ReportBoardDetail from "./components/board/ReportBoardDetail";
 
 import "./App.css";
 
@@ -40,7 +43,16 @@ function App() {
         {authCtx.isLoggedIn && <Route path="/mypage" element={<MyPage />} />}
         {authCtx.isLoggedIn && <Route path="/ranking" element={<Ranking />} />}
         {authCtx.isLoggedIn && (
+          <Route path="/board/report" element={<ReportBoard />} />
+        )}
+        {authCtx.isLoggedIn && (
+          <Route path="/board/report/:reportSequence" element={<ReportBoardDetail />} />
+        )}
+        {authCtx.isLoggedIn && (
           <Route path="/board/:type/create" element={<CreateBoard />} />
+        )}
+        {authCtx.isLoggedIn && (
+          <Route path="/board/:type/update/:articleSequence" element={<UpdateBoard />} />
         )}
         {authCtx.isLoggedIn && (
           <Route

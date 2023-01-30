@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  pk: 2,
+  pk: 3,
   nickname: '동섬',
-  isAdmin: true
+  isAdmin: false
 };
 
 const userSlice = createSlice({

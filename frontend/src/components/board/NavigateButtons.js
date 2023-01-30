@@ -18,7 +18,7 @@ const NavigateButtons = (props) => {
       <Button className={type==='notice'? classes.blue : classes.white} onClick={() => navigate('/board/notice')}>공지사항</Button>
       <Button className={type==='free'? classes.blue : classes.white} onClick={() => navigate('/board/free')}>자유게시판</Button>
       <Button className={type==='party'? classes.blue : classes.white} onClick={() => navigate('/board/party')}>팀원 모집</Button>
-      <Button>신고게시판</Button>
+      <Button className={type==='report'? classes.blue : classes.white} onClick={() => navigate('/board/report')}>신고게시판</Button>
     </div>
   );
 };

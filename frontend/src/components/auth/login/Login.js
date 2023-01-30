@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from "react";
-
+import axios from "axios";
 import AuthContext from "../../../store/auth-context";
 import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
@@ -63,11 +63,27 @@ const Login = () => {
         }
       })
       // 요청이 성공적으로 응답하면 (firebase에 정상적으로 로그인)
-      .then((data) => {
+      .then(async (data) => {
         console.log(data);
-        authCtx.login(data.idToken, data.email);
-        navigate("/");
-        
+        try {
+          await axios.post(
+            "http://localhost:3000/api/login",
+            {
+              email: data.email,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${data.idToken}`,
+              },
+            }
+          );
+          authCtx.login(data.idToken, data.email, data.displayName);
+          navigate("/");
+        } catch (err) {
+          console.log(err);
+        }
+        // authCtx.login(data.idToken, data.email, data.displayName);
+        // navigate("/");
       })
       .catch((err) => {
         alert(err.message);

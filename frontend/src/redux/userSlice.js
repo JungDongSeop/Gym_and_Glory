@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   pk: 2,
-  nickname: '동섬'
+  nickname: '동섬',
+  isAdmin: false
 };
 
 const userSlice = createSlice({
@@ -14,10 +15,13 @@ const userSlice = createSlice({
     },
     setUserNickname: (state, action) => {
       state.nickname = action.payload.nickname;
+    },
+    setIsAdmin: (state, action) => {
+      state.isAdmin = action.payload.isAdmin;
     }
   }
 });
 
-export const { setUserPK, setUserNickname } = userSlice.actions;
+export const { setUserPK, setUserNickname, setIsAdmin } = userSlice.actions;
 
 export default userSlice.reducer;

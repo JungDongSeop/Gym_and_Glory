@@ -54,6 +54,7 @@ const Comment = () => {
     });
   }
 
+  // 댓글 좋아요 axios 요청
   const handleGood = async (commentSequence) => {
     try {
       await axios(`/board/comment/good/${user.pk}/${commentSequence}`);

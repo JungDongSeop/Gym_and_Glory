@@ -28,7 +28,6 @@ const Board = () => {
         `http://localhost:8080/board/list/${types[type]}`
       );
       setData(result.data.reverse());
-      // console.log(result.data);
     };
     fetchData();
   }, [type]);
@@ -42,11 +41,6 @@ const Board = () => {
 
   return (
     <main>
-      {/* 게시판 종류 선택. navigate 써서 페이지 갱신하는 게 좋을 듯
-      <Button className={type==='notice'? classes.blue : classes.white} onClick={() => navigate('/board/notice')}>공지사항</Button>
-      <Button className={type==='free'? classes.blue : classes.white} onClick={() => navigate('/board/free')}>자유게시판</Button>
-      <Button className={type==='party'? classes.blue : classes.white} onClick={() => navigate('/board/party')}>팀원 모집</Button>
-      <Button>신고게시판</Button> */}
       <NavigateButtons type={type} />
 
       <br />

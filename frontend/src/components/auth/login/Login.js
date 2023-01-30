@@ -64,7 +64,7 @@ const Login = () => {
       })
       // 요청이 성공적으로 응답하면 (firebase에 정상적으로 로그인)
       .then(async (data) => {
-        console.log("데이터",data);
+        console.log("데이터", data);
         try {
           const response = await axios.post(
             "http://localhost:8080/api/login",
@@ -77,12 +77,7 @@ const Login = () => {
               },
             }
           );
-<<<<<<< HEAD
-          console.log("리스폰스 객체",response);
-=======
-          console.log(response);
-
->>>>>>> 189d5f79d3efa6dd677e09b0c7861d62f4c69d9c
+          console.log("리스폰스 객체", response);
           authCtx.login(data.idToken, data.email, data.displayName);
           navigate("/");
         } catch (err) {

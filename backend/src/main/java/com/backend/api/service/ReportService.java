@@ -25,11 +25,14 @@ public class ReportService {
                 .sendSequence(reportReq.getSendSequence())
                 .getSequence(reportReq.getGetSequence())
                 .kind(reportReq.getKind())
+                .confirmation(0)
                 .contents(reportReq.getContents())
                 .registerTime(String.valueOf(LocalDateTime.now())).build();
         reportRepository.save(report);
     }
 
+
+    //관리자용
     public List<Report> getList() {
         return reportRepository.findAll();
     }
@@ -40,5 +43,15 @@ public class ReportService {
 
     public Report getOne(Integer reportSequence) {
         return reportRepository.findByReportSequence(reportSequence);
+    }
+
+    public List<Report> getListByUser(Integer userSequence) {
+        return reportRepository.findBySendSequence(userSequence);
+    }
+
+    public void confirmReport(Integer reportSequence) {
+        Report report = reportRepository.findByReportSequence(reportSequence);
+        report.setConfirmation(1);
+        reportRepository.save(report);
     }
 }

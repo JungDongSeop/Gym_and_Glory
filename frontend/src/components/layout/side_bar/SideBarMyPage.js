@@ -26,7 +26,7 @@ const SideBar = () => {
         {authCtx}
       </p>
       <p>
-        <Link to="/mypage/dongsum">LV.25 정동섬</Link>
+        <Link to="/mypage">LV.25 정동섬</Link>
       </p>
 
       {/* 뱃지 모달 */}

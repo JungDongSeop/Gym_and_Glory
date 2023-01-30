@@ -21,8 +21,9 @@ public class Comment {
 
     @Column(name = "article_sequence")
     private Integer articleSequence;
+    @Column(name = "user_sequence")
+    private Integer userSequence;
     private String title;
-    private String nickname;
     private String contents;
 
     @Column(name = "good_count")

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from'react-router-dom';
-import Review from './Review';
+import Comment from './Comment';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import axios from 'axios';
 
@@ -39,6 +39,7 @@ const DetailBoard = () => {
   // 게시글 삭제를 위한 axios
   const deleteClick = async () => {
     const result = await axios.delete(`http://localhost:8080/board/${articleSequence}`);
+    console.log(result.data);
     navigate('/board/notice');
   }
 
@@ -62,7 +63,7 @@ const DetailBoard = () => {
       <button onClick={() => deleteClick()}>삭제</button>        
       
       {/* 댓글 */}
-      <Review />
+      <Comment />
     </main>
   );
 };

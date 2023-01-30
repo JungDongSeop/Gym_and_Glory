@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -34,6 +35,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestHeader("Authorization") String authorization, @RequestBody SignUpReq signUpReq) throws UnknownHostException, MessagingException {
         // TOKEN을 가져온다.
+        System.out.println("들어옴ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
         FirebaseToken decodedToken;
         try {
             String token = RequestUtil.getAuthorizationToken(authorization);
@@ -49,19 +51,11 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody SignUpReq signUpReq) throws UnknownHostException, MessagingException {
-        System.out.println("------------------------------------------------------잘하자");
-
-        User user = null;
-        user = userService.findUserByEmail(signUpReq.getEmail());
-
-        if(user.getPassword().equals(signUpReq.getPassword())){
-            return new ResponseEntity(HttpStatus.OK);
-        }
-        else{
-            System.out.println("실패");
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+    public User login(@RequestBody SignUpReq signUpReq, Authentication authentication) throws UnknownHostException, MessagingException {
+        System.out.println("들어오냐 로그인에 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        System.out.println(authentication);
+        User customUser = ((User) authentication.getPrincipal());
+        return customUser;
     }
 
     @GetMapping("/check_email")

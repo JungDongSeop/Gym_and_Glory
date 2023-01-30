@@ -1,6 +1,7 @@
 package com.backend.api.service;
 
 import com.backend.db.entity.BoardGood;
+import com.backend.db.entity.Comment;
 import com.backend.db.entity.CommentGood;
 import com.backend.db.repository.BoardGoodRepository;
 import com.backend.db.repository.CommentGoodRepository;
@@ -13,12 +14,14 @@ public class GoodService {
 
     private BoardGoodRepository boardGoodRepository;
     private CommentGoodRepository commentGoodRepository;
-
+    private CommentRepository commentRepository;
     @Autowired
     public GoodService(BoardGoodRepository boardGoodRepository,
-                       CommentGoodRepository commentGoodRepository) {
+                       CommentGoodRepository commentGoodRepository,
+                       CommentRepository commentRepository) {
         this.boardGoodRepository = boardGoodRepository;
         this.commentGoodRepository = commentGoodRepository;
+        this.commentRepository =   commentRepository;
     }
 
 
@@ -38,6 +41,9 @@ public class GoodService {
 
     public void addGoodComment(Integer userSequence, Integer commentSequence) {
         CommentGood commentGood = new CommentGood(userSequence,commentSequence);
+        Comment comment = commentRepository.findByCommentSequence(commentSequence);
+        comment.setGoodCount(comment.getGoodCount()+1);
+        commentRepository.save(comment);
         commentGoodRepository.save(commentGood);
     }
 }

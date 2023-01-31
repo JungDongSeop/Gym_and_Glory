@@ -53,6 +53,12 @@ public class UserController {
     @PostMapping("/login")
     public User login(@RequestBody SignUpReq signUpReq,@RequestHeader("Authorization") String authorization) throws UnknownHostException, MessagingException {
         System.out.println("들어오냐 로그인에 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+<<<<<<< HEAD
+        System.out.println(authorization);
+
+        User customUser = ((User) authentication.getPrincipal());
+        return customUser;
+=======
         FirebaseToken decodedToken;
         //인증
         try {
@@ -65,6 +71,7 @@ public class UserController {
 
         User user = userService.getFindByEmail(signUpReq.getEmail());
         return user;
+>>>>>>> master
     }
 
     @GetMapping("/check_email")

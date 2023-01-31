@@ -60,12 +60,13 @@ const Login = () => {
           return res.json().then((data) => {
             let errorMessage = "로그인 실패";
             alert(errorMessage);
+            console.log(data);
           });
         }
       })
       // 요청이 성공적으로 응답하면 (firebase에 정상적으로 로그인)
       .then(async (data) => {
-        console.log("데이터", data);
+        console.log("데이터", data.idToken);
         try {
           const response = await axios.post(
             "http://localhost:8080/api/login",
@@ -78,6 +79,7 @@ const Login = () => {
               },
             }
           );
+<<<<<<< HEAD
           console.log("리스폰스 객체", response);
           authCtx.login(
             data.idToken,
@@ -85,6 +87,11 @@ const Login = () => {
             response.nickname,
             response.gender
           );
+=======
+          console.log(response);
+          // console.log("리스폰스 객체", response);
+          // authCtx.login(data.idToken, data.email, data.displayName);
+>>>>>>> 123e38b5283aec1ef30aea72ea70fe5f35cc4f4e
           navigate("/");
         } catch (err) {
           console.log(err);

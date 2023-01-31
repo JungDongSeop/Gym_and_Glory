@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class BackendApplication {
 

@@ -111,4 +111,9 @@ public class UserService {
         cur.setNickname(nickName);
         userRepository.save(cur);
     }
+
+    public List<User> getList(Integer userSequence) {
+        List<User> list = userRepository.findUser(userSequence);
+        return list;
+    }
 }

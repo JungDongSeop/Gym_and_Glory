@@ -50,4 +50,5 @@ public class FriendController {
         List<Friend>list =  friendService.getList(userSequence);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
 }

@@ -27,8 +27,10 @@ public class FriendService {
     }
 
     public void accept(Integer send, Integer get) {
-        Friend friend1 = new Friend(send,get);
-        Friend friend2 = new Friend(get,send);
+
+        Friend friend1 = Friend.builder().sendSequence(send).getSequence(get).build();
+        Friend friend2 = Friend.builder().sendSequence(get).getSequence(send).build();
+
         friendRepository.save(friend1);
         friendRepository.save(friend2);
     }

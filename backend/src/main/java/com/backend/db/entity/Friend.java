@@ -19,6 +19,9 @@ import javax.persistence.Table;
 public class Friend {
 
     @Id
+    @Column(name = "friends_sequence")
+    private Integer friendsSequence;
+
     @Column(name = "send_sequence")
     private Integer sendSequence;
 

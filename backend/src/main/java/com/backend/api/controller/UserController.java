@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.mail.MessagingException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -124,5 +125,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @GetMapping("/list/{userSequence}")
+    public ResponseEntity<?> getList(@PathVariable Integer userSequence){
+        List<User> list =userService.getList(userSequence);
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
 }

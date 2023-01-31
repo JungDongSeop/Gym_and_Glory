@@ -90,4 +90,12 @@ public class UserService {
         User user = userRepository.findByUserSequence(userSequence);
         return user.getNickname();
     }
+
+    public User getOne(Integer userSequence) {
+        return userRepository.findByUserSequence(userSequence);
+    }
+
+    public User getFindByEmail(String email) {
+        return userRepository.findOneByEmail(email);
+    }
 }

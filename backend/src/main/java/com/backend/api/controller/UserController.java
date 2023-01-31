@@ -51,12 +51,27 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public User login(@RequestBody SignUpReq signUpReq, Authentication authentication) throws UnknownHostException, MessagingException {
+    public User login(@RequestBody SignUpReq signUpReq,@RequestHeader("Authorization") String authorization) throws UnknownHostException, MessagingException {
         System.out.println("들어오냐 로그인에 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+<<<<<<< HEAD
         System.out.println(authorization);
 
         User customUser = ((User) authentication.getPrincipal());
         return customUser;
+=======
+        FirebaseToken decodedToken;
+        //인증
+        try {
+            String token = RequestUtil.getAuthorizationToken(authorization);
+            decodedToken = firebaseAuth.verifyIdToken(token);
+        } catch (IllegalArgumentException | FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
+        }
+
+        User user = userService.getFindByEmail(signUpReq.getEmail());
+        return user;
+>>>>>>> master
     }
 
     @GetMapping("/check_email")
@@ -91,6 +106,13 @@ public class UserController {
     @GetMapping("/user/{userSequence}")
     public String getNick(@PathVariable Integer userSequence){
         return userService.getNick(userSequence);
+    }
+
+    @GetMapping("/user/detail/{userSequence}")
+    public ResponseEntity<?> getDetail(@PathVariable Integer userSequence){
+        User user = userService.getOne(userSequence);
+
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
 }

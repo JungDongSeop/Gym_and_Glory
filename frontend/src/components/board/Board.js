@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import NavigateButtons from "./NavigateButtons";
+import UserIdToNickname from "./UserIdToNickname";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import axios from "axios";
 import classes from "./Board.module.css";
@@ -20,14 +21,14 @@ const Board = () => {
 
   // axios 요청을 위한 state
   // data : 게시판 정보가 담긴 변수. 최신 글이 위로 오도록
-  const [data, setData] = useState([]);
+  const [board, setBoard] = useState([]);
   useEffect(() => {
     const types = { 'notice': 1, 'free': 2, 'party': 3 };
     const fetchData = async () => {
       const result = await axios(
         `http://localhost:8080/board/list/${types[type]}`
       );
-      setData(result.data.reverse());
+      setBoard(result.data.reverse());
     };
     fetchData();
   }, [type]);
@@ -56,7 +57,7 @@ const Board = () => {
 
       {/* 게시판 내용 */}
       <ul className={classes.boardUl}>
-        {data
+        {board
           .slice(currentPage * 10 - 10, currentPage * 10)
           .map((item, index) => (
             <li
@@ -67,7 +68,7 @@ const Board = () => {
               {/* 제목 */}
               <div>{item.title}</div>
               {/* 작성자 */}
-              <div>작성자 : {item.userSequence}</div>
+              <div>작성자 : <UserIdToNickname userId={item.userSequence} /></div>
               {/* 기타 정보 */}
               <div>
                 ❤{item.goodCount}
@@ -83,7 +84,7 @@ const Board = () => {
         className={classes.pagination}
         current={currentPage}
         onChange={onChangePage}
-        total={Object.keys(data).length}
+        total={Object.keys(board).length}
       />
     </main>
   );

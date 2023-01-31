@@ -37,6 +37,28 @@ const Signup = () => {
     setGenderValue(e.target.value);
     console.log(genderValue);
   };
+
+  // 이메일 유효성 검사를 통과해야하고 중복검사를 반드시 실행해야 한다.
+  const checkEmailHandler = () => {
+    const checkEmail = emailInputRef.current.value;
+    fetch("http://localhost:8080/api/check_nickname", {
+      method: "GET",
+      body: JSON.stringify({
+        email: checkEmail,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        console.log("사용가능한 닉네임입니다.");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("이미 사용중인 닉네임입니다.");
+      });
+  };
   const submitHandler = (event) => {
     event.preventDefault();
 
@@ -123,6 +145,7 @@ const Signup = () => {
             placeholder="example@example.com"
             ref={emailInputRef}
           />
+          <button onClick={checkEmailHandler}>중복확인</button>
         </div>
         {/* 1차 비밀번호 입력 */}
         <div className={classes.control}>

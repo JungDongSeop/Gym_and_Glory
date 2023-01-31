@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from'react-router-dom';
+import { useParams, useNavigate } from'react-router-dom';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import axios from 'axios';
 
 const ReportBoardDetail = () => {
+  // url 이동을 위한 함수
+  const navigate = useNavigate();
+
   // redux에서 user 정보를 받아오기
   const isAdmin = useSelector((state) => state.user.isAdmin);
+  const userSequence = useSelector((state) => state.user.pk);
 
   // URL의 params를 쓰기 위한 state
   const { reportSequence } = useParams();
@@ -23,24 +27,37 @@ const ReportBoardDetail = () => {
     fetchData();
   }, [reportSequence]);
 
+  // 게시글 삭제를 위한 axios 요청
+  const deleteClick = async () => {
+    await axios.delete(`http://localhost:8080/report/${reportSequence}`);
+    alert('삭제되었습니다')
+    navigate('/board/report');
+  }  
+
   // 컴포넌트 표시
   return (
     <main>
+      {/* 관리자에겐 신고 확인 버튼을, 사용자에겐 삭제 버튼을 */}
       {isAdmin ? (
         <div>
+          <h1>관리자에게 보이는 신고내역</h1>
           <p>from : {data.sendSequence}, to : {data.getSequence}</p>
-          <p>
-          내용 : {data.contents}
-          </p>
+          <p>내용 : {data.contents}</p>
+
+          {/* 관리자에겐 신고 확인 버튼 */}
           <button>
             확인 완료
           </button>
         </div>
-      ) : (
-        <div>
-          관리자가 아니군요
-        </div>
-      )}
+      ) : ( userSequence === data.sendSequence ? (
+            <div>
+              <h1>유저님이 신고한 내역입니다.</h1>
+              <p>from : {data.sendSequence}, to : {data.getSequence}</p>
+              <p>내용 : {data.contents}</p>
+              <button onClick={() => deleteClick()}>삭제</button>        
+            </div>
+       ) : <div></div> )
+      }
     </main>
   );
 };

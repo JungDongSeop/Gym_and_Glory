@@ -94,4 +94,8 @@ public class UserService {
     public User getOne(Integer userSequence) {
         return userRepository.findByUserSequence(userSequence);
     }
+
+    public User getFindByEmail(String email) {
+        return userRepository.findOneByEmail(email);
+    }
 }

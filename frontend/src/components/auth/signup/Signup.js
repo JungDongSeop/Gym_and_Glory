@@ -41,11 +41,8 @@ const Signup = () => {
   // 이메일 유효성 검사를 통과해야하고 중복검사를 반드시 실행해야 한다.
   const checkEmailHandler = () => {
     const checkEmail = emailInputRef.current.value;
-    fetch("http://localhost:8080/api/check_email", {
-      method: "POST",
-      body: JSON.stringify({
-        email: checkEmail,
-      }),
+    fetch(`http://localhost:8080/api/check_email?email=${checkEmail}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },

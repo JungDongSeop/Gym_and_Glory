@@ -40,7 +40,13 @@
 }
 
 .even {
-  background-color: gray;
+  background-color: rgb(187, 187, 187);
+}
+
+.confirm {
+  cursor: default;
+  color: rgb(109, 109, 109);
+  font-weight: bold;
 }
 
 .pagination {

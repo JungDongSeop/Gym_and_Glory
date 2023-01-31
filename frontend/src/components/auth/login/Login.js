@@ -1,5 +1,6 @@
 import { useState, useRef, useContext } from "react";
 import axios from "axios";
+
 import AuthContext from "../../../store/auth-context";
 import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
@@ -78,7 +79,12 @@ const Login = () => {
             }
           );
           console.log("리스폰스 객체", response);
-          // authCtx.login(data.idToken, data.email, data.displayName);
+          authCtx.login(
+            data.idToken,
+            response.email,
+            response.nickname,
+            response.gender
+          );
           navigate("/");
         } catch (err) {
           console.log(err);

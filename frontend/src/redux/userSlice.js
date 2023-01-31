@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  pk: 3,
+  pk: 1,
   nickname: '동섬',
   isAdmin: false
 };

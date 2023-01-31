@@ -79,7 +79,6 @@ const Login = () => {
               },
             }
           );
-<<<<<<< HEAD
           console.log("리스폰스 객체", response);
           authCtx.login(
             data.idToken,
@@ -87,11 +86,7 @@ const Login = () => {
             response.nickname,
             response.gender
           );
-=======
-          console.log(response);
-          // console.log("리스폰스 객체", response);
-          // authCtx.login(data.idToken, data.email, data.displayName);
->>>>>>> 123e38b5283aec1ef30aea72ea70fe5f35cc4f4e
+
           navigate("/");
         } catch (err) {
           console.log(err);

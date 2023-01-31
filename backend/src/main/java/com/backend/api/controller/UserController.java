@@ -73,10 +73,10 @@ public class UserController {
     public ResponseEntity<?> check_email(@RequestParam String email){
         boolean flag= userService.checkDuplicateEmail(email);
         if(flag){
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("중복X",HttpStatus.OK);
         }else{
             System.out.println("실패");
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity("중복O",HttpStatus.OK);
         }
     }
 
@@ -84,12 +84,10 @@ public class UserController {
     public ResponseEntity<?> check_nickname(@RequestParam String nickname){
         boolean flag= userService.checkDuplicateNickname(nickname);
         if(flag){
-
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-
+            return new ResponseEntity("중복X",HttpStatus.OK);
         }else{
             System.out.println("실패");
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity("중복O",HttpStatus.OK);
         }
     }
 

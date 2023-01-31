@@ -68,23 +68,26 @@ public class UserController {
     }
 
     @GetMapping("/check_email")
-    public ResponseEntity<?> check_email(@RequestParam(required = true) String email){
+    public ResponseEntity<?> check_email(@RequestBody(required = true) String email){
         boolean flag= userService.checkDuplicateEmail(email);
         if(flag){
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }else{
-            return new ResponseEntity(HttpStatus.ACCEPTED);
+            System.out.println("실패");
+            return new ResponseEntity(HttpStatus.OK);
         }
     }
 
     @GetMapping("/check_nickname")
-    public ResponseEntity<?> check_nickname(@RequestParam(required = true) String nickname){
+    public ResponseEntity<?> check_nickname(@RequestBody(required = true) String nickname){
         boolean flag= userService.checkDuplicateNickname(nickname);
         if(flag){
-            return new ResponseEntity(HttpStatus.OK);
+
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
         }else{
             System.out.println("실패");
-            return new ResponseEntity(HttpStatus.ACCEPTED);
+            return new ResponseEntity(HttpStatus.OK);
         }
     }
 

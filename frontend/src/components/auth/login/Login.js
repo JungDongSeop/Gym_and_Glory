@@ -73,12 +73,12 @@ const Login = () => {
             },
             {
               headers: {
-                authentication: `Bearer ${data.idToken}`,
+                Authorization: `Bearer ${data.idToken}`,
               },
             }
           );
           console.log("리스폰스 객체", response);
-          authCtx.login(data.idToken, data.email, data.displayName);
+          // authCtx.login(data.idToken, data.email, data.displayName);
           navigate("/");
         } catch (err) {
           console.log(err);

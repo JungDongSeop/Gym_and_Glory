@@ -103,4 +103,12 @@ public class UserService {
     public User FindByNick(String nickname) {
         return  userRepository.findByNickname(nickname);
     }
+
+    public void changeNick(Integer userSequence, String nickName) {
+        User cur = userRepository.findByUserSequence(userSequence);
+        System.out.println(userSequence);
+        System.out.println(nickName);
+        cur.setNickname(nickName);
+        userRepository.save(cur);
+    }
 }

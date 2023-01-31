@@ -1,5 +1,6 @@
 package com.backend.api.controller;
 
+import com.backend.api.request.ChangeNickReq;
 import com.backend.api.request.SignUpReq;
 import com.backend.api.service.UserService;
 import com.backend.db.entity.User;
@@ -116,5 +117,12 @@ public class UserController {
         User user = userService.FindByNick(nickname);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PutMapping("/user/modify/nickname")
+    public ResponseEntity<?> modifyNick(@RequestBody ChangeNickReq changeNickReq){
+        userService.changeNick(changeNickReq.getUserSequence(), changeNickReq.getNickName());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

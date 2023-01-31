@@ -20,15 +20,16 @@ const Signup = () => {
   const navigate = useNavigate();
   const [genderValue, setGenderValue] = useState("");
 
-  // 입력한 아이디 비밀번호값 확인
+  // 중복검사해서 중복되지 않으면 true로 바꾸어 준다.
+  // const [emailvalidator, setEmailvalidator] = useState(false);
+  // const [nicknamevalidator, setNicknamevalidator] = useState(false);
+
+  // 입력한 내용 확인
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const passwordCheckInputRef = useRef();
   const nicknameInputRef = useRef();
   const phoneNumberInputRef = useRef();
-
-  // 유효한 닉네임 확인
-  // const [isValidNickname, setIsValidNickname] = useState(false);
 
   // api요청 보낼 때 응답 대기
   const [isLoading, setIsLoading] = useState(false);
@@ -39,23 +40,20 @@ const Signup = () => {
   };
 
   // 이메일 유효성 검사를 통과해야하고 중복검사를 반드시 실행해야 한다.
-  const checkEmailHandler = () => {
-    const checkEmail = emailInputRef.current.value;
-    fetch(`http://localhost:8080/api/check_email?email=${checkEmail}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        console.log("사용가능한 닉네임입니다.");
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("이미 사용중인 닉네임입니다.");
-      });
-  };
+  // const checkEmailHandler = async () => {
+  //   const checkEmail = emailInputRef.current.value;
+  //   const response = await axios.get(
+  //     `http://localhost:8080/api/check_email?email=${checkEmail}`
+  //   );
+  //   console.log(response);
+  //   if (response.data === "중복X") {
+  //     alert("사용 가능한 이메일입니다.");
+  //     setEmailvalidator(true);
+  //   } else {
+  //     alert("이미 사용중인 이메일입니다.");
+  //     emailInputRef.current.value = "";
+  //   }
+  // };
   const submitHandler = (event) => {
     event.preventDefault();
 
@@ -142,7 +140,7 @@ const Signup = () => {
             placeholder="example@example.com"
             ref={emailInputRef}
           />
-          <button onClick={checkEmailHandler}>중복확인</button>
+          {/* <button onClick={checkEmailHandler}>중복확인</button> */}
         </div>
         {/* 1차 비밀번호 입력 */}
         <div className={classes.control}>
@@ -212,38 +210,6 @@ const Signup = () => {
         </div>
       </form>
     </section>
-    // <div className={classes.whiteBox}>
-    //   <img className={classes.logoSmall} src={Logo} alt="logo-small" />
-    //   <br />
-    //   <input
-    //     className={classes.inputText}
-    //     type="text"
-    //     placeholder="아이디(e-mail)"
-    //   />
-    //   <br />
-    //   <input
-    //     className={classes.inputText}
-    //     type="password"
-    //     placeholder="비밀번호"
-    //   />
-    //   <br />
-    //   <input
-    //     className={classes.inputText}
-    //     type="password"
-    //     placeholder="비밀번호 확인"
-    //   />
-    //   <br />
-    //   <input className={classes.inputText} type="text" placeholder="닉네임" />
-    //   <br />
-    //   <div class="gender-checkbox">
-    //     <input type="radio" id="male" name="gender" value="male" />
-    //     <label for="male">남</label>
-
-    //     <input type="radio" id="female" name="gender" value="female" />
-    //     <label for="female">여</label>
-    //   </div>
-    //   <Button onClick={() => navigate("/login")}>회원가입</Button>
-    // </div>
   );
 };
 

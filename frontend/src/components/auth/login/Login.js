@@ -80,14 +80,16 @@ const Login = () => {
             }
           );
           console.log("리스폰스 객체", response);
+          // console.log(response.data.email);
           authCtx.login(
             data.idToken,
-            response.email,
-            response.nickname,
-            response.gender
+            response.data.userSequence,
+            response.data.email,
+            response.data.nickname,
+            response.data.gender
           );
-
           navigate("/");
+          console.log(authCtx);
         } catch (err) {
           console.log(err);
         }

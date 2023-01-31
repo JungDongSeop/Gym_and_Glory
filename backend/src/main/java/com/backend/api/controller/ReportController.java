@@ -15,6 +15,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/report")
+@CrossOrigin("*")
 public class ReportController {
 
     private ReportService reportService;

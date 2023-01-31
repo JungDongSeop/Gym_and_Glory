@@ -53,6 +53,8 @@ public class UserController {
     @PostMapping("/login")
     public User login(@RequestBody SignUpReq signUpReq,@RequestHeader("Authorization") String authorization) throws UnknownHostException, MessagingException {
         System.out.println("들어오냐 로그인에 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        System.out.println(authorization);
+
         FirebaseToken decodedToken;
         //인증
         try {
@@ -68,23 +70,24 @@ public class UserController {
     }
 
     @GetMapping("/check_email")
-    public ResponseEntity<?> check_email(@RequestParam(required = true) String email){
+    public ResponseEntity<?> check_email(@RequestParam String email){
         boolean flag= userService.checkDuplicateEmail(email);
         if(flag){
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity("중복X",HttpStatus.OK);
         }else{
-            return new ResponseEntity(HttpStatus.ACCEPTED);
+            System.out.println("실패");
+            return new ResponseEntity("중복O",HttpStatus.OK);
         }
     }
 
     @GetMapping("/check_nickname")
-    public ResponseEntity<?> check_nickname(@RequestParam(required = true) String nickname){
+    public ResponseEntity<?> check_nickname(@RequestParam String nickname){
         boolean flag= userService.checkDuplicateNickname(nickname);
         if(flag){
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity("중복X",HttpStatus.OK);
         }else{
             System.out.println("실패");
-            return new ResponseEntity(HttpStatus.ACCEPTED);
+            return new ResponseEntity("중복O",HttpStatus.OK);
         }
     }
 
@@ -106,6 +109,12 @@ public class UserController {
         User user = userService.getOne(userSequence);
 
         return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
+    @GetMapping("/user/getInfo/{nickname}")
+    public ResponseEntity<?> getInfoByNic(@PathVariable String  nickname){
+        User user = userService.FindByNick(nickname);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }

@@ -6,6 +6,7 @@ import com.backend.db.entity.User;
 import com.backend.db.repository.UserRepository;
 import com.backend.util.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -97,5 +98,9 @@ public class UserService {
 
     public User getFindByEmail(String email) {
         return userRepository.findOneByEmail(email);
+    }
+
+    public User FindByNick(String nickname) {
+        return  userRepository.findByNickname(nickname);
     }
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const AuthContext = React.createContext({
   token: "",
+  userSequence: 0,
   email: "",
   nickname: "",
   gender: "",
@@ -13,10 +14,12 @@ const AuthContext = React.createContext({
 export const AuthContextProvider = (props) => {
   const initialToken = localStorage.getItem("token");
   const initialEmail = localStorage.getItem("email");
+  const initialUserSequence = localStorage.getItem("userSequence");
   const initialNickname = localStorage.getItem("nickname");
   const initialGender = localStorage.getItem("gender");
 
   const [token, setToken] = useState(initialToken);
+  const [userSequence, setUserSequence] = useState(initialUserSequence);
   const [email, setEmail] = useState(initialEmail);
   const [nickname, setNickname] = useState(initialNickname);
   const [gender, setGender] = useState(initialGender);
@@ -24,9 +27,10 @@ export const AuthContextProvider = (props) => {
   // 로그인 여부 (토큰 여부)
   const userIsLoggedIn = !!token;
 
-  const loginHandler = (token, email, nickname, gender) => {
+  const loginHandler = (token, userSequence, email, nickname, gender) => {
     // 로그인 할 때는 토큰을 인자로 받아 저장
     setToken(token);
+    setUserSequence(userSequence);
     setEmail(email);
     setNickname(nickname);
 
@@ -48,9 +52,11 @@ export const AuthContextProvider = (props) => {
     setEmail("");
     setNickname("");
     setGender("");
+    setUserSequence(0);
 
     localStorage.removeItem("token");
     localStorage.removeItem("email");
+    localStorage.removeItem("userSequence");
     localStorage.removeItem("nickname");
     localStorage.removeItem("gender");
   };
@@ -58,6 +64,7 @@ export const AuthContextProvider = (props) => {
   const contextValue = {
     token: token,
     email: email,
+    userSequence: userSequence,
     nickname: nickname,
     gender: gender,
     isLoggedIn: userIsLoggedIn,

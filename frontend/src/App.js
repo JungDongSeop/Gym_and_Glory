@@ -22,6 +22,7 @@ import "./App.css";
 
 function App() {
   const authCtx = useContext(AuthContext);
+  console.log(authCtx);
 
   return (
     <div>

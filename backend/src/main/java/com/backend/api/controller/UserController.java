@@ -92,4 +92,11 @@ public class UserController {
         return userService.getNick(userSequence);
     }
 
+    @GetMapping("/user/detail/{userSequence}")
+    public ResponseEntity<?> getDetail(@PathVariable Integer userSequence){
+        User user = userService.getOne(userSequence);
+
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
 }

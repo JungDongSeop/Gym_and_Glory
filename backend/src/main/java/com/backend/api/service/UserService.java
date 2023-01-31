@@ -90,4 +90,8 @@ public class UserService {
         User user = userRepository.findByUserSequence(userSequence);
         return user.getNickname();
     }
+
+    public User getOne(Integer userSequence) {
+        return userRepository.findByUserSequence(userSequence);
+    }
 }

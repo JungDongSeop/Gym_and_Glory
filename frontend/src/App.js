@@ -46,13 +46,19 @@ function App() {
           <Route path="/board/report" element={<ReportBoard />} />
         )}
         {authCtx.isLoggedIn && (
-          <Route path="/board/report/:reportSequence" element={<ReportBoardDetail />} />
+          <Route
+            path="/board/report/:reportSequence"
+            element={<ReportBoardDetail />}
+          />
         )}
         {authCtx.isLoggedIn && (
           <Route path="/board/:type/create" element={<CreateBoard />} />
         )}
         {authCtx.isLoggedIn && (
-          <Route path="/board/:type/update/:articleSequence" element={<UpdateBoard />} />
+          <Route
+            path="/board/:type/update/:articleSequence"
+            element={<UpdateBoard />}
+          />
         )}
         {authCtx.isLoggedIn && (
           <Route

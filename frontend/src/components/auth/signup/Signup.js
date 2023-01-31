@@ -25,6 +25,7 @@ const Signup = () => {
   const passwordInputRef = useRef();
   const passwordCheckInputRef = useRef();
   const nicknameInputRef = useRef();
+  const phoneNumberInputRef = useRef();
 
   // 유효한 닉네임 확인
   // const [isValidNickname, setIsValidNickname] = useState(false);
@@ -43,6 +44,7 @@ const Signup = () => {
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
     const enteredNickname = nicknameInputRef.current.value;
+    const enteredPhoneNumber = phoneNumberInputRef.current.value;
 
     // 유효성 검증 추가 할 수 있음
 
@@ -79,7 +81,7 @@ const Signup = () => {
         }
       })
       .then(async (data) => {
-        console.log(data,'hjjkkj');
+        console.log(data, "hjjkkj");
         try {
           await axios.post(
             "http://localhost:8080/api/signup",
@@ -87,6 +89,7 @@ const Signup = () => {
               email: data.email,
               nickname: enteredNickname,
               gender: genderValue,
+              phoneNumber: enteredPhoneNumber,
             },
             {
               headers: {
@@ -141,7 +144,11 @@ const Signup = () => {
             ref={passwordCheckInputRef}
           />
         </div>
-
+        {/* 전화번호 */}
+        <div className={classes.contorl}>
+          <label htmlFor="phone">전화번호</label>
+          <input type="tel" id="phone" ref={phoneNumberInputRef} />
+        </div>
         {/* 닉네임 */}
         <div>
           <div className={classes.control}>

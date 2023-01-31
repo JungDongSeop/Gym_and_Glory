@@ -78,7 +78,12 @@ const Login = () => {
             }
           );
           console.log("리스폰스 객체", response);
-          // authCtx.login(data.idToken, data.email, data.displayName);
+          authCtx.login(
+            data.idToken,
+            response.email,
+            response.nickname,
+            response.gender
+          );
           navigate("/");
         } catch (err) {
           console.log(err);

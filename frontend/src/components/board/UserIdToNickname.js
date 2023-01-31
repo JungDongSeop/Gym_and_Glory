@@ -3,14 +3,20 @@ import axios from "axios";
 
 const UserIdToNickname = (props) => {
   const [nickname, setNickname] = useState("");
+  const userId = props.userId
 
   useEffect(() => {
     axios
-      .get(`https://localhost8080/api/user/${props.userId}`)
+      .get(`http://localhost:8080/api/user/detail/${userId}`)
       .then((res) => {
+        console.log(res.data);
+
         setNickname(res.data.nickname);
+      })
+      .catch((err) => {
+        console.log(err)
       });
-  }, [props.userId]);
+  }, [userId]);
 
   return <span>{nickname}</span>;
 };

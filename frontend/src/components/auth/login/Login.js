@@ -79,7 +79,7 @@ const Login = () => {
               },
             }
           );
-          console.log("리스폰스 객체", response);
+          // console.log("리스폰스 객체", response);
           // console.log(response.data.email);
           authCtx.login(
             data.idToken,

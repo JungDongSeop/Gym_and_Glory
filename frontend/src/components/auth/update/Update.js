@@ -1,4 +1,6 @@
+// import axios from "axios";
 import React, { useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import AuthContext from "../../../store/auth-context";
 import WithNavBarAndSideBar from "../../layout/WithNavBarAndSideBar";
@@ -11,6 +13,7 @@ const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
 
 const Update = () => {
+  const navigate = useNavigate();
   // const user = {
   //   name: "홍길동",
   //   age: 20,
@@ -33,46 +36,39 @@ const Update = () => {
     fetch(URL, {
       method: "POST",
       body: JSON.stringify({
-        idToken: authCtx.idToken,
+        idToken: authCtx.token,
         password: enteredNewPassword,
         returnSecureToken: true,
       }),
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => {});
+    }).then((res) => {
+      console.log(res);
+      if (res.ok) {
+        return res.json();
+      } else {
+        return res.json().then((err) => {
+          let errorMessage = "실패";
+          console.log(errorMessage);
+        });
+      }
+    });
+    alert("비밀번호 변경이 완료되었습니다. 다시 로그인 해주세요");
+    authCtx.logout();
+    navigate("/login");
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div>
-        <label htmlFor="new-password">새 비밀번호</label>
-        <input type="password" id="new-password" ref={newPasswordInputRef} />
-      </div>
-    </form>
-    // <main>
-    //   <form onSubmit={handleSubmit}>
-    //     <label>
-    //       Name:
-    //       <input
-    //         type="text"
-    //         value={name}
-    //         onChange={(e) => setName(e.target.value)}
-    //       />
-    //     </label>
-    //     <br />
-    //     <label>
-    //       Email:
-    //       <input
-    //         type="email"
-    //         value={email}
-    //         onChange={(e) => setEmail(e.target.value)}
-    //       />
-    //     </label>
-    //     <br />
-    //     <button type="submit">Save</button>
-    //   </form>
-    // </main>
+    <main>
+      <form onSubmit={submitHandler}>
+        <div>
+          <label htmlFor="new-password">새 비밀번호</label>
+          <input type="password" id="new-password" ref={newPasswordInputRef} />
+          <input type="submit" />
+        </div>
+      </form>
+    </main>
   );
 };
 

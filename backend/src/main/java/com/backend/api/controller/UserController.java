@@ -53,7 +53,8 @@ public class UserController {
     @PostMapping("/login")
     public User login(@RequestBody SignUpReq signUpReq, Authentication authentication) throws UnknownHostException, MessagingException {
         System.out.println("들어오냐 로그인에 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-        System.out.println(authentication);
+        System.out.println(authorization);
+
         User customUser = ((User) authentication.getPrincipal());
         return customUser;
     }

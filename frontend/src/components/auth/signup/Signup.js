@@ -79,7 +79,7 @@ const Signup = () => {
         }
       })
       .then(async (data) => {
-        console.log(data,'hjjkkj');
+        console.log(data, "hjjkkj");
         try {
           await axios.post(
             "http://localhost:8080/api/signup",

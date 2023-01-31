@@ -108,4 +108,10 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
+    @GetMapping("/user/getInfo/{nickname}")
+    public ResponseEntity<?> getInfoByNic(@PathVariable String  nickname){
+        User user = userService.FindByNick(nickname);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 }

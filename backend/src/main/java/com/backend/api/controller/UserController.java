@@ -51,11 +51,20 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public User login(@RequestBody SignUpReq signUpReq, Authentication authentication) throws UnknownHostException, MessagingException {
+    public User login(@RequestBody SignUpReq signUpReq,@RequestHeader("Authorization") String authorization) throws UnknownHostException, MessagingException {
         System.out.println("들어오냐 로그인에 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-        System.out.println(authentication);
-        User customUser = ((User) authentication.getPrincipal());
-        return customUser;
+        FirebaseToken decodedToken;
+        //인증
+        try {
+            String token = RequestUtil.getAuthorizationToken(authorization);
+            decodedToken = firebaseAuth.verifyIdToken(token);
+        } catch (IllegalArgumentException | FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
+        }
+
+        User user = userService.getFindByEmail(signUpReq.getEmail());
+        return user;
     }
 
     @GetMapping("/check_email")

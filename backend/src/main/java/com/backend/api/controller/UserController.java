@@ -134,6 +134,9 @@ public class UserController {
     @PostMapping("/cross_check")
     public ResponseEntity<?> passwordReset(@RequestBody TelEmailReq telEmailReq){
         boolean flag = userService.crossCheck(telEmailReq);
-        return new ResponseEntity<>(flag,HttpStatus.OK);
+        if(flag==true)
+            return new ResponseEntity<>(HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

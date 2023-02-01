@@ -29,7 +29,7 @@ const Signup = () => {
   const passwordInputRef = useRef();
   const passwordCheckInputRef = useRef();
   const nicknameInputRef = useRef();
-  // const phoneNumberInputRef = useRef();
+  const phoneInputRef = useRef();
 
   // api요청 보낼 때 응답 대기
   const [isLoading, setIsLoading] = useState(false);
@@ -64,7 +64,7 @@ const Signup = () => {
     const enteredPassword = passwordInputRef.current.value;
     const enteredPasswordCheck = passwordCheckInputRef.current.value;
     const enteredNickname = nicknameInputRef.current.value;
-    // const enteredPhoneNumber = phoneNumberInputRef.current.value;
+    const enteredPhone = phoneInputRef.current.value;
 
     // 유효성 검증 추가 할 수 있음
     if (enteredPassword !== enteredPasswordCheck || emailvalidator === false) {
@@ -112,7 +112,7 @@ const Signup = () => {
                 email: data.email,
                 nickname: enteredNickname,
                 gender: genderValue,
-                // phoneNumber: enteredPhoneNumber,
+                telNumber: enteredPhone,
               },
               {
                 headers: {
@@ -131,6 +131,7 @@ const Signup = () => {
           alert(err.message);
         });
     }
+    console.log(enteredPhone);
   };
   return (
     <section className={classes.whiteBox}>
@@ -175,6 +176,13 @@ const Signup = () => {
           <div className={classes.control}>
             <label htmlFor="nickname">닉네임</label>
             <input type="text" id="nickname" required ref={nicknameInputRef} />
+          </div>
+        </div>
+        {/* 전화번호 */}
+        <div>
+          <div className={classes.control}>
+            <label htmlFor="phone">전화번호</label>
+            <input type="tel" id="phone" required ref={phoneInputRef} />
           </div>
         </div>
 

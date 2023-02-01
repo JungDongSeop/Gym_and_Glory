@@ -21,7 +21,7 @@ const Signup = () => {
   const [genderValue, setGenderValue] = useState("");
 
   // 중복검사해서 중복되지 않으면 true로 바꾸어 준다.
-  // const [emailvalidator, setEmailvalidator] = useState(false);
+  const [emailvalidator, setEmailvalidator] = useState(false);
   // const [nicknamevalidator, setNicknamevalidator] = useState(false);
 
   // 입력한 내용 확인
@@ -40,20 +40,21 @@ const Signup = () => {
   };
 
   // 이메일 유효성 검사를 통과해야하고 중복검사를 반드시 실행해야 한다.
-  // const checkEmailHandler = async () => {
-  //   const checkEmail = emailInputRef.current.value;
-  //   const response = await axios.get(
-  //     `http://localhost:8080/api/check_email?email=${checkEmail}`
-  //   );
-  //   console.log(response);
-  //   if (response.data === "중복X") {
-  //     alert("사용 가능한 이메일입니다.");
-  //     setEmailvalidator(true);
-  //   } else {
-  //     alert("이미 사용중인 이메일입니다.");
-  //     emailInputRef.current.value = "";
-  //   }
-  // };
+  const checkEmailHandler = async () => {
+    const checkEmail = emailInputRef.current.value;
+    const response = await axios.get(
+      `http://localhost:8080/api/check_email?email=${checkEmail}`
+    );
+    console.log(response);
+    if (response.data === "중복X") {
+      alert("사용 가능한 이메일입니다.");
+      setEmailvalidator(true);
+    } else {
+      alert("이미 사용중인 이메일입니다.");
+      setEmailvalidator(false);
+      emailInputRef.current.value = "";
+    }
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -66,8 +67,8 @@ const Signup = () => {
     // const enteredPhoneNumber = phoneNumberInputRef.current.value;
 
     // 유효성 검증 추가 할 수 있음
-    if (enteredPassword !== enteredPasswordCheck) {
-      alert("비밀번호가 일치하지 않습니다.");
+    if (enteredPassword !== enteredPasswordCheck || emailvalidator === false) {
+      alert("다시 확인 후 회원가입을 진행해주세요");
       passwordCheckInputRef.current.value = "";
     } else {
       // 회원가입 api요청 보내기
@@ -146,7 +147,7 @@ const Signup = () => {
             placeholder="example@example.com"
             ref={emailInputRef}
           />
-          {/* <button onClick={checkEmailHandler}>중복확인</button> */}
+          <button onClick={checkEmailHandler}>중복확인</button>
         </div>
         {/* 1차 비밀번호 입력 */}
         <div className={classes.control}>

@@ -29,7 +29,7 @@ const Signup = () => {
   const passwordInputRef = useRef();
   const passwordCheckInputRef = useRef();
   const nicknameInputRef = useRef();
-  const phoneNumberInputRef = useRef();
+  // const phoneNumberInputRef = useRef();
 
   // api요청 보낼 때 응답 대기
   const [isLoading, setIsLoading] = useState(false);
@@ -54,76 +54,82 @@ const Signup = () => {
   //     emailInputRef.current.value = "";
   //   }
   // };
+
   const submitHandler = (event) => {
     event.preventDefault();
 
     // useRef 이용하여 입력 데이터 가져오기
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
+    const enteredPasswordCheck = passwordCheckInputRef.current.value;
     const enteredNickname = nicknameInputRef.current.value;
-    const enteredPhoneNumber = phoneNumberInputRef.current.value;
+    // const enteredPhoneNumber = phoneNumberInputRef.current.value;
 
     // 유효성 검증 추가 할 수 있음
+    if (enteredPassword !== enteredPasswordCheck) {
+      alert("비밀번호가 일치하지 않습니다.");
+      passwordCheckInputRef.current.value = "";
+    } else {
+      // 회원가입 api요청 보내기
+      setIsLoading(true);
 
-    // 회원가입 api요청 보내기
-    setIsLoading(true);
-
-    fetch(URL, {
-      method: "POST",
-      // json 형태로 넘겨줘야하고 email과 아이디를 넘겨준다. 추후 닉네임, 성별도 추가 예정
-      body: JSON.stringify({
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      // 응답이 성공적이라면
-      .then((res) => {
-        // 로딩상태 제거
-        setIsLoading(false);
-        if (res.ok) {
-          // ...
-          // console.log("회원가입 성공");
-          // console.log(res)
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            // 오류 모달 띄워야 한다.
-            let errorMessage = "다시 확인후 회원가입을 진행해주세요.";
-            throw new Error(errorMessage);
-          });
-        }
+      fetch(URL, {
+        method: "POST",
+        // json 형태로 넘겨줘야하고 email과 아이디를 넘겨준다. 추후 닉네임, 성별도 추가 예정
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .then(async (data) => {
-        console.log(data, "hjjkkj");
-        try {
-          await axios.post(
-            "http://localhost:8080/api/signup",
-            {
-              email: data.email,
-              nickname: enteredNickname,
-              gender: genderValue,
-              phoneNumber: enteredPhoneNumber,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${data.idToken}`,
+        // 응답이 성공적이라면
+        .then((res) => {
+          // 로딩상태 제거
+          setIsLoading(false);
+          if (res.ok) {
+            // ...
+            // console.log("회원가입 성공");
+            // console.log(res)
+            return res.json();
+          } else {
+            return res.json().then((data) => {
+              // 오류 모달 띄워야 한다.
+              let errorMessage = "다시 확인후 회원가입을 진행해주세요.";
+              throw new Error(errorMessage);
+            });
+          }
+        })
+        .then(async (data) => {
+          console.log(data, "hjjkkj");
+          try {
+            await axios.post(
+              "http://localhost:8080/api/signup",
+              {
+                email: data.email,
+                nickname: enteredNickname,
+                gender: genderValue,
+                // phoneNumber: enteredPhoneNumber,
               },
-            }
-          );
-          alert("성공적으로 회원가입이 완료되었습니다.");
-          navigate("/login");
-        } catch (err) {
-          console.log(err);
-        }
-      })
+              {
+                headers: {
+                  Authorization: `Bearer ${data.idToken}`,
+                },
+              }
+            );
+            alert("성공적으로 회원가입이 완료되었습니다.");
+            navigate("/login");
+          } catch (err) {
+            console.log(err);
+          }
+        })
 
-      .catch((err) => {
-        alert(err.message);
-      });
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
   };
   return (
     <section className={classes.whiteBox}>
@@ -162,11 +168,7 @@ const Signup = () => {
             ref={passwordCheckInputRef}
           />
         </div>
-        {/* 전화번호 */}
-        <div className={classes.contorl}>
-          <label htmlFor="phone">전화번호</label>
-          <input type="tel" id="phone" ref={phoneNumberInputRef} />
-        </div>
+
         {/* 닉네임 */}
         <div>
           <div className={classes.control}>

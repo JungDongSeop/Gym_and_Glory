@@ -25,6 +25,7 @@ const FindPwd = () => {
     // 가입한 이메일인지 확인하는 작업
     // 만약 가입안한 이메일이거나 유효성검증에서 탈락했다면 다시 입력
     setIsLoading(true);
+    console.log(isLoading);
     fetch(URL, {
       method: "POST",
       body: JSON.stringify({

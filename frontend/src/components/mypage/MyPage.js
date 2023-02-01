@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
+import ExerciseGrass from './ExerciseGrass';
 import ExerciseGraph from './ExerciseGraph';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import classes from './MyPage.module.css';
@@ -22,6 +23,8 @@ const MyPage = () => {
         <div>
           <h2>유저 pk : {authCtx.userSequence}</h2>
           <p>유저 닉네임 : {authCtx.nickname}</p>
+          {/* 잔디 */}
+          <ExerciseGrass /> 
           {/* 운동 통계 */}
           <div className={classes.graphWrap}>
             <button onClick={() => setExerciseData(1)}>스쿼트</button>

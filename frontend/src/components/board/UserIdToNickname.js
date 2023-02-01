@@ -9,8 +9,6 @@ const UserIdToNickname = (props) => {
     axios
       .get(`http://localhost:8080/api/user/detail/${userId}`)
       .then((res) => {
-        console.log(res.data);
-
         setNickname(res.data.nickname);
       })
       .catch((err) => {
@@ -18,7 +16,10 @@ const UserIdToNickname = (props) => {
       });
   }, [userId]);
 
-  return <span>{nickname}</span>;
+  return (<span>
+    {nickname? (nickname) : ('탈퇴한 회원')}
+    </span>
+  );
 };
 
 export default UserIdToNickname;

@@ -58,6 +58,7 @@ const DetailBoard = () => {
       {/* 게시글 수정 구현 */}
       <button onClick={() => navigate(`/board/${type}/update/${articleSequence}`)}>게시글 수정</button>
       {/* 게시글 좋아요 구현 */}
+      추천 : {data.goodCount}
       <button onClick={() => goodClick()}>좋아요</button>
       {/* 게시글 삭제 구현 */}
       <button onClick={() => deleteClick()}>삭제</button>        

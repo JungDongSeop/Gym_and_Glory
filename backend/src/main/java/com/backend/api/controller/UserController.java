@@ -1,10 +1,10 @@
 package com.backend.api.controller;
 
 import com.backend.api.request.ChangeNickReq;
+import com.backend.api.request.TelEmailReq;
 import com.backend.api.request.SignUpReq;
 import com.backend.api.service.UserService;
 import com.backend.db.entity.User;
-import com.backend.db.repository.UserRepository;
 import com.backend.util.RequestUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -129,5 +128,15 @@ public class UserController {
     public ResponseEntity<?> getList(@PathVariable Integer userSequence){
         List<User> list =userService.getList(userSequence);
         return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
+
+    @PostMapping("/cross_check")
+    public ResponseEntity<?> passwordReset(@RequestBody TelEmailReq telEmailReq){
+        boolean flag = userService.crossCheck(telEmailReq);
+        if(flag==true)
+            return new ResponseEntity<>(HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

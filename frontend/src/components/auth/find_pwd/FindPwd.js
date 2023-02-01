@@ -5,6 +5,7 @@ import Logo from "../../../assets/logo.svg";
 import classes from "./FindPwd.module.css";
 
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
+// const API_KEY = process.env.REACT_APP_API_KEY;
 
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${API_KEY}`;
 const FindPwd = () => {
@@ -34,6 +35,7 @@ const FindPwd = () => {
       }),
       headers: {
         "Content-Type": "application/json",
+        "x-firebase-locale": "ko",
       },
     })
       .then((res) => {

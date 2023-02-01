@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("file")
+@CrossOrigin("*")
 public class FileUserController {
 
     private final FileUserService fileUserService;

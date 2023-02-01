@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @Transactional
 @RequestMapping("/board/comment")
+@CrossOrigin("*")
 public class CommentController {
 
     private final CommentService commentService;

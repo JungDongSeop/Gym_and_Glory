@@ -21,7 +21,7 @@ const Signup = () => {
   const [genderValue, setGenderValue] = useState("");
 
   // 중복검사해서 중복되지 않으면 true로 바꾸어 준다.
-  // const [emailvalidator, setEmailvalidator] = useState(false);
+  const [emailvalidator, setEmailvalidator] = useState(false);
   // const [nicknamevalidator, setNicknamevalidator] = useState(false);
 
   // 입력한 내용 확인
@@ -29,7 +29,7 @@ const Signup = () => {
   const passwordInputRef = useRef();
   const passwordCheckInputRef = useRef();
   const nicknameInputRef = useRef();
-  const phoneNumberInputRef = useRef();
+  const phoneInputRef = useRef();
 
   // api요청 보낼 때 응답 대기
   const [isLoading, setIsLoading] = useState(false);
@@ -40,90 +40,98 @@ const Signup = () => {
   };
 
   // 이메일 유효성 검사를 통과해야하고 중복검사를 반드시 실행해야 한다.
-  // const checkEmailHandler = async () => {
-  //   const checkEmail = emailInputRef.current.value;
-  //   const response = await axios.get(
-  //     `http://localhost:8080/api/check_email?email=${checkEmail}`
-  //   );
-  //   console.log(response);
-  //   if (response.data === "중복X") {
-  //     alert("사용 가능한 이메일입니다.");
-  //     setEmailvalidator(true);
-  //   } else {
-  //     alert("이미 사용중인 이메일입니다.");
-  //     emailInputRef.current.value = "";
-  //   }
-  // };
+  const checkEmailHandler = async () => {
+    const checkEmail = emailInputRef.current.value;
+    const response = await axios.get(
+      `http://localhost:8080/api/check_email?email=${checkEmail}`
+    );
+    console.log(response);
+    if (response.data === "중복X") {
+      alert("사용 가능한 이메일입니다.");
+      setEmailvalidator(true);
+    } else {
+      alert("이미 사용중인 이메일입니다.");
+      setEmailvalidator(false);
+      emailInputRef.current.value = "";
+    }
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
 
     // useRef 이용하여 입력 데이터 가져오기
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
+    const enteredPasswordCheck = passwordCheckInputRef.current.value;
     const enteredNickname = nicknameInputRef.current.value;
-    const enteredPhoneNumber = phoneNumberInputRef.current.value;
+    const enteredPhone = phoneInputRef.current.value;
 
     // 유효성 검증 추가 할 수 있음
+    if (enteredPassword !== enteredPasswordCheck || emailvalidator === false) {
+      alert("다시 확인 후 회원가입을 진행해주세요");
+      passwordCheckInputRef.current.value = "";
+    } else {
+      // 회원가입 api요청 보내기
+      setIsLoading(true);
 
-    // 회원가입 api요청 보내기
-    setIsLoading(true);
-
-    fetch(URL, {
-      method: "POST",
-      // json 형태로 넘겨줘야하고 email과 아이디를 넘겨준다. 추후 닉네임, 성별도 추가 예정
-      body: JSON.stringify({
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      // 응답이 성공적이라면
-      .then((res) => {
-        // 로딩상태 제거
-        setIsLoading(false);
-        if (res.ok) {
-          // ...
-          // console.log("회원가입 성공");
-          // console.log(res)
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            // 오류 모달 띄워야 한다.
-            let errorMessage = "다시 확인후 회원가입을 진행해주세요.";
-            throw new Error(errorMessage);
-          });
-        }
+      fetch(URL, {
+        method: "POST",
+        // json 형태로 넘겨줘야하고 email과 아이디를 넘겨준다. 추후 닉네임, 성별도 추가 예정
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .then(async (data) => {
-        console.log(data, "hjjkkj");
-        try {
-          await axios.post(
-            "http://localhost:8080/api/signup",
-            {
-              email: data.email,
-              nickname: enteredNickname,
-              gender: genderValue,
-              phoneNumber: enteredPhoneNumber,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${data.idToken}`,
+        // 응답이 성공적이라면
+        .then((res) => {
+          // 로딩상태 제거
+          setIsLoading(false);
+          if (res.ok) {
+            // ...
+            // console.log("회원가입 성공");
+            // console.log(res)
+            return res.json();
+          } else {
+            return res.json().then((data) => {
+              // 오류 모달 띄워야 한다.
+              let errorMessage = "다시 확인후 회원가입을 진행해주세요.";
+              throw new Error(errorMessage);
+            });
+          }
+        })
+        .then(async (data) => {
+          console.log(data, "hjjkkj");
+          try {
+            await axios.post(
+              "http://localhost:8080/api/signup",
+              {
+                email: data.email,
+                nickname: enteredNickname,
+                gender: genderValue,
+                telNumber: enteredPhone,
               },
-            }
-          );
-          alert("성공적으로 회원가입이 완료되었습니다.");
-          navigate("/login");
-        } catch (err) {
-          console.log(err);
-        }
-      })
+              {
+                headers: {
+                  Authorization: `Bearer ${data.idToken}`,
+                },
+              }
+            );
+            alert("성공적으로 회원가입이 완료되었습니다.");
+            navigate("/login");
+          } catch (err) {
+            console.log(err);
+          }
+        })
 
-      .catch((err) => {
-        alert(err.message);
-      });
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+    console.log(enteredPhone);
   };
   return (
     <section className={classes.whiteBox}>
@@ -140,7 +148,7 @@ const Signup = () => {
             placeholder="example@example.com"
             ref={emailInputRef}
           />
-          {/* <button onClick={checkEmailHandler}>중복확인</button> */}
+          <button onClick={checkEmailHandler}>중복확인</button>
         </div>
         {/* 1차 비밀번호 입력 */}
         <div className={classes.control}>
@@ -162,16 +170,19 @@ const Signup = () => {
             ref={passwordCheckInputRef}
           />
         </div>
-        {/* 전화번호 */}
-        <div className={classes.contorl}>
-          <label htmlFor="phone">전화번호</label>
-          <input type="tel" id="phone" ref={phoneNumberInputRef} />
-        </div>
+
         {/* 닉네임 */}
         <div>
           <div className={classes.control}>
             <label htmlFor="nickname">닉네임</label>
             <input type="text" id="nickname" required ref={nicknameInputRef} />
+          </div>
+        </div>
+        {/* 전화번호 */}
+        <div>
+          <div className={classes.control}>
+            <label htmlFor="phone">전화번호</label>
+            <input type="tel" id="phone" required ref={phoneInputRef} />
           </div>
         </div>
 

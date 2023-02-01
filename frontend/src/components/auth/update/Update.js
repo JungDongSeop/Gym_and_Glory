@@ -1,7 +1,7 @@
 // import axios from "axios";
 import React, { useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+// import axios from "axios";
 import AuthContext from "../../../store/auth-context";
 import WithNavBarAndSideBar from "../../layout/WithNavBarAndSideBar";
 
@@ -9,23 +9,22 @@ import WithNavBarAndSideBar from "../../layout/WithNavBarAndSideBar";
 
 // API_KEY
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
-// 회원가입 api 주소
+// 비밀번호 변경 api 주소
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
 
 const Update = () => {
   const navigate = useNavigate();
-  // const user = {
-  //   name: "홍길동",
-  //   age: 20,
-  //   email: "nnheo@example.com",
-  // };
+
   const newPasswordInputRef = useRef();
+  const newNicknameInputRef = useRef();
+
   const authCtx = useContext(AuthContext);
 
-  // const [name, setName] = useState(user.name);
-  // const [email, setEmail] = useState(user.email);
+  // const [nickname, setNickname] = useState(authCtx.nickname);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const submitHandler = (event) => {
+  // 비밀번호 유효성 검사 및 제출
+  const passwordCheck = (event) => {
     event.preventDefault();
 
     const enteredNewPassword = newPasswordInputRef.current.value;
@@ -59,13 +58,49 @@ const Update = () => {
     navigate("/login");
   };
 
+  // 닉네임 중복 체크
+  const nicknameCheck = (event) => {
+    event.preventDefault();
+    console.log(authCtx.userSequence);
+    //유효성 검사 추가
+
+    const enteredNewNickname = newNicknameInputRef.current.value;
+
+    fetch("http://localhost:8080/api/user/modify/nickname", {
+      method: "PUT",
+      body: JSON.stringify({
+        userSequence: authCtx.userSequence,
+        nickName: enteredNewNickname,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      console.log(res);
+      localStorage.setItem("nickname", enteredNewNickname);
+
+      alert("닉네임 변경이 완료되었습니다.");
+    });
+  };
   return (
     <main>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={passwordCheck}>
         <div>
           <label htmlFor="new-password">새 비밀번호</label>
           <input type="password" id="new-password" ref={newPasswordInputRef} />
-          <input type="submit" />
+          <input type="submit" value="비밀번호 변경" />
+        </div>
+      </form>
+      <form onSubmit={nicknameCheck}>
+        <div>
+          <label htmlFor="new-nickname">새 닉네임</label>
+          <input
+            type="text"
+            id="new-nickname"
+            defaultValue={localStorage.getItem("nickname")}
+            ref={newNicknameInputRef}
+          />
+          <input type="submit" value="닉네임 변경" />
         </div>
       </form>
     </main>

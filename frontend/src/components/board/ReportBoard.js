@@ -51,6 +51,9 @@ const ReportBoard = () => {
     setCurrentPage(page);
   };
 
+  // 신고 종류 구분
+  const reportKinds = [true, '욕설', '게임 불참', '성희롱']
+
   return (
     <main>
       {/* 게시판 별로 이동 가능한 버튼 */}
@@ -69,6 +72,7 @@ const ReportBoard = () => {
 
       {/* 신고게시판 내용 */}
       {isAdmin ? (
+        // 관리자의 신고페이지
         <div>
           <h2>관리자의 신고페이지.</h2>
           <ul className={classes.boardUl}>
@@ -80,7 +84,7 @@ const ReportBoard = () => {
                   className={index % 2 === 0 ? classes.odd : classes.even}
                   onClick={() => navigate(`/board/report/${item.reportSequence}`)}
                 >
-                  from : {item.sendSequence}, to : {item.getSequence}, 종류 : {item.kind}, 내용 : {item.contents}
+                  from : {item.sendSequence}, to : {item.getSequence}, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents}
                 
                 </li>
             ))}
@@ -103,7 +107,7 @@ const ReportBoard = () => {
                     className={index % 2 === 0 ? classes.odd : classes.even}
                     onClick={() => navigate(`/board/report/${item.reportSequence}`)}
                   >
-                    from : <UserIdToNickname userId={item.sendSequence}/>, to : <UserIdToNickname userId={item.getSequence}/>, 종류 : {item.kind}, 내용 : {item.contents}
+                    from : <UserIdToNickname userId={item.sendSequence}/>, to : <UserIdToNickname userId={item.getSequence}/>, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents}
                   
                   </li>
                   // 관리자가 확인했으면

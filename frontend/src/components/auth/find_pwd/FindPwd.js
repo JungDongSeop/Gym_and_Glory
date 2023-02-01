@@ -5,6 +5,7 @@ import Logo from "../../../assets/logo.svg";
 import classes from "./FindPwd.module.css";
 
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
+// const API_KEY = process.env.REACT_APP_API_KEY;
 
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${API_KEY}`;
 const FindPwd = () => {
@@ -19,12 +20,15 @@ const FindPwd = () => {
 
     // 입력 데이터 값 가져오기
     const enteredEmail = emailInputRef.current.value;
+    // const enteredPhone = phoneInputRef.current.value;
 
     // 유효성 검증 추가
 
     // 가입한 이메일인지 확인하는 작업
+
     // 만약 가입안한 이메일이거나 유효성검증에서 탈락했다면 다시 입력
     setIsLoading(true);
+    console.log(isLoading);
     fetch(URL, {
       method: "POST",
       body: JSON.stringify({
@@ -33,11 +37,13 @@ const FindPwd = () => {
       }),
       headers: {
         "Content-Type": "application/json",
+        "x-firebase-locale": "ko",
       },
     })
       .then((res) => {
         setIsLoading(false);
         console.log(res.json());
+        alert("확인 이메일을 발송하였습니다 확인후 비밀번호를 재설정해주세요");
         navigate("/login");
       })
       .catch((err) => {

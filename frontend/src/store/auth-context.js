@@ -43,6 +43,7 @@ export const AuthContextProvider = (props) => {
 
     localStorage.setItem("token", token);
     localStorage.setItem("email", email);
+    localStorage.setItem("userSequence", userSequence);
     localStorage.setItem("nickname", nickname);
     localStorage.setItem("gender", gender);
   };

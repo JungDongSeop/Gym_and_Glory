@@ -32,7 +32,7 @@ function App() {
         {!authCtx.isLoggedIn && <Route path="/login" element={<Login />} />}
         {!authCtx.isLoggedIn && <Route path="/signup" element={<Signup />} />}
         {!authCtx.isLoggedIn && (
-          <Route path="/find_pwd" element={<FindPwd />} />
+          <Route path="/find-pwd" element={<FindPwd />} />
         )}
 
         {authCtx.isLoggedIn && (

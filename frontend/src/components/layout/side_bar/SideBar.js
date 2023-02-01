@@ -20,8 +20,8 @@ const SideBar = (props) => {
     <aside>
       {/* 유저 프로필 */}
       <div>
-        <p>{authCtx.gender}</p>
-        <Link to="/mypage">gdgd</Link>
+        {/* <p>{authCtx.gender}</p> */}
+        <Link to="/mypage">{authCtx.nickname}</Link>
       </div>
 
       {isMyPage ? (

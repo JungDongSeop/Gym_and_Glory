@@ -5,6 +5,7 @@ import Logo from "../../../assets/logo.svg";
 import classes from "./FindPwd.module.css";
 
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
+// const API_KEY = process.env.REACT_APP_API_KEY;
 
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${API_KEY}`;
 const FindPwd = () => {
@@ -25,6 +26,7 @@ const FindPwd = () => {
     // 가입한 이메일인지 확인하는 작업
     // 만약 가입안한 이메일이거나 유효성검증에서 탈락했다면 다시 입력
     setIsLoading(true);
+    console.log(isLoading);
     fetch(URL, {
       method: "POST",
       body: JSON.stringify({
@@ -33,6 +35,7 @@ const FindPwd = () => {
       }),
       headers: {
         "Content-Type": "application/json",
+        "x-firebase-locale": "ko",
       },
     })
       .then((res) => {

@@ -23,4 +23,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("select u from User u where u.userSequence not in " +
             "(select f.getSequence from Friend f where f.sendSequence =:userSequence)")
     List<User> findUser(Integer userSequence);
+
+    User findByTelNumber(String telNum);
 }

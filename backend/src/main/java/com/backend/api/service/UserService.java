@@ -1,18 +1,15 @@
 package com.backend.api.service;
 
+import com.backend.api.request.TelEmailReq;
 import com.backend.api.request.SignUpReq;
-import com.backend.db.entity.FileUser;
 import com.backend.db.entity.User;
 import com.backend.db.repository.UserRepository;
 import com.backend.util.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -115,5 +112,15 @@ public class UserService {
     public List<User> getList(Integer userSequence) {
         List<User> list = userRepository.findUser(userSequence);
         return list;
+    }
+
+    public boolean crossCheck(TelEmailReq telEmailReq) {
+        User user1 = userRepository.findByTelNumber(telEmailReq.getTelNum());
+        User user2 = userRepository.findOneByEmail(telEmailReq.getEmail());
+
+        if(user1==user2){
+            return true;
+        }
+        return false;
     }
 }

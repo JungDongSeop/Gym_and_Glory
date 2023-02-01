@@ -33,4 +33,5 @@ public class ExerciseLogController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+
 }

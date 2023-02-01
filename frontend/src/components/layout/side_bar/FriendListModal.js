@@ -28,7 +28,8 @@ const FriendList = () => {
   // 친구 목록 axios 요청
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(`http://localhost:8080/friend/list/${userSequence}`);
+      const result = await axios(`http://localhost:8080/friend/list/${userSequence}`, {
+      });
       setFriends(result.data);
     };
     fetchData();

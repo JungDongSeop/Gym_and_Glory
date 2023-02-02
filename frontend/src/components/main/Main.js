@@ -6,7 +6,7 @@ import AuthContext from "../../store/auth-context";
 
 import Logo from "../../assets/logo.svg";
 import story_img1 from "../../assets/story_img1.PNG";
-// import story_img2 from "../../assets/story_img2.PNG";
+import story_img2 from "../../assets/story_img2.PNG";
 // import story_img3 from "../../assets/story_img3.PNG";
 // import story_img4 from "../../assets/story_img4.PNG";
 import story_textbg from "../../assets/story_textbg.jpg";
@@ -20,12 +20,17 @@ const Main = () => {
   // 캐러셀 페이지 넘기기
   const carouselRef = React.createRef();
 
+  const storyDivScrollUp = () => {
+    document.getElementById('storyDiv').scrollTop=0;
+    };
+
   return (
     <div>
       {/* 로그인하지 않은 유저에게 표시되는 화면 */}
 
       {/* 캐러셀 넣기 */}
-      <Carousel className={classes.carousel} ref={carouselRef}>
+      <Carousel
+        className={classes.carousel} ref={carouselRef}>
         {/* 로그인 캐러셀 */}
         <div>
           <span className={classes.carouselBox}>
@@ -54,8 +59,9 @@ const Main = () => {
             </span>
             <span
               className={classes.rightword}
-              onClick={() => {
+              onClick={() => {    
                 carouselRef.current.next();
+                storyDivScrollUp();
               }}
             >
               스토리 {">"}
@@ -67,7 +73,7 @@ const Main = () => {
         <div>
           <span className={classes.carouselBox}>
             <img className={classes.smallLogo} src={Logo} alt={Logo}></img>
-            <div className={classes.storyDiv}>
+            <div className={classes.storyDiv} id="storyDiv">
               <h2>스토리</h2>
 
               <div className={classes.storySection}>
@@ -80,7 +86,7 @@ const Main = () => {
               </div>
 
               <div className={classes.storySection}>
-              <img src={story_img1} alt={story_img1}></img>
+              <img src={story_img2} alt={story_img2}></img>
               <div className={classes.StorytextDiv} style={{backgroundImage : `url(${story_textbg})`}}>
                 <p>
                   이 목표를 달성하기 위해서는 먼저 신체적으로 강하고 전투에 능숙해야 합니다.
@@ -142,6 +148,7 @@ const Main = () => {
               className={classes.leftword}
               onClick={() => {
                 carouselRef.current.prev();
+                storyDivScrollUp();
               }}
             >
               {"<"}

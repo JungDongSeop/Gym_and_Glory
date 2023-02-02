@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Song+Myung&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Song+Myung&display=swap');
 
 .carousel {
-  width: 50%;
+  width: 50vw;
   height: 100%;
   object-fit: contain;
   margin: 0 auto;
@@ -46,7 +46,7 @@
   font-family: 'Song Myung', serif;
   position: absolute;
   bottom: 0;
-  font-size: 1.5vw;
+  font-size: calc(10px + 1.2vw);
   cursor: pointer;
   bottom: 0;
   left: 10px;
@@ -59,7 +59,7 @@
   /* font-family: 'Dokdo', cursive; */
   position: absolute;
   bottom: 0;
-  font-size: 1.5vw;
+  font-size: calc(10px + 1.2vw);
   cursor: pointer;
   bottom: 0;
   right: 10px;
@@ -78,7 +78,36 @@
   0 0 40px rgb(255, 0, 0)
 }
 
-.mainText{
-  font-size: 20px;
+.mainTextDiv{
   font-family: 'Song Myung', serif;
+    & > h1{
+    font-size: 20px;
+  }
+  margin-bottom: 20px;
+}
+
+.storyDiv{
+  // text-shadow: ;
+  font-family: 'Jua', sans-serif;
+  margin-left: 50px;
+  margin-right: 50px;
+  overflow-y: scroll; 
+  height:72vh;
+  & > h2{
+    font-size: 36px;
+    color: #be1616;
+  }
+
+  & > p{
+    font-size: calc(8px + 0.8vw);
+    
+  }
+
+  & > img{
+    width: 100%;
+  }
+}
+
+.storyDiv::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }

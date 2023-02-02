@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect, useContext } from "react";
+import AuthContext from "../../store/auth-context";
+// import { useSelector } from 'react-redux';
 import axios from "axios";
+import classes from './ExerciseGrass.module.css';
 
 const ExerciseGrass = () => {
-    const userSequence = useSelector((state) => state.user.pk);
+  // redux로 user 정보 가져오기
+  // const userSequence = useSelector((state) => state.user.pk);
+  const {userSequence} = useContext(AuthContext)
 
+  // 출석 정보 axsio 요청
   const [attendanceData, setAttendanceData] = useState([]);
 
   useEffect(() => {
@@ -17,10 +22,10 @@ const ExerciseGrass = () => {
 
   const renderAttendance = () => {
     const date = new Date();
-    date.setDate(date.getDate() - 10);
+    date.setDate(date.getDate() - 365);
 
     return (
-      <div style={{ display: "flex" }}>
+      <div className={classes.container}>
         {Array(52)
           .fill(0)
           .map((_, i) => {
@@ -42,10 +47,8 @@ const ExerciseGrass = () => {
                 return (
                   <div
                     key={j}
+                    className={classes.cell}
                     style={{
-                      width: "10px",
-                      height: "10px",
-                      margin: "2px",
                       backgroundColor: hasAttendance ? "green" : "gray"
                     }}
                   />
@@ -53,7 +56,7 @@ const ExerciseGrass = () => {
               });
 
             return (
-              <div key={i} style={{ display: "flex" }}>
+              <div key={i} className={classes.row}>
                 {week}
               </div>
             );

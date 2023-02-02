@@ -2,11 +2,7 @@
   background-color: white;
 }
 
-.githubWrap {
-  background-color: white;
-}
-
-.githubCell {
-  background-color: red;
-
+.grassWrap {
+  background-color: wheat;
+  height: 100px;
 }

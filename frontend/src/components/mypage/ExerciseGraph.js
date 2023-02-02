@@ -61,10 +61,8 @@ const ExerciseGraph = (props) => {
           } else if (xUnit === 7) {
             // 일주일 단위로 분류해서 acc에 추가
             if (exerciseDay >= fewDaysAgo) {
-              console.log('exerciseDay', exerciseDay)
 
               const week = getWeek(exerciseDay);
-              console.log('wow', exerciseDay, week);
               if (acc[week]) {
                 acc[week] += exerciseData.count;
               } else {
@@ -72,9 +70,8 @@ const ExerciseGraph = (props) => {
               }
             }
           } else if (xUnit === 30) {
+            // 한달 단위로 분류해서 acc에 추가
             const key = exerciseDay.getFullYear() + '-' + (exerciseDay.getMonth() + 1);
-            console.log('key woww', key);
-            
             if (exerciseDay >= fewDaysAgo) {
               if (acc[key]) {
                 acc[key] += exerciseData.count;
@@ -87,7 +84,6 @@ const ExerciseGraph = (props) => {
 
           return acc;
         }, {});
-        console.log('groupedData', groupedData);
 
         // 그래프에 줄 데이터
         const dates = [];
@@ -98,9 +94,7 @@ const ExerciseGraph = (props) => {
              : new Date(i).getFullYear() + '-' + (new Date(i).getMonth() + 1)));
 
           dates.push({ date: key, count: groupedData[key]? groupedData[key] : 0 });
-        }
-        console.log('dates', dates);
-        
+        }        
 
         setExerciseData(dates);
       });
@@ -114,7 +108,6 @@ const ExerciseGraph = (props) => {
     if (window.myChart) {
       window.myChart.destroy();
     }
-    console.log('exerciseData', exerciseData);
     
     // 그래프 출력
     window.myChart = new Chart(ctx, {

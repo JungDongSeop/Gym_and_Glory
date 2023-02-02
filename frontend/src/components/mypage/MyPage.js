@@ -39,7 +39,7 @@ const MyPage = () => {
             <br/>
             <button onClick={() => setXAxisMin(7)}>1주일</button>
             <button onClick={() => setXAxisMin(30)}>1달</button>
-            <button onClick={() => setXAxisMin(365)}>1년</button>
+            <button onClick={() => setXAxisMin(364)}>1년</button>
             
             <br/>
             <button onClick={() => setXUnit(1)}>일별</button>

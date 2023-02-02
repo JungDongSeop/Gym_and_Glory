@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect, useContext } from 'react';
+// import { useSelector } from 'react-redux';
+import AuthContext from "../../store/auth-context";
 import axios from 'axios';
-// import { Line } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js/auto';
 import classes from './ExerciseGraph.module.css';
 
@@ -9,7 +9,8 @@ Chart.register(...registerables);
 
 const ExerciseGraph = (props) => {
   // redux로 user 정보 가져오기
-  const userSequence = useSelector((state) => state.user.pk);
+  // const userSequence = useSelector((state) => state.user.pk);
+  const {userSequence} = useContext(AuthContext)
 
   // 상속받는 변수들
   const exerciseKind = props.exerciseKind;
@@ -22,58 +23,105 @@ const ExerciseGraph = (props) => {
   useEffect(() => {
     axios.get(`http://localhost:8080/exerciseLog/list/${userSequence}/${exerciseKind}`)
       .then(res => {        
-        const data = res.data;
+        const exerciseDatas = res.data;
         // 오늘 날짜
         const today = new Date();
-        // 일주일 전 날짜
+        // 옛날 날짜
         const fewDaysAgo = new Date(today.getTime() - xAxisMin * 24 * 60 * 60 * 1000);
-
-        // groupeData = axios 받은 데이터를 날짜별로 분류. 이후 acc 에 저장, return
         
-        const groupedData = data.reduce((acc, curr) => {
-          // console.log(xUnit);
-          // const date = (xUnit===1 ? new Date(curr.date) : new Date(curr.week) )
-          const date = new Date(curr.date)
+        // 1주일 관련한 함수
+        function getWeek(date) {
+          const firstDayOfWeek = getFirstDayOfWeek(fewDaysAgo);
+          const week = Math.ceil((((date - firstDayOfWeek) / 86400000) + firstDayOfWeek.getDay() + 1) / 7);
+          return `week-${week}`;
+        }
+        function getFirstDayOfWeek(date) {
+          const day = date.getDay();
+          const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+          return new Date(date.setDate(diff));
+        }
+
+        // groupeData = axios 받은 데이터를 날짜별로 분류. 이후 acc 에 저장, acc를 return
+        const groupedData = exerciseDatas.reduce((acc, exerciseData) => {
           
-          if (date >= fewDaysAgo) {
-            const key = date.toDateString();
-            if (acc[key]) {
-              acc[key].count += curr.count;
-            } else {
-              acc[key] = { date, count: curr.count };
+          // 운동 데이터 1개
+          const exerciseDay = new Date(exerciseData.date)
+
+          // 하루 단위
+          if(xUnit === 1) {
+            // 날짜 별로 분류해서 acc에 추가
+            const key = exerciseDay.toDateString().slice(4, 10);
+            if (exerciseDay >= fewDaysAgo) {
+              if (acc[key]) {
+                acc[key] += exerciseData.count;
+              } else {
+                acc[key] = exerciseData.count ;
+              }
             }
+          } else if (xUnit === 7) {
+            // 일주일 단위로 분류해서 acc에 추가
+            if (exerciseDay >= fewDaysAgo) {
+              console.log('exerciseDay', exerciseDay)
+
+              const week = getWeek(exerciseDay);
+              console.log('wow', exerciseDay, week);
+              if (acc[week]) {
+                acc[week] += exerciseData.count;
+              } else {
+                acc[week] = exerciseData.count;
+              }
+            }
+          } else if (xUnit === 30) {
+            const key = exerciseDay.getFullYear() + '-' + (exerciseDay.getMonth() + 1);
+            console.log('key woww', key);
+            
+            if (exerciseDay >= fewDaysAgo) {
+              if (acc[key]) {
+                acc[key] += exerciseData.count;
+              } else {
+                acc[key] = exerciseData.count ;
+              }
+            }
+
           }
 
           return acc;
         }, {});
+        console.log('groupedData', groupedData);
 
         // 그래프에 줄 데이터
         const dates = [];
-        for (let i = fewDaysAgo; i <= today; i.setDate(i.getDate() + 1)) {
-          const key = new Date(i).toDateString();
-          if (groupedData[key]) {
-            dates.push(groupedData[key]);
-          } else {
-            dates.push({ date: new Date(i), count: 0 });
-          }
+        for (let i = new Date(fewDaysAgo); i <= today; i.setDate(i.getDate() + xUnit)) {   
+          const key = (xUnit === 1 ? 
+            new Date(i).toDateString().slice(4, 10)
+             : (xUnit === 7 ? getWeek(new Date(i))
+             : new Date(i).getFullYear() + '-' + (new Date(i).getMonth() + 1)));
+
+          dates.push({ date: key, count: groupedData[key]? groupedData[key] : 0 });
         }
+        console.log('dates', dates);
+        
 
         setExerciseData(dates);
       });
   }, [userSequence, exerciseKind, xAxisMin, xUnit]);
+  
 
   // 그래프 출력
   useEffect(() => {
     const ctx = document.getElementById('exercise-chart').getContext('2d');
-    // 그래프가 존재할 경우 삭제 (안그러면 에러 남)
+    // 그래프가 이미 존재할 경우 삭제 (안그러면 에러 남)
     if (window.myChart) {
       window.myChart.destroy();
     }
+    console.log('exerciseData', exerciseData);
+    
     // 그래프 출력
     window.myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: exerciseData.map(d => d.date.toDateString()),
+        // labels: exerciseData.map(d => d.date.toDateString()),
+        labels: exerciseData.map(d => d['date']),
         datasets: [{
           label: 'Exercise Count',
           data: exerciseData.map(d => d.count),
@@ -96,7 +144,6 @@ const ExerciseGraph = (props) => {
         },
         scales: {
           x: {
-
           },
           y: {
               min: 0,
@@ -118,7 +165,7 @@ const ExerciseGraph = (props) => {
       }
       
     });
-  }, [exerciseData]);
+  }, [exerciseData, xUnit]);
 
   return (
     <div className={classes.wow}>

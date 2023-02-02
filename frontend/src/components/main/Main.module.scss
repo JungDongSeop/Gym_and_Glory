@@ -97,17 +97,26 @@
     font-size: 36px;
     color: #be1616;
   }
-
-  & > p{
-    font-size: calc(8px + 0.8vw);
-    
-  }
-
-  & > img{
-    width: 100%;
-  }
 }
 
 .storyDiv::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+.storySection{
+  margin-bottom: 12vw;
+  & > p{
+    font-size: calc(8px + 0.8vw);
+    margin: 20px;    
+  }
+
+  & > img{
+    width: calc(200px + 8vw);
+  }
+}
+
+.storytextDiv{
+  user-select: none;
+  padding: 20px;
+  width: 100%;
 }

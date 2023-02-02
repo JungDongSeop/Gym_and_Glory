@@ -151,7 +151,7 @@ const Signup = () => {
             required
             placeholder="example@example.com"
             ref={emailInputRef}
-            autocomplete = "off"
+            autoComplete = "off"
           />
            </div>
         {/* 1차 비밀번호 입력 */}
@@ -162,7 +162,7 @@ const Signup = () => {
             id="password"
             required
             ref={passwordInputRef}
-            autocomplete = "off"
+            autoComplete = "off"
           />
         </div>
         {/* 2차 비밀번호 입력 */}
@@ -173,7 +173,7 @@ const Signup = () => {
             id="passwordcheck"
             required
             ref={passwordCheckInputRef}
-            autocomplete = "off"
+            autoComplete = "off"
           />
         </div>
 
@@ -181,14 +181,14 @@ const Signup = () => {
         <div>
           <div className={classes.control}>
             <label htmlFor="nickname">닉네임</label>
-            <input type="text" id="nickname" required ref={nicknameInputRef} autocomplete = "off"/>
+            <input type="text" id="nickname" required ref={nicknameInputRef} autoComplete = "off"/>
           </div>
         </div>
         {/* 전화번호 */}
         <div>
           <div className={classes.control}>
             <label htmlFor="phone">전화번호</label>
-            <input type="tel" id="phone" required ref={phoneInputRef} autocomplete = "off"/>
+            <input type="tel" id="phone" required ref={phoneInputRef} autoComplete = "off"/>
           </div>
         </div>
 

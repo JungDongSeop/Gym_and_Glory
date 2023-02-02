@@ -55,19 +55,26 @@ const Signup = () => {
   const passwordChangeHandler = (event) => {
     event.preventDefault();
     const password = passwordInputRef.current.value;
+    var isVal = false;
 
     const re = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{7,25}$/;
 
     if (!re.test(password)) {
-      setIsValidPassword(false);
+      isVal = false;
       setPasswordError(
         "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
       );
+      setIsValidPassword(false);
     } else {
-      setIsValidPassword(true);
+      isVal = true;
       setPasswordError("");
+      setIsValidPassword(true);
     }
+    console.log(passwordInputRef.current.value);
+    console.log(event.target.value);
+
     console.log(isValidPassword);
+    console.log(isVal);
   };
 
   // 비밀번호확인 일치 검사

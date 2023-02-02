@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface
-CommentRepository extends JpaRepository<Comment, String> {
+CommentRepository extends JpaRepository<Comment, Integer> {
     List<Comment> findByArticleSequence(int articleSequence);
 
     int deleteByArticleSequence(int articleSequence);

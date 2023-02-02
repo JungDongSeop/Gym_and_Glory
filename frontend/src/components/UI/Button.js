@@ -1,5 +1,6 @@
 import React from 'react';
-import classes from './Button.module.css';
+//import classes from './Button.module.css';
+import classes from './Button.module.scss';
 
 // 크기 조절이 가능한 버튼
 function Button({ onClick, children, size }) {
@@ -9,10 +10,10 @@ function Button({ onClick, children, size }) {
       padding: '5px 10px'
     },
     sideBar: {
-      height: '60px',
-      width: '250px',
-      fontSize: '30px',
-      padding: '10px 20px',
+      height: '50px',
+      width: '180px',
+      fontSize: '20px',
+      // padding: '10px',
     },
     large: {
       fontSize: '20px',

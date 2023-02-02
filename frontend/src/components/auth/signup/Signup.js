@@ -6,7 +6,7 @@ import axios from "axios";
 // import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo.svg";
-import classes from "./Signup.module.css";
+import classes from "./Signup.module.scss";
 // import Button from "../../UI/Button";
 // import { ValidatorForm, TextValidator} from "react-material-ui-form-validator";
 
@@ -49,10 +49,12 @@ const Signup = () => {
     if (response.data === "중복X") {
       alert("사용 가능한 이메일입니다.");
       setEmailvalidator(true);
+      emailInputRef.current.style.borderBottom = "2px solid #00bd10";
     } else {
       alert("이미 사용중인 이메일입니다.");
       setEmailvalidator(false);
       emailInputRef.current.value = "";
+      emailInputRef.current.style.borderBottom = "2px solid #ff0b0b";
     }
   };
 
@@ -141,15 +143,17 @@ const Signup = () => {
         {/* 아이디 입력 */}
         <div className={classes.control}>
           <label htmlFor="email">아이디(email)</label>
+          <button className={classes.authsmallbutton} onClick={checkEmailHandler}>중복확인</button>
+       
           <input
             type="email"
             id="email"
             required
             placeholder="example@example.com"
             ref={emailInputRef}
+            autocomplete = "off"
           />
-          <button onClick={checkEmailHandler}>중복확인</button>
-        </div>
+           </div>
         {/* 1차 비밀번호 입력 */}
         <div className={classes.control}>
           <label htmlFor="password">비밀번호(Password)</label>
@@ -158,6 +162,7 @@ const Signup = () => {
             id="password"
             required
             ref={passwordInputRef}
+            autocomplete = "off"
           />
         </div>
         {/* 2차 비밀번호 입력 */}
@@ -168,6 +173,7 @@ const Signup = () => {
             id="passwordcheck"
             required
             ref={passwordCheckInputRef}
+            autocomplete = "off"
           />
         </div>
 
@@ -175,21 +181,21 @@ const Signup = () => {
         <div>
           <div className={classes.control}>
             <label htmlFor="nickname">닉네임</label>
-            <input type="text" id="nickname" required ref={nicknameInputRef} />
+            <input type="text" id="nickname" required ref={nicknameInputRef} autocomplete = "off"/>
           </div>
         </div>
         {/* 전화번호 */}
         <div>
           <div className={classes.control}>
             <label htmlFor="phone">전화번호</label>
-            <input type="tel" id="phone" required ref={phoneInputRef} />
+            <input type="tel" id="phone" required ref={phoneInputRef} autocomplete = "off"/>
           </div>
         </div>
 
         {/* 성별 확인 */}
         <div className={classes.gender}>
           <div>
-            <label>
+            <label className={classes.genderRadio}>
               <input
                 type="radio"
                 name="male"
@@ -199,10 +205,10 @@ const Signup = () => {
               />
               남자
             </label>
-          </div>
+          {/* </div>
           <br />
-          <div>
-            <label>
+          <div> */}
+            <label className={classes.genderRadio}>
               <input
                 type="radio"
                 name="female"

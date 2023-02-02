@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BoardGoodRepository extends JpaRepository<BoardGood,String> {
+public interface BoardGoodRepository extends JpaRepository<BoardGood,Integer> {
 
     @Query("SELECT m from BoardGood m where m.userSequence=:userSequence AND m.articleSequence=:articleSequence")
     BoardGood findByUserSequenceAndArticleSequence(Integer userSequence, Integer articleSequence);

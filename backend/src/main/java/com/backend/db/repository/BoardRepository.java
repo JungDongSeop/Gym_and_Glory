@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BoardRepository extends JpaRepository<BoardArticle, String> {
+public interface BoardRepository extends JpaRepository<BoardArticle, Integer> {
 
     BoardArticle findOneByArticleSequence(Integer articleSequence);
     int deleteByArticleSequence(Integer articleSequence);

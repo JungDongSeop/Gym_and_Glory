@@ -18,7 +18,7 @@
 
 .carouselBox img {
   margin: 0 auto;
-  width: 30vw;
+  width: 35vw;
 }
 
 .carouselBox button {
@@ -81,10 +81,11 @@
 .mainTextDiv{
   font-family: 'Song Myung', serif;
     & > h1{
-    font-size: 20px;
+    font-size: calc(20px + 0.3vw);
   }
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
+
 
 .storyDiv{
   // text-shadow: ;
@@ -104,19 +105,38 @@
 }
 
 .storySection{
-  margin-bottom: 12vw;
-  & > p{
-    font-size: calc(8px + 0.8vw);
-    margin: 20px;    
-  }
-
   & > img{
-    width: calc(200px + 8vw);
+    width: 35vw;
+    margin-left: 0;
+    margin-bottom: 3vw;
+    float: left;
   }
 }
 
-.storytextDiv{
+// .ff {
+// 	animation-name: fadein;
+//   animation-duration: 2s;
+// }
+
+// @keyframes fadein {
+// 	0% {
+// 		opacity: 0;
+// 	}
+// 	100% {
+// 		opacity: 1;
+// 	}
+// }
+
+.StorytextDiv{
+  float: right;
   user-select: none;
-  padding: 20px;
-  width: 100%;
+  padding: 10px;
+  width: 30vw;
+  margin-top: -8vw;
+  margin-right: 0;
+  margin-bottom: 3vw;
+
+  & > p{
+    font-size: calc(8px + 0.8vw);
+  }
 }

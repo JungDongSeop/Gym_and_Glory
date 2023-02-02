@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReportRepository extends JpaRepository<Report,String> {
+public interface ReportRepository extends JpaRepository<Report,Integer> {
 
     void deleteByReportSequence(Integer reportSequence);
 

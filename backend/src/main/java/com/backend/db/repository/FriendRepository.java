@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FriendRepository extends JpaRepository<Friend,String> {
+public interface FriendRepository extends JpaRepository<Friend,Integer> {
     List<Friend> findByGetSequence(Integer userSequence);
 }

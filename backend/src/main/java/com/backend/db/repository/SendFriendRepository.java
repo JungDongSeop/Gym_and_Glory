@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface SendFriendRepository extends JpaRepository<SendFriend,String> {
+public interface SendFriendRepository extends JpaRepository<SendFriend,Integer> {
 
     @Modifying//이유는 잘모르지만 삭제에는 이게 붙어야합니다
     @Transactional

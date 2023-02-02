@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef} from "react";
 import classes from "./Main.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Carousel } from "antd";
 import AuthContext from "../../store/auth-context";
 
-import Logo from "../../assets/logo.svg";
+import Logo from "../../assets/logo.png";
 import story_img1 from "../../assets/story_img1.PNG";
 import story_img2 from "../../assets/story_img2.PNG";
 // import story_img3 from "../../assets/story_img3.PNG";
@@ -19,10 +19,14 @@ const Main = () => {
 
   // 캐러셀 페이지 넘기기
   const carouselRef = React.createRef();
+  // 스토리Div. 스크롤 파악용
+  const storyDivRev = useRef();
 
+  // 캐러셀과의 스크롤 충돌로 인해 직접 접근
   const storyDivScrollUp = () => {
     document.getElementById('storyDiv').scrollTop=0;
     };
+    
 
   return (
     <div>
@@ -41,7 +45,7 @@ const Main = () => {
             </div>
             {!isLoggedIn && (
               <div>
-                <Button onClick={() => navigate("/login")}>로그인</Button>
+                <Button onClick={() => navigate("/login")} >로그인</Button>
               </div>
             )}
             {isLoggedIn && (
@@ -73,12 +77,12 @@ const Main = () => {
         <div>
           <span className={classes.carouselBox}>
             <img className={classes.smallLogo} src={Logo} alt={Logo}></img>
-            <div className={classes.storyDiv} id="storyDiv">
+            <div ref={storyDivRev} className={classes.storyDiv} id="storyDiv">
               <h2>스토리</h2>
 
               <div className={classes.storySection}>
-              <img src={story_img1} alt={story_img1}></img>
-              <div className={classes.StorytextDiv} style={{backgroundImage : `url(${story_textbg})`}}>
+              <img  src={story_img1} alt={story_img1}></img>
+              <div  className={classes.StorytextDiv} style={{backgroundImage : `url(${story_textbg})`}}>
               <p>
                 여러분은 이 땅에서 가장 위대한 드래곤 슬레이어가 되는 꿈을 꾸며 여행을 떠나는 젊은 강아지들입니다.
                 (때때로 당신은 사람일 수도 있습니다.)</p>

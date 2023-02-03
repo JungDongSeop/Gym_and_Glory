@@ -28,6 +28,7 @@ const Wrapper = styled.div`
   height: auto;
   width: 100%;
   background-color: black;
+  overflow-y:hidden;
 `;
 
 const NavWrapper = styled.div`
@@ -50,6 +51,7 @@ const HeadWrapper = styled.div`
 
 const BodyWrapper = styled.div`
   width: 100%;
+  height: 100%;
 `;
 
 const TitleWrapper = styled.div`
@@ -281,6 +283,7 @@ class GameRoom extends Component {
           swal({
             text: "방장에 의해 강퇴당하셨습니다.\n확인 클릭 또는 5초 후에 로비로 이동합니다.",
             button: "확인",
+            icon:'error'
           }).then(() => {
             if (mySession) {
               mySession.disconnect();

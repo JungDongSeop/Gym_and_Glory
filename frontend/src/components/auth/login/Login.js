@@ -104,7 +104,14 @@ const Login = () => {
 
   return (
     <div className={classes.whiteBox}>
-      <img className={classes.logoSmall} src={Logo} alt="logo-small" />
+      <img
+        className={classes.logoSmall}
+        src={Logo}
+        alt="logo-small"
+        onClick={() => {
+          navigate("/");
+        }}
+      />
       <br />
       {/* 로그인 폼 */}
       <form onSubmit={submitHandler}>

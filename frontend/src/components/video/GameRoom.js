@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component, createRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
@@ -8,7 +9,7 @@ import Chats from "../chat/Chats";
 import "./GameRoom.css";
 import $ from "jquery";
 import styled from "styled-components";
-import { Dialog } from "@mui/material";
+import swal from "sweetalert";
 import {
   ChatOutlined,
   SpeakerNotesOffOutlined,
@@ -27,6 +28,7 @@ const Wrapper = styled.div`
   height: auto;
   width: 100%;
   background-color: black;
+  overflow-y:hidden;
 `;
 
 const NavWrapper = styled.div`
@@ -49,6 +51,7 @@ const HeadWrapper = styled.div`
 
 const BodyWrapper = styled.div`
   width: 100%;
+  height: 100%;
 `;
 
 const TitleWrapper = styled.div`
@@ -274,6 +277,41 @@ class GameRoom extends Component {
               ],
             });
           }
+        });
+        mySession.on("signal:get-out", (event) => {
+          const mySession = this.state.session;
+          swal({
+            text: "방장에 의해 강퇴당하셨습니다.\n확인 클릭 또는 5초 후에 로비로 이동합니다.",
+            button: "확인",
+            icon:'error'
+          }).then(() => {
+            if (mySession) {
+              mySession.disconnect();
+            }
+            this.OV = null;
+            this.setState({
+              session: "",
+              subscribers: [],
+              mySessionId: "",
+              mainStreamManager: undefined,
+              publisher: undefined,
+            });
+            window.location.replace("/lobby");
+          });
+          setTimeout(() => {
+            if (mySession) {
+              mySession.disconnect();
+            }
+            this.OV = null;
+            this.setState({
+              session: "",
+              subscribers: [],
+              mySessionId: "",
+              mainStreamManager: undefined,
+              publisher: undefined,
+            });
+            window.location.replace("/lobby");
+          }, 5000);
         });
         mySession.on("streamDestroyed", (event) => {
           this.updateHost().then((clientData) => {

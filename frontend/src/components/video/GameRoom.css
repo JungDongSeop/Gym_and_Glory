@@ -3,8 +3,28 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  margin-top: 1vh;
-  margin-bottom: 2vh;
+  top:50%;
+  margin-top: 5px;
+  /* margin-bottom: 2vh; */
+}
+
+@media (max-width: 1920px) {
+  #session {
+    min-width: 1536px;
+    /* max-height: 756px; */
+  }
+}
+
+@media (max-width: 1152px) {
+  #session {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 971px) {
+  #session {
+    margin-top: -7px;
+  }
 }
 
 .stream-container {

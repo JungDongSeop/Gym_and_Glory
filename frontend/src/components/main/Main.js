@@ -1,4 +1,5 @@
 import React, { useContext, useRef} from "react";
+import styled from '@emotion/styled'
 import classes from "./Main.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Carousel } from "antd";
@@ -21,13 +22,29 @@ const Main = () => {
   const carouselRef = React.createRef();
   // 스토리Div. 스크롤 파악용
   const storyDivRev = useRef();
+  const storyContentRef = useRef([]);
 
   // 캐러셀과의 스크롤 충돌로 인해 직접 접근
   const storyDivScrollUp = () => {
     document.getElementById('storyDiv').scrollTop=0;
     };
-    
 
+  //   const ContentDiv = styled.div`  
+  //   &.animation {
+  //     animation-name: opacity;
+  //     animation-duration: 5000ms;
+  
+  //     @keyframes opacity {
+  //       from {
+  //         opacity: 0;
+  //       }
+  //       to {
+  //         opacity: 1;
+  //       }
+  //     }
+  //   }
+  // `
+  
   return (
     <div>
       {/* 로그인하지 않은 유저에게 표시되는 화면 */}
@@ -80,7 +97,7 @@ const Main = () => {
             <div ref={storyDivRev} className={classes.storyDiv} id="storyDiv">
               <h2>스토리</h2>
 
-              <div className={classes.storySection}>
+              <div ref={el => (storyContentRef.current[0] = el)} className={classes.storySection}>
               <img  src={story_img1} alt={story_img1}></img>
               <div  className={classes.StorytextDiv} style={{backgroundImage : `url(${story_textbg})`}}>
               <p>
@@ -89,7 +106,7 @@ const Main = () => {
               </div>
               </div>
 
-              <div className={classes.storySection}>
+              <div ref={el => (storyContentRef.current[1] = el)} className={classes.storySection}>
               <img src={story_img2} alt={story_img2}></img>
               <div className={classes.StorytextDiv} style={{backgroundImage : `url(${story_textbg})`}}>
                 <p>
@@ -99,7 +116,7 @@ const Main = () => {
               </div>
               </div>
 
-              <div className={classes.storySection}>
+              <div ref={el => (storyContentRef.current[2] = el)} className={classes.storySection}>
               <img src={story_img3} alt={story_img3}></img>
               <div className={classes.StorytextDiv} style={{backgroundImage : `url(${story_textbg})`}}>
                 <p>
@@ -109,7 +126,7 @@ const Main = () => {
               </div>
               </div>
 
-              <div className={classes.storySection}>
+              <div ref={el => (storyContentRef.current[3] = el)} className={classes.storySection}>
               <img src={story_img4} alt={story_img4}></img>
               <div className={classes.StorytextDiv} style={{backgroundImage : `url(${story_textbg})`}}>
                 <p>

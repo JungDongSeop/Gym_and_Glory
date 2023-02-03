@@ -55,14 +55,10 @@ class UserVideoComponent extends Component {
   }
 
   getNicknameTag() {
-    const myNick = localStorage.getItem("nickname");
-    const getNick = JSON.parse(
+    return JSON.parse(
       this.props.streamManager.stream.connection.data
     ).clientData;
-    if (myNick === getNick) {
-      this.setState({ imgActive: false });
-    }
-    return getNick;
+    
   }
 
   handleIsActive() {
@@ -76,6 +72,11 @@ class UserVideoComponent extends Component {
   }
 
   render() {
+    const myNick = localStorage.getItem('nickname')
+    const getNick = JSON.parse(
+      this.props.streamManager.stream.connection.data
+    ).clientData;
+
     return (
       <div className="video">
         {this.props.streamManager !== undefined ? (
@@ -84,7 +85,7 @@ class UserVideoComponent extends Component {
             <NickTag>{this.getNicknameTag()}</NickTag>
             <Img
               src={AlarmImage}
-              className={this.state.imgActive ? "active" : "notActive"}
+              className={myNick !== getNick ? "active" : "notActive"}
               alt="신고/강퇴 버튼"
               onClick={this.handleIsActive}
             />

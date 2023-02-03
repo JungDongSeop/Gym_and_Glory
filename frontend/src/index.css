@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("./assets/background.png");
+  /* background-image: url("./assets/background.png"); */
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -15,4 +15,18 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+/* 
+.bg_container{
+
+} */
+
+#bgVideo{
+  position: absolute;
+  z-index: -1;
+  top:0;
+  object-fit: cover;
+  min-width: 100%; min-height: 100%;
+  width: auto; height: 100%;
+  
 }

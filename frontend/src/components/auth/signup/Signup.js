@@ -17,9 +17,9 @@ const Signup = () => {
   const [genderValue, setGenderValue] = useState("1");
 
   // 오류 메세지 저장
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  // const [emailError, setEmailError] = useState("");
+  // const [passwordError, setPasswordError] = useState("");
+  // const [confirmPasswordError, setConfirmPasswordError] = useState("");
   // const [nickNameError, setNickNameError] = useState("");
   // const [phoneError, setPhoneError] = useState("");
 
@@ -29,24 +29,39 @@ const Signup = () => {
   const [isCheckedNickname, setIsCheckedNickname] = useState(false);
 
   // 닉네임 유효성 검사
-  // const [isValidNickname, setIsValidNickname] = useState(false);
+  const [isValidNickname, setIsValidNickname] = useState(false);
+
+  const nicknameChangeHandler = () => {
+    setIsCheckedNickname(false);
+    let specialCheck = /[`~!@#$%^&*|\\;:?]/gi;
+    let nicknameValue = document.getElementById("nickname").value;
+
+    if (
+      nicknameValue.search(/\s/) !== -1 ||
+      specialCheck.test(nicknameValue) ||
+      nicknameValue.length < 2 ||
+      nicknameValue.length > 10
+    ) {
+      setIsValidNickname(false);
+      // nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
+    } else {
+      setIsValidNickname(true);
+      // nicknameInputRef.current.style.borderBottom = "2px solid #00bd10";
+    }
+  };
   // 이메일 유효성 검사
   const [isValidEmail, setIsValidEmail] = useState(false);
 
   const emailChangeHandler = (email) => {
+    setIsCheckedEmail(false);
     const re =
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{3}$/;
 
     if (!re.test(emailInputRef.current.value)) {
-      setEmailError("이메일 형식이 올바르지 않습니다.");
       setIsValidEmail(false);
     } else {
-      setEmailError("사용 가능한 이메일 입니다.");
       setIsValidEmail(true);
     }
-    // console.log(emailInputRef.current.value);
-
-    // console.log(isValidEmail);
   };
 
   // 비밀번호 유효성 검사
@@ -55,30 +70,33 @@ const Signup = () => {
   const passwordChangeHandler = (event) => {
     event.preventDefault();
     const password = passwordInputRef.current.value;
-    var isVal = false;
+    // let isVal = false;
 
     const re = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{7,25}$/;
 
     if (!re.test(password)) {
-      isVal = false;
-      setPasswordError(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      );
+      // isVal = false;
+      // setPasswordError(
+      //   "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
+      // );
       setIsValidPassword(false);
+      passwordInputRef.current.style.borderBottom = "2px solid #8f1010";
     } else {
-      isVal = true;
-      setPasswordError("");
+      // isVal = true;
+      // setPasswordError("");
       setIsValidPassword(true);
+      passwordInputRef.current.style.borderBottom = "2px solid #00bd10";
     }
-    console.log(passwordInputRef.current.value);
-    console.log(event.target.value);
 
-    console.log(isValidPassword);
-    console.log(isVal);
+    // console.log(passwordInputRef.current.value);
+    // console.log(event.target.value);
+
+    // console.log(isValidPassword);
+    // console.log(isVal);
   };
 
   // 비밀번호확인 일치 검사
-  const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
+  // const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
 
   const passwordConfirmCheckHandler = (event) => {
     event.preventDefault();
@@ -86,14 +104,17 @@ const Signup = () => {
     const secondPassword = passwordCheckInputRef.current.value;
 
     if (firstPassword !== secondPassword) {
-      setIsValidConfirmPassword(false);
-      setConfirmPasswordError("비밀번호가 다릅니다!");
+      // setIsValidConfirmPassword(false);
+      // setConfirmPasswordError("비밀번호가 다릅니다!");
+      passwordCheckInputRef.current.style.borderBottom = "2px solid #8f1010";
     } else {
-      setIsValidConfirmPassword(true);
-      setConfirmPasswordError("");
+      // setIsValidConfirmPassword(true);
+      passwordCheckInputRef.current.style.borderBottom = "2px solid #00bd10";
+
+      // setConfirmPasswordError("");
     }
-    console.log(firstPassword);
-    console.log(isValidConfirmPassword);
+    // console.log(firstPassword);
+    // console.log(isValidConfirmPassword);
   };
 
   // 입력한 내용 확인
@@ -113,7 +134,8 @@ const Signup = () => {
   };
 
   // 이메일 중복 검사
-  const checkEmailHandler = async () => {
+  const checkEmailHandler = async (e) => {
+    e.preventDefault();
     const checkEmail = emailInputRef.current.value;
     const response = await axios.get(
       `http://localhost:8080/api/check_email?email=${checkEmail}`
@@ -124,10 +146,14 @@ const Signup = () => {
       setIsCheckedEmail(true);
       emailInputRef.current.style.borderBottom = "2px solid #00bd10";
     } else {
-      alert("이미 사용중인 이메일입니다.");
+      if (response.data === "중복O") {
+        alert("이미 사용중인 이메일입니다.");
+      } else if (isValidEmail === false) {
+        alert("이메일 형식이 올바르지 않습니다. 다시 확인후 입력해주세요.");
+      }
       setIsCheckedEmail(false);
       emailInputRef.current.value = "";
-      emailInputRef.current.style.borderBottom = "2px solid #ff0b0b";
+      emailInputRef.current.style.borderBottom = "2px solid #8f1010";
     }
   };
 
@@ -140,13 +166,15 @@ const Signup = () => {
       `http://localhost:8080/api/check_nickname?nickname=${nickname}`
     );
     console.log(response);
-    if (response.data === "중복X") {
+    if (response.data === "중복X" && isValidNickname) {
       alert("사용 가능한 닉네임입니다.");
       setIsCheckedNickname(true);
+      nicknameInputRef.current.style.borderBottom = "2px solid #00bd10";
     } else {
       alert("이미 사용중인 닉네임입니다.");
       setIsCheckedNickname(false);
       nicknameInputRef.current.value = "";
+      nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
     }
   };
 
@@ -195,7 +223,7 @@ const Signup = () => {
         }
       })
       .then(async (data) => {
-        console.log(data, "hjjkkj");
+        // console.log(data, "hjjkkj");
         try {
           await axios.post(
             "http://localhost:8080/api/signup",
@@ -221,7 +249,9 @@ const Signup = () => {
       .catch((err) => {
         alert(err.message);
       });
-    console.log(enteredPhone);
+    // console.log(enteredPhone);
+    // console.log(isCheckedNickname);
+    // console.log(isCheckedEmail);
   };
   return (
     <section className={classes.whiteBox}>
@@ -242,6 +272,7 @@ const Signup = () => {
             onChange={() => {
               setIsCheckedEmail(false);
               emailChangeHandler(emailInputRef.current.value);
+              emailInputRef.current.style.borderBottom = "2px solid #8f1010";
             }}
             type="email"
             id="email"
@@ -255,6 +286,7 @@ const Signup = () => {
         <div className={classes.control}>
           <label htmlFor="password">비밀번호(Password)</label>
           <input
+            className={isValidPassword ? "" : " "}
             onChange={passwordChangeHandler}
             type="password"
             id="password"
@@ -289,6 +321,9 @@ const Signup = () => {
             <input
               onChange={() => {
                 setIsCheckedNickname(false);
+                nicknameChangeHandler(nicknameInputRef.current.value);
+                nicknameInputRef.current.style.borderBottom =
+                  "2px solid #8f1010";
               }}
               type="text"
               id="nickname"
@@ -346,6 +381,9 @@ const Signup = () => {
           {isLoading && <p>잠시만 기다려 주세요...</p>}
         </div>
       </form>
+      <div className={classes.actions} onClick={() => navigate("/login")}>
+        <button className={classes.toggle}>홈으로</button>
+      </div>
     </section>
   );
 };

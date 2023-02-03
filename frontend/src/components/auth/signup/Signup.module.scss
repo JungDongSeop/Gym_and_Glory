@@ -194,6 +194,24 @@
   0 0 10px #f40303;
 }
 
-.passwordValid {
-  border: green;
+.backDiv{
+    // text-shadow: ;
+    font-family: 'Jua', sans-serif;
+    margin-left: 50px;
+    margin-right: 50px;
+    overflow-y: scroll; 
+    height:72vh;
+    & > h2{
+      font-size: 36px;
+      color: #be1616;
+    }
+}
+
+.divSection{
+  & > img{
+    width: 35vw;
+    margin-left: 0;
+    margin-bottom: 3vw;
+    float: left;
+  }
 }

@@ -31,6 +31,8 @@ public class UserBadgeController {
         //DTO가 원래 있어야된다.
         //ENTITY넘기면 안도ㅒ!!!!!!!!!!!!!!!!
         List<Badge> list = userBadgeService.getList(userSequence);
+        Badge badge = list.get(0);
+        System.out.println(badge.getDescription());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

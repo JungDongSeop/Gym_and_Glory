@@ -581,6 +581,7 @@ class GameRoom extends Component {
                     <UserVideoComponent
                       streamManager={this.state.publisher}
                       isHost={this.state.ishost}
+                      currentSession={this.state.session}
                     />
                   </div>
                 ) : (
@@ -596,6 +597,7 @@ class GameRoom extends Component {
                     <UserVideoComponent
                       streamManager={this.state.subscribers[0]}
                       isHost={this.state.ishost}
+                      currentSession={this.state.session}
                     />
                   </div>
                 ) : (
@@ -623,6 +625,7 @@ class GameRoom extends Component {
                     <UserVideoComponent
                       streamManager={this.state.subscribers[1]}
                       isHost={this.state.ishost}
+                      currentSession={this.state.session}
                     />
                   </div>
                 ) : (
@@ -638,6 +641,7 @@ class GameRoom extends Component {
                     <UserVideoComponent
                       streamManager={this.state.subscribers[2]}
                       isHost={this.state.ishost}
+                      currentSession={this.state.session}
                     />
                   </div>
                 ) : (

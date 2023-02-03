@@ -113,8 +113,22 @@ const Signup = () => {
 
       // setConfirmPasswordError("");
     }
+
     // console.log(firstPassword);
     // console.log(isValidConfirmPassword);
+  };
+
+  // 전화번호 유효성검사
+  const [isValidPhone, setIsValidPhone] = useState(false);
+
+  const phoneCheckHandler = (event) => {
+    const re = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
+    console.log(re.test(phoneInputRef.current.value));
+    if (re.test(phoneInputRef.current.value)) {
+      setIsValidPhone(true);
+    } else {
+      setIsValidPhone(false);
+    }
   };
 
   // 입력한 내용 확인
@@ -149,7 +163,11 @@ const Signup = () => {
       if (response.data === "중복O") {
         alert("이미 사용중인 이메일입니다.");
       } else if (isValidEmail === false) {
-        alert("이메일 형식이 올바르지 않습니다. 다시 확인후 입력해주세요.");
+        if (checkEmail.length === 0) {
+          alert("이메일을 입력해주세요!");
+        } else {
+          alert("이메일 형식이 올바르지 않습니다. 다시 확인후 입력해주세요.");
+        }
       }
       setIsCheckedEmail(false);
       emailInputRef.current.value = "";
@@ -179,83 +197,96 @@ const Signup = () => {
   };
 
   const submitHandler = (event) => {
-    event.preventDefault();
+    if (!isCheckedEmail) {
+      alert("이메일 중복검사를 해주세요");
+    } else if (!isCheckedNickname) {
+      alert("닉네임 중복검사를 해주세요");
+    } else if (!isValidPhone) {
+      alert("전화번호를 다시 확인해주세요");
+    } else {
+      event.preventDefault();
 
-    // useRef 이용하여 입력 데이터 가져오기
-    const enteredEmail = emailInputRef.current.value;
-    const enteredPassword = passwordInputRef.current.value;
-    // const enteredPasswordCheck = passwordCheckInputRef.current.value;
-    const enteredNickname = nicknameInputRef.current.value;
-    const enteredPhone = phoneInputRef.current.value;
+      // useRef 이용하여 입력 데이터 가져오기
+      const enteredEmail = emailInputRef.current.value;
+      const enteredPassword = passwordInputRef.current.value;
+      // const enteredPasswordCheck = passwordCheckInputRef.current.value;
+      const enteredNickname = nicknameInputRef.current.value;
+      const enteredPhone = phoneInputRef.current.value;
 
-    // 유효성 검증 추가 할 수 있음
+      // 유효성 검증 추가 할 수 있음
 
-    // 회원가입 api요청 보내기
-    setIsLoading(true);
+      // 회원가입 api요청 보내기
+      setIsLoading(true);
 
-    fetch(URL, {
-      method: "POST",
-      // json 형태로 넘겨줘야하고 email과 아이디를 넘겨준다. 추후 닉네임, 성별도 추가 예정
-      body: JSON.stringify({
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      // 응답이 성공적이라면
-      .then((res) => {
-        // 로딩상태 제거
-        setIsLoading(false);
-        if (res.ok) {
-          // ...
-          // console.log("회원가입 성공");
-          // console.log(res)
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            // 오류 모달 띄워야 한다.
-            let errorMessage = "다시 확인후 회원가입을 진행해주세요.";
-            throw new Error(errorMessage);
-          });
-        }
+      fetch(URL, {
+        method: "POST",
+        // json 형태로 넘겨줘야하고 email과 아이디를 넘겨준다. 추후 닉네임, 성별도 추가 예정
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .then(async (data) => {
-        // console.log(data, "hjjkkj");
-        try {
-          await axios.post(
-            "http://localhost:8080/api/signup",
-            {
-              email: data.email,
-              nickname: enteredNickname,
-              gender: genderValue,
-              telNumber: enteredPhone,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${data.idToken}`,
+        // 응답이 성공적이라면
+        .then((res) => {
+          // 로딩상태 제거
+          setIsLoading(false);
+          if (res.ok) {
+            // ...
+            // console.log("회원가입 성공");
+            // console.log(res)
+            return res.json();
+          } else {
+            return res.json().then((data) => {
+              // 오류 모달 띄워야 한다.
+              let errorMessage = "다시 확인후 회원가입을 진행해주세요.";
+              throw new Error(errorMessage);
+            });
+          }
+        })
+        .then(async (data) => {
+          // console.log(data, "hjjkkj");
+          try {
+            await axios.post(
+              "http://localhost:8080/api/signup",
+              {
+                email: data.email,
+                nickname: enteredNickname,
+                gender: genderValue,
+                telNumber: enteredPhone,
               },
-            }
-          );
-          alert("성공적으로 회원가입이 완료되었습니다.");
-          navigate("/login");
-        } catch (err) {
-          console.log(err);
-        }
-      })
+              {
+                headers: {
+                  Authorization: `Bearer ${data.idToken}`,
+                },
+              }
+            );
+            alert("성공적으로 회원가입이 완료되었습니다.");
+            navigate("/login");
+          } catch (err) {
+            console.log(err);
+          }
+        })
 
-      .catch((err) => {
-        alert(err.message);
-      });
-    // console.log(enteredPhone);
-    // console.log(isCheckedNickname);
-    // console.log(isCheckedEmail);
+        .catch((err) => {
+          alert(err.message);
+        });
+      // console.log(enteredPhone);
+      // console.log(isCheckedNickname);
+      // console.log(isCheckedEmail);
+    }
   };
   return (
     <section className={classes.whiteBox}>
-      <img className={classes.logoSmall} src={Logo} alt="small logo" />
+      <img
+        className={classes.logoSmall}
+        src={Logo}
+        alt="small logo"
+        onClick={() => navigate("/")}
+      />
       <h1>회원가입</h1>
       <form onSubmit={submitHandler}>
         {/* 아이디 입력 */}
@@ -286,7 +317,6 @@ const Signup = () => {
         <div className={classes.control}>
           <label htmlFor="password">비밀번호(Password)</label>
           <input
-            className={isValidPassword ? "" : " "}
             onChange={passwordChangeHandler}
             type="password"
             id="password"
@@ -296,22 +326,24 @@ const Signup = () => {
           />
         </div>
         {/* 2차 비밀번호 입력 */}
-        <div className={classes.control}>
-          <label htmlFor="passwordcheck">비밀번호 확인</label>
-          <input
-            onChange={passwordConfirmCheckHandler}
-            type="password"
-            id="passwordcheck"
-            // required
-            ref={passwordCheckInputRef}
-            autoComplete="off"
-          />
-        </div>
+        {isValidPassword && (
+          <div className={classes.control}>
+            <label htmlFor="passwordcheck">비밀번호 확인</label>
+            <input
+              onChange={passwordConfirmCheckHandler}
+              type="password"
+              id="passwordcheck"
+              // required
+              ref={passwordCheckInputRef}
+              autoComplete="off"
+            />
+          </div>
+        )}
 
         {/* 닉네임 */}
         <div>
           <div className={classes.control}>
-            <label htmlFor="nickname">닉네임</label>
+            <label htmlFor="nickname">닉네임(Nickname)</label>
             <button
               className={classes.authsmallbutton}
               onClick={checkNicknameHandler}
@@ -336,8 +368,9 @@ const Signup = () => {
         {/* 전화번호 */}
         <div>
           <div className={classes.control}>
-            <label htmlFor="phone">전화번호</label>
+            <label htmlFor="phone">전화번호(Phone)</label>
             <input
+              onChange={phoneCheckHandler}
               type="tel"
               id="phone"
               // required

@@ -49,4 +49,11 @@ public class FriendController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @DeleteMapping("/list/{getSequence}/{sendSequence}")
+    public ResponseEntity<?> deleteFriend(@PathVariable Integer getSequence, @PathVariable Integer sendSequence){
+        friendService.deleteFriend(getSequence,sendSequence);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

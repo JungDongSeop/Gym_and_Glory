@@ -66,13 +66,22 @@ class UserVideoComponent extends Component {
   }
 
   handleForceDisconnect() {
-    alert("방장만 강퇴시킬수 있습니다.");
-    return;
-    console.log("밑에꺼 실행되나");
+    if (!this.state.ishost) {
+      alert("방장만 강퇴시킬수 있습니다.");
+      return;
+    }
+    const connection = this.props.streamManager.stream.connection;
+    const currentSession = this.props.currentSession;
+    // currentSession.forceDisconnect(stream);
+    // console.log("밑에꺼 실행되나");
+    currentSession.signal({
+      to: [connection],
+      type: "get-out",
+    });
   }
 
   render() {
-    const myNick = localStorage.getItem('nickname')
+    const myNick = localStorage.getItem("nickname");
     const getNick = JSON.parse(
       this.props.streamManager.stream.connection.data
     ).clientData;

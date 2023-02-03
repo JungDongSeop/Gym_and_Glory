@@ -96,7 +96,7 @@ const Signup = () => {
   };
 
   // 비밀번호확인 일치 검사
-  // const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
+  const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
 
   const passwordConfirmCheckHandler = (event) => {
     event.preventDefault();
@@ -104,11 +104,11 @@ const Signup = () => {
     const secondPassword = passwordCheckInputRef.current.value;
 
     if (firstPassword !== secondPassword) {
-      // setIsValidConfirmPassword(false);
+      setIsValidConfirmPassword(false);
       // setConfirmPasswordError("비밀번호가 다릅니다!");
       passwordCheckInputRef.current.style.borderBottom = "2px solid #8f1010";
     } else {
-      // setIsValidConfirmPassword(true);
+      setIsValidConfirmPassword(true);
       passwordCheckInputRef.current.style.borderBottom = "2px solid #00bd10";
 
       // setConfirmPasswordError("");
@@ -122,12 +122,14 @@ const Signup = () => {
   const [isValidPhone, setIsValidPhone] = useState(false);
 
   const phoneCheckHandler = (event) => {
-    const re = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
+    const re = /^01(?:0|1|[6-9])(?:\d{4})\d{4}$/;
     console.log(re.test(phoneInputRef.current.value));
     if (re.test(phoneInputRef.current.value)) {
       setIsValidPhone(true);
+      phoneInputRef.current.style.borderBottom = "2px solid #00bd10";
     } else {
       setIsValidPhone(false);
+      phoneInputRef.current.style.borderBottom = "2px solid #8f1010";
     }
   };
 
@@ -188,8 +190,8 @@ const Signup = () => {
       alert("사용 가능한 닉네임입니다.");
       setIsCheckedNickname(true);
       nicknameInputRef.current.style.borderBottom = "2px solid #00bd10";
-    } else {
-      alert("이미 사용중인 닉네임입니다.");
+    } else if (response.data === "중복X" && !isValidNickname) {
+      alert("사용할 수 없는 닉네임 입니다.");
       setIsCheckedNickname(false);
       nicknameInputRef.current.value = "";
       nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
@@ -314,17 +316,20 @@ const Signup = () => {
           />
         </div>
         {/* 1차 비밀번호 입력 */}
-        <div className={classes.control}>
-          <label htmlFor="password">비밀번호(Password)</label>
-          <input
-            onChange={passwordChangeHandler}
-            type="password"
-            id="password"
-            // required
-            ref={passwordInputRef}
-            autoComplete="off"
-          />
-        </div>
+        {
+          <div className={classes.control}>
+            <label htmlFor="password">비밀번호(Password)</label>
+            <input
+              onChange={passwordChangeHandler}
+              type="password"
+              id="password"
+              // required
+              placeholder="영어+숫자+특수문자 8자리 이상"
+              ref={passwordInputRef}
+              autoComplete="off"
+            />
+          </div>
+        }
         {/* 2차 비밀번호 입력 */}
         {isValidPassword && (
           <div className={classes.control}>
@@ -341,30 +346,37 @@ const Signup = () => {
         )}
 
         {/* 닉네임 */}
-        <div>
-          <div className={classes.control}>
-            <label htmlFor="nickname">닉네임(Nickname)</label>
-            <button
-              className={classes.authsmallbutton}
-              onClick={checkNicknameHandler}
-            >
-              중복확인
-            </button>
-            <input
-              onChange={() => {
-                setIsCheckedNickname(false);
-                nicknameChangeHandler(nicknameInputRef.current.value);
-                nicknameInputRef.current.style.borderBottom =
-                  "2px solid #8f1010";
-              }}
-              type="text"
-              id="nickname"
-              // required
-              ref={nicknameInputRef}
-              autoComplete="off"
-            />
+        {
+          <div>
+            <div className={classes.control}>
+              <label htmlFor="nickname">닉네임(Nickname)</label>
+              <button
+                className={classes.authsmallbutton}
+                onClick={checkNicknameHandler}
+              >
+                중복확인
+              </button>
+              <input
+                onChange={() => {
+                  setIsCheckedNickname(false);
+                  nicknameChangeHandler(nicknameInputRef.current.value);
+                  nicknameInputRef.current.style.borderBottom =
+                    "2px solid #8f1010";
+                }}
+                type="text"
+                id="nickname"
+                // required
+                ref={nicknameInputRef}
+                autoComplete="off"
+                // onKeyDown={(e) => {
+                //   if (e.key === "Enter") {
+                //     checkNicknameHandler();
+                //   }
+                // }}
+              />
+            </div>
           </div>
-        </div>
+        }
         {/* 전화번호 */}
         <div>
           <div className={classes.control}>

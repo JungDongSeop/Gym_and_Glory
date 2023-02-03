@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useContext } from "react";
+import AuthContext from "../../store/auth-context";
 import axios from 'axios';
 import './Comment.module.css';
 // import { useNavigate } from 'react-router-dom';
@@ -13,12 +14,12 @@ const Comment = () => {
   const { articleSequence } = useParams();
 
   // 유저 정보 redux에서 받아오기
-  const user = useSelector((state) => state.user);
+  const {userSequence} = useContext(AuthContext);
 
   // 댓글 읽기 위한 state
   const [comments, setComments] = useState([]);
   // 댓글 쓰기 위한 state
-  const [newComment, setNewComment] = useState({'userSequence': user.pk, contents: ''});
+  const [newComment, setNewComment] = useState({'userSequence': userSequence, contents: ''});
 
   // 댓글 read axios 요청
   const commentRead = (articleSequence) => {
@@ -40,7 +41,7 @@ const Comment = () => {
     alert("댓글이 작성되었습니다.")
 
     axios.post(`/board/comment`, {
-      "userSequence": user.pk,
+      "userSequence": userSequence,
       "articleSequence": articleSequence,
       "contents": newComment.contents
     })
@@ -57,7 +58,7 @@ const Comment = () => {
   // 댓글 좋아요 axios 요청
   const handleGood = async (commentSequence) => {
     try {
-      await axios(`/board/comment/good/${user.pk}/${commentSequence}`);
+      await axios(`/board/comment/good/${userSequence}/${commentSequence}`);
       alert('댓글을 추천하였습니다.')
       // Show a success message or refresh the comments list
       commentRead(articleSequence);

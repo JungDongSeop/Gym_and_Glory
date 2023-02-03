@@ -15,14 +15,25 @@ const ExerciseGrass = () => {
   useEffect(() => {
     axios.get(`http://localhost:8080/exerciseLog/list/${userSequence}/1`)
     .then(res => {
-        console.log(res.data)
-      setAttendanceData(res.data);
+      // 여기가 이상하게 작동한다.
+      console.log('res.data', res.data)
+      const tmp = res.data
+
+      const aaa = tmp.reduce((acc, d) => { 
+        console.log('acc', acc)
+        acc[d.date] = d.count;
+        return acc;
+        
+      });
+      console.log('aaa', aaa);
+      setAttendanceData(aaa);      
     });
   }, [userSequence]);
 
   const renderAttendance = () => {
     const date = new Date();
     date.setDate(date.getDate() - 365);
+    // console.log('attendanceData', attendanceData);
 
     return (
       <div className={classes.container}>
@@ -33,23 +44,22 @@ const ExerciseGrass = () => {
               .fill(0)
               .map((_, j) => {
                 const currentDate = new Date(date);
+                
                 currentDate.setDate(currentDate.getDate() + i * 7 + j);
+                // console.log('currentDate', currentDate);
 
-                const attendanceForDay = attendanceData.find(
-                    attendance =>
-                      new Date(attendance.date).toDateString() ===
-                      currentDate.toDateString()
-                  );
-  
-                  const hasAttendance =
-                    attendanceForDay && attendanceForDay.count > 0;
+                const attendanceForDay = attendanceData[currentDate]
+                
+
+                // console.log('attendanceForDay', attendanceForDay)
+                // console.log('attendanceData', attendanceData)
 
                 return (
                   <div
                     key={j}
                     className={classes.cell}
                     style={{
-                      backgroundColor: hasAttendance ? "green" : "gray"
+                      backgroundColor: attendanceForDay ? "green" : "gray"
                     }}
                   />
                 );

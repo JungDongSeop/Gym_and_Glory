@@ -1,19 +1,33 @@
 import classes from "./Lobby.module.css";
 import RoomList from "./room_list/RoomList";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  width: 100%;
+`;
+
+const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const Lobby = () => {
   return (
     <main className={classes.lobby}>
       {/* 방 검색 + 방 목록 */}
-      <div>
-        <form>
-          <input type="text" placeholder="검색" />
-          <button type="submit">검색</button>
-        </form>
-
+      <Wrapper>
+        <SearchWrapper>
+          <span>로비</span>
+          <form>
+            <input type="text" placeholder="검색" />
+            <button type="submit">검색</button>
+          </form>
+        </SearchWrapper>
+        <hr />
+        <br />
         <RoomList />
-      </div>
+      </Wrapper>
     </main>
   );
 };

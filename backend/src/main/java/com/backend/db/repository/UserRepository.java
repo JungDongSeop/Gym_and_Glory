@@ -25,4 +25,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findUser(Integer userSequence);
 
     User findByTelNumber(String telNum);
+
+    @Query("select u from User u where u.nickname like %:word%")
+    List<User> findByNicknameLike(String word);
 }

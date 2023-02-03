@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useContext } from "react";
+import AuthContext from "../../../store/auth-context";
 import { useNavigate } from "react-router-dom";
 import FriendListModalDetail from './FriendListModalDetail';
 import axios from 'axios';
@@ -11,8 +12,8 @@ const FriendList = () => {
   // 네비게이션을 위한 함수
   const navigate = useNavigate();
 
-  // redux로 user 정보 가져오기
-  const userSequence = useSelector((state) => state.user.pk);
+  // user 정보 가져오기
+  const {userSequence} = useContext(AuthContext);
 
   // 모달을 열고 닫는 함수
   const [modalOpen, setModalOpen] = useState(false);
@@ -28,7 +29,8 @@ const FriendList = () => {
   // 친구 목록 axios 요청
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(`http://localhost:8080/friend/list/${userSequence}`);
+      const result = await axios(`http://localhost:8080/friend/list/${userSequence}`, {
+      });
       setFriends(result.data);
     };
     fetchData();

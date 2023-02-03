@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useContext } from "react";
+import AuthContext from "../../store/auth-context";
 import { useParams, useNavigate } from'react-router-dom';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import axios from 'axios';
@@ -10,7 +12,7 @@ const ReportBoardDetail = () => {
 
   // redux에서 user 정보를 받아오기
   const isAdmin = useSelector((state) => state.user.isAdmin);
-  const userSequence = useSelector((state) => state.user.pk);
+  const {userSequence} = useContext(AuthContext);
 
   // URL의 params를 쓰기 위한 state
   const { reportSequence } = useParams();
@@ -49,14 +51,14 @@ const ReportBoardDetail = () => {
             확인 완료
           </button>
         </div>
-      ) : ( userSequence === data.sendSequence ? (
+      ) : ( userSequence === String(data.sendSequence) ? (
             <div>
               <h1>유저님이 신고한 내역입니다.</h1>
               <p>from : {data.sendSequence}, to : {data.getSequence}</p>
               <p>내용 : {data.contents}</p>
               <button onClick={() => deleteClick()}>삭제</button>        
             </div>
-       ) : <div></div> )
+       ) : <div>본인이 신고한 페이지가 아닙니다.</div> )
       }
     </main>
   );

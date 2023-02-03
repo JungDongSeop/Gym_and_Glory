@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useContext } from "react";
+import AuthContext from "../../store/auth-context";
 import { useParams, useNavigate } from'react-router-dom';
 import Comment from './Comment';
+import UserIdToNickname from './UserIdToNickname';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import axios from 'axios';
 
@@ -16,30 +18,34 @@ const DetailBoard = () => {
   const { type, articleSequence } = useParams();
 
   // redux에서 user 정보를 받아오기
-  const user = useSelector((state) => state.user);
+  const {userSequence} = useContext(AuthContext);
 
   // 게시글 read를 위한 axios 요청
   // data : 게시글 상세 정보를 담은 변수
   const [data, setData] = useState([]);
 
+  const readBoard = async () => {
+    const result = await axios(`http://localhost:8080/board/${articleSequence}`);
+    setData(result.data);        
+  };
   useEffect(() => {
-    const fetchData = async () => {
+    const readBoard = async () => {
       const result = await axios(`http://localhost:8080/board/${articleSequence}`);
       setData(result.data);        
     };
-    fetchData();
+    readBoard();
   }, [articleSequence]);
 
   // 게시글 좋아요를 위한 axios
   const goodClick = async () => {
-    const result = await axios(`http://localhost:8080/board/good/${user.pk}/${articleSequence}`);
-    console.log(result);
+    await axios(`http://localhost:8080/board/good/${userSequence}/${articleSequence}`);
+    alert('추천하였습니다')
+    readBoard();
   }
 
   // 게시글 삭제를 위한 axios
   const deleteClick = async () => {
-    const result = await axios.delete(`http://localhost:8080/board/${articleSequence}`);
-    console.log(result.data);
+    await axios.delete(`http://localhost:8080/board/${articleSequence}`);
     navigate('/board/notice');
   }
 
@@ -53,6 +59,8 @@ const DetailBoard = () => {
       <p>{data.title}</p>
       <p>내용 : </p>
       <p>{data.contents}</p>
+      <p>작성자 : </p>
+      <p><UserIdToNickname userId={data.userSequence}/></p>
 
       <br />
       {/* 게시글 수정 구현 */}

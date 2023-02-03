@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { useContext } from "react";
+import AuthContext from "../../store/auth-context";
 import { useSelector } from 'react-redux';
 import NavigateButtons from './NavigateButtons';
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
@@ -19,12 +21,10 @@ const ReportBoard = () => {
 
   // redux로 user 정보 가져오기
   const isAdmin = useSelector(state => state.user.isAdmin);
-  const userSequence = useSelector(state => state.user.pk);
+  const {userSequence} = useContext(AuthContext);
   
   // 게시판에 쓴 글들을 저장할 변수
   const [board, setBoard] = useState([]);
-  // 사용자의 게시글을 저장할 변수
-  // const [userBoard, setUserBoard] = useState([]);
 
   // 게시글 전체 조회 axios (관리자, 유저)
   useEffect(() => {

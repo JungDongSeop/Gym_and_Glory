@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Song+Myung&display=swap');
+
+.whiteBox {
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  object-fit: contain;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.6);
+
+  & > h1{
+    font-family: 'Song Myung', serif;
+    font-size: 20px;
+  }
+
+  & > form{
+    width:40%;
+  }
+}
+
+.whiteBox .logoSmall {
+  width: 10rem;
+  height: 10rem;
+  margin: 0 auto;
+}
+
+.whiteBox .inputText {
+  width: 30%;
+  height: 5%;
+
+  margin: 0 auto;
+  border: 1px solid #9f9f9f;
+
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.514);
+}
+.control {
+  margin-bottom: 0.5rem;
+
+  & > input:hover, input:focus{
+    background-color: rgba(52, 46, 46, 0.473) ;
+   
+  }
+
+  & >input::placeholder {
+    color: rgba(0, 0, 0, 0.471);
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.514);
+  }
+  
+}
+
+.control label {
+  display: block;
+  color: #920000;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 2px #626262;
+}
+
+.control input {
+  width: 100%;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0) ;
+  border-top: 0px ;
+  border-left: 0px ;
+  border-right: 0px ;
+  border-bottom: 2px solid #8f1010 ;
+  border-radius: 0 ;
+  color: black;
+  transition: 0.3s; 
+  background-color: #ffffff30;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.514);
+}
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions button {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  background-color: #9f5ccc;
+  border: 1px solid #9f5ccc;
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem;
+}
+
+.actions button:hover {
+  background-color: #873abb;
+  border-color: #873abb;
+}
+
+.actions .toggle {
+  margin-top: 1rem;
+  background-color: transparent;
+  color: #8f1010;
+  border: 1px solid #8f1010;
+  padding: 0.15rem 1.5rem;
+
+
+  color: rgb(208, 175, 175);
+  background-color: rgb(155, 3, 3);
+  border-radius: 5px;
+  border: 0px;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.514);
+  transition: 0.2s;
+}
+
+.actions .toggle:hover {
+  background: #f40303;
+  color: #fff;
+  box-shadow: 0 0 5px #f40303,
+              0 0 10px #f40303;
+}
+
+.gender {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  justify-content: center;
+}
+
+.nicknamecheck {
+  display: flex;
+}
+
+
+.authsmallbutton{
+  color: rgb(208, 175, 175);
+  background-color: rgb(155, 3, 3);
+  border-radius: 5px;
+  border: 0px;
+  margin-bottom: 5px;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.514);
+  transition: 0.2s;
+  float: right;
+  margin-top: -25px;
+  &:hover{
+    background: #f40303;
+    color: #fff;
+    box-shadow: 0 0 5px #f40303,
+                0 0 10px #f40303;
+  }
+}
+
+.genderRadio{
+  color : #920000;
+  text-shadow: 0 1px 2px #626262;
+  margin-right: 10px;
+  & > input[type="radio"] {
+    background-color: #62626276;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid #920000;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+  }
+
+  & > input[type="radio"]:hover {
+    background-color: #ffffff7b;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding:1px;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    border : 2px white;
+    box-shadow: 0 0 7px #ffc3c3,
+    0 0 10px #f40303;
+  }
+
+  & > input[type="radio"]:checked {
+    background-color: #980000;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding:1px;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+  }
+
+}
+
+.genderRadio:hover, .genderRadio:focus{
+  color:rgb(255, 255, 255);
+  text-shadow: 0 0 5px #ffc3c3,
+  0 0 10px #f40303;
+}
+
+.backDiv{
+    // text-shadow: ;
+    font-family: 'Jua', sans-serif;
+    margin-left: 50px;
+    margin-right: 50px;
+    overflow-y: scroll; 
+    height:72vh;
+    & > h2{
+      font-size: 36px;
+      color: #be1616;
+    }
+}
+
+.divSection{
+  & > img{
+    width: 35vw;
+    margin-left: 0;
+    margin-bottom: 3vw;
+    float: left;
+  }
+}

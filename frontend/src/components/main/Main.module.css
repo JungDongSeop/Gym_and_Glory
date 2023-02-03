@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Song+Myung&display=swap');
+
 .carousel {
   width: 50%;
   height: 100%;
@@ -39,23 +41,44 @@
 }
 
 .carouselBox .leftword {
-  color: #8f1010;
-  font-family: 'Dokdo', cursive;
+  color: #be1616;
+  /* font-family: 'Dokdo', cursive; */
+  font-family: 'Song Myung', serif;
   position: absolute;
   bottom: 0;
-  font-size: 50px;
+  font-size: 1.5vw;
   cursor: pointer;
   bottom: 0;
-  left: 0;
+  left: 10px;
+  transition: 0.3s;
 }
 
 .carouselBox .rightword {
-  color: #8f1010;
-  font-family: 'Dokdo', cursive;
+  color: #be1616;
+  font-family: 'Song Myung', serif;
+  /* font-family: 'Dokdo', cursive; */
   position: absolute;
   bottom: 0;
-  font-size: 50px;
+  font-size: 1.5vw;
   cursor: pointer;
   bottom: 0;
-  right: 0;
+  right: 10px;
+  transition: 0.3s;
+}
+
+.leftword:hover,
+.leftword:focus,
+.rightword:hover,
+.rightword:focus{
+  color: #ff5454;
+  text-shadow:
+  0 0 5px #fff,
+  0 0 10px #fff,
+  0 0 20px #fff,
+  0 0 40px rgb(255, 0, 0)
+}
+
+.mainText{
+  font-size: 20px;
+  font-family: 'Song Myung', serif;
 }

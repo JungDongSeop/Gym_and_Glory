@@ -7,6 +7,7 @@ import com.backend.db.repository.SendFriendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -42,5 +43,11 @@ public class FriendService {
 
     public List<Friend> getList(Integer userSequence) {
         return friendRepository.findByGetSequence(userSequence);
+    }
+
+    @Transactional
+    public void deleteFriend(Integer getSequence, Integer sendSequence) {
+        friendRepository.deleteByGetSequenceAndSendSequence(getSequence,sendSequence);
+        friendRepository.deleteByGetSequenceAndSendSequence(sendSequence,getSequence);
     }
 }

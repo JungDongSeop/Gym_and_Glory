@@ -6,7 +6,18 @@
   object-fit: contain;
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.6);
+
+  & > ul{
+      margin-left: 15vw;
+      margin-right: 15vw;
+      width: 20vw;
+  }
 }
+
+// .slick-slider{
+//   display: flex !important;
+//   justify-content: center;
+// }
 
 .carouselBox {
   text-align: center;
@@ -53,6 +64,7 @@
   transition: 0.3s;
 }
 
+
 .carouselBox .rightword {
   color: #be1616;
   font-family: 'Song Myung', serif;
@@ -83,12 +95,11 @@
     & > h1{
     font-size: calc(20px + 0.3vw);
   }
-  margin-bottom: 30px;
+  margin-bottom: -30px;
 }
 
 
 .storyDiv{
-  // text-shadow: ;
   font-family: 'Jua', sans-serif;
   margin-left: 50px;
   margin-right: 50px;
@@ -113,19 +124,6 @@
   }
 }
 
-// .ff {
-// 	animation-name: fadein;
-//   animation-duration: 2s;
-// }
-
-// @keyframes fadein {
-// 	0% {
-// 		opacity: 0;
-// 	}
-// 	100% {
-// 		opacity: 1;
-// 	}
-// }
 
 .StorytextDiv{
   float: right;

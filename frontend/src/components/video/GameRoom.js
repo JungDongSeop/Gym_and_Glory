@@ -28,6 +28,7 @@ const Wrapper = styled.div`
   height: auto;
   width: 100%;
   background-color: black;
+  overflow-y:hidden;
 `;
 
 const NavWrapper = styled.div`
@@ -49,7 +50,8 @@ const HeadWrapper = styled.div`
 `;
 
 const BodyWrapper = styled.div`
-  width: 1535px;
+  width: 100%;
+  height: 100%;
 `;
 
 const TitleWrapper = styled.div`

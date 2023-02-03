@@ -55,8 +55,10 @@ class UserVideoComponent extends Component {
   }
 
   getNicknameTag() {
-    return JSON.parse(this.props.streamManager.stream.connection.data)
-      .clientData;
+    return JSON.parse(
+      this.props.streamManager.stream.connection.data
+    ).clientData;
+    
   }
 
   handleIsActive() {

@@ -28,7 +28,7 @@ const Wrapper = styled.div`
   height: auto;
   width: 100%;
   background-color: black;
-  overflow-y:hidden;
+  overflow-y: hidden;
 `;
 
 const NavWrapper = styled.div`
@@ -116,6 +116,8 @@ class GameRoom extends Component {
     this.predict = this.predict.bind(this);
     this.chattoggle = this.chattoggle.bind(this);
     this.changemodel = this.changemodel.bind(this);
+    this.handleAudioStatus = this.handleAudioStatus.bind(this);
+    this.handleVideoStatus = this.handleVideoStatus.bind(this);
   }
 
   componentDidMount() {
@@ -241,6 +243,18 @@ class GameRoom extends Component {
       subscribers.splice(index, 1);
       this.setState({ subscribers });
     }
+  }
+
+  handleAudioStatus() {
+    const changeAudioStatus = !this.state.audiostate;
+    this.state.publisher.publishAudio(changeAudioStatus);
+    this.setState({ audiostate: changeAudioStatus });
+  }
+
+  handleVideoStatus() {
+    const changeVideoStatus = !this.state.videostate;
+    this.state.publisher.publishVideo(changeVideoStatus);
+    this.setState({ videostate: changeVideoStatus });
   }
 
   joinSession() {
@@ -605,13 +619,13 @@ class GameRoom extends Component {
                 )}
               </div>
               <div id="game-container">
-                <button onClick={this.start}>start</button>
                 <button onClick={this.changemodel}>모델 바꾸기</button>
 
                 <UnityGame ref={this.state.myRef} />
                 <div>
                   <Chats chats={chats} />
                 </div>
+                <button onClick={this.start}>start</button>
                 <input type="text" />
               </div>
               <div id="video-container2" className="video-container">
@@ -654,14 +668,30 @@ class GameRoom extends Component {
         <FooterWrapper>
           <Footer>
             {this.state.videostate ? (
-              <VideocamOutlined id="icon-margin" />
+              <VideocamOutlined
+                id="icon-margin"
+                onClick={this.handleVideoStatus}
+                className="hover-pointer"
+              />
             ) : (
-              <VideocamOffOutlined id="icon-margin" />
+              <VideocamOffOutlined
+                id="icon-margin"
+                onClick={this.handleVideoStatus}
+                className="hover-pointer"
+              />
             )}
             {this.state.audiostate ? (
-              <MicOutlined id="icon-margin" />
+              <MicOutlined
+                id="icon-margin"
+                onClick={this.handleAudioStatus}
+                className="hover-pointer"
+              />
             ) : (
-              <MicOffOutlined id="icon-margin" />
+              <MicOffOutlined
+                id="icon-margin"
+                onClick={this.handleAudioStatus}
+                className="hover-pointer"
+              />
             )}
             {this.state.chaton ? (
               <ChatOutlined id="icon-margin" />

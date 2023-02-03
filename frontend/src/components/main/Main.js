@@ -7,8 +7,8 @@ import AuthContext from "../../store/auth-context";
 import Logo from "../../assets/logo.png";
 import story_img1 from "../../assets/story_img1.PNG";
 import story_img2 from "../../assets/story_img2.PNG";
-// import story_img3 from "../../assets/story_img3.PNG";
-// import story_img4 from "../../assets/story_img4.PNG";
+import story_img3 from "../../assets/story_img3.PNG";
+import story_img4 from "../../assets/story_img4.PNG";
 import story_textbg from "../../assets/story_textbg.jpg";
 import Button from "../../components/UI/Button";
 
@@ -100,7 +100,7 @@ const Main = () => {
               </div>
 
               <div className={classes.storySection}>
-              <img src={story_img1} alt={story_img1}></img>
+              <img src={story_img3} alt={story_img3}></img>
               <div className={classes.StorytextDiv} style={{backgroundImage : `url(${story_textbg})`}}>
                 <p>
                   당신은 여행을 떠나며 점점 더 강하고 다양한 드래곤과 만나 전투를 벌이게 됩니다.
@@ -110,7 +110,7 @@ const Main = () => {
               </div>
 
               <div className={classes.storySection}>
-              <img src={story_img1} alt={story_img1}></img>
+              <img src={story_img4} alt={story_img4}></img>
               <div className={classes.StorytextDiv} style={{backgroundImage : `url(${story_textbg})`}}>
                 <p>
                 만약 당신이 그 드래곤을 무찌른다면 드래곤 머슬 마스터라는 칭호를 얻고 지상 최고의 드래곤 슬레이어가 됩니다.

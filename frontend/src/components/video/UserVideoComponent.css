@@ -1,0 +1,38 @@
+video {
+  width: 100%;
+  aspect-ratio: 9/7;
+}
+
+.alert {
+  width: 20px;
+  position: absolute;
+  right: 0;
+}
+
+.alert:hover {
+  cursor: pointer;
+}
+
+li {
+  font-size: 15px;
+  margin: 5px;
+}
+
+li:hover {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  text-align: center;
+  margin: 5px;
+}
+
+.active {
+  visibility: visible;
+}
+
+.notActive {
+  visibility: hidden;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import { useNavigate } from 'react-router';
@@ -10,17 +10,18 @@ const ReportBoardCreate = () => {
   // url 이동을 위한 함수
   const navigate = useNavigate();
   
+  const enteredusername = useRef();
   // redux로 user 정보 가져오기
   const {userSequence} = useContext(AuthContext);
 
   // 닉네임으로 유저 검색
-  const [reportUserNickname, setReportUserNickname] = useState('');
+  // const [reportUserNickname, setReportUserSequence] = useState('');
   const [searchedDatas, setSearchedDatas] = useState([]);
   const [pickedData, setPickedData] = useState({});
 
   // 게시판에 저장할 정보
   const [contents, setContents] = useState('');
-  const [kind, setKind] = useState('');
+  const [kind, setKind] = useState('1');
   // 게시판에 작성한 글 저장
   const handleChange = (event) => {
     setContents(event.target.value);
@@ -29,15 +30,24 @@ const ReportBoardCreate = () => {
   const handleKindChange = (event) => {
     setKind(event.target.value);
   };
-  // 닉네임 저장
-  const handleReportUserNicknameChange = async (event) => {
-    setReportUserNickname(event.target.value);
-    const pickedUserData = await axios.get(`http://localhost:8080/api/search/nickname/${reportUserNickname}`)
+  // 닉네임 목록 불러오기
+  const handleReportUserNicknameChange = async () => {
+    const reportUserName = enteredusername.current.value
+    // 닉네임이 있으면 해당 닉네임으로 axios 요청
+    if (reportUserName.trim()) {
+      await axios.get(`http://localhost:8080/api/search/nickname/${reportUserName}`)
       .then((res) => {
-        console.log(res.data);
         setSearchedDatas(res.data);
       })
+      .catch(() => {
+      } )
+    }
   };
+  // 닉네임 저장
+  const saveReportUserData = (data) => {
+    setPickedData(data);
+    console.log(data)
+  }
 
   // 게시판 create axios 요청
   const handleSubmit = async (event) => {
@@ -46,7 +56,7 @@ const ReportBoardCreate = () => {
     try {
       await axios.post('http://localhost:8080/report', {
         "sendSequence": userSequence,
-        "getSequence": pickedData,
+        "getSequence": pickedData.userSequence,
         "contents":contents,
         "kind":kind,
       });
@@ -82,7 +92,20 @@ const ReportBoardCreate = () => {
         {/* 유저 닉네임 검색 */}
         <label>
           유저 닉네임 : 
-          <input type="text" value={reportUserNickname} onChange={handleReportUserNicknameChange} />
+          <input type="text" onChange={handleReportUserNicknameChange} ref={enteredusername} />
+          {Array.isArray(searchedDatas) ? (
+            <div>
+              {searchedDatas.map((d, index) => {
+                return (
+                  <div key={index} onClick={() => saveReportUserData(d)}>
+                    {d.nickname}
+                  </div>
+                )
+              })}
+            </div>
+          ) : null}
+          <br />
+          고른 닉네임 : {pickedData ? (<span>{pickedData.nickname}</span>) : null}
         </label>
 
         <br/>
@@ -91,11 +114,6 @@ const ReportBoardCreate = () => {
         <label>
           내용을 입력하세요:
           <input type="text" value={contents} onChange={handleChange} />
-          {searchedDatas ? (
-            <div>
-              내용 있음
-            </div>
-          ) : null}
         </label>
 
         {/* 제출 버튼 */}

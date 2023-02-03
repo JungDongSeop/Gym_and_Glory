@@ -51,14 +51,14 @@ const ReportBoardDetail = () => {
             확인 완료
           </button>
         </div>
-      ) : ( userSequence === data.sendSequence ? (
+      ) : ( userSequence === String(data.sendSequence) ? (
             <div>
               <h1>유저님이 신고한 내역입니다.</h1>
               <p>from : {data.sendSequence}, to : {data.getSequence}</p>
               <p>내용 : {data.contents}</p>
               <button onClick={() => deleteClick()}>삭제</button>        
             </div>
-       ) : <div></div> )
+       ) : <div>본인이 신고한 페이지가 아닙니다.</div> )
       }
     </main>
   );

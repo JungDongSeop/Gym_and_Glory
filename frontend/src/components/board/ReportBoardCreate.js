@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useContext } from "react";
+import AuthContext from "../../store/auth-context";
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import NavigateButtons from './NavigateButtons';
@@ -10,7 +11,7 @@ const ReportBoardCreate = () => {
   const navigate = useNavigate();
   
   // redux로 user 정보 가져오기
-  const user = useSelector((state) => state.user);
+  const {userSequence} = useContext(AuthContext);
 
   // 닉네임으로 유저 검색
   const [userNickname, setUserNickname] = useState('');
@@ -37,7 +38,7 @@ const ReportBoardCreate = () => {
     // Add logic to create board here
     try {
       await axios.post('http://localhost:8080/report', {
-        "sendSequence": user.pk,
+        "sendSequence": userSequence,
         "getSequence": 5,
         "contents":contents,
         "kind":kind,

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component, createRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
@@ -48,7 +49,7 @@ const HeadWrapper = styled.div`
 `;
 
 const BodyWrapper = styled.div`
-  width: 100%;
+  width: 1535px;
 `;
 
 const TitleWrapper = styled.div`
@@ -280,6 +281,7 @@ class GameRoom extends Component {
           swal({
             text: "방장에 의해 강퇴당하셨습니다.\n확인 클릭 또는 5초 후에 로비로 이동합니다.",
             button: "확인",
+            icon: "error",
           }).then(() => {
             if (mySession) {
               mySession.disconnect();

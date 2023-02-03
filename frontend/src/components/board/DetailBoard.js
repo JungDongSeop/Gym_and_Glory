@@ -60,7 +60,7 @@ const DetailBoard = () => {
       <p>내용 : </p>
       <p>{data.contents}</p>
       <p>작성자 : </p>
-      <p><UserIdToNickname userId={data.articleSequence}/></p>
+      <p><UserIdToNickname userId={data.userSequence}/></p>
 
       <br />
       {/* 게시글 수정 구현 */}

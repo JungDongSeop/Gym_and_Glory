@@ -8,7 +8,7 @@ import Chats from "../chat/Chats";
 import "./GameRoom.css";
 import $ from "jquery";
 import styled from "styled-components";
-import { Dialog } from "@mui/material";
+import swal from "sweetalert";
 import {
   ChatOutlined,
   SpeakerNotesOffOutlined,
@@ -274,6 +274,40 @@ class GameRoom extends Component {
               ],
             });
           }
+        });
+        mySession.on("signal:get-out", (event) => {
+          const mySession = this.state.session;
+          swal({
+            text: "방장에 의해 강퇴당하셨습니다.\n확인 클릭 또는 5초 후에 로비로 이동합니다.",
+            button: "확인",
+          }).then(() => {
+            if (mySession) {
+              mySession.disconnect();
+            }
+            this.OV = null;
+            this.setState({
+              session: "",
+              subscribers: [],
+              mySessionId: "",
+              mainStreamManager: undefined,
+              publisher: undefined,
+            });
+            window.location.replace("/lobby");
+          });
+          setTimeout(() => {
+            if (mySession) {
+              mySession.disconnect();
+            }
+            this.OV = null;
+            this.setState({
+              session: "",
+              subscribers: [],
+              mySessionId: "",
+              mainStreamManager: undefined,
+              publisher: undefined,
+            });
+            window.location.replace("/lobby");
+          }, 5000);
         });
         mySession.on("streamDestroyed", (event) => {
           this.updateHost().then((clientData) => {
@@ -543,6 +577,7 @@ class GameRoom extends Component {
                     <UserVideoComponent
                       streamManager={this.state.publisher}
                       isHost={this.state.ishost}
+                      currentSession={this.state.session}
                     />
                   </div>
                 ) : (
@@ -558,6 +593,7 @@ class GameRoom extends Component {
                     <UserVideoComponent
                       streamManager={this.state.subscribers[0]}
                       isHost={this.state.ishost}
+                      currentSession={this.state.session}
                     />
                   </div>
                 ) : (
@@ -585,6 +621,7 @@ class GameRoom extends Component {
                     <UserVideoComponent
                       streamManager={this.state.subscribers[1]}
                       isHost={this.state.ishost}
+                      currentSession={this.state.session}
                     />
                   </div>
                 ) : (
@@ -600,6 +637,7 @@ class GameRoom extends Component {
                     <UserVideoComponent
                       streamManager={this.state.subscribers[2]}
                       isHost={this.state.ishost}
+                      currentSession={this.state.session}
                     />
                   </div>
                 ) : (

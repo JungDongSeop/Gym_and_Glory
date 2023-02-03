@@ -55,14 +55,8 @@ class UserVideoComponent extends Component {
   }
 
   getNicknameTag() {
-    const myNick = localStorage.getItem("nickname");
-    const getNick = JSON.parse(
-      this.props.streamManager.stream.connection.data
-    ).clientData;
-    if (myNick === getNick) {
-      this.setState({ imgActive: false });
-    }
-    return getNick;
+    return JSON.parse(this.props.streamManager.stream.connection.data)
+      .clientData;
   }
 
   handleIsActive() {
@@ -70,12 +64,26 @@ class UserVideoComponent extends Component {
   }
 
   handleForceDisconnect() {
-    alert("방장만 강퇴시킬수 있습니다.");
-    return;
-    console.log("밑에꺼 실행되나");
+    if (!this.state.ishost) {
+      alert("방장만 강퇴시킬수 있습니다.");
+      return;
+    }
+    const connection = this.props.streamManager.stream.connection;
+    const currentSession = this.props.currentSession;
+    // currentSession.forceDisconnect(stream);
+    // console.log("밑에꺼 실행되나");
+    currentSession.signal({
+      to: [connection],
+      type: "get-out",
+    });
   }
 
   render() {
+    const myNick = localStorage.getItem("nickname");
+    const getNick = JSON.parse(
+      this.props.streamManager.stream.connection.data
+    ).clientData;
+
     return (
       <div className="video">
         {this.props.streamManager !== undefined ? (
@@ -84,7 +92,7 @@ class UserVideoComponent extends Component {
             <NickTag>{this.getNicknameTag()}</NickTag>
             <Img
               src={AlarmImage}
-              className={this.state.imgActive ? "active" : "notActive"}
+              className={myNick !== getNick ? "active" : "notActive"}
               alt="신고/강퇴 버튼"
               onClick={this.handleIsActive}
             />

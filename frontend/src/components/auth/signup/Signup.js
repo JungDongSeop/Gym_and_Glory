@@ -96,7 +96,7 @@ const Signup = () => {
   };
 
   // 비밀번호확인 일치 검사
-  // const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
+  const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
 
   const passwordConfirmCheckHandler = (event) => {
     event.preventDefault();
@@ -104,15 +104,16 @@ const Signup = () => {
     const secondPassword = passwordCheckInputRef.current.value;
 
     if (firstPassword !== secondPassword) {
-      // setIsValidConfirmPassword(false);
+      setIsValidConfirmPassword(false);
       // setConfirmPasswordError("비밀번호가 다릅니다!");
       passwordCheckInputRef.current.style.borderBottom = "2px solid #8f1010";
     } else {
-      // setIsValidConfirmPassword(true);
+      setIsValidConfirmPassword(true);
       passwordCheckInputRef.current.style.borderBottom = "2px solid #00bd10";
 
       // setConfirmPasswordError("");
     }
+
     // console.log(firstPassword);
     // console.log(isValidConfirmPassword);
   };
@@ -286,8 +287,7 @@ const Signup = () => {
         <div className={classes.control}>
           <label htmlFor="password">비밀번호(Password)</label>
           <input
-            className={isValidPassword ? "" : " "}
-            onChange={passwordChangeHandler}
+            onChange={{ passwordChangeHandler }}
             type="password"
             id="password"
             // required

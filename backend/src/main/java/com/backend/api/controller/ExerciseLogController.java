@@ -2,6 +2,7 @@ package com.backend.api.controller;
 
 import com.backend.api.response.ExerciseLogRes;
 import com.backend.api.service.ExerciseLogService;
+import com.backend.db.entity.UserExerciseLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,5 +32,11 @@ public class ExerciseLogController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/grace/{userSequence}")
+    public ResponseEntity<?> getTimeList(@PathVariable Integer userSequence){
+
+        List<String> list = exerciseLogService.getTime(userSequence);
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
 
 }

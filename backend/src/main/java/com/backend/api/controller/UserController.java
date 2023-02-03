@@ -139,4 +139,14 @@ public class UserController {
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/search/nickname/{word}")
+    public ResponseEntity<?> searchList(@PathVariable String word){
+        List<User> result = userService.searchByNick(word);
+        if(result.size()>0){
+            return new ResponseEntity<>(result,HttpStatus.OK);
+        }
+        return new ResponseEntity<>("검색된 개수 0",HttpStatus.OK);
+    }
+
 }

@@ -9,7 +9,7 @@
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.6);
 
   & > h1{
     font-family: 'Song Myung', serif;
@@ -192,4 +192,8 @@
   color:rgb(255, 255, 255);
   text-shadow: 0 0 5px #ffc3c3,
   0 0 10px #f40303;
+}
+
+.passwordValid {
+  border: green;
 }

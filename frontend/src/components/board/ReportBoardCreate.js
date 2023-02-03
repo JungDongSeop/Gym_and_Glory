@@ -14,7 +14,9 @@ const ReportBoardCreate = () => {
   const {userSequence} = useContext(AuthContext);
 
   // 닉네임으로 유저 검색
-  const [userNickname, setUserNickname] = useState('');
+  const [reportUserNickname, setReportUserNickname] = useState('');
+  const [searchedDatas, setSearchedDatas] = useState([]);
+  const [pickedData, setPickedData] = useState({});
 
   // 게시판에 저장할 정보
   const [contents, setContents] = useState('');
@@ -28,8 +30,13 @@ const ReportBoardCreate = () => {
     setKind(event.target.value);
   };
   // 닉네임 저장
-  const handleNicknameChange = async (event) => {
-    setUserNickname(event.target.value);
+  const handleReportUserNicknameChange = async (event) => {
+    setReportUserNickname(event.target.value);
+    const pickedUserData = await axios.get(`http://localhost:8080/api/search/nickname/${reportUserNickname}`)
+      .then((res) => {
+        console.log(res.data);
+        setSearchedDatas(res.data);
+      })
   };
 
   // 게시판 create axios 요청
@@ -39,7 +46,7 @@ const ReportBoardCreate = () => {
     try {
       await axios.post('http://localhost:8080/report', {
         "sendSequence": userSequence,
-        "getSequence": 5,
+        "getSequence": pickedData,
         "contents":contents,
         "kind":kind,
       });
@@ -60,6 +67,7 @@ const ReportBoardCreate = () => {
 
       {/* 신고 내용 작성 */}
       <form onSubmit={handleSubmit}>
+        {/* 신고 종류 선택 */}
         <label>
           신고 종류 :
           <select value={kind} onChange={handleKindChange}>
@@ -71,19 +79,26 @@ const ReportBoardCreate = () => {
 
         <br/>
 
-        {/* 어떤 식으로 axios 요청할 지 고민 */}
+        {/* 유저 닉네임 검색 */}
         <label>
           유저 닉네임 : 
-          <input type="text" value={userNickname} onChange={handleNicknameChange} />
+          <input type="text" value={reportUserNickname} onChange={handleReportUserNicknameChange} />
         </label>
 
         <br/>
 
+        {/* 신고 내용 입력 */}
         <label>
           내용을 입력하세요:
           <input type="text" value={contents} onChange={handleChange} />
+          {searchedDatas ? (
+            <div>
+              내용 있음
+            </div>
+          ) : null}
         </label>
 
+        {/* 제출 버튼 */}
         <button type="submit">Create Board</button>
       </form>
     </main>

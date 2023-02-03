@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface FriendRepository extends JpaRepository<Friend,Integer> {
     List<Friend> findByGetSequence(Integer userSequence);
+
+    void deleteByGetSequenceAndSendSequence(Integer getSequence, Integer sendSequence);
 }

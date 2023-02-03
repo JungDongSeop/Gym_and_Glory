@@ -30,4 +30,16 @@ public class ExerciseLogService {
         }
         return list;
     }
+
+    public List<String> getTime(Integer userSequence) {
+        List<UserExerciseLog> list = exerciseLogRepository.findByUserSequence(userSequence);
+
+        List<String > result= new ArrayList<>();
+        for(int i =0; i<list.size(); i++){
+            result.add(String.valueOf(list.get(i).getDate())) ;
+            System.out.println(String.valueOf(list.get(i).getDate()));
+        }
+        return result;
+    }
+
 }

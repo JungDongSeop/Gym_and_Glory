@@ -123,4 +123,9 @@ public class UserService {
         }
         return false;
     }
+
+    public List<User> searchByNick(String word) {
+        List<User> list = userRepository.findByNicknameLike(word);
+        return list;
+    }
 }

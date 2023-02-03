@@ -8,4 +8,6 @@ import java.util.List;
 public interface ExerciseLogRepository extends JpaRepository <UserExerciseLog,Integer>{
 
     List<UserExerciseLog> findByUserSequenceAndDiv(Integer userSequence, Integer div);
+
+    List<UserExerciseLog> findByUserSequence(Integer userSequence);
 }

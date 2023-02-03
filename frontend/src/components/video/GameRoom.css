@@ -3,7 +3,7 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  top:50%;
+  top: 50%;
   margin-top: 5px;
   /* margin-bottom: 2vh; */
 }
@@ -66,4 +66,8 @@
 .p-margin {
   margin-right: 10px;
   margin-left: 10px;
+}
+
+.hover-pointer {
+  cursor: pointer;
 }

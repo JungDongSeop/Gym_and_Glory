@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import AuthContext from "../../../store/auth-context";
-import { useNavigate } from "react-router-dom";
 import FriendListModalDetail from './FriendListModalDetail';
+import FriendListModalAdd from './FriendListModalAdd';
 import axios from 'axios';
 import Modal from '../../UI/Modal';
 import Button from '../../UI/Button'
 
 const FriendList = () => {
 
-  // 네비게이션을 위한 함수
-  const navigate = useNavigate();
+  // 페이지 (친구 목록창 or 친구 신청창 구분)
+  const [page, setPage] = useState(1);
 
   // user 정보 가져오기
   const {userSequence} = useContext(AuthContext);
@@ -27,6 +27,13 @@ const FriendList = () => {
   // 친구 목록 저장할 변수
   const [friends, setFriends] = useState([]);
   // 친구 목록 axios 요청
+  const readFriends = async (userSequence) => {
+    await axios(`http://localhost:8080/friend/list/${userSequence}`)
+    .then((res) => {
+      setFriends(res.data)
+    });
+  };
+  // 시작할 때 친구 목록 요청. 이후 friends 바뀔 때마다 실행
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(`http://localhost:8080/friend/list/${userSequence}`, {
@@ -34,26 +41,32 @@ const FriendList = () => {
       setFriends(result.data);
     };
     fetchData();
-  }, [userSequence]);
-
-  // 유저 아이디로 유저 정보 받아오기
+  }, [userSequence, friends]);
   
   return (
     <div>
       {/* 방 생성 모달 */}
       <Button onClick={openModal}>친구 목록</Button>
+
       <Modal open={modalOpen} close={closeModal} header="친구목록" isfooter="true">
-        {/* Modal.js <main> {props.children} </main>에 내용이 입력된다. 리액트 함수형 모달 */}
-        <ul>
-          {friends.map((friend, index) => (
-            <li 
-              key={index}
-            >
-              <FriendListModalDetail friendId={friend.sendSequence} />
-            </li>
-          ))}
-        </ul>
-        <button onClick={() => navigate("/gameroom")}>어디론가 이동</button>
+
+      {/* 창 선택 */}
+      <button onClick={() => setPage(1)}>목록</button>
+      <button onClick={() => setPage(2)}>신청</button>
+
+      {/* 창 표시 */}
+      {page === 1 ? (
+        <div>
+          <ul>
+            {friends.map((friend, index) => (
+              <li key={index}>
+                <FriendListModalDetail friendId={friend.sendSequence} onClick={() => readFriends(userSequence)}/>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (<FriendListModalAdd />)
+      }
       </Modal>
     </div>
   );

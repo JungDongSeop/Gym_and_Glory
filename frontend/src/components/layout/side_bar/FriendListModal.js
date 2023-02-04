@@ -27,21 +27,24 @@ const FriendList = () => {
   // 친구 목록 저장할 변수
   const [friends, setFriends] = useState([]);
   // 친구 목록 axios 요청
-  const readFriends = async (userSequence) => {
-    await axios(`http://localhost:8080/friend/list/${userSequence}`)
-    .then((res) => {
-      setFriends(res.data)
-    });
-  };
+  // const readFriends = async (userSequence) => {
+  //   await axios(`http://localhost:8080/friend/list/${userSequence}`)
+  //   .then((res) => {
+  //     setFriends(res.data)
+  //   });
+  // };
   // 시작할 때 친구 목록 요청. 이후 friends 바뀔 때마다 실행
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(`http://localhost:8080/friend/list/${userSequence}`, {
-      });
-      setFriends(result.data);
+    await axios(`http://localhost:8080/friend/list/${userSequence}`)
+      .then((res) => {
+        setFriends(res.data);
+      })
+
     };
     fetchData();
-  }, [userSequence, friends]);
+    return () => {};
+  }, [userSequence, page]);
   
   return (
     <div>
@@ -60,7 +63,7 @@ const FriendList = () => {
           <ul>
             {friends.map((friend, index) => (
               <li key={index}>
-                <FriendListModalDetail friendId={friend.sendSequence} onClick={() => readFriends(userSequence)}/>
+                <FriendListModalDetail friendId={friend.sendSequence} onClick={() => {setPage(1);}}/>
               </li>
             ))}
           </ul>

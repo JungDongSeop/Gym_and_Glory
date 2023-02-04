@@ -25,7 +25,7 @@ const Navbar = () => {
         <Link to="/">
           <img className="logo" src={Logo} alt="홈으로" />
         </Link>
-        {!isLoggedIn && <Link to="/lobby">로비</Link>}
+        {isLoggedIn && <Link to="/lobby">로비</Link>}
         <Link to="/ranking">랭킹</Link>
         <Link to="/board/notice">게시판</Link>
       </div>

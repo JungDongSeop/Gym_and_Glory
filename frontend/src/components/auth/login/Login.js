@@ -4,7 +4,7 @@ import axios from "axios";
 import AuthContext from "../../../store/auth-context";
 import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../../assets/logo.svg";
+import Logo from "../../../assets/logo.png";
 import classes from "./Login.module.css";
 
 // API_KEY
@@ -128,7 +128,7 @@ const Login = () => {
             ref={passwordInputRef}
           />
         </div>
-        <div>
+        <div className={classes.loginBtnDiv}>
           {!isLoading && (
             // <Button onClick={() => navigate("/lobby")}>로그인</Button>
             <Button>로그인</Button>

@@ -20,6 +20,7 @@ public class RoomService {
 
     public String addRoom(RoomReq roomReq) {
         Room room = Room.createRoom(roomReq, RandomNumberUtil.getRandomNumber());
+        roomRepository.save(room);
         return room.getSession_key(); //방에 접근할 수 있도록 세션 키 정보를 넘겨준다.
     }
 }

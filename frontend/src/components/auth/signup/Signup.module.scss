@@ -22,9 +22,12 @@
 }
 
 .whiteBox .logoSmall {
-  width: 10rem;
-  height: 10rem;
+
+  // width: 10rem;
+  // height: 10rem;
   margin: 0 auto;
+  width: 12vw;
+  margin-top: -5vw;
 }
 
 .whiteBox .inputText {
@@ -79,6 +82,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-weight: bold;
 }
 
 .actions button {
@@ -214,4 +218,12 @@
     margin-bottom: 3vw;
     float: left;
   }
+}
+
+
+.whiteBox span{
+  margin-top: 40px;
+  width: 20vw;
+  height: 2px;
+  background-color: #71717174;
 }

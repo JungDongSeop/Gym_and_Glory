@@ -57,11 +57,12 @@
   font-family: 'Song Myung', serif;
   position: absolute;
   bottom: 0;
-  font-size: calc(10px + 1.2vw);
+  font-size: calc(10px + 1vw);
   cursor: pointer;
   bottom: 0;
   left: 10px;
   transition: 0.3s;
+  margin-left:15px;
 }
 
 
@@ -71,11 +72,12 @@
   /* font-family: 'Dokdo', cursive; */
   position: absolute;
   bottom: 0;
-  font-size: calc(10px + 1.2vw);
+  font-size: calc(10px + 1vw);
   cursor: pointer;
   bottom: 0;
   right: 10px;
   transition: 0.3s;
+  margin-right:15px;
 }
 
 .leftword:hover,

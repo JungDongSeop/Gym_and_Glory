@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../../assets/logo.svg";
+import Logo from "../../../assets/logo.png";
 import classes from "./Signup.module.scss";
 
 // API_KEY
@@ -426,6 +426,7 @@ const Signup = () => {
           {isLoading && <p>잠시만 기다려 주세요...</p>}
         </div>
       </form>
+      <span></span>
       <div className={classes.actions} onClick={() => navigate("/login")}>
         <button className={classes.toggle}>홈으로</button>
       </div>

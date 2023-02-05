@@ -1,15 +1,25 @@
 .container {
-  display: flex;
-  flex-wrap: wrap;
+  width: 500px;
 }
 
 .row {
   display: flex;
-  flex-direction: column;
 }
 
 .cell {
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   margin: 2px;
+  font-size: 5px;
+  border-radius: 3px;
+}
+
+.yes{
+  background-color: green;
+}
+.no{
+  background-color: gray;
+}
+.transparent{
+  opacity: 1;
 }

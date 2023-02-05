@@ -56,10 +56,11 @@ const FindPwd = () => {
       <img className={classes.logoSmall} src={Logo} alt="logo-small" />
       <p> 다시 참전하세요!</p>
       <form onSubmit={submitHandler}>
+
         <br />
 
         <label>
-        
+      
         <input
           className={classes.inputText}
           type="email" 
@@ -67,6 +68,7 @@ const FindPwd = () => {
           placeholder=" "
           ref={emailInputRef}
         />
+
         <p className={classes.labelText}>email</p>
         </label>
 

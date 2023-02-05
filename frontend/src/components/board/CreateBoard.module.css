@@ -1,0 +1,23 @@
+.content {
+  resize: none;
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.title {
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+}
+
+.submit {
+  width: 20%;
+  float: right;
+}
+
+.submit:hover {
+  background-color: #555;
+}

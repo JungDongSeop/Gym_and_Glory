@@ -3,6 +3,7 @@
 }
 
 .grassWrap {
-  background-color: wheat;
-  height: 100px;
+  background-color: rgb(230, 230, 230);
+  height: 150px;
+  width: 1000px
 }

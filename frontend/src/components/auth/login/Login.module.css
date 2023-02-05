@@ -11,9 +11,18 @@
 }
 
 .whiteBox .logoSmall {
-  width: 10rem;
-  height: 10rem;
+  /* width: 10rem; */
+  /* height: 10rem; */
   margin: 0 auto;
+  width: 12vw;
+  margin-top: -5vw;
+}
+
+.whiteBox form{
+  width: 25%;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
 }
 
 .whiteBox .inputText {
@@ -44,7 +53,8 @@
 }
 
 .control {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.31vw;
+  width: 100%;
 }
 
 .control label {
@@ -101,9 +111,15 @@
 }
 
 hr {
-  width: 15rem;
+  width: 10vw;
   /* height: 50%; */
-  background-color: black;
+  margin-top: 30px;
+  background-color: #88888874;
   height: 2px;
   border: 0px;
+}
+
+
+.loginBtnDiv{
+  margin-top:20px;
 }

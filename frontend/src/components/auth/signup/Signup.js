@@ -444,6 +444,7 @@ const Signup = () => {
             </div>
           )}
       </form>
+
       <span></span>
       <div className={classes.actions} onClick={() => navigate("/login")}>
         <button className={classes.toggle}>홈으로</button>

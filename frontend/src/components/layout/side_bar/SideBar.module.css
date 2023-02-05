@@ -18,8 +18,14 @@ aside a {
   color: white;
 }
 
+aside .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 aside button {
-  margin: 10px
+  margin: 10px;
 }
 
 main {

@@ -1,6 +1,7 @@
 package com.backend.db.repository;
 
 import com.backend.db.entity.Report;
+import com.backend.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,5 @@ public interface ReportRepository extends JpaRepository<Report,Integer> {
 
     Report findByReportSequence(Integer reportSequence);
 
-    List<Report> findBySendSequence(Integer userSequence);
+    List<Report> findBySendUser(User user);
 }

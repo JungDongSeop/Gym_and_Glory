@@ -19,10 +19,12 @@ public class Comment {
     @Column(name = "comment_sequence")
     private Integer commentSequence;
 
-    @Column(name = "article_sequence")
-    private Integer articleSequence;
-    @Column(name = "user_sequence")
-    private Integer userSequence;
+    @ManyToOne
+    @JoinColumn(name = "article_sequence")
+    private BoardArticle boardArticle;
+    @ManyToOne
+    @JoinColumn(name = "user_sequence")
+    private User user;
     private String title;
     private String contents;
 

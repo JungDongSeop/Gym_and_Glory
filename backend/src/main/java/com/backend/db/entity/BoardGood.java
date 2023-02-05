@@ -20,9 +20,11 @@ public class BoardGood {
     @Column(name = "board_good_sequence")
     private Integer boardGoodSequence;
 
-    @Column(name = "user_sequence")
-    private Integer userSequence;
+    @ManyToOne
+    @JoinColumn(name = "user_sequence")
+    private User user;
 
-    @Column(name = "article_sequence")
-    private Integer articleSequence;
+    @ManyToOne
+    @JoinColumn(name = "article_sequence")
+    private BoardArticle article;
 }

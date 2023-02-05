@@ -1,7 +1,9 @@
 package com.backend.util;
 
+import com.backend.api.service.UserService;
 import com.backend.db.entity.FileUser;
 import com.backend.db.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +17,9 @@ import java.util.List;
 @Component
 public class FileHandler {
 
+
+    @Autowired
+    private UserService userService;
     public List<FileUser> parseFileInfo(Integer userID, List<MultipartFile> multipartFiles) throws Exception {
 
         // 반환을 할 파일 리스트
@@ -72,6 +77,7 @@ public class FileHandler {
                 // 각 이름은 겹치면 안되므로 나노 초까지 동원하여 지정
                 String new_file_name = System.nanoTime() + originalFileExtension;
                 // 생성 후 리스트에 추가
+                User user= userService.getOne(userID);
                 FileUser fileUser = FileUser.builder()
                         .userSequence(userID)
                         .originalFileName(multipartFile.getOriginalFilename())

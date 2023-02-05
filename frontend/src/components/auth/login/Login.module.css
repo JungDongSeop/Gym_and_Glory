@@ -10,6 +10,13 @@
   background-color: rgba(255, 255, 255, 0.6);
 }
 
+.whiteBox form{
+  width: 25%;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+}
+
 .whiteBox .logoSmall {
   /* width: 10rem; */
   /* height: 10rem; */
@@ -18,12 +25,6 @@
   margin-top: -5vw;
 }
 
-.whiteBox form{
-  width: 25%;
-  display: grid;
-  justify-content: center;
-  justify-items: center;
-}
 
 .whiteBox .inputText {
   width: 30%;
@@ -118,7 +119,6 @@ hr {
   height: 2px;
   border: 0px;
 }
-
 
 .loginBtnDiv{
   margin-top:20px;

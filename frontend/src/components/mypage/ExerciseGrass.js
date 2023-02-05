@@ -16,6 +16,8 @@ const ExerciseGrass = () => {
       // 1주일 관련한 함수 (주의 시작은 일요일, 최대 1년 전까지 표시, getWeek 함수는 1년 전을 기준으로 구하고자 하는 날이 몇 번째 주인지 판단.)
       const today = new Date();
       const fewDaysAgo = new Date(today.getTime() - 364 * 24 * 60 * 60 * 1000);
+      // 과거 날짜를 0시0분0초로 지정
+      fewDaysAgo.setHours(0,0,0,0)
       function getWeek(date) {
         const firstDayOfWeek = getFirstDayOfWeek(fewDaysAgo);
         const week = Math.ceil((((date - firstDayOfWeek) / 86400000) + firstDayOfWeek.getDay()) / 7);

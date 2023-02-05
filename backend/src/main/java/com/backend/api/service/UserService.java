@@ -14,14 +14,12 @@ import java.util.List;
 
 @Service
 public class UserService {
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     private final UserRepository userRepository;
-    private final FileHandler fileHandler;
-    @Autowired
-    public UserService(UserRepository userRepository,FileHandler fileHandler) {
-        this.userRepository = userRepository;
-        this.fileHandler = fileHandler;
-    }
 
 
     @Transactional

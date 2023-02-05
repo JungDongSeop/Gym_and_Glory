@@ -18,8 +18,9 @@ public class BoardArticle {
     @Column(name = "article_sequence")
     private Integer articleSequence;
 
-    @Column(name = "user_sequence")
-    private Integer userSequence;
+    @ManyToOne
+    @JoinColumn(name = "user_sequence")
+    private User user;
 
     private String title;
 
@@ -36,7 +37,5 @@ public class BoardArticle {
     @Column(name = "good_count")
     private Integer goodCount;
 
-
     private Integer div;
-
 }

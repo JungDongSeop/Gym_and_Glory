@@ -60,7 +60,7 @@ const FindPwd = () => {
         <label>
         <input
           className={classes.inputText}
-          type="email"
+          type="email" 
           required
           placeholder=" "
           ref={emailInputRef}
@@ -68,6 +68,7 @@ const FindPwd = () => {
         
         <p className={classes.labelText}>email</p>
         </label>
+
         <br />
         <input className={classes.findBtn} type="submit" value="비밀번호 찾기" />
         <br />

@@ -1,4 +1,22 @@
-.badge {
+.container img {
   width: 100px;
   height: 100px;
+  z-index: 0;
+}
+
+.descriptionBox {
+  position: absolute;
+  background-color: rgb(215, 215, 215);
+  padding: 10px;
+  z-index: 10;
+  opacity: 0.8;
+  border-radius: 5px;
+}
+
+.have {
+
+}
+
+.notHave {
+  filter: grayscale(100%)
 }

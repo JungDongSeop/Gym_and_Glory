@@ -4,7 +4,7 @@ import AuthContext from "../../../store/auth-context";
 import CreateRoomModal from "./CreateRoomModal";
 import FriendListModal from "./FriendListModal";
 import Button from "../../UI/Button";
-import "./SideBar.module.css";
+import classes from "./SideBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
 // 사이드바 만들기. 이후 수정
@@ -20,12 +20,11 @@ const SideBar = (props) => {
     <aside>
       {/* 유저 프로필 */}
       <div>
-        {/* <p>{authCtx.gender}</p> */}
         <Link to="/mypage">{authCtx.nickname}</Link>
       </div>
 
       {isMyPage ? (
-        <div>
+        <div className={classes.container}>
           {/* 뱃지 모달 */}
           <BadgeModal />
 

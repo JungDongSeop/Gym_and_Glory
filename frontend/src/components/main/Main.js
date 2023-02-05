@@ -63,7 +63,7 @@ const Main = () => {
             {!isLoggedIn && (
             
                 <Button onClick={() => navigate("/login")} >로그인</Button>
-         
+
             )}
             {isLoggedIn && (
               <Button onClick={() => navigate("/lobby")}>게임시작</Button>

@@ -1,7 +1,9 @@
 package com.backend.api.service;
 
 import com.backend.db.entity.FileUser;
+import com.backend.db.entity.User;
 import com.backend.db.repository.FileUserRepository;
+import com.backend.db.repository.UserRepository;
 import com.backend.util.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +17,11 @@ import java.util.Optional;
 @Service
 public class FileUserService {
 
-    private final FileUserRepository fileUserRepository;
-    private final FileHandler fileHandler;
+    private FileUserRepository fileUserRepository;
+    private FileHandler fileHandler;
 
     @Autowired
-    public FileUserService(FileUserRepository fileUserRepository){
+    public FileUserService(FileUserRepository fileUserRepository,UserRepository userRepository){
         this.fileUserRepository = fileUserRepository;
         this.fileHandler = new FileHandler();
     }

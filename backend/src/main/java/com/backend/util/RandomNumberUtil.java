@@ -4,8 +4,6 @@ import java.security.SecureRandom;
 import java.util.Date;
 
 /**
- * Created by Yeseul Kim on 2021.08.05
- *
  * 방 번호 난수 생성 Util
  */
 public class RandomNumberUtil {

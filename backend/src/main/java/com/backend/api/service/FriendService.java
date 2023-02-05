@@ -23,7 +23,9 @@ public class FriendService {
     }
 
     public void send(Integer send, Integer get) {
-        SendFriend sendFriend = new SendFriend(send,get);
+        SendFriend sendFriend = new SendFriend();
+        sendFriend.setSendSequence(send);
+        sendFriend.setGetSequence(get);
         sendFriendRepository.save(sendFriend);
     }
 
@@ -37,7 +39,9 @@ public class FriendService {
     }
 
     public void delete(Integer send, Integer get) {
-        SendFriend sendFriend = new SendFriend(send,get);
+        SendFriend sendFriend = new SendFriend();
+        sendFriend.setSendSequence(send);
+        sendFriend.setGetSequence(get);
         sendFriendRepository.deleteSendingList(send,get);
     }
 

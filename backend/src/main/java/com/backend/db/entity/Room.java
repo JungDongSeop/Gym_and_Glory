@@ -1,16 +1,12 @@
 package com.backend.db.entity;
 
 import com.backend.api.request.RoomReq;
-import com.backend.db.constant.PrivateStatus;
 import com.backend.db.constant.RoomStatus;
 import com.backend.db.exception.OutOfCountException;
-import com.backend.util.RandomNumberUtil;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-
-import java.util.*;
 
 @Entity
 @Table(name= "rooms")
@@ -28,8 +24,7 @@ public class Room {
     private String teamName; // 팀 명
 
     @Column(name = "is_private")
-    @Enumerated(EnumType.ORDINAL)
-    private PrivateStatus privateStatus; // 비밀방 여부
+    private boolean privateStatus; // 비밀방 여부
 
     @Column(name = "room_pwd")
     private String password; // 방 비밀번호
@@ -39,17 +34,26 @@ public class Room {
     private RoomStatus roomStatus; // 방 게임 상태
 
     @Column(name = "count")
-    private int count;
-    private String session_key; // 방 세션 키
+    private int count; // 방 인원 수
+
+    @Column(name = "session_key")
+    private String sessionKey; // 방 세션 키
 
     public static Room createRoom(RoomReq roomReq, String sessionKey) {
         Room room = new Room();
         room.setTitle(roomReq.getTitle()); // 방제목
         room.setTeamName(roomReq.getTeamName()); // 팀명
-        room.setPrivateStatus(roomReq.getPrivateStatus()); //비밀방여부
+
+        // 비밀번호가 없으면
+        if(roomReq.getPassword() == null || roomReq.getPassword() == "") {
+            room.setPrivateStatus(false); //비밀방여부 X
+        } else { // 비밀번호가 있으면
+            room.setPrivateStatus(true); // 비밀방여부 O
+        }
         room.setPassword(roomReq.getPassword()); //비밀번호
         room.setRoomStatus(RoomStatus.READY); //방 생성되면 준비상태
-        room.setSession_key(sessionKey); // 세션키 만든 후 세션키 저장ㄴ
+        room.setCount(1); // 방을 만들면 인원 수 1로 고정
+        room.setSessionKey(sessionKey); // 세션키 만든 후 세션키 저장
         return room; // room 반환
     }
 
@@ -60,4 +64,10 @@ public class Room {
         }
         this.count = restCount;
     }
+
+    public void removeCount(int countNumber) { // 사람이 나갔을 때
+        int restCount = this.count - countNumber;
+        this.count = restCount;
+    }
+    
 }

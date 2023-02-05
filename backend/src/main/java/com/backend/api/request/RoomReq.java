@@ -1,6 +1,5 @@
 package com.backend.api.request;
 
-import com.backend.db.constant.PrivateStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +14,7 @@ public class RoomReq {
     @NotBlank(message = "팀 명은 필수 입력 값입니다.")
     private String teamName;
 
-    private PrivateStatus privateStatus;
+    private boolean privateStatus;
 
     private String password;
 }

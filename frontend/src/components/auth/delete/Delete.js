@@ -3,6 +3,7 @@ import { useContext } from "react";
 import AuthContext from "../../../store/auth-context";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import RestApi from "../../api/RestApi";
 
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
 
@@ -40,9 +41,7 @@ const Delete = () => {
       .then(async (data) => {
         console.log(data);
         try {
-          await axios.delete(
-            `http://localhost:8080/api/user/${authCtx.userSequence}`
-          );
+          await axios.delete(`${RestApi()}api/user/${authCtx.userSequence}`);
           authCtx.logout();
         } catch (err) {
           console.log(err);

@@ -14,6 +14,7 @@ const CreateBoard = () => {
   // url 이동을 위한 함수
   const navigate = useNavigate();
   const titleInputRef = useRef();
+  const contentInputRef = useRef();
 
   // url의 params를 사용하기 위한 변수
   const { type } = useParams("notice");
@@ -26,7 +27,11 @@ const CreateBoard = () => {
   // 게시판에 쓴 글들을 저장할 변수
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-
+  const changeHandler = (event) => {
+    event.preventDefault();
+    console.log(titleInputRef.current.value);
+    console.log(contentInputRef.current.value);
+  };
   // 게시판 제출 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,7 +107,10 @@ const CreateBoard = () => {
                 </dl>
               </div>
               <div className={classes.cont}>
-                <textarea placeholder="내용을 입력하세요"></textarea>
+                <textarea
+                  placeholder="내용을 입력하세요"
+                  ref={contentInputRef}
+                ></textarea>
               </div>
             </div>
 

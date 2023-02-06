@@ -2,6 +2,7 @@ import classes from "./Lobby.module.css";
 import RoomList from "./room_list/RoomList";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import styled from "styled-components";
+// import RestApi from "../api/RestApi";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -10,7 +11,6 @@ const Wrapper = styled.div`
 const SearchWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  
 `;
 
 const Lobby = () => {
@@ -21,7 +21,11 @@ const Lobby = () => {
         <SearchWrapper>
           <span>로비</span>
           <form>
-            <input className={classes.searchBarArea} type="text" placeholder="검색" />
+            <input
+              className={classes.searchBarArea}
+              type="text"
+              placeholder="검색"
+            />
             <button type="submit">검색</button>
           </form>
         </SearchWrapper>

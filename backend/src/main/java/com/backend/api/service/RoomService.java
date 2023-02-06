@@ -31,11 +31,9 @@ public class RoomService {
 
     // 전체 방 조회
     @Transactional(readOnly = true)
-    public List<RoomRes> getRoomList() {
+    public List<Room> getRoomList() {
 
-        List<RoomRes> roomList = new ArrayList<>();
-
-//        roomList = roomRepository.findRoomResList();
+        List<Room> roomList = roomRepository.findAll();
 
         return roomList;
     }

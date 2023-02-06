@@ -46,33 +46,85 @@ const CreateBoard = () => {
     }
   };
 
+  const typename = () => {
+    if (type == "notice") {
+      return "공지사항";
+    } else if (type == "free") {
+      return "자유게시판";
+    } else if (type == "party") {
+      return "팀원 모집";
+    }
+  };
+
+  const typeDescription = () => {
+    if (type == "notice") {
+      return "공지사항을 작성하세요";
+    } else if (type == "free") {
+      return "여러 사용자들과 자유롭게 이야기를 나누어 보세요 유용한 팁과 정보를 쉽게 얻으실 수 있을거에요.";
+    } else if (type == "party") {
+      return "파티모집 게시판을 통해 함께 운동할 유저를 찾고 모험을 떠나보아요!";
+    }
+  };
+
   return (
     <main>
       {/* 게시판 종류 선택 버튼 */}
       <NavigateButtons type={type} />
+      {/* {() => {
+        const typename = ""
+        if (type == "notice") {
+          typename = "공지사항"
+        } else if (type == "free") {
+          return "자유게시판"
+        }
+        return typename
+        <p></p>
+      }} */}
       {/* 게시판 제출 */}
       <form onSubmit={handleSubmit}>
-        <div className={classes.board_write_wrap}>
-          <div className={classes.board_write}>
-            <div className={classes.title}>
-              <dl>
-                <dt>제목</dt>
-                <dd>
-                  <input type="text" placeholder="제목을 입력하세요" />
-                </dd>
-              </dl>
+        <div className={classes.board_wrap}>
+          <div className={classes.board_write_wrap}>
+            <h1>{typename()}</h1>
+            <p>{typeDescription()}</p>
+            <p>{typeDescription}</p>
+            <div className={classes.board_write}>
+              <div className={classes.title}>
+                <dl>
+                  <dt>제목</dt>
+                  <dd>
+                    <input type="text" placeholder="제목을 입력하세요" />
+                  </dd>
+                </dl>
+              </div>
+              {/* <div className={classes.info}>
+                <dl>
+                  <dt>글쓴이</dt>
+                  <dd>{sessionStorage.getItem("nickname")}</dd>
+                </dl>
+
+                <dl>
+                  <dt>비밀번호</dt>
+                  <dd>
+                    <input type="password" />
+                  </dd>
+                </dl>
+              </div> */}
+              <div className={classes.cont}>
+                <textarea placeholder="내용을 입력하세요"></textarea>
+              </div>
             </div>
-            <div className={classes.cont}>
-              <textarea placeholder="내용을 입력하세요"></textarea>
+
+            <div className={classes.bt_wrap}>
+              <button type="submit" className={classes.on}>
+                등록
+              </button>
+              <button type="submit" onClick={() => navigate(`/board/${type}`)}>
+                취소
+              </button>
             </div>
-          </div>
-          <div className={classes.bt_wrap}>
-            <button type="submit" className={classes.on}>
-              등록
-            </button>
-            <button type="submit">취소</button>
           </div>
         </div>
+
         {/* <div>
           <h1>제목:</h1>
           <input

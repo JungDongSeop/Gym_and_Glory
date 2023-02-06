@@ -5,7 +5,6 @@ import AuthContext from "../../store/auth-context";
 import { useSelector } from 'react-redux';
 import NavigateButtons from './NavigateButtons';
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
-import UserIdToNickname from './UserIdToNickname';
 import axios from 'axios';
 import classes from './Board.module.css';
 import { Button } from "antd";
@@ -37,7 +36,6 @@ const ReportBoard = () => {
     } else {
       const fetchBoard = async () => {
         const result = await axios(`http://localhost:8080/report/user/${userSequence}`);
-
         setBoard(result.data);   
       };
       fetchBoard();
@@ -107,7 +105,8 @@ const ReportBoard = () => {
                     className={index % 2 === 0 ? classes.odd : classes.even}
                     onClick={() => navigate(`/board/report/${item.reportSequence}`)}
                   >
-                    from : <UserIdToNickname userId={item.sendSequence}/>, to : <UserIdToNickname userId={item.getSequence}/>, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents}
+                    {/* from : <UserIdToNickname userId={item.sendSequence}/>, to : <UserIdToNickname userId={item.getSequence}/>, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents} */}
+                    from : {item.sendUser.nickname}, to : {item.getUser.nickname}, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents}
                   
                   </li>
                   // 관리자가 확인했으면

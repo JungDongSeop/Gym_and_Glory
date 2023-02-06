@@ -6,6 +6,7 @@ import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
 import classes from "./Login.module.css";
+import RestApi from "../../api/RestApi";
 
 // API_KEY
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
@@ -28,6 +29,7 @@ const Login = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    console.log(`${RestApi()}api/login`);
 
     //입력 데이터 값 가져오기
     const enteredEmail = emailInputRef.current.value;
@@ -69,7 +71,7 @@ const Login = () => {
         console.log("데이터", data.idToken);
         try {
           const response = await axios.post(
-            "http://localhost:8080/api/login",
+            `${RestApi()}api/login`,
             {
               email: data.email,
             },

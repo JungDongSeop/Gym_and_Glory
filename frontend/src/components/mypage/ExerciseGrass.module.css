@@ -1,9 +1,29 @@
 .container {
   width: 500px;
+  display: flex;
+  align-items: flex-start;
 }
 
-.row {
+.col {
+  flex-direction: column;
   display: flex;
+
+}
+
+.cellDays {
+  width: 15px;
+  height: 15px;
+  margin: 2px 30px 4px 2px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center ;
+  border-radius: 3px;
+  font-size: 100px;
+  box-sizing: border-box;
+  /* border: 2px solid black */
+  font-size: 15px;
+  margin-right: 30px;
 }
 
 .cell {
@@ -15,10 +35,11 @@
   justify-content: center;
   align-items: center ;
   border-radius: 3px;
+  box-sizing: border-box;
+  /* border: 2px solid black */
 }
-.days {
-  font-size: 15px;
-  margin-right: 10px;
+.cell:hover {
+  border: 2px solid black;
 }
 
 .yes{
@@ -29,4 +50,27 @@
 }
 .transparent{
   opacity: 1;
+}
+
+.xAxisMonth {
+  width: 15px;
+  height: 40px;
+  /* margin-left: 49px; */
+  display: flex;
+  align-items: flex-end;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.descriptionBox {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  margin: 0;
+  background-color: black;
+  color: white;
+  text-align: center;
+  z-index: 10;
+  border-radius: 5px;
 }

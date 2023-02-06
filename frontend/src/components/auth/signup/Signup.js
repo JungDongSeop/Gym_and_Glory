@@ -3,10 +3,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo.svg";
 import classes from "./Signup.module.scss";
+import RestApi from "../../api/RestApi";
 
 // API_KEY
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
-
+const commonhttp = RestApi;
 // 회원가입 api 주소
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
 
@@ -152,6 +153,7 @@ const Signup = () => {
   // 이메일 중복 검사
   const checkEmailHandler = async (e) => {
     e.preventDefault();
+    console.log(commonhttp);
     const checkEmail = emailInputRef.current.value;
     const response = await axios.get(
       `http://localhost:8080/api/check_email?email=${checkEmail}`

@@ -1,15 +1,32 @@
-import React, {useState} from 'react';
-import { useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+// import { useSelector } from 'react-redux';
 import { useContext } from "react";
+import axios from 'axios';
 import AuthContext from "../../store/auth-context";
 import ExerciseGrass from './ExerciseGrass';
 import ExerciseGraph from './ExerciseGraph';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
+import defaultProfile from '../../assets/defaultProfile.png';
 import classes from './MyPage.module.css';
 
 const MyPage = () => {
-  // redux에서 유저 정보 가져오기
-  const user = useSelector((state) => state.user);
+  // 유저 정보 가져오기
+  // const user = useSelector((state) => state.user);
+  const authCtx = useContext(AuthContext);
+
+  // 유저 정보 axios 요청
+  const [user, setUser] = useState()
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/user/detail/${authCtx.userSequence}`)
+      .then((res) => {
+        console.log('res', res.data)
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }, [authCtx]);
 
   // 통계에서 운동 종류 구별
   const [exerciseType, setExerciseData] = useState(1);
@@ -18,15 +35,15 @@ const MyPage = () => {
   // 통계에서 x축 단위 구별
   const [xUnit, setXUnit] = useState(1);
 
-  const authCtx = useContext(AuthContext);
 
   return (
     <main>
-      <h1>마이페이지 입니다.</h1>
       {user ? (
-        <div>
-          <h2>유저 pk : {authCtx.userSequence}</h2>
-          <p>유저 닉네임 : {authCtx.nickname}</p>
+        <div className={classes.container}>
+          {/* 유저 프로필 사진 */}
+          <img className={classes.profile} src={user.imagePath || defaultProfile} alt='프로필'/>
+          {/* <h2>유저 pk : {authCtx.userSequence}</h2> */}
+          <p>Lv.{authCtx.level ? authCtx.level : 1}{authCtx.nickname}</p>
           {/* 잔디 */}
           <div className={classes.grassWrap}>
             <ExerciseGrass /> 

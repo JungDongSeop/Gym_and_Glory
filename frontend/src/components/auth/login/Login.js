@@ -71,7 +71,7 @@ const Login = () => {
         console.log("데이터", data.idToken);
         try {
           const response = await axios.post(
-            `${RestApi()}api/login`,
+            `${RestApi()}/login`,
             {
               email: data.email,
             },

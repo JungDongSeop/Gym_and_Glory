@@ -1,7 +1,7 @@
 // import axios from "axios";
 import React, { useRef, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import AuthContext from "../../../store/auth-context";
 import WithNavBarAndSideBar from "../../layout/WithNavBarAndSideBar";
 import RestApi from "../../api/RestApi";
@@ -73,12 +73,14 @@ const Update = () => {
   // 닉네임 중복 체크
   const nicknameCheck = (event) => {
     event.preventDefault();
-    console.log(authCtx.userSequence);
+    // console.log(authCtx.userSequence);
     //유효성 검사 추가
 
     const enteredNewNickname = newNicknameInputRef.current.value;
+    // 존재하는 닉네임인지 중복체크 api
+    // const response = await axios.get(`${RestApi()}api/check_nickname?nickname=${enteredNewNickname}`)
 
-    fetch(`${RestApi()}api/user/modify/nickname`, {
+    fetch(`${RestApi()}/user/modify/nickname`, {
       method: "PUT",
       body: JSON.stringify({
         userSequence: authCtx.userSequence,
@@ -101,7 +103,7 @@ const Update = () => {
 
     const enteredNewTelNumber = newTelNumberInputRef;
 
-    fetch(`${RestApi()}api/user/modify/telNumber`, {
+    fetch(`${RestApi()}/user/modify/telNumber`, {
       method: "PUT",
       body: JSON.stringify({
         userSequence: authCtx.userSequence,

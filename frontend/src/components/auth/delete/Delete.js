@@ -41,7 +41,7 @@ const Delete = () => {
       .then(async (data) => {
         console.log(data);
         try {
-          await axios.delete(`${RestApi()}api/user/${authCtx.userSequence}`);
+          await axios.delete(`${RestApi()}/user/${authCtx.userSequence}`);
           authCtx.logout();
         } catch (err) {
           console.log(err);

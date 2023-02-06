@@ -46,7 +46,6 @@ public class RoomController {
         String sessionKey; // 프론트에 보낼 세션 키
 
         try {
-            System.out.println("여기까지 들어오는가?");
             // 프론트에서 넘어오는 방 입력 정보를 이용하여 방 생성 로직을 호출
             sessionKey = roomService.addRoom(roomReq);
         } catch (Exception e) {

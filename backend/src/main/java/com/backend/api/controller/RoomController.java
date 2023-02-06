@@ -94,7 +94,7 @@ public class RoomController {
     // 선택한 방 나가기
     @DeleteMapping(value = "/room/{roomId}")
     public @ResponseBody ResponseEntity leaveRoom
-    (@PathVariable("roomID") Long roomId) {
+    (@PathVariable("roomId") Long roomId) {
 
         roomService.leaveRoom(roomId);
 

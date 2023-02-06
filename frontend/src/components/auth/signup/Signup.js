@@ -156,7 +156,7 @@ const Signup = () => {
     // console.log(RestApi());
     const checkEmail = emailInputRef.current.value;
     const response = await axios.get(
-      `${RestApi()}api/check_email?email=${checkEmail}`
+      `${RestApi()}/check_email?email=${checkEmail}`
     );
     // console.log(response);
     if (response.data === "중복X" && isValidEmail === true) {

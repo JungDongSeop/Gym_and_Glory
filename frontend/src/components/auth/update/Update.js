@@ -80,7 +80,7 @@ const Update = () => {
     // 존재하는 닉네임인지 중복체크 api
     // const response = await axios.get(`${RestApi()}api/check_nickname?nickname=${enteredNewNickname}`)
 
-    fetch(`${RestApi()}api/user/modify/nickname`, {
+    fetch(`${RestApi()}/user/modify/nickname`, {
       method: "PUT",
       body: JSON.stringify({
         userSequence: authCtx.userSequence,
@@ -103,7 +103,7 @@ const Update = () => {
 
     const enteredNewTelNumber = newTelNumberInputRef;
 
-    fetch(`${RestApi()}api/user/modify/telNumber`, {
+    fetch(`${RestApi()}/user/modify/telNumber`, {
       method: "PUT",
       body: JSON.stringify({
         userSequence: authCtx.userSequence,

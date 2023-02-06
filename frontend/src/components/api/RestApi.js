@@ -1,5 +1,5 @@
 const RestApi = () => {
-  const commonhttp = "https://i8e107.p.ssafy.io/";
+  const commonhttp = "https://i8e107.p.ssafy.io/api";
   // const commonhttp = "http://localhost:8080/";
   return commonhttp;
 };

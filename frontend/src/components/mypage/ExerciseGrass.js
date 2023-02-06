@@ -71,7 +71,7 @@ const ExerciseGrass = () => {
       const fewDaysAgo = new Date(today.getTime() - 364 * 24 * 60 * 60 * 1000);
       for (let i=0; i < 7; i++) {
         const ijDate = (new Date(fewDaysAgo.getTime() + (- fewDaysAgo.getDay() + i + 7 * j + 1)*24*60*60*1000))
-        if (ijDate.getDate() === 2) {return ijDate.getMonth() === 0 ? ijDate.getFullYear() : `${ijDate.getMonth()}월`}
+        if (ijDate.getDate() === 2) {return ijDate.getMonth() === 0 ? ijDate.getFullYear() : `${ijDate.getMonth() + 1}월`}
       }
       return false;
     }
@@ -111,7 +111,7 @@ const ExerciseGrass = () => {
               <div
                 key={`${i}-${j}`}
                 id={`${i}-${j}`}
-                className={`${classes.cell} ${row === 0 ? classes.no : row === 1 ? classes.yes : 'transparent'}`}
+                className={`${row === -1 ? classes.cellNotHover : classes.cell} ${row === 0 ? classes.no : row === 1 ? classes.yes : 'transparent'}`}
                 onMouseEnter={() => setShowDescription({left: i, top: j})}
                 onMouseLeave={() => setShowDescription(false)}
               >

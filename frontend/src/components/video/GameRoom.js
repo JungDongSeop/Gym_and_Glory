@@ -441,9 +441,7 @@ class GameRoom extends Component {
       mySession.disconnect();
     }
     axios
-      .delete("http://localhost:8080/api/rooms", {
-        roomId: this.state.mySessionId,
-      })
+      .delete("http://localhost:8080/api/room" + this.state.mySessionId, {})
       .then(() => {
         this.OV = null;
         this.setState({

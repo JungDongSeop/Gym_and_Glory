@@ -74,13 +74,18 @@ public class BoardController {
 
     @GetMapping("/good/{userSequence}/{articleSequence}")
     public ResponseEntity<?> boardGood(@PathVariable Integer userSequence,@PathVariable Integer articleSequence){
+        System.out.println("들어오고");
         User user = userService.getOne(userSequence);
+        System.out.println("닉네임은?"+user.getNickname());
         BoardArticle article = boardService.getOne(articleSequence);
+        System.out.println("타이틀은?"+article.getTitle());
 
-        BoardGood flag = goodService.findBoardGood(user,article);
+        boolean flag = goodService.findBoardGood(user,article);
         System.out.println(flag);
-        if(flag==null){
+        if(flag==true){
+            System.out.println("여기까지 오면 성공");
             //null이면 등록하고
+            System.out.println(userSequence+"헤헤"+articleSequence);
             goodService.addGoodBoard(userSequence,articleSequence);
             boardService.addGoodArticle(articleSequence);
         }

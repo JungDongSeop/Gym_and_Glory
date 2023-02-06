@@ -34,4 +34,9 @@ main {
   background-clip: padding-box;
   margin-left: 300px;
   padding: 50px;
+  overflow-y: scroll; 
+}
+
+main::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }

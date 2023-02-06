@@ -16,10 +16,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-/* 
-.bg_container{
 
-} */
+.bg_container{
+  position: sticky;
+  /* object-fit: cover;
+  min-width: 100%; min-height: 100%;
+  width: auto; height: 100%; */
+}
 
 #bgVideo{
   position: absolute;

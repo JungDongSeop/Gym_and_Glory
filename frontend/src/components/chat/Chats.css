@@ -1,0 +1,15 @@
+.my-chat {
+  margin-left: auto;
+}
+
+.your-chat {
+  margin-right: auto;
+}
+
+.back-green {
+  background-color: #69f388;
+}
+
+.back-white {
+  background-color: white;
+}

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import "./RoomItem.scss";
 
 const Wrapper = styled.div`
-
   &:hover {
     cursor: pointer;
   }
@@ -45,7 +44,7 @@ const RoomItem = (props) => {
 
   return (
     <Wrapper onClick={enterRoom} className="card">
-      <TitleWrapper>{props.room.roomId}</TitleWrapper>
+      <TitleWrapper>{props.room.title}</TitleWrapper>
       <TeamWrapper></TeamWrapper>
     </Wrapper>
   );

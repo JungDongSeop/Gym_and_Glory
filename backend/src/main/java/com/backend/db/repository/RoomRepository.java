@@ -13,12 +13,11 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    @Query( "select new com.backend.api.response.RoomRes(r.id, r.title, r.teamName," +
-            "r.privateStatus, r.password, r.roomStatus, r.count, r.sessionKey) " +
-            "from Room r" +
-            "order by r.roomStatus, r.id asc"
-    )
-    List<RoomRes> findRoomResList();
+//    @Query( "select r " +
+//            "from Rooms r" +
+//            "order by r.roomStatus, r.id asc"
+//    )
+//    List<RoomRes> findRoomResList();
 
     List<Room> findByTitleContaining(String roomTitle); // 방 제목으로 데이터를 조회
 

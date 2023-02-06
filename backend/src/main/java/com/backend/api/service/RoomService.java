@@ -35,7 +35,7 @@ public class RoomService {
 
         List<RoomRes> roomList = new ArrayList<>();
 
-        roomList = roomRepository.findRoomResList();
+//        roomList = roomRepository.findRoomResList();
 
         return roomList;
     }

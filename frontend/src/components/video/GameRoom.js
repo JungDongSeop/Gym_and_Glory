@@ -441,7 +441,7 @@ class GameRoom extends Component {
       mySession.disconnect();
     }
     axios
-      .delete("http://localhost:8080/api/room" + this.state.mySessionId, {})
+      .delete("http://localhost:8080/api/room/" + this.state.mySessionId, {})
       .then(() => {
         this.OV = null;
         this.setState({
@@ -561,29 +561,51 @@ class GameRoom extends Component {
   }
 
   async getToken() {
-    console.log(this.state.mySessionId);
     const sessionId = await this.createSession(this.state.mySessionId);
     return await this.createToken(sessionId);
   }
 
   async createSession(sessionId) {
-    let data = JSON.stringify({ customSessionId: sessionId });
-    const response = await axios.post(
-      `${OPENVIDU_URL}/openvidu/api/sessions`,
-      data,
-      {
-        headers: {
-          Authorization: `Basic ${btoa(
-            `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-          )}`,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,POST",
-        },
-      }
-    );
-    console.log(response.data);
-    return response.data.sessionId;
+    return new Promise((resolve, reject) => {
+      let data = JSON.stringify({ customSessionId: sessionId });
+      axios
+        .post(`${OPENVIDU_URL}/openvidu/api/sessions`, data, {
+          headers: {
+            Authorization: `Basic ${btoa(
+              `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+            )}`,
+            "Content-Type": "application/json",
+            // "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Methods": "GET,POST",
+          },
+        })
+        .then((response) => {
+          resolve(response.data.id);
+        })
+        .catch((error) => {
+          console.log(error.response.status);
+          if (error.response.status === 409) {
+            resolve(sessionId);
+          }
+        });
+    });
+
+    // const response = await axios.post(
+    //   `${OPENVIDU_URL}/openvidu/api/sessions`,
+    //   data,
+    //   {
+    //     headers: {
+    //       Authorization: `Basic ${btoa(
+    //         `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+    //       )}`,
+    //       "Content-Type": "application/json",
+    //       "Access-Control-Allow-Origin": "*",
+    //       "Access-Control-Allow-Methods": "GET,POST",
+    //     },
+    //   }
+    // )
+    // console.log(response.data);
+    // return response.data.sessionId;
   }
 
   async createToken(sessionId) {
@@ -727,7 +749,10 @@ class GameRoom extends Component {
                     </p>
                   </div>
                 </div>
-                <UnityGame ref={this.state.myRef} />
+                <UnityGame
+                  ref={this.state.myRef}
+                  sessionId={this.state.mySessionId}
+                />
                 {this.state.chaton ? (
                   <div className="chatbox">
                     <div className="chatbox-header" />

@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
-import { useSelector } from 'react-redux';
-import NavigateButtons from './NavigateButtons';
+import { useSelector } from "react-redux";
+import NavigateButtons from "./NavigateButtons";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
-import axios from 'axios';
-import classes from './Board.module.css';
+import axios from "axios";
+import classes from "./Board.module.css";
 import { Button } from "antd";
 import { Pagination } from "antd";
+import RestApi from "../api/RestApi";
 
 // 신고게시판
 // 관리자 : 유저들의 신고 내역 조회 가능. 이후 확인 및 확정하기 버튼 누르기
@@ -19,24 +20,24 @@ const ReportBoard = () => {
   const navigate = useNavigate();
 
   // redux로 user 정보 가져오기
-  const isAdmin = useSelector(state => state.user.isAdmin);
-  const {userSequence} = useContext(AuthContext);
-  
+  const isAdmin = useSelector((state) => state.user.isAdmin);
+  const { userSequence } = useContext(AuthContext);
+
   // 게시판에 쓴 글들을 저장할 변수
   const [board, setBoard] = useState([]);
 
   // 게시글 전체 조회 axios (관리자, 유저)
   useEffect(() => {
-    if(isAdmin) {
+    if (isAdmin) {
       const fetchBoard = async () => {
-        const result = await axios('http://localhost:8080/report');
-        setBoard(result.data);   
+        const result = await axios(`${RestApi()}/report`);
+        setBoard(result.data);
       };
       fetchBoard();
     } else {
       const fetchBoard = async () => {
-        const result = await axios(`http://localhost:8080/report/user/${userSequence}`);
-        setBoard(result.data);   
+        const result = await axios(`${RestApi()}/report/user/${userSequence}`);
+        setBoard(result.data);
       };
       fetchBoard();
     }
@@ -50,13 +51,13 @@ const ReportBoard = () => {
   };
 
   // 신고 종류 구분
-  const reportKinds = [true, '욕설', '게임 불참', '성희롱']
+  const reportKinds = [true, "욕설", "게임 불참", "성희롱"];
 
   return (
     <main>
       {/* 게시판 별로 이동 가능한 버튼 */}
-      <NavigateButtons type="report"/>
-      
+      <NavigateButtons type="report" />
+
       <br />
 
       {/* 글 작성 버튼 */}
@@ -77,15 +78,17 @@ const ReportBoard = () => {
             {board
               .slice(currentPage * 10 - 10, currentPage * 10)
               .map((item, index) => (
-                <li 
+                <li
                   key={item.reportSequence}
                   className={index % 2 === 0 ? classes.odd : classes.even}
-                  onClick={() => navigate(`/board/report/${item.reportSequence}`)}
+                  onClick={() =>
+                    navigate(`/board/report/${item.reportSequence}`)
+                  }
                 >
-                  from : {item.sendSequence}, to : {item.getSequence}, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents}
-                
+                  from : {item.sendSequence}, to : {item.getSequence}, 종류 :{" "}
+                  {reportKinds[item.kind]}, 내용 : {item.contents}
                 </li>
-            ))}
+              ))}
           </ul>
         </div>
       ) : (
@@ -97,27 +100,33 @@ const ReportBoard = () => {
           <ul className={classes.boardUl}>
             {board
               .slice(currentPage * 10 - 10, currentPage * 10)
-              .map((item, index) => 
+              .map((item, index) =>
                 // 관리자가 확인 안했으면
-                !item.confirmation ? 
-                  <li 
-                    key={item.reportSequence}
-                    className={index % 2 === 0 ? classes.odd : classes.even}
-                    onClick={() => navigate(`/board/report/${item.reportSequence}`)}
-                  >
-                    {/* from : <UserIdToNickname userId={item.sendSequence}/>, to : <UserIdToNickname userId={item.getSequence}/>, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents} */}
-                    from : {item.sendUser.nickname}, to : {item.getUser.nickname}, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents}
-                  
-                  </li>
-                  // 관리자가 확인했으면
-                  :
+                !item.confirmation ? (
                   <li
                     key={item.reportSequence}
-                    className={`${classes.confirm} ${index % 2 === 0 ? classes.odd : classes.even}`}
+                    className={index % 2 === 0 ? classes.odd : classes.even}
+                    onClick={() =>
+                      navigate(`/board/report/${item.reportSequence}`)
+                    }
+                  >
+                    {/* from : <UserIdToNickname userId={item.sendSequence}/>, to : <UserIdToNickname userId={item.getSequence}/>, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents} */}
+                    from : {item.sendUser.nickname}, to :{" "}
+                    {item.getUser.nickname}, 종류 : {reportKinds[item.kind]},
+                    내용 : {item.contents}
+                  </li>
+                ) : (
+                  // 관리자가 확인했으면
+                  <li
+                    key={item.reportSequence}
+                    className={`${classes.confirm} ${
+                      index % 2 === 0 ? classes.odd : classes.even
+                    }`}
                   >
                     신고 내용이 확인되었습니다.
                   </li>
-            )}
+                )
+              )}
           </ul>
         </div>
       )}
@@ -131,6 +140,6 @@ const ReportBoard = () => {
       />
     </main>
   );
-}
+};
 
 export default WithNavBarAndSideBar(ReportBoard);

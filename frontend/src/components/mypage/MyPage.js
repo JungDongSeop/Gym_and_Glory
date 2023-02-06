@@ -19,7 +19,7 @@ const MyPage = () => {
   const [user, setUser] = useState();
   useEffect(() => {
     axios
-      .get(`${RestApi()}api/user/detail/${authCtx.userSequence}`)
+      .get(`${RestApi()}/user/detail/${authCtx.userSequence}`)
       .then((res) => {
         console.log("res", res.data);
         setUser(res.data);

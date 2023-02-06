@@ -5,6 +5,7 @@ import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import NavigateButtons from "./NavigateButtons";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router";
+import RestApi from "../api/RestApi";
 
 import classes from "./CreateBoard.module.css";
 
@@ -37,7 +38,7 @@ const CreateBoard = () => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:8080/board", {
+      await axios.post(`${RestApi()}/board`, {
         userSequence: userSequence,
         title: titleInputRef.current.value,
         contents: contents,

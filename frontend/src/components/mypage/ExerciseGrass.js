@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import axios from "axios";
-import classes from './ExerciseGrass.module.css';
+import classes from "./ExerciseGrass.module.css";
+import RestApi from "../api/RestApi";
 
 const ExerciseGrass = () => {
   // user 정보 가져오기
-  const {userSequence} = useContext(AuthContext)
+  const { userSequence } = useContext(AuthContext);
 
   // 출석 정보 axsio 요청
   const [attendanceData, setAttendanceData] = useState([]);
   const [fewDaysAgo, setFewDaysAgo] = useState()
   // 잔디 출석 정보 계산
   useEffect(() => {
-    axios.get(`http://localhost:8080/exerciseLog/grace/${userSequence}`)
-    .then(res => {
+    axios.get(`${RestApi()}/exerciseLog/grace/${userSequence}`).then((res) => {
       // 1주일 관련한 함수 (주의 시작은 일요일, 최대 1년 전까지 표시, getWeek 함수는 1년 전을 기준으로 구하고자 하는 날이 몇 번째 주인지 판단.)
       const today = new Date();
       const fewDaysAgo = new Date(today.getTime() - 364 * 24 * 60 * 60 * 1000);
@@ -23,7 +23,9 @@ const ExerciseGrass = () => {
       // 일주일 관련한 함수
       function getWeek(date) {
         const firstDayOfWeek = getFirstDayOfWeek(fewDaysAgo);
-        const week = Math.ceil((((date - firstDayOfWeek) / 86400000) + firstDayOfWeek.getDay()) / 7);
+        const week = Math.ceil(
+          ((date - firstDayOfWeek) / 86400000 + firstDayOfWeek.getDay()) / 7
+        );
         return week;
       }
       function getFirstDayOfWeek(date) {
@@ -32,7 +34,7 @@ const ExerciseGrass = () => {
         return new Date(date.setDate(diff));
       }
 
-      const tmp = res.data
+      const tmp = res.data;
       // 잔디를 채워나가기 (범위 밖은 -1, 운동 안 한 날은 0, 한 날은 1)
       let grass = Array.from({length: 53}, () => Array(7).fill(0))
       // 운동한 날짜는 1로 지정
@@ -41,7 +43,7 @@ const ExerciseGrass = () => {
         grass[getWeek(date)-1][date.getDay()] = 1;        
       }
       // 1년의 범위 밖을 나타내는 상자는 표시하지 않기 위해, -1로 지정
-      const startDay = today.getDay()
+      const startDay = today.getDay();
       for (let i = 0; i < startDay; i++) {
         grass[0][i] = -1
       }
@@ -49,7 +51,7 @@ const ExerciseGrass = () => {
         grass[52][i] = -1
       }
       // attendanceData에 저장
-      setAttendanceData(grass);      
+      setAttendanceData(grass);
     });
   }, [userSequence]);
 

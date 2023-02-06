@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { useContext } from "react";
 import AuthContext from "../../../store/auth-context";
 import axios from "axios";
+import RestApi from "../../api/RestApi";
 
 const FriendListModalAdd = (props) => {
   // redux로 user 정보 가져오기
@@ -18,7 +19,7 @@ const FriendListModalAdd = (props) => {
     // 닉네임이 있으면 해당 닉네임으로 axios 요청
     if (reportUserName.trim()) {
       await axios
-        .get(`http://localhost:8080/api/search/nickname/${reportUserName}`)
+        .get(`${RestApi()}/search/nickname/${reportUserName}`)
         .then((res) => {
           setSearchedDatas(res.data);
         })
@@ -29,9 +30,7 @@ const FriendListModalAdd = (props) => {
   // 친구 요청 보내기
   const handleSendFriendRequest = async (getter) => {
     alert("친구 요청을 보냈습니다.");
-    await axios.get(
-      `http://localhost:8080/friend/send/${userSequence}/${getter}`
-    );
+    await axios.get(`${RestApi()}/friend/send/${userSequence}/${getter}`);
   };
 
   // 받은 친구 요청 출력 (이후 axios 요청 만들어지면 바꾸기)
@@ -70,7 +69,7 @@ const FriendListModalAdd = (props) => {
   const handleAcceptFriendRequest = async (sender, accept) => {
     alert(`친구 요청을 ${accept === 1 ? "수락" : "거절"}하셨습니다.`);
     await axios(
-      `http://localhost:8080/friend/accept/${sender}/${userSequence}/${accept}`
+      `${RestApi()}/friend/accept/${sender}/${userSequence}/${accept}`
     );
     // 이후 친구요청목록 다시 request 할 것
   };
@@ -90,11 +89,13 @@ const FriendListModalAdd = (props) => {
             return (
               <div key={index}>
                 {/* 유저 정보 출력 */}
-                <img src={d.profile_img_path} alt=""/>
+                <img src={d.profile_img_path} alt="" />
                 Lv.{d.level}
-                {d.nickname}                
+                {d.nickname}
                 {/* 친구 요청 버튼 */}
-                <button onClick={() => handleSendFriendRequest(d.userSequence)}>V</button>
+                <button onClick={() => handleSendFriendRequest(d.userSequence)}>
+                  V
+                </button>
               </div>
             );
           })}
@@ -110,13 +111,25 @@ const FriendListModalAdd = (props) => {
           {getFriendRequests.map((data, index) => {
             return (
               <div key={index}>
-                <img src={data.profile_img_path} alt=""/>
+                <img src={data.profile_img_path} alt="" />
                 Lv.{data.level}
                 {data.nickname}
                 {/* 수락 버튼 */}
-                <button onClick={() => handleAcceptFriendRequest(data.userSequence, 1)}>V</button>
+                <button
+                  onClick={() =>
+                    handleAcceptFriendRequest(data.userSequence, 1)
+                  }
+                >
+                  V
+                </button>
                 {/* 거절 버튼 */}
-                <button onClick={() => handleAcceptFriendRequest(data.userSequence, 0)}>X</button>
+                <button
+                  onClick={() =>
+                    handleAcceptFriendRequest(data.userSequence, 0)
+                  }
+                >
+                  X
+                </button>
                 <button></button>
               </div>
             );

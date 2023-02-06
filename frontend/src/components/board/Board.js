@@ -27,6 +27,7 @@ const Board = () => {
       const result = await axios(
         `http://localhost:8080/board/list/${types[type]}`
       );
+      console.log("data", result.data);
       setBoard(result.data.reverse());
     };
     fetchData();

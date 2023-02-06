@@ -53,7 +53,7 @@ const CreateBoard = () => {
       {/* 게시판 제출 */}
       <form onSubmit={handleSubmit}>
         <div>
-          <p>제목:</p>
+          <h1>제목:</h1>
           <input
             className={classes.title}
             type="text"
@@ -73,7 +73,7 @@ const CreateBoard = () => {
           }}
         /> */}
         <div>
-          <p>내용:</p>
+          <h1>내용:</h1>
 
           <textarea
             className={classes.content}

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 import AuthContext from "../../../store/auth-context";
 import WithNavBarAndSideBar from "../../layout/WithNavBarAndSideBar";
+import RestApi from "../../api/RestApi";
 
 // 이후 와이어프레임에 맞춰 수정
 
@@ -74,7 +75,7 @@ const Update = () => {
 
     const enteredNewNickname = newNicknameInputRef.current.value;
 
-    fetch("http://localhost:8080/api/user/modify/nickname", {
+    fetch(`${RestApi()}api/user/modify/nickname`, {
       method: "PUT",
       body: JSON.stringify({
         userSequence: authCtx.userSequence,

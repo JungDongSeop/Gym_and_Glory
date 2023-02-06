@@ -26,9 +26,28 @@ const Navbar = () => {
         <Link to="/">
           <img className="logo" src={Logo} alt="홈으로" />
         </Link>
-        {isLoggedIn && <Link to="/lobby" style={{color: location.pathname === "/lobby" ? "red": "white"}}>로비</Link>}
-        <Link to="/ranking" style={{color: location.pathname === "/ranking" ? "red": "white"}}>랭킹</Link>
-        <Link to="/board/notice" style={{color: location.pathname === "/board/notice" ? "red": "white"}}>게시판</Link>
+        {isLoggedIn && (
+          <Link
+            to="/lobby"
+            style={{ color: location.pathname === "/lobby" ? "red" : "white" }}
+          >
+            로비
+          </Link>
+        )}
+        <Link
+          to="/ranking"
+          style={{ color: location.pathname === "/ranking" ? "red" : "white" }}
+        >
+          랭킹
+        </Link>
+        <Link
+          to="/board/notice"
+          style={{
+            color: location.pathname.includes("/board") ? "red" : "white",
+          }}
+        >
+          게시판
+        </Link>
       </div>
 
       {/* 네브바 오른쪽 */}

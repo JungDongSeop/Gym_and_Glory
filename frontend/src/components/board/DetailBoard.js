@@ -3,7 +3,6 @@ import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import { useParams, useNavigate } from'react-router-dom';
 import Comment from './Comment';
-import UserIdToNickname from './UserIdToNickname';
 import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
 import axios from 'axios';
 
@@ -31,7 +30,7 @@ const DetailBoard = () => {
   useEffect(() => {
     const readBoard = async () => {
       const result = await axios(`http://localhost:8080/board/${articleSequence}`);
-      setData(result.data);        
+      setData(result.data);    
     };
     readBoard();
   }, [articleSequence]);
@@ -60,7 +59,8 @@ const DetailBoard = () => {
       <p>내용 : </p>
       <p>{data.contents}</p>
       <p>작성자 : </p>
-      <p><UserIdToNickname userId={data.userSequence}/></p>
+      {/* <p><UserIdToNickname userId={data.userSequence}/></p> */}
+      <p>{data.user ? data.user.nickname : null}</p>
 
       <br />
       {/* 게시글 수정 구현 */}

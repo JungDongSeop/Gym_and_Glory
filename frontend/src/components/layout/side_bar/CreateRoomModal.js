@@ -4,7 +4,7 @@ import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const APPLICATION_SERVER_URL = "http://localhost:5000/";
+const APPLICATION_SERVER_URL = "http://localhost:8080/";
 
 const CreateRoom = () => {
   // 네비게이션을 위한 함수
@@ -59,12 +59,17 @@ const CreateRoom = () => {
     axios
       .post(
         APPLICATION_SERVER_URL + "api/rooms",
-        {},
+        {
+          title: roomTitle,
+          teamName: teamTitle,
+          // privateStatus: isopened,
+          password: roomPassword,
+        },
         {
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,POST",
+            // "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Methods": "GET,POST",
           },
         }
       )

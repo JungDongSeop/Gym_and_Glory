@@ -71,3 +71,117 @@
 .hover-pointer {
   cursor: pointer;
 }
+
+.exercise-container {
+  display: flex;
+  justify-content: space-evenly;
+  height: 45px;
+  align-items: center;
+}
+
+.exercise-button {
+  background-color: #6da2d9;
+  box-shadow: 0 0 0 1px #6698cb inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 8px 0 0 rgba(110, 164, 219, 0.7), 0 8px 0 1px rgba(0, 0, 0, 0.4),
+    0 8px 8px 1px rgba(0, 0, 0, 0.5);
+  width: 190px;
+  text-align: center;
+  height: 100%;
+  border-radius: 6px;
+  transition: top 0.01s linear;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+.exercise-button:hover {
+  cursor: pointer;
+}
+
+.button-active {
+  width: 190px;
+  text-align: center;
+  height: 100%;
+  border-radius: 6px;
+  transition: top 0.01s linear;
+  background-color: #6da2d9;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  margin-bottom: 6px;
+  box-shadow: 0 0 0 1px #6191c2 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.button-active:hover {
+  cursor: pointer;
+}
+
+.exercise-text {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.chatbox {
+  height: 550px;
+  width: 350px;
+  position: absolute;
+  bottom: 17px;
+  margin-left: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  min-height: 60vh;
+  transform: translateY(-40px);
+  z-index: 1234455;
+  border-radius: 10px;
+}
+
+.chatbox-header {
+  height: 34px;
+  background-color: #69f388;
+  opacity: 0.8;
+  position: sticky;
+  top: 0;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.chatbox-chats {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 457px;
+  padding: 0 10px;
+}
+
+.chatbox-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 20px;
+  position: sticky;
+  bottom: 0;
+  border-top: 2px solid black;
+  background-color: rgba(105, 243, 136, 0.7);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.chatbox-footer input {
+  border-radius: 10px;
+  text-align: center;
+  width: 250px;
+  height: 25px;
+}
+
+.chatbox-button {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 10px;
+  margin-right: 6px;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.chatbox-button:hover {
+  cursor: pointer;
+  background-color: #469f59;
+}

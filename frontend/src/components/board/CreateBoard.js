@@ -47,21 +47,21 @@ const CreateBoard = () => {
   };
 
   const typename = () => {
-    if (type == "notice") {
+    if (type === "notice") {
       return "공지사항";
-    } else if (type == "free") {
+    } else if (type === "free") {
       return "자유게시판";
-    } else if (type == "party") {
+    } else if (type === "party") {
       return "팀원 모집";
     }
   };
 
   const typeDescription = () => {
-    if (type == "notice") {
+    if (type === "notice") {
       return "공지사항을 작성하세요";
-    } else if (type == "free") {
+    } else if (type === "free") {
       return "여러 사용자들과 자유롭게 이야기를 나누어 보세요 유용한 팁과 정보를 쉽게 얻으실 수 있을거에요.";
-    } else if (type == "party") {
+    } else if (type === "party") {
       return "파티모집 게시판을 통해 함께 운동할 유저를 찾고 모험을 떠나보아요!";
     }
   };
@@ -96,19 +96,6 @@ const CreateBoard = () => {
                   </dd>
                 </dl>
               </div>
-              {/* <div className={classes.info}>
-                <dl>
-                  <dt>글쓴이</dt>
-                  <dd>{sessionStorage.getItem("nickname")}</dd>
-                </dl>
-
-                <dl>
-                  <dt>비밀번호</dt>
-                  <dd>
-                    <input type="password" />
-                  </dd>
-                </dl>
-              </div> */}
               <div className={classes.cont}>
                 <textarea placeholder="내용을 입력하세요"></textarea>
               </div>
@@ -124,40 +111,6 @@ const CreateBoard = () => {
             </div>
           </div>
         </div>
-
-        {/* <div>
-          <h1>제목:</h1>
-          <input
-            className={classes.title}
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div> */}
-        {/* <br /> */}
-        {/* <CkEditor
-          value={(editor) => {
-            const data = editor.getData();
-            console.log(data);
-          }}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log(contents);
-          }}
-        /> */}
-        {/* <div>
-          <h1>내용:</h1>
-
-          <textarea
-            className={classes.content}
-            value={contents}
-            placeholder="내용을 입력하세요."
-            onChange={(e) => setContents(e.target.value)}
-          />
-        </div> */}
-        {/* <button className={classes.submit} type="submit">
-          글 작성하기
-        </button> */}
       </form>
     </main>
   );

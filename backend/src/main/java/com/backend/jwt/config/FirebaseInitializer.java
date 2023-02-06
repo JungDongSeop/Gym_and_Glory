@@ -8,10 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -24,8 +27,11 @@ public class FirebaseInitializer {
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
         log.info("Initializing Firebase.");
-        Path currentPath = Paths.get("src/main/resources/config/firebasekey.json");
-        String path = currentPath.toAbsolutePath().toString();
+//        Path currentPath = Paths.get("classpath:firebasekey.json");
+//        String path = currentPath.toAbsolutePath().toString();
+        ClassPathResource cpr = new ClassPathResource("firebasekey.json");
+        byte[] bdata = FileCopyUtils.copyToByteArray(cpr.getInputStream());
+        String path = new String(bdata, StandardCharsets.UTF_8);
         System.out.println("현재 작업 경로: " + path);
         FileInputStream serviceAccount =
                 new FileInputStream(path);

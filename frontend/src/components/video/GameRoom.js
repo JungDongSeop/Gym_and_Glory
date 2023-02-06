@@ -17,10 +17,13 @@ import {
   MicOutlined,
   VideocamOffOutlined,
   VideocamOutlined,
+  PersonOff,
 } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
+import Logo from "../../assets/logo.png";
 
 const APPLICATION_SERVER_URL = "http://localhost:5000/";
+const OPENVIDU_URL = "https://i8e107.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 const Wrapper = styled.div`
@@ -437,17 +440,20 @@ class GameRoom extends Component {
     if (mySession) {
       mySession.disconnect();
     }
-    // back으로 axios요청을 보내 방 정보 갱신
-    // back에서는 현재 방 인원수가 1명일때 방 관리하는 곳에서 방을 삭제하고
-    // 1명보다 많을 때는 방의 인원수를 한명 줄인다.
-    this.OV = null;
-    this.setState({
-      session: "",
-      subscribers: [],
-      mySessionId: "",
-      mainStreamManager: undefined,
-      publisher: undefined,
-    });
+    axios
+      .delete("http://localhost:8080/api/rooms", {
+        roomId: this.state.mySessionId,
+      })
+      .then(() => {
+        this.OV = null;
+        this.setState({
+          session: "",
+          subscribers: [],
+          mySessionId: "",
+          mainStreamManager: undefined,
+          publisher: undefined,
+        });
+      });
 
     const { navigate } = this.props;
     navigate("/lobby");
@@ -563,11 +569,15 @@ class GameRoom extends Component {
   }
 
   async createSession(sessionId) {
+    let data = JSON.stringify({ customSessionId: sessionId });
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions",
-      { customSessionId: sessionId },
+      `${OPENVIDU_URL}/openvidu/api/sessions`,
+      data,
       {
         headers: {
+          Authorization: `Basic ${btoa(
+            `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+          )}`,
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,POST",
@@ -575,22 +585,26 @@ class GameRoom extends Component {
       }
     );
     console.log(response.data);
-    return response.data;
+    return response.data.sessionId;
   }
 
   async createToken(sessionId) {
+    console.log(sessionId);
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
+      `${OPENVIDU_URL}/openvidu/api/sessions/${sessionId}/connection`,
       {},
       {
         headers: {
+          Authorization: `Basic ${btoa(
+            `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+          )}`,
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,POST",
         },
       }
     );
-    return response.data;
+    return response.data.token;
   }
 
   render() {
@@ -601,7 +615,6 @@ class GameRoom extends Component {
       <Wrapper>
         <NavWrapper>
           <HeadWrapper>
-            <img alt="로고 이미지" />
             <TitleWrapper>
               <p className="p-margin">방제 : {this.state.mySessionTitle}</p>
               <p className="p-margin">팀명 : {this.state.myTeamTitle}</p>
@@ -644,7 +657,9 @@ class GameRoom extends Component {
                     />
                   </div>
                 ) : (
-                  <div className="none-container"></div>
+                  <div className="none-container">
+                    <PersonOff style={{ width: 280, height: 280 }} />
+                  </div>
                 )}
               </div>
               <div id="game-container">
@@ -754,7 +769,9 @@ class GameRoom extends Component {
                     />
                   </div>
                 ) : (
-                  <div className="none-container"></div>
+                  <div className="none-container">
+                    <PersonOff style={{ width: 280, height: 280 }} />
+                  </div>
                 )}
                 {this.state.subscribers[2] !== undefined ? (
                   <div
@@ -770,7 +787,9 @@ class GameRoom extends Component {
                     />
                   </div>
                 ) : (
-                  <div className="none-container"></div>
+                  <div className="none-container">
+                    <PersonOff style={{ width: 280, height: 280 }} />
+                  </div>
                 )}
               </div>
             </div>

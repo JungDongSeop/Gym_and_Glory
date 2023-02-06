@@ -6,6 +6,7 @@ import axios from "axios";
 import classes from "./Board.module.css";
 import { Button } from "antd";
 import { Pagination } from "antd";
+import RestApi from "../api/RestApi";
 
 // 기본적으로 공지사항 게시판이 표시
 // 버튼을 누를 경우 다른 게시판 정보를 axios 요청
@@ -24,9 +25,7 @@ const Board = () => {
   useEffect(() => {
     const types = { notice: 1, free: 2, party: 3 };
     const fetchData = async () => {
-      const result = await axios(
-        `http://localhost:8080/board/list/${types[type]}`
-      );
+      const result = await axios(`${RestApi()}/board/list/${types[type]}`);
       console.log("data", result.data);
       setBoard(result.data.reverse());
     };

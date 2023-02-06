@@ -3,8 +3,9 @@ import Modal from "../../UI/Modal";
 import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import RestApi from "../../api/RestApi";
 
-const APPLICATION_SERVER_URL = "http://localhost:8080/";
+const APPLICATION_SERVER_URL = `${RestApi()}/`;
 
 const CreateRoom = () => {
   // 네비게이션을 위한 함수

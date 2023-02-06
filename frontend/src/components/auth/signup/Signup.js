@@ -185,7 +185,7 @@ const Signup = () => {
     const nickname = nicknameInputRef.current.value;
     // console.log(nickname.type);
     const response = await axios.get(
-      `${RestApi()}api/check_nickname?nickname=${nickname}`
+      `${RestApi()}/check_nickname?nickname=${nickname}`
     );
     console.log(response);
     if (response.data === "중복X" && isValidNickname) {
@@ -260,7 +260,7 @@ const Signup = () => {
           // console.log(data, "hjjkkj");
           try {
             await axios.post(
-              `${RestApi()}api/signup`,
+              `${RestApi()}/signup`,
               {
                 email: data.email,
                 nickname: enteredNickname,

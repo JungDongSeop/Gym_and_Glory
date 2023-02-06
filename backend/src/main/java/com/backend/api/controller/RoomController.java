@@ -5,15 +5,21 @@ import com.backend.api.response.RoomRes;
 import com.backend.api.service.RoomService;
 import com.backend.db.entity.Room;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,9 +58,18 @@ public class RoomController {
     }
 
     // 로비로 방 조회
-    @GetMapping(value = "/lobby")
-    public @ResponseBody ResponseEntity searchAllRooms() {
-        List<Room> roomList = roomService.getRoomList();
+//    @GetMapping(value = "/lobby")
+//    public @ResponseBody ResponseEntity searchAllRooms() {
+//        List<Room> roomList = roomService.getRoomList();
+//        return new ResponseEntity<>(roomList,HttpStatus.OK);
+//    }
+
+    // 로비 방 조회
+    @GetMapping(value = {"lobby", "/lobby/{page}"})
+    public @ResponseBody ResponseEntity searchAllRooms(@PathVariable("page") Optional<Integer> page) {
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
+
+        Page<Room> roomList = roomService.getRoomList(pageable);
         return new ResponseEntity<>(roomList,HttpStatus.OK);
     }
 

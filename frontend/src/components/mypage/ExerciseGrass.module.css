@@ -38,6 +38,18 @@
   box-sizing: border-box;
   /* border: 2px solid black */
 }
+.cellNotHover {
+  width: 15px;
+  height: 15px;
+  margin: 2px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center ;
+  border-radius: 3px;
+  box-sizing: border-box;
+  /* border: 2px solid black */
+}
 .cell:hover {
   border: 2px solid black;
 }

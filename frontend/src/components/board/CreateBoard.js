@@ -52,7 +52,28 @@ const CreateBoard = () => {
       <NavigateButtons type={type} />
       {/* 게시판 제출 */}
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className={classes.board_write_wrap}>
+          <div className={classes.board_write}>
+            <div className={classes.title}>
+              <dl>
+                <dt>제목</dt>
+                <dd>
+                  <input type="text" placeholder="제목을 입력하세요" />
+                </dd>
+              </dl>
+            </div>
+            <div className={classes.cont}>
+              <textarea placeholder="내용을 입력하세요"></textarea>
+            </div>
+          </div>
+          <div className={classes.bt_wrap}>
+            <button type="submit" className={classes.on}>
+              등록
+            </button>
+            <button type="submit">취소</button>
+          </div>
+        </div>
+        {/* <div>
           <h1>제목:</h1>
           <input
             className={classes.title}
@@ -60,7 +81,7 @@ const CreateBoard = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-        </div>
+        </div> */}
         {/* <br /> */}
         {/* <CkEditor
           value={(editor) => {
@@ -72,7 +93,7 @@ const CreateBoard = () => {
             console.log(contents);
           }}
         /> */}
-        <div>
+        {/* <div>
           <h1>내용:</h1>
 
           <textarea
@@ -81,11 +102,10 @@ const CreateBoard = () => {
             placeholder="내용을 입력하세요."
             onChange={(e) => setContents(e.target.value)}
           />
-        </div>
-        <br />
-        <button className={classes.submit} type="submit">
+        </div> */}
+        {/* <button className={classes.submit} type="submit">
           글 작성하기
-        </button>
+        </button> */}
       </form>
     </main>
   );

@@ -18,6 +18,7 @@ const Update = () => {
 
   const newPasswordInputRef = useRef();
   const newNicknameInputRef = useRef();
+  const newTelNumberInputRef = useRef();
 
   const authCtx = useContext(AuthContext);
 
@@ -25,6 +26,8 @@ const Update = () => {
   // const [isLoading, setIsLoading] = useState(false);
 
   const [isValidPassword, setIsValidPassword] = useState(false);
+  const [isValidNickname, setIsValidNickname] = useState(false);
+  const [isValidPhone, setIsValidPhone] = useState(false);
 
   // 비밀번호 유효성 검사 및 제출
 
@@ -86,9 +89,32 @@ const Update = () => {
       },
     }).then((res) => {
       console.log(res);
-      localStorage.setItem("nickname", enteredNewNickname);
+      sessionStorage.setItem("nickname", enteredNewNickname);
+      window.location.reload();
 
       alert("닉네임 변경이 완료되었습니다.");
+    });
+  };
+
+  const telNumberChangeHandler = (event) => {
+    event.preventDefault();
+
+    const enteredNewTelNumber = newTelNumberInputRef;
+
+    fetch(`${RestApi()}api/user/modify/telNumber`, {
+      method: "PUT",
+      body: JSON.stringify({
+        userSequence: authCtx.userSequence,
+        telNumber: enteredNewTelNumber,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      console.log(res);
+      sessionStorage.setItem("telNumber", enteredNewTelNumber);
+      window.location.reload();
+      alert("전화번호 변경이 완료되었습니다.");
     });
   };
   return (
@@ -106,10 +132,22 @@ const Update = () => {
           <input
             type="text"
             id="new-nickname"
-            defaultValue={localStorage.getItem("nickname")}
+            defaultValue={sessionStorage.getItem("nickname")}
             ref={newNicknameInputRef}
           />
           <input type="submit" value="닉네임 변경" />
+        </div>
+      </form>
+      <form onSubmit={telNumberChangeHandler}>
+        <div>
+          <label htmlFor="new-tel-number">새 전화번호</label>
+          <input
+            type="text"
+            id="new-tel-number"
+            defaultValue={sessionStorage.getItem("telNumber")}
+            ref={newTelNumberInputRef}
+          />
+          <input type="submit" value="전화번호 변경" />
         </div>
       </form>
     </main>

@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/ranking")
+@RequestMapping("/api/ranking")
 @CrossOrigin("*")
 public class RankingController {
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/badge")
+@RequestMapping("/api/badge")
 @CrossOrigin("*")
 public class UserBadgeController {
 

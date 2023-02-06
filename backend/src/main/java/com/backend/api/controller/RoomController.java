@@ -3,6 +3,7 @@ package com.backend.api.controller;
 import com.backend.api.request.RoomReq;
 import com.backend.api.response.RoomRes;
 import com.backend.api.service.RoomService;
+import com.backend.db.entity.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,9 +53,9 @@ public class RoomController {
 
     // 로비로 방 조회
     @GetMapping(value = "/lobby")
-    public List<RoomRes> searchAllRooms() {
-        List<RoomRes> roomResList = roomService.getRoomList();
-        return roomResList;
+    public @ResponseBody ResponseEntity searchAllRooms() {
+        List<Room> roomList = roomService.getRoomList();
+        return new ResponseEntity<>(roomList,HttpStatus.OK);
     }
 
     // 선택한 방 들어가기

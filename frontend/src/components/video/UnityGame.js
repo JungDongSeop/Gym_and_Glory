@@ -36,18 +36,18 @@ const UnityGame = forwardRef((props, ref) => {
     sendSignal,
   }));
 
-  const handleGameIn = useCallback((isconnect) => {
-    setIsConnect(isconnect);
-  }, []);
+  // const handleGameIn = useCallback((isconnect) => {
+  //   setIsConnect(isconnect);
+  // }, []);
 
-  useEffect(() => {
-    addEventListener("GameIn", handleGameIn);
-    return () => {
-      let nick = sessionStorage.getItem("nickname");
-      sendMessage("PhotonInit", "setUserInfo", nick);
-      removeEventListener("GameIn", handleGameIn);
-    };
-  }, [addEventListener, removeEventListener, handleGameIn]);
+  // useEffect(() => {
+  //   addEventListener("GameIn", handleGameIn);
+  //   return () => {
+  //     let nick = sessionStorage.getItem("nickname");
+  //     sendMessage("PhotonInit", "setUserInfo", nick);
+  //     removeEventListener("GameIn", handleGameIn);
+  //   };
+  // }, [addEventListener, removeEventListener, handleGameIn]);
 
   return (
     <div>

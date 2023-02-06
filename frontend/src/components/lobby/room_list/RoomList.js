@@ -24,7 +24,7 @@ class RoomList extends Component {
     // 오픈비두에 직접 요청을 보내니 내가 커스텀한 방제와 팀명이 오지 않음
     // axios.get("https://i8e107.p.ssafy.io:8443/openvidu/api/sessions",)
     axios
-      .get(`${RestApi}/api/lobby`, {
+      .get(`${RestApi()}api/lobby`, {
         headers: {
           Authorization: `Basic ${btoa(`OPENVIDUAPP:MY_SECRET`)}`,
         },

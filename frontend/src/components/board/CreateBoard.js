@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
@@ -13,6 +13,7 @@ import classes from "./CreateBoard.module.css";
 const CreateBoard = () => {
   // url 이동을 위한 함수
   const navigate = useNavigate();
+  const titleInputRef = useRef();
 
   // url의 params를 사용하기 위한 변수
   const { type } = useParams("notice");
@@ -33,7 +34,7 @@ const CreateBoard = () => {
     try {
       await axios.post("http://localhost:8080/board", {
         userSequence: userSequence,
-        title: title,
+        title: titleInputRef.current.value,
         contents: contents,
         div: types[type],
       });
@@ -92,7 +93,11 @@ const CreateBoard = () => {
                 <dl>
                   <dt>제목</dt>
                   <dd>
-                    <input type="text" placeholder="제목을 입력하세요" />
+                    <input
+                      type="text"
+                      placeholder="제목을 입력하세요"
+                      ref={titleInputRef}
+                    />
                   </dd>
                 </dl>
               </div>

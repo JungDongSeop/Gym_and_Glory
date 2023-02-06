@@ -4,6 +4,7 @@ import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router";
 import classes from "./CreateBoard.module.css";
+import RestApi from "../api/RestApi";
 
 const UpdateBoard = () => {
   // url 이동을 위한 함수
@@ -18,9 +19,7 @@ const UpdateBoard = () => {
   // 게시글 read axios
   useEffect(() => {
     const fetchBoard = async () => {
-      const result = await axios(
-        `http://localhost:8080/board/${articleSequence}`
-      );
+      const result = await axios(`${RestApi()}/board/${articleSequence}`);
       setBoard(result.data);
     };
     fetchBoard();
@@ -34,7 +33,7 @@ const UpdateBoard = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .put(`http://localhost:8080/board/`, {
+      .put(`${RestApi()}/board/`, {
         articleSequence: articleSequence,
         title: board.title,
         contents: board.contents,

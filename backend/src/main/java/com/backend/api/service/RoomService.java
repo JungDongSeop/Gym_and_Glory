@@ -53,20 +53,23 @@ public class RoomService {
     }
 
     // 선택한 방 들어가기
-    public String enterRoom(Long roomId) {
-        // 방 아이디를 통해 방을 찾는다.
-        Room room = roomRepository.findById(roomId)
-                .orElseThrow(EntityNotFoundException::new);
-        
+    public int enterRoom(String sessionKey) {
+        // 방 세션을 통해 방을 찾는다.
+        Room room = roomRepository.findBySessionKey(sessionKey);
+
+        if(room == null) {
+            throw new EntityNotFoundException("선택하신 방은 존재하지 않습니다.");
+        }
+
         room.addCount(1); // 한명의 사람이 들어간다.
         roomRepository.save(room); // 인원수 갱신
-        return room.getSessionKey(); // 세션키를 돌려준다.
+        return 1; // 방에 들어갔으면 성공
     }
 
-    public void leaveRoom(Long roomId) {
-        // 방 아이디를 통해 방을 찾는다.
-        Room room = roomRepository.findById(roomId)
-                .orElseThrow(EntityNotFoundException::new);
+    public void leaveRoom(String sessionKey) {
+
+        // 세션키로 방을 찾는다.
+        Room room = roomRepository.findBySessionKey(sessionKey);
 
         room.removeCount(1); // 한 명의 사람이 나간다.
 
@@ -74,6 +77,5 @@ public class RoomService {
         if(room.getCount() == 0) {
             roomRepository.delete(room); // 현재 방을 삭제한다.
         }
-        // 방장이 나갔을 경우는 어떻게 하는가..?
     }
 }

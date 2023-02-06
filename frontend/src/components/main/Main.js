@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from "react";
+import styled from "@emotion/styled";
 import classes from "./Main.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Carousel } from "antd";
@@ -59,7 +60,7 @@ const Main = () => {
               <h1>Let`s Go</h1>
             </div>
             {!isLoggedIn && (
-              <Button onClick={() => navigate("/login")}>로그인</Button>
+              <Button onClick={() => navigate("/login")}>게임시작</Button>
             )}
             {isLoggedIn && (
               <Button onClick={() => navigate("/lobby")}>게임시작</Button>

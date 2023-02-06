@@ -20,7 +20,7 @@
   max-width: 450px;
   margin: 0 auto;
   border-radius: 0.3rem;
-  background-color: #fff;
+  /* background-color: #fff; */
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-show 0.3s;
   overflow: hidden;
@@ -42,11 +42,41 @@
   color: #999;
   background-color: transparent;
 }
-.modal > section > main {
-  padding: 16px;
+.modal > section > div {
+  padding-left: 20px;
+  padding-right: 20px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
+  background-color: rgba(218, 218, 218, 0.768);
 }
+
+.modal > section > div > form {
+  font-weight: bold;
+  display: grid;
+  /* grid-template-columns: 1fr 1fr; */
+  /* grid-column-gap: 30px; */
+  justify-content: center;
+  justify-items: right;
+  align-items: center;
+}
+
+.modal > section > div > form > p{
+  display: grid;
+  /* justify-content: center; */
+  /* justify-items: center; */
+  width: 100%;
+  align-items: center;
+  margin:0;
+  margin-top:10px;
+}
+
+/* .modal > section > div > form > p:nth-child(4) p:nth-child(5){
+  display: inline-block;
+  float: left;
+  margin:0;
+  margin-top:10px;
+} */
+
 .modal > section > footer {
   padding: 12px 16px;
   text-align: right;
@@ -64,6 +94,7 @@
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-bg-show 0.3s;
 }
+
 @keyframes modal-show {
   from {
     opacity: 0;

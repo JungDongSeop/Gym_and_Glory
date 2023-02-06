@@ -6,6 +6,7 @@ import com.backend.api.service.RoomService;
 import com.backend.db.entity.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -56,13 +57,6 @@ public class RoomController {
         return new ResponseEntity(sessionKey, HttpStatus.OK);
     }
 
-    // 로비로 방 조회
-//    @GetMapping(value = "/lobby")
-//    public @ResponseBody ResponseEntity searchAllRooms() {
-//        List<Room> roomList = roomService.getRoomList();
-//        return new ResponseEntity<>(roomList,HttpStatus.OK);
-//    }
-
     // 로비 방 조회
     @GetMapping(value = {"lobby", "/lobby/{page}"})
     public @ResponseBody ResponseEntity searchAllRooms(@PathVariable("page") Optional<Integer> page) {
@@ -70,6 +64,14 @@ public class RoomController {
 
         Page<Room> roomList = roomService.getRoomList(pageable);
         return new ResponseEntity<>(roomList,HttpStatus.OK);
+    }
+
+    // 방 제목 검색 조회
+    @GetMapping(value = {"/room/search"})
+    public ResponseEntity<?> searchRoom(@RequestParam String title) {
+        List<Room> searchRoomList = roomService.getSearchRoom(title);
+
+        return new ResponseEntity(searchRoomList, HttpStatus.OK);
     }
 
     // 선택한 방 들어가기

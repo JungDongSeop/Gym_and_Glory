@@ -67,15 +67,12 @@ const MyPage = () => {
               <button onClick={() => setXAxisMin(30)}>1달</button>
               <button onClick={() => setXAxisMin(364)}>1년</button>
             </div>
-          
+
             <div>
               <button onClick={() => setXUnit(1)}>일별</button>
               <button onClick={() => setXUnit(7)}>주별</button>
               <button onClick={() => setXUnit(30)}>월별</button>
             </div>
-            
-            <ExerciseGraph exerciseKind={exerciseType} xAxisMin={xAxisMin} xUnit={xUnit}/>
-          </div>
 
             <ExerciseGraph
               exerciseKind={exerciseType}
@@ -83,6 +80,12 @@ const MyPage = () => {
               xUnit={xUnit}
             />
           </div>
+
+          <ExerciseGraph
+            exerciseKind={exerciseType}
+            xAxisMin={xAxisMin}
+            xUnit={xUnit}
+          />
         </div>
       ) : (
         <p>존재하지 않는 프로필입니다</p>

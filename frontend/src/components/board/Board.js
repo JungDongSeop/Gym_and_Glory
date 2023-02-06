@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import NavigateButtons from "./NavigateButtons";
-import UserIdToNickname from "./UserIdToNickname";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import axios from "axios";
 import classes from "./Board.module.css";
@@ -68,9 +67,8 @@ const Board = () => {
               {/* 제목 */}
               <div>{item.title}</div>
               {/* 작성자 */}
-              <div>
-                작성자 : <UserIdToNickname userId={item.userSequence} />
-              </div>
+              {/* <div>작성자 : <UserIdToNickname userId={item.userSequence} /></div> */}
+              <div>작성자 : {item.user.nickname}</div>
               {/* 기타 정보 */}
               <div>
                 ❤{item.goodCount}

@@ -1,10 +1,7 @@
 package com.backend.api.service;
 
 import com.backend.db.entity.*;
-import com.backend.db.repository.BoardGoodRepository;
-import com.backend.db.repository.CommentGoodRepository;
-import com.backend.db.repository.CommentRepository;
-import com.backend.db.repository.UserRepository;
+import com.backend.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,28 +12,34 @@ public class GoodService {
     private CommentGoodRepository commentGoodRepository;
     private CommentRepository commentRepository;
     private UserRepository userRepository;
-    private BoardService boardService;
+    private BoardRepository boardRepository;
     @Autowired
     public GoodService(BoardGoodRepository boardGoodRepository,
                        CommentGoodRepository commentGoodRepository,
                        CommentRepository commentRepository,
                        UserRepository userRepository,
+                       BoardRepository boardRepository,
                        BoardService boardService) {
         this.boardGoodRepository = boardGoodRepository;
         this.commentGoodRepository = commentGoodRepository;
         this.commentRepository =   commentRepository;
         this.userRepository = userRepository;
-        this.boardService = boardService;
+        this.boardRepository=boardRepository;
     }
 
 
-    public BoardGood findBoardGood(User user , BoardArticle article) {
-        return boardGoodRepository.findByUserAndArticle(user,article);
+    public Boolean findBoardGood(User user , BoardArticle article) {
+        BoardGood boardGood= boardGoodRepository.findByUserAndArticle(user,article);
+        if(boardGood!=null){//있으면 false
+            return false;
+        }
+        return true;//없으면 true
     }
 
     public void addGoodBoard(Integer userSequence, Integer articleSequence) {
         User user = userRepository.findById(userSequence).get();
-        BoardArticle boardArticle = boardService.boardRepository.findOneByArticleSequence(articleSequence);
+        System.out.println("user"+user.getNickname());
+        BoardArticle boardArticle = boardRepository.findOneByArticleSequence(articleSequence);
         System.out.println("여기들어오나?");
         BoardGood boardGood = BoardGood.builder().user(user).article(boardArticle).build();
         boardGoodRepository.save(boardGood);

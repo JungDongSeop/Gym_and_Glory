@@ -6,18 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import java.util.List;
-@Repository
+
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
 //    @Query( "select r " +
-//            "from Rooms r" +
-//            "order by r.roomStatus, r.id asc"
+//            "from Room r " +
+//            "order by r.roomStatus"
 //    )
-//    List<RoomRes> findRoomResList();
+//    List<Room> findRoomResList();
 
     List<Room> findByTitleContaining(String roomTitle); // 방 제목으로 데이터를 조회
 

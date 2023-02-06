@@ -73,30 +73,28 @@ public class RoomController {
     }
 
     // 선택한 방 들어가기
-    @PutMapping(value = "/room/{roomId}")
+    @PutMapping(value = "/room/{sessionKey}")
     public @ResponseBody ResponseEntity enterRoom
-    (@PathVariable("roomId") Long roomId) {
-
-        String sessionKey; // 프론트에 보낼 세션 키
+    (@PathVariable("sessionKey") String sessionKey) {
 
         try {
             // 선택한 방 키를 가지고 방에 들어간다.
             // 방에 들어갈 수 있다면 sessionKey를 받을 수 있다.
-            sessionKey = roomService.enterRoom(roomId);
+            int res = roomService.enterRoom(sessionKey);
         } catch (Exception e){
             return new ResponseEntity<String>(e.getMessage(),
                     HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<String>(sessionKey, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     // 선택한 방 나가기
-    @DeleteMapping(value = "/room/{roomId}")
+    @DeleteMapping(value = "/room/{sessionKey}")
     public @ResponseBody ResponseEntity leaveRoom
-    (@PathVariable("roomId") Long roomId) {
+    (@PathVariable("sessionKey") String sessionKey) {
 
-        roomService.leaveRoom(roomId);
+        roomService.leaveRoom(sessionKey);
 
         // 방에 나가졌으면 OK
         return new ResponseEntity(HttpStatus.OK);

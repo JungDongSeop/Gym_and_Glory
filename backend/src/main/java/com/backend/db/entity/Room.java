@@ -59,7 +59,7 @@ public class Room {
 
     public void addCount(int countNumber) { // 사람이 들어왔을 때
         int restCount = this.count + countNumber; // countNumber는 1이 들어온다.
-        if(restCount == 4) {
+        if(restCount > 4) {
             throw new OutOfCountException("선택하신 방의 인원이 다 찼습니다.");
         }
         this.count = restCount;

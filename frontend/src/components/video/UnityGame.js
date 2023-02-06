@@ -1,4 +1,10 @@
-import React, { forwardRef, useImperativeHandle } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import "./UnityGame.css";
 
@@ -16,6 +22,8 @@ const UnityGame = forwardRef((props, ref) => {
     productVersion: "0.1",
   });
 
+  const [isconnect, setIsConnect] = useState(false);
+
   function sendSignal(signal) {
     if (signal === "connectGamelobby") {
       sendMessage("GameManager", "GameStart");
@@ -28,14 +36,18 @@ const UnityGame = forwardRef((props, ref) => {
     sendSignal,
   }));
 
-  // const handleUnload = async () => {
-  //   try {
-  //     await unload();
-  //     console.log("게임 종료");
-  //   } catch (error) {
-  //     console.log("에러났다");
-  //   }
-  // };
+  // const handleGameIn = useCallback((isconnect) => {
+  //   setIsConnect(isconnect);
+  // }, []);
+
+  // useEffect(() => {
+  //   addEventListener("GameIn", handleGameIn);
+  //   return () => {
+  //     let nick = sessionStorage.getItem("nickname");
+  //     sendMessage("PhotonInit", "setUserInfo", nick);
+  //     removeEventListener("GameIn", handleGameIn);
+  //   };
+  // }, [addEventListener, removeEventListener, handleGameIn]);
 
   return (
     <div>

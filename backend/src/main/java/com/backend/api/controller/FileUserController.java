@@ -13,7 +13,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("file")
+@RequestMapping("/api/file")
 @CrossOrigin("*")
 public class FileUserController {
 

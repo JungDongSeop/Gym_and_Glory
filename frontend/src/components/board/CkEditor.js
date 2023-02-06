@@ -6,17 +6,20 @@ class CkEditor extends Component {
   render() {
     return (
       <div>
-        <h2>CKEditor</h2>
+        {/* <h2>CKEditor</h2> */}
         <CKEditor
           editor={ClassicEditor}
+          config={{
+            placeholder: "내용을 입력하세요.",
+          }}
           // data="<p>Hello from CKEditor5</p>"
           onReady={(editor) => {
             console.log("Editor is ready to use!", editor);
           }}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-          }}
+          // onChange={(event, editor) => {
+          //   const data = editor.getData();
+          //   // console.log({ event, editor, data });
+          // }}
           onBlur={(event, editor) => {
             console.log("Blur.", editor);
           }}

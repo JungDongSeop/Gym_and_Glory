@@ -12,11 +12,11 @@ const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = (props) => {
-  const initialToken = localStorage.getItem("token");
-  const initialEmail = localStorage.getItem("email");
-  const initialUserSequence = localStorage.getItem("userSequence");
-  const initialNickname = localStorage.getItem("nickname");
-  const initialGender = localStorage.getItem("gender");
+  const initialToken = sessionStorage.getItem("token");
+  const initialEmail = sessionStorage.getItem("email");
+  const initialUserSequence = sessionStorage.getItem("userSequence");
+  const initialNickname = sessionStorage.getItem("nickname");
+  const initialGender = sessionStorage.getItem("gender");
 
   const [token, setToken] = useState(initialToken);
   const [userSequence, setUserSequence] = useState(initialUserSequence);
@@ -41,11 +41,11 @@ export const AuthContextProvider = (props) => {
     }
     setGender(gender);
 
-    localStorage.setItem("token", token);
-    localStorage.setItem("email", email);
-    localStorage.setItem("userSequence", userSequence);
-    localStorage.setItem("nickname", nickname);
-    localStorage.setItem("gender", gender);
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("email", email);
+    sessionStorage.setItem("userSequence", userSequence);
+    sessionStorage.setItem("nickname", nickname);
+    sessionStorage.setItem("gender", gender);
   };
 
   const logoutHandler = () => {
@@ -55,11 +55,11 @@ export const AuthContextProvider = (props) => {
     setGender("");
     setUserSequence(0);
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("userSequence");
-    localStorage.removeItem("nickname");
-    localStorage.removeItem("gender");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("email");
+    sessionStorage.removeItem("userSequence");
+    sessionStorage.removeItem("nickname");
+    sessionStorage.removeItem("gender");
   };
 
   const contextValue = {

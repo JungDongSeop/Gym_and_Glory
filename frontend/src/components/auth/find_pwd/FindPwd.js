@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../../assets/logo.svg";
-import classes from "./FindPwd.module.css";
+import Logo from "../../../assets/logo.png";
+import classes from "./FindPwd.module.scss";
 
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
 // const API_KEY = process.env.REACT_APP_API_KEY;
@@ -53,19 +53,29 @@ const FindPwd = () => {
 
   return (
     <div className={classes.whiteBox}>
+      <img className={classes.logoSmall} src={Logo} alt="logo-small" />
+      <p> 다시 참전하세요!</p>
       <form onSubmit={submitHandler}>
-        <img className={classes.logoSmall} src={Logo} alt="logo-small" />
+
         <br />
+
+        <label>
+      
         <input
           className={classes.inputText}
-          type="email"
+          type="email" 
           required
-          placeholder="이메일"
+          placeholder=" "
           ref={emailInputRef}
         />
+
+        <p className={classes.labelText}>email</p>
+        </label>
+
         <br />
-        <input type="submit" value="비밀번호 찾기" />
+        <input className={classes.findBtn} type="submit" value="비밀번호 찾기" />
         <br />
+        <span></span>
       </form>
       <Button onClick={() => navigate("/login")}>홈으로</Button>
     </div>

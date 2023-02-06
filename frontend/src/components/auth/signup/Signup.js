@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../../assets/logo.svg";
+import Logo from "../../../assets/logo.png";
 import classes from "./Signup.module.scss";
 import RestApi from "../../api/RestApi";
 
@@ -197,6 +197,11 @@ const Signup = () => {
       setIsCheckedNickname(false);
       nicknameInputRef.current.value = "";
       nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
+    } else if (response.data === "중복O") {
+      alert("이미 사용중인 닉네임입니다.");
+      setIsCheckedNickname(false);
+      nicknameInputRef.current.value = "";
+      nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
     }
   };
 
@@ -318,7 +323,7 @@ const Signup = () => {
           />
         </div>
         {/* 1차 비밀번호 입력 */}
-        {
+        {isCheckedEmail && (
           <div className={classes.control}>
             <label htmlFor="password">비밀번호(Password)</label>
             <input
@@ -331,7 +336,7 @@ const Signup = () => {
               autoComplete="off"
             />
           </div>
-        }
+        )}
         {/* 2차 비밀번호 입력 */}
         {isValidPassword && (
           <div className={classes.control}>
@@ -348,7 +353,7 @@ const Signup = () => {
         )}
 
         {/* 닉네임 */}
-        {
+        {isValidConfirmPassword && (
           <div>
             <div className={classes.control}>
               <label htmlFor="nickname">닉네임(Nickname)</label>
@@ -378,56 +383,71 @@ const Signup = () => {
               />
             </div>
           </div>
-        }
+        )}
         {/* 전화번호 */}
-        <div>
-          <div className={classes.control}>
-            <label htmlFor="phone">전화번호(Phone)</label>
-            <input
-              onChange={phoneCheckHandler}
-              type="tel"
-              id="phone"
-              // required
-              ref={phoneInputRef}
-              autoComplete="off"
-            />
+        {isCheckedNickname && (
+          <div>
+            <div className={classes.control}>
+              <label htmlFor="phone">전화번호(Phone)</label>
+              <input
+                onChange={phoneCheckHandler}
+                type="tel"
+                id="phone"
+                // required
+                ref={phoneInputRef}
+                autoComplete="off"
+                placeholder="- 빼고 입력해주세요"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* 성별 확인 */}
-        <div className={classes.gender}>
-          <div>
-            <label className={classes.genderRadio}>
-              <input
-                type="radio"
-                name="male"
-                value="1"
-                checked={genderValue === "1"}
-                onChange={genderChangeHandler}
-              />
-              남자
-            </label>
-            {/* </div>
+        {isValidPhone && (
+          <div className={classes.gender}>
+            <div>
+              <label className={classes.genderRadio}>
+                <input
+                  type="radio"
+                  name="male"
+                  value="1"
+                  checked={genderValue === "1"}
+                  onChange={genderChangeHandler}
+                />
+                남자
+              </label>
+              {/* </div>
           <br />
-          <div> */}
-            <label className={classes.genderRadio}>
-              <input
-                type="radio"
-                name="female"
-                value="0"
-                checked={genderValue === "0"}
-                onChange={genderChangeHandler}
-              />
-              여자
-            </label>
+        <div> */}
+              <label className={classes.genderRadio}>
+                <input
+                  type="radio"
+                  name="female"
+                  value="0"
+                  checked={genderValue === "0"}
+                  onChange={genderChangeHandler}
+                />
+                여자
+              </label>
+            </div>
           </div>
-        </div>
+        )}
         {/* 회원가입 버튼 */}
-        <div className={classes.actions}>
-          {!isLoading && <button className={classes.toggle}>회원가입</button>}
-          {isLoading && <p>잠시만 기다려 주세요...</p>}
-        </div>
+        {isValidEmail &&
+          isValidPassword &&
+          isValidConfirmPassword &&
+          isValidNickname &&
+          isValidPhone && (
+            <div className={classes.actions}>
+              {!isLoading && (
+                <button className={classes.toggle}>회원가입</button>
+              )}
+              {isLoading && <p>잠시만 기다려 주세요...</p>}
+            </div>
+          )}
       </form>
+
+      <span></span>
       <div className={classes.actions} onClick={() => navigate("/login")}>
         <button className={classes.toggle}>홈으로</button>
       </div>

@@ -3,7 +3,9 @@ package com.backend.api.service;
 import com.backend.api.request.BoardPostReq;
 import com.backend.api.request.WriteReq;
 import com.backend.db.entity.BoardArticle;
+import com.backend.db.entity.User;
 import com.backend.db.repository.BoardRepository;
+import com.backend.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +16,12 @@ import java.util.List;
 @Service
 public class BoardService {
 
-    private final BoardRepository boardRepository;
+    final BoardRepository boardRepository;
+    final UserRepository userRepository;
 
     @Autowired
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(BoardRepository boardRepository,UserRepository userRepository) {
+        this.userRepository = userRepository;
         this.boardRepository = boardRepository;
     }
 
@@ -44,9 +48,11 @@ public class BoardService {
     @Transactional
     public BoardArticle writeArticle(WriteReq writeReq) {
 
+        User user = userRepository.findById(writeReq.getUserSequence()).get();
+
         BoardArticle boardArticle = BoardArticle.builder()
                 .title(writeReq.getTitle())
-                .userSequence(writeReq.getUserSequence())
+                .user(user)
                 .contents(writeReq.getContents())
                 .registerTime(String.valueOf(LocalDateTime.now()))
                 .modify_time(String.valueOf(LocalDateTime.now()))

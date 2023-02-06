@@ -1,12 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import "./RoomItem.css";
+import "./RoomItem.scss";
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 230px;
-  border: 5px solid black;
 
   &:hover {
     cursor: pointer;
@@ -19,7 +16,6 @@ const TitleWrapper = styled.div`
   height: 25%;
   text-align: center;
   flex-wrap: wrap;
-  font-size: 20px;
 `;
 
 const TeamWrapper = styled.div`
@@ -27,7 +23,7 @@ const TeamWrapper = styled.div`
   width: 80%;
   height: 15%;
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 25px;
   margin-right: auto;
   margin-left: auto;
@@ -48,7 +44,7 @@ const RoomItem = (props) => {
   };
 
   return (
-    <Wrapper onClick={enterRoom}>
+    <Wrapper onClick={enterRoom} className="card">
       <TitleWrapper>{props.room.roomId}</TitleWrapper>
       <TeamWrapper></TeamWrapper>
     </Wrapper>

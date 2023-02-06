@@ -5,7 +5,10 @@ import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import NavigateButtons from "./NavigateButtons";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router";
-import CkEditor from "./CkEditor";
+
+import classes from "./CreateBoard.module.css";
+
+// import CkEditor from "./CkEditor";
 
 const CreateBoard = () => {
   // url 이동을 위한 함수
@@ -45,29 +48,44 @@ const CreateBoard = () => {
 
   return (
     <main>
-      <CkEditor />
       {/* 게시판 종류 선택 버튼 */}
       <NavigateButtons type={type} />
       {/* 게시판 제출 */}
       <form onSubmit={handleSubmit}>
-        <label>
-          Title:
+        <div>
+          <p>제목:</p>
           <input
+            className={classes.title}
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-        </label>
-        <br />
-        <label>
-          Contents:
+        </div>
+        {/* <br /> */}
+        {/* <CkEditor
+          value={(editor) => {
+            const data = editor.getData();
+            console.log(data);
+          }}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            console.log(contents);
+          }}
+        /> */}
+        <div>
+          <p>내용:</p>
+
           <textarea
+            className={classes.content}
             value={contents}
+            placeholder="내용을 입력하세요."
             onChange={(e) => setContents(e.target.value)}
           />
-        </label>
+        </div>
         <br />
-        <button type="submit">제출</button>
+        <button className={classes.submit} type="submit">
+          글 작성하기
+        </button>
       </form>
     </main>
   );

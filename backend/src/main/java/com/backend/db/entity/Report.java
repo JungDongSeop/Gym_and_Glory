@@ -19,13 +19,15 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_sequence")
-    private Integer reportSequence;
+    private Long reportSequence;
 
-    @Column(name = "send_sequence")
-    private Integer sendSequence;
+    @ManyToOne
+    @JoinColumn(name = "send_sequence")
+    private User sendUser;
 
-    @Column(name = "get_sequence")
-    private Integer getSequence;
+    @ManyToOne
+    @JoinColumn(name = "get_sequence")
+    private User getUser;
 
     private Integer kind;
 

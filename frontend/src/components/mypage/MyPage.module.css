@@ -1,8 +1,23 @@
+.container .profile{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
 .graphWrap {
   background-color: white;
+  max-width: 1050px;
+  overflow-x: auto;
+  /* display: flex; */
+  flex-wrap: wrap;
 }
 
 .grassWrap {
-  background-color: wheat;
-  height: 100px;
+  background-color: rgb(230, 230, 230);
+  height: 150px;
+  max-width: 1050px;
+  overflow-x: auto;
+  display: flex;
+  flex-wrap: wrap;
 }

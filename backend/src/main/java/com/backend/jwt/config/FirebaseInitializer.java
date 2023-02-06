@@ -27,7 +27,7 @@ public class FirebaseInitializer {
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
         log.info("Initializing Firebase.");
-        Path currentPath = Paths.get("classpath:firebasekey.json");
+        Path currentPath = Paths.get("src/main/resources/config/firebasekey.json");
         String path = currentPath.toAbsolutePath().toString();
         System.out.println("현재 작업 경로: " + path);
         FileInputStream serviceAccount =

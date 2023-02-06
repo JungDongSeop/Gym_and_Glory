@@ -1,0 +1,16 @@
+.divset {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentDiv {
+  width: 30%;
+  margin-right: 30px;
+  border: 5px solid black;
+  border-radius: 10px;
+}
+
+.commentForm {
+  display: flex;
+}

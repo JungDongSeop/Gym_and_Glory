@@ -6,6 +6,7 @@ import Comment from "./Comment";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import axios from "axios";
 import RestApi from "../api/RestApi";
+import classes from "./Comment.module.css";
 
 // 게시판 상세페이지
 // 이후 notice, getTeam, report 등으로 분리할 예정
@@ -51,29 +52,35 @@ const DetailBoard = () => {
 
   return (
     <main>
-      <h1>게시판 상세페이지 입니다.</h1>
-      {/* 게시판  */}
-      <p>제목 : </p>
-      <p>{data.title}</p>
-      <p>내용 : </p>
-      <p>{data.contents}</p>
-      <p>작성자 : </p>
-      {/* <p><UserIdToNickname userId={data.userSequence}/></p> */}
-      <p>{data.user ? data.user.nickname : null}</p>
-      <br />
-      {/* 게시글 수정 구현 */}
-      <button
-        onClick={() => navigate(`/board/${type}/update/${articleSequence}`)}
-      >
-        게시글 수정
-      </button>
-      {/* 게시글 좋아요 구현 */}
-      추천 : {data.goodCount}
-      <button onClick={() => goodClick()}>좋아요</button>
-      {/* 게시글 삭제 구현 */}
-      <button onClick={() => deleteClick()}>삭제</button>
-      {/* 댓글 */}
-      <Comment />
+      <div className={classes.divset}>
+        <div>
+          <h1>게시판 상세페이지 입니다.</h1>
+          {/* 게시판  */}
+          <p>제목 : </p>
+          <p>{data.title}</p>
+          <p>내용 : </p>
+          <p>{data.contents}</p>
+          <p>작성자 : </p>
+          {/* <p><UserIdToNickname userId={data.userSequence}/></p> */}
+          <p>{data.user ? data.user.nickname : null}</p>
+          <br />
+          {/* 게시글 수정 구현 */}
+          <button
+            onClick={() => navigate(`/board/${type}/update/${articleSequence}`)}
+          >
+            게시글 수정
+          </button>
+          {/* 게시글 좋아요 구현 */}
+          추천 : {data.goodCount}
+          <button onClick={() => goodClick()}>좋아요</button>
+          {/* 게시글 삭제 구현 */}
+          <button onClick={() => deleteClick()}>삭제</button>
+          {/* 댓글 */}
+        </div>
+        <div className={classes.commentDiv}>
+          <Comment />
+        </div>
+      </div>
     </main>
   );
 };

@@ -41,7 +41,7 @@ const CreateBoard = () => {
       await axios.post(`${RestApi()}/board`, {
         userSequence: userSequence,
         title: titleInputRef.current.value,
-        contents: contents,
+        contents: contentInputRef.current.value,
         div: types[type],
       });
       setTitle("");

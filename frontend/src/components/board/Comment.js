@@ -13,8 +13,9 @@ const Comment = () => {
   // url params 받아오는 변수
   const { articleSequence } = useParams();
 
-  // 유저 정보 redux에서 받아오기
+  // 유저 정보 받아오기
   const {userSequence} = useContext(AuthContext);
+  const user = useContext(AuthContext);
 
   // 댓글 읽기 위한 state
   const [comments, setComments] = useState([]);
@@ -32,6 +33,7 @@ const Comment = () => {
     });
   ;}
   useEffect(() => {
+    console.log('user', user)
     commentRead(articleSequence);
   }, [articleSequence]);
 
@@ -104,7 +106,7 @@ const Comment = () => {
       {comments.map((comment, index) => (
         <ul key={index}>
           {/* 댓글 상세 표시, 댓글 좋아요, 댓글 삭제 */}
-          <h1>{comment.commentSequence}, 내용 : {comment.contents} 작성자 : {comment.userSequence}</h1>
+          <h1>{comment.commentSequence}, 내용 : {comment.contents} 작성자 : {comment.user ? comment.user.nickname : null}</h1>
           추천 : {comment.goodCount}. <button onClick={() => handleGood(comment.commentSequence)}>❤</button>
           <button onClick={() => handleDelete(comment.commentSequence)}>삭제</button>
       

@@ -43,6 +43,15 @@ public class RoomService {
         return roomList;
     }
 
+    // 방 검색 조회
+    @Transactional(readOnly = true)
+    public List<Room> getSearchRoom(String title) {
+
+        List<Room> roomSearchList = roomRepository.findByTitleContaining(title);
+
+        return roomSearchList;
+    }
+
     // 페이징 조회
     @Transactional(readOnly = true)
     public Page<Room> getRoomList(Pageable pageable) {
@@ -66,6 +75,8 @@ public class RoomService {
         return 1; // 방에 들어갔으면 성공
     }
 
+
+    // 현재 유저가 들어가 있는 방 나갔을 때
     public void leaveRoom(String sessionKey) {
 
         // 세션키로 방을 찾는다.

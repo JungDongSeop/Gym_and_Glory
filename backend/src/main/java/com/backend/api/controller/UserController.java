@@ -36,7 +36,6 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestHeader("Authorization") String authorization, @RequestBody SignUpReq signUpReq) throws UnknownHostException, MessagingException {
         // TOKEN을 가져온다.
-        System.out.println("들어옴ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
         FirebaseToken decodedToken;
         try {
             String token = RequestUtil.getAuthorizationToken(authorization);
@@ -76,7 +75,7 @@ public class UserController {
         if(flag){
             return new ResponseEntity("중복X",HttpStatus.OK);
         }else{
-            System.out.println("실패");
+
             return new ResponseEntity("중복O",HttpStatus.OK);
         }
     }
@@ -87,14 +86,13 @@ public class UserController {
         if(flag){
             return new ResponseEntity("중복X",HttpStatus.OK);
         }else{
-            System.out.println("실패");
+
             return new ResponseEntity("중복O",HttpStatus.OK);
         }
     }
 
     @DeleteMapping("/user/{userSequence}")
-    public ResponseEntity deleteUser( @PathVariable int userSequence){
-        System.out.println("안들어오노 ㅠ");
+    public ResponseEntity deleteUser( @PathVariable int userSequence){;
         userService.deleteUser(userSequence);
 
         return new ResponseEntity(HttpStatus.OK);

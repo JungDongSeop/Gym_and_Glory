@@ -2,56 +2,36 @@ package com.backend.api.service;
 
 import com.backend.db.entity.Friend;
 import com.backend.db.entity.SendFriend;
+import com.backend.db.entity.User;
 import com.backend.db.repository.FriendRepository;
 import com.backend.db.repository.SendFriendRepository;
+import com.backend.db.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class FriendService {
 
-    FriendRepository friendRepository;
-    SendFriendRepository sendFriendRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public FriendService(FriendRepository friendRepository,SendFriendRepository sendFriendRepository){
-        this.friendRepository = friendRepository;
-        this.sendFriendRepository = sendFriendRepository;
+
+    // 친구목록에서 유저 검색하기
+    @Transactional(readOnly = true)
+    public List<User> getUserSearchList(String NickName) {
+        List<User> userSearchList = userRepository.findByNicknameLike(NickName);
+
+        if(userSearchList.size() == 0) {
+            throw new EntityNotFoundException("검색된 유저가 없습니다.");
+        }
+        return userSearchList;
     }
 
-    public void send(Integer send, Integer get) {
-        SendFriend sendFriend = new SendFriend();
-        sendFriend.setSendSequence(send);
-        sendFriend.setGetSequence(get);
-        sendFriendRepository.save(sendFriend);
-    }
-
-    public void accept(Integer send, Integer get) {
-
-        Friend friend1 = Friend.builder().sendSequence(send).getSequence(get).build();
-        Friend friend2 = Friend.builder().sendSequence(get).getSequence(send).build();
-
-        friendRepository.save(friend1);
-        friendRepository.save(friend2);
-    }
-
-    public void delete(Integer send, Integer get) {
-        SendFriend sendFriend = new SendFriend();
-        sendFriend.setSendSequence(send);
-        sendFriend.setGetSequence(get);
-        sendFriendRepository.deleteSendingList(send,get);
-    }
-
-    public List<Friend> getList(Integer userSequence) {
-        return friendRepository.findByGetSequence(userSequence);
-    }
-
-    @Transactional
-    public void deleteFriend(Integer getSequence, Integer sendSequence) {
-        friendRepository.deleteByGetSequenceAndSendSequence(getSequence,sendSequence);
-        friendRepository.deleteByGetSequenceAndSendSequence(sendSequence,getSequence);
-    }
 }

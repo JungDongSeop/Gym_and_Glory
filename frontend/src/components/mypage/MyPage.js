@@ -57,18 +57,22 @@ const MyPage = () => {
           </div>
           {/* 운동 통계 */}
           <div className={classes.graphWrap}>
-            <button onClick={() => setExerciseData(1)}>스쿼트</button>
-            <button onClick={() => setExerciseData(2)}>푸쉬업</button>
-            <button onClick={() => setExerciseData(3)}>버피</button>
-            <br />
-            <button onClick={() => setXAxisMin(7)}>1주일</button>
-            <button onClick={() => setXAxisMin(30)}>1달</button>
-            <button onClick={() => setXAxisMin(364)}>1년</button>
+            <div>
+              <button onClick={() => setExerciseData(1)}>스쿼트</button>
+              <button onClick={() => setExerciseData(2)}>푸쉬업</button>
+              <button onClick={() => setExerciseData(3)}>버피</button>
+            </div>
+            <div>
+              <button onClick={() => setXAxisMin(7)}>1주일</button>
+              <button onClick={() => setXAxisMin(30)}>1달</button>
+              <button onClick={() => setXAxisMin(364)}>1년</button>
+            </div>
 
-            <br />
-            <button onClick={() => setXUnit(1)}>일별</button>
-            <button onClick={() => setXUnit(7)}>주별</button>
-            <button onClick={() => setXUnit(30)}>월별</button>
+            <div>
+              <button onClick={() => setXUnit(1)}>일별</button>
+              <button onClick={() => setXUnit(7)}>주별</button>
+              <button onClick={() => setXUnit(30)}>월별</button>
+            </div>
 
             <ExerciseGraph
               exerciseKind={exerciseType}
@@ -76,6 +80,12 @@ const MyPage = () => {
               xUnit={xUnit}
             />
           </div>
+
+          <ExerciseGraph
+            exerciseKind={exerciseType}
+            xAxisMin={xAxisMin}
+            xUnit={xUnit}
+          />
         </div>
       ) : (
         <p>존재하지 않는 프로필입니다</p>

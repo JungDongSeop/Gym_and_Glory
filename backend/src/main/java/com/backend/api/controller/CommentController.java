@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Transactional
-@RequestMapping("/board/comment")
+@RequestMapping("/api/board/comment")
 @CrossOrigin("*")
 public class CommentController {
 

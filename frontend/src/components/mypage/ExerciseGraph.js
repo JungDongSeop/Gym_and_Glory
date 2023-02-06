@@ -147,8 +147,8 @@ const ExerciseGraph = (props) => {
           },
           title: {
             display: true,
-            text: "제목입니다.",
-          },
+            text: `${[0, '스쿼트', '푸쉬업', '버피'][exerciseKind]}`
+          }
         },
         scales: {
           x: {},
@@ -174,7 +174,7 @@ const ExerciseGraph = (props) => {
   }, [exerciseData, xUnit]);
 
   return (
-    <div className={classes.wow}>
+    <div className={classes.container}>
       <canvas id="exercise-chart" />
     </div>
   );

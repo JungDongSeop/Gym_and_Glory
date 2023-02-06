@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/exerciseLog")
+@RequestMapping("/api/exerciseLog")
 @CrossOrigin("*")
 public class ExerciseLogController {
 

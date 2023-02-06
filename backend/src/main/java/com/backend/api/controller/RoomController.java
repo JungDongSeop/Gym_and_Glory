@@ -5,15 +5,21 @@ import com.backend.api.response.RoomRes;
 import com.backend.api.service.RoomService;
 import com.backend.db.entity.Room;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,7 +46,6 @@ public class RoomController {
         String sessionKey; // 프론트에 보낼 세션 키
 
         try {
-            System.out.println("여기까지 들어오는가?");
             // 프론트에서 넘어오는 방 입력 정보를 이용하여 방 생성 로직을 호출
             sessionKey = roomService.addRoom(roomReq);
         } catch (Exception e) {
@@ -52,37 +57,44 @@ public class RoomController {
     }
 
     // 로비로 방 조회
-    @GetMapping(value = "/lobby")
-    public @ResponseBody ResponseEntity searchAllRooms() {
-        List<Room> roomList = roomService.getRoomList();
+//    @GetMapping(value = "/lobby")
+//    public @ResponseBody ResponseEntity searchAllRooms() {
+//        List<Room> roomList = roomService.getRoomList();
+//        return new ResponseEntity<>(roomList,HttpStatus.OK);
+//    }
+
+    // 로비 방 조회
+    @GetMapping(value = {"lobby", "/lobby/{page}"})
+    public @ResponseBody ResponseEntity searchAllRooms(@PathVariable("page") Optional<Integer> page) {
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
+
+        Page<Room> roomList = roomService.getRoomList(pageable);
         return new ResponseEntity<>(roomList,HttpStatus.OK);
     }
 
     // 선택한 방 들어가기
-    @PutMapping(value = "/room/{roomId}")
+    @PutMapping(value = "/room/{sessionKey}")
     public @ResponseBody ResponseEntity enterRoom
-    (@PathVariable("roomId") Long roomId) {
-
-        String sessionKey; // 프론트에 보낼 세션 키
+    (@PathVariable("sessionKey") String sessionKey) {
 
         try {
             // 선택한 방 키를 가지고 방에 들어간다.
             // 방에 들어갈 수 있다면 sessionKey를 받을 수 있다.
-            sessionKey = roomService.enterRoom(roomId);
+            int res = roomService.enterRoom(sessionKey);
         } catch (Exception e){
             return new ResponseEntity<String>(e.getMessage(),
                     HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<String>(sessionKey, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     // 선택한 방 나가기
-    @DeleteMapping(value = "/room/{roomId}")
+    @DeleteMapping(value = "/room/{sessionKey}")
     public @ResponseBody ResponseEntity leaveRoom
-    (@PathVariable("roomID") Long roomId) {
+    (@PathVariable("sessionKey") String sessionKey) {
 
-        roomService.leaveRoom(roomId);
+        roomService.leaveRoom(sessionKey);
 
         // 방에 나가졌으면 OK
         return new ResponseEntity(HttpStatus.OK);

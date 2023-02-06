@@ -56,6 +56,7 @@
   background-color: grey;
   margin-top: 4%;
   margin-bottom: 4%;
+  text-align: center;
 }
 
 #icon-margin {
@@ -103,7 +104,7 @@
   height: 100%;
   border-radius: 6px;
   transition: top 0.01s linear;
-  background-color: #6da2d9;
+  background-color: #ebf3fa;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
   margin-bottom: 6px;
   box-shadow: 0 0 0 1px #6191c2 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,

@@ -55,10 +55,8 @@ class UserVideoComponent extends Component {
   }
 
   getNicknameTag() {
-    return JSON.parse(
-      this.props.streamManager.stream.connection.data
-    ).clientData;
-    
+    return JSON.parse(this.props.streamManager.stream.connection.data)
+      .clientData;
   }
 
   handleIsActive() {
@@ -81,7 +79,7 @@ class UserVideoComponent extends Component {
   }
 
   render() {
-    const myNick = localStorage.getItem("nickname");
+    const myNick = sessionStorage.getItem("nickname");
     const getNick = JSON.parse(
       this.props.streamManager.stream.connection.data
     ).clientData;

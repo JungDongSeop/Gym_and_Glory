@@ -1,9 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useEffect } from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import "./UnityGame.css";
 
 const UnityGame = forwardRef((props, ref) => {
-  const { unityProvider, sendMessage, unload } = useUnityContext({
+  const { unityProvider, sendMessage } = useUnityContext({
     loaderUrl: "unitybuild/build.loader.js",
     dataUrl: "unitybuild/build.data",
     frameworkUrl: "unitybuild/build.framework.js",
@@ -16,13 +16,16 @@ const UnityGame = forwardRef((props, ref) => {
     productVersion: "0.1",
   });
 
-  function sendAttack() {
+  function sendSignal(signal) {
+    if (signal === "connectGamelobby") {
+      sendMessage("GameManager", "GameStart");
+    }
     console.log("공격 신호 받아서 유니티로 보낸다");
-    sendMessage("Player1(Clone)", "Attack");
+    // sendMessage("Player1(Clone)", "Attack");
   }
 
   useImperativeHandle(ref, () => ({
-    sendAttack,
+    sendSignal,
   }));
 
   // const handleUnload = async () => {

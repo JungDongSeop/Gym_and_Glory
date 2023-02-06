@@ -18,6 +18,7 @@ import {
   VideocamOffOutlined,
   VideocamOutlined,
 } from "@mui/icons-material";
+import { CircularProgress } from "@mui/material";
 
 const APPLICATION_SERVER_URL = "http://localhost:5000/";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
@@ -101,6 +102,8 @@ class GameRoom extends Component {
       ishost: false,
       chaton: false,
       myRef: createRef({}),
+      selectedExercise: undefined,
+      loadingStatus: false,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -118,6 +121,8 @@ class GameRoom extends Component {
     this.changemodel = this.changemodel.bind(this);
     this.handleAudioStatus = this.handleAudioStatus.bind(this);
     this.handleVideoStatus = this.handleVideoStatus.bind(this);
+    this.handleSelectedExercise = this.handleSelectedExercise.bind(this);
+    this.chatContainer = createRef(null);
   }
 
   componentDidMount() {
@@ -136,7 +141,7 @@ class GameRoom extends Component {
       const { roomId, roomTitle, teamTitle } = location.state;
       this.setState({
         mySessionId: roomId,
-        myUserNick: localStorage.getItem("nickname"),
+        myUserNick: sessionStorage.getItem("nickname"),
         mySessionTitle: roomTitle,
         myTeamTitle: teamTitle,
       });
@@ -144,26 +149,14 @@ class GameRoom extends Component {
       this.setmodel();
       this.joinSession();
     }, 500);
+    setTimeout(() => {
+      this.state.myRef.current.sendSignal("connectGamelobby");
+    }, 5000);
   }
 
   componentWillUnmount() {
     window.location.reload();
     this.leaveSession();
-    // const mySession = this.state.session;
-    // if (mySession) {
-    //   mySession.disconnect();
-    // }
-    // // back으로 axios요청을 보내 방 정보 갱신
-    // // back에서는 현재 방 인원수가 1명일때 방 관리하는 곳에서 방을 삭제하고
-    // // 1명보다 많을 때는 방의 인원수를 한명 줄인다.
-    // this.OV = null;
-    // this.setState({
-    //   session: "",
-    //   subscribers: [],
-    //   mySessionId: "",
-    //   mainStreamManager: undefined,
-    //   publisher: undefined,
-    // });
   }
 
   componentDidUpdate(previousProps, previousState) {
@@ -179,6 +172,9 @@ class GameRoom extends Component {
   }
 
   sendChatByClick() {
+    if (this.state.chat === "") {
+      return;
+    }
     this.setState({
       chats: [
         ...this.state.chats,
@@ -200,9 +196,14 @@ class GameRoom extends Component {
     this.setState({
       chat: "",
     });
+    console.log("채팅 보냄");
+    console.log(this.state.chats);
   }
 
   sendChatByEnter(e) {
+    if (this.state.chat === "") {
+      return;
+    }
     if (e.key === "Enter") {
       this.setState({
         chats: [
@@ -226,6 +227,8 @@ class GameRoom extends Component {
         chat: "",
       });
     }
+    console.log("채팅 보냄");
+    console.log(this.state.chats);
   }
 
   handleMainVideoStream(stream) {
@@ -290,6 +293,7 @@ class GameRoom extends Component {
                 },
               ],
             });
+            console.log("채팅 추가 됨?");
           }
         });
         mySession.on("signal:get-out", (event) => {
@@ -355,10 +359,8 @@ class GameRoom extends Component {
             .then(async () => {
               this.updateHost().then((firstUser) => {
                 const host = JSON.parse(firstUser).clientData;
-                console.log(host, this.state.myUserNick);
                 if (this.state.myUserNick === host) {
                   this.setState({ ishost: true });
-                  console.log(this.state.ishost);
                 }
               });
               let publisher = await this.OV.initPublisherAsync(undefined, {
@@ -485,6 +487,33 @@ class GameRoom extends Component {
     console.log("바꼇다");
   }
 
+  async handleSelectedExercise(exercise) {
+    if (this.state.loadingStatus === true) {
+      return;
+    }
+    if (this.state.selectedExercise === exercise) {
+      this.setState({ selectedExercise: undefined });
+    } else {
+      this.setState({ selectedExercise: exercise, loadingStatus: true });
+      if (exercise === "squat") {
+        const modelURL =
+          "https://teachablemachine.withgoogle.com/models/UQcyvhIye/model.json";
+        const metadataURL =
+          "https://teachablemachine.withgoogle.com/models/UQcyvhIye/metadata.json";
+        this.setState({
+          model: await tmPose.load(modelURL, metadataURL),
+          loadingStatus: false,
+        });
+      } else if (exercise === "lunge") {
+        setTimeout(() => this.setState({ loadingStatus: false }), 3000);
+      } else if (exercise === "pushup") {
+        setTimeout(() => this.setState({ loadingStatus: false }), 3000);
+      } else {
+        setTimeout(() => this.setState({ loadingStatus: false }), 3000);
+      }
+    }
+  }
+
   async init() {
     // this.setState({ webcam: new tmPose.Webcam(size, size, flip) });
     await this.state.webcam.setup();
@@ -524,7 +553,7 @@ class GameRoom extends Component {
 
   async sendKey() {
     console.log("공격 신호 보낸다");
-    this.state.myRef.current.sendAttack();
+    this.state.myRef.current.sendSignal();
   }
 
   async getToken() {
@@ -619,14 +648,96 @@ class GameRoom extends Component {
                 )}
               </div>
               <div id="game-container">
-                <button onClick={this.changemodel}>모델 바꾸기</button>
-
-                <UnityGame ref={this.state.myRef} />
-                <div>
-                  <Chats chats={chats} />
+                <div className="exercise-container">
+                  <div
+                    onClick={() => this.handleSelectedExercise("squat")}
+                    className={
+                      this.state.selectedExercise === "squat"
+                        ? "button-active"
+                        : "exercise-button"
+                    }
+                  >
+                    <p className="exercise-text">
+                      스쿼트
+                      {this.state.loadingStatus &&
+                      this.state.selectedExercise === "squat" ? (
+                        <CircularProgress size={15} color="grey" />
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    onClick={() => this.handleSelectedExercise("lunge")}
+                    className={
+                      this.state.selectedExercise === "lunge"
+                        ? "button-active"
+                        : "exercise-button"
+                    }
+                  >
+                    <p className="exercise-text">
+                      런지
+                      {this.state.loadingStatus &&
+                      this.state.selectedExercise === "lunge" ? (
+                        <CircularProgress size={15} color="grey" />
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    onClick={() => this.handleSelectedExercise("pushup")}
+                    className={
+                      this.state.selectedExercise === "pushup"
+                        ? "button-active"
+                        : "exercise-button"
+                    }
+                  >
+                    <p className="exercise-text">
+                      팔굽혀펴기
+                      {this.state.loadingStatus &&
+                      this.state.selectedExercise === "pushup" ? (
+                        <CircularProgress size={15} color="grey" />
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    onClick={() => this.handleSelectedExercise("jumpingjack")}
+                    className={
+                      this.state.selectedExercise === "jumpingjack"
+                        ? "button-active"
+                        : "exercise-button"
+                    }
+                  >
+                    <p className="exercise-text">
+                      점핑잭
+                      {this.state.loadingStatus &&
+                      this.state.selectedExercise === "jumpingjack" ? (
+                        <CircularProgress size={15} color="grey" />
+                      ) : null}
+                    </p>
+                  </div>
                 </div>
-                <button onClick={this.start}>start</button>
-                <input type="text" />
+                <UnityGame ref={this.state.myRef} />
+                {this.state.chaton ? (
+                  <div className="chatbox">
+                    <div className="chatbox-header" />
+                    <div className="chatbox-chats" ref="chatoutput">
+                      <Chats chats={chats} />
+                    </div>
+                    <div className="chatbox-footer">
+                      <input
+                        type="text"
+                        placeholder="채팅을 입력하세요"
+                        onChange={this.handleChatMessageChange}
+                        onKeyPress={this.sendChatByEnter}
+                        value={this.state.chat}
+                      />
+                      <p
+                        className="chatbox-button"
+                        onClick={this.sendChatByClick}
+                      >
+                        Send
+                      </p>
+                    </div>
+                  </div>
+                ) : null}
               </div>
               <div id="video-container2" className="video-container">
                 {this.state.subscribers[1] !== undefined ? (
@@ -670,12 +781,14 @@ class GameRoom extends Component {
             {this.state.videostate ? (
               <VideocamOutlined
                 id="icon-margin"
+                fontSize="large"
                 onClick={this.handleVideoStatus}
                 className="hover-pointer"
               />
             ) : (
               <VideocamOffOutlined
                 id="icon-margin"
+                fontSize="large"
                 onClick={this.handleVideoStatus}
                 className="hover-pointer"
               />
@@ -683,20 +796,32 @@ class GameRoom extends Component {
             {this.state.audiostate ? (
               <MicOutlined
                 id="icon-margin"
+                fontSize="large"
                 onClick={this.handleAudioStatus}
                 className="hover-pointer"
               />
             ) : (
               <MicOffOutlined
                 id="icon-margin"
+                fontSize="large"
                 onClick={this.handleAudioStatus}
                 className="hover-pointer"
               />
             )}
             {this.state.chaton ? (
-              <ChatOutlined id="icon-margin" />
+              <ChatOutlined
+                id="icon-margin"
+                fontSize="large"
+                onClick={this.chattoggle}
+                className="hover-pointer"
+              />
             ) : (
-              <SpeakerNotesOffOutlined id="icon-margin" />
+              <SpeakerNotesOffOutlined
+                id="icon-margin"
+                fontSize="large"
+                onClick={this.chattoggle}
+                className="hover-pointer"
+              />
             )}
           </Footer>
         </FooterWrapper>

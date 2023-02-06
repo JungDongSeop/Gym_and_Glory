@@ -21,19 +21,33 @@ class RoomList extends Component {
     // 현재는 오픈비두 서버에 직접 요청을 보내 열려있는 방 정보를 들고 오지만
     // 추후 백에 요청을 보내어 현재 열려있는 방의 정보를 받아오기
     // 오픈비두에 직접 요청을 보내니 내가 커스텀한 방제와 팀명이 오지 않음
+    // axios.get("https://i8e107.p.ssafy.io:8443/openvidu/api/sessions",)
     axios
-      .get("https://i8e107.p.ssafy.io:8443/openvidu/api/sessions", {
+      .get("http://localhost:8080/api/lobby", {
         headers: {
           Authorization: `Basic ${btoa(`OPENVIDUAPP:MY_SECRET`)}`,
         },
       })
       .then((response) => {
-        console.log(response.data.content);
-        const info = response.data.content.map((room) => {
-          const roomId = room.customSessionId;
-          const peopleNum = room.connections.numberOfElements;
+        console.log(response.data);
+        const info = response.data.map((room) => {
+          const title = room.title;
+          const teamName = room.teamName;
+          const peopleNum = room.count;
+          const isopened = room.privateStatus;
+          const roomPassword = room.password;
+          const roomId = room.sessionKey;
+          const roomStatus = room.roomStatus;
 
-          return { roomId, peopleNum, isopened: true };
+          return {
+            title,
+            teamName,
+            peopleNum,
+            isopened,
+            roomPassword,
+            roomId,
+            roomStatus,
+          };
         });
         console.log(info);
         this.setState({ rooms: info });

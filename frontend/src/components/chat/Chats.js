@@ -1,12 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import Chat from "./Chat";
+import "./Chats.css";
 
 const Chats = (props) => {
   const { chats } = props;
   return chats.map((chat, i) => {
-    <div className={chat.chatClass} key={i}>
-      <Chat text={chat.text} userNick={chat.userNick} />
-    </div>;
+    return (
+      <div className={chat.chatClass} key={i}>
+        <Chat
+          text={chat.text}
+          userNick={chat.userNick}
+          chatOwner={chat.chatClass}
+        />
+      </div>
+    );
   });
 };
 

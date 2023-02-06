@@ -1,54 +1,116 @@
-import React, { useState, useEffect } from 'react';
-import NavigateButtons from './NavigateButtons';
-import WithNavBarAndSideBar from '../layout/WithNavBarAndSideBar';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router';
+import React, { useState, useEffect } from "react";
+import NavigateButtons from "./NavigateButtons";
+import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
+import axios from "axios";
+import { useParams, useNavigate } from "react-router";
+import classes from "./CreateBoard.module.css";
 
 const UpdateBoard = () => {
   // url 이동을 위한 함수
   const navigate = useNavigate();
-  
+
   // url의 params를 사용하기 위한 변수
-  const { type, articleSequence } = useParams('notice');
-  
+  const { type, articleSequence } = useParams("notice");
+
   // 게시판에 쓴 글들을 저장할 변수
   const [board, setBoard] = useState([]);
-  
+
   // 게시글 read axios
   useEffect(() => {
     const fetchBoard = async () => {
-      const result = await axios(`http://localhost:8080/board/${articleSequence}`);
-      setBoard(result.data);   
+      const result = await axios(
+        `http://localhost:8080/board/${articleSequence}`
+      );
+      setBoard(result.data);
     };
     fetchBoard();
   }, [articleSequence]);
-  
+
   const handleChange = (event) => {
     setBoard({ ...board, [event.target.name]: event.target.value });
-  }
+  };
 
   // 게시판 수정 axios
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.put(`http://localhost:8080/board/`, {
-      "articleSequence": articleSequence,
-      "title":board.title,
-      "contents":board.contents,
-    })
+    axios
+      .put(`http://localhost:8080/board/`, {
+        articleSequence: articleSequence,
+        title: board.title,
+        contents: board.contents,
+      })
       .then(() => {
-        navigate(`/board/${type}`)
+        navigate(`/board/${type}`);
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
+  const typename = () => {
+    if (type === "notice") {
+      return "공지사항";
+    } else if (type === "free") {
+      return "자유게시판";
+    } else if (type === "party") {
+      return "팀원 모집";
+    }
+  };
+
+  const typeDescription = () => {
+    if (type === "notice") {
+      return "공지사항을 작성하세요";
+    } else if (type === "free") {
+      return "여러 사용자들과 자유롭게 이야기를 나누어 보세요 유용한 팁과 정보를 쉽게 얻으실 수 있을거에요.";
+    } else if (type === "party") {
+      return "파티모집 게시판을 통해 함께 운동할 유저를 찾고 모험을 떠나보아요!";
+    }
+  };
 
   return (
     <main>
       {/* 게시판 종류 선택 버튼 */}
-      <NavigateButtons type={type}/>
-
+      <NavigateButtons type={type} />
       <form onSubmit={handleSubmit}>
+        <div className={classes.board_wrap}>
+          <div className={classes.board_write_wrap}>
+            <h1>{typename()}</h1>
+            <p>{typeDescription()}</p>
+            <p>{typeDescription}</p>
+            <div className={classes.board_write}>
+              <div className={classes.title}>
+                <dl>
+                  <dt>제목</dt>
+                  <dd>
+                    <input
+                      type="text"
+                      placeholder="제목을 입력하세요"
+                      defaultValue={board.title}
+                      onChange={handleChange}
+                    />
+                  </dd>
+                </dl>
+              </div>
+              <div className={classes.cont}>
+                <textarea
+                  placeholder="내용을 입력하세요"
+                  defaultValue={board.contents}
+                  onChange={handleChange}
+                ></textarea>
+              </div>
+            </div>
+
+            <div className={classes.bt_wrap}>
+              <button type="submit" className={classes.on}>
+                등록
+              </button>
+              <button type="submit" onClick={() => navigate(`/board/${type}`)}>
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      {/* <form onSubmit={handleSubmit}>
         <label>
           제목:
           <input type="text" name="title" defaultValue={board.title} onChange={handleChange} />
@@ -60,9 +122,9 @@ const UpdateBoard = () => {
         </label>
         <br />
         <button type="submit">Update Board</button>
-      </form>
+      </form> */}
     </main>
   );
-}
+};
 
 export default WithNavBarAndSideBar(UpdateBoard);

@@ -23,7 +23,7 @@ const Board = () => {
   // data : 게시판 정보가 담긴 변수. 최신 글이 위로 오도록
   const [board, setBoard] = useState([]);
   useEffect(() => {
-    const types = { 'notice': 1, 'free': 2, 'party': 3 };
+    const types = { notice: 1, free: 2, party: 3 };
     const fetchData = async () => {
       const result = await axios(
         `http://localhost:8080/board/list/${types[type]}`
@@ -68,7 +68,9 @@ const Board = () => {
               {/* 제목 */}
               <div>{item.title}</div>
               {/* 작성자 */}
-              <div>작성자 : <UserIdToNickname userId={item.userSequence} /></div>
+              <div>
+                작성자 : <UserIdToNickname userId={item.userSequence} />
+              </div>
               {/* 기타 정보 */}
               <div>
                 ❤{item.goodCount}

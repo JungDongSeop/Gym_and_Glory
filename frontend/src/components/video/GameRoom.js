@@ -20,9 +20,9 @@ import {
   PersonOff,
 } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
-import Logo from "../../assets/logo.png";
+import RestApi from "../api/RestApi";
 
-const APPLICATION_SERVER_URL = "http://localhost:5000/";
+const APPLICATION_SERVER_URL = `${RestApi()}/`;
 const OPENVIDU_URL = "https://i8e107.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
@@ -107,6 +107,7 @@ class GameRoom extends Component {
       myRef: createRef({}),
       selectedExercise: undefined,
       loadingStatus: false,
+      roomLeave: false,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -130,10 +131,7 @@ class GameRoom extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", () => {
-      const mySession = this.state.session;
-      if (mySession) {
-        mySession.disconnect();
-      }
+      this.componentWillUnmount();
     });
     setTimeout(() => {
       const { location } = this.props;
@@ -141,12 +139,13 @@ class GameRoom extends Component {
         const { navigate } = this.props;
         navigate("/lobby");
       }
-      const { roomId, roomTitle, teamTitle } = location.state;
+      const { roomId, roomTitle, teamTitle, isHost } = location.state;
       this.setState({
         mySessionId: roomId,
         myUserNick: sessionStorage.getItem("nickname"),
         mySessionTitle: roomTitle,
         myTeamTitle: teamTitle,
+        ishost: isHost,
       });
 
       this.setmodel();
@@ -159,7 +158,9 @@ class GameRoom extends Component {
 
   componentWillUnmount() {
     window.location.reload();
-    this.leaveSession();
+    if (!this.state.roomLeave) {
+      this.leaveSession();
+    }
   }
 
   componentDidUpdate(previousProps, previousState) {
@@ -335,24 +336,42 @@ class GameRoom extends Component {
           }, 5000);
         });
         mySession.on("streamDestroyed", (event) => {
-          this.updateHost().then((clientData) => {
-            const host = JSON.parse(clientData).clientData;
-
-            mySession
-              .signal({
-                data: host,
-                to: [],
-                type: "update-host",
-              })
-              .then(() => {});
-          });
-          console.log(event.stream.streamManager);
           this.deleteSubscriber(event.stream.streamManager);
         });
-        mySession.on("signal:update-host", (event) => {
-          if (this.state.myUserNick === event.data) {
-            this.setState({ ishost: true });
-          }
+        mySession.on("signal:room-exploded", (event) => {
+          const mySession = this.state.session;
+          swal({
+            text: "방장이 방을 나가 방이 폭파되었습니다.\n확인 클릭 또는 3초 후에 로비로 이동합니다.",
+            button: "확인",
+            icon: "error",
+          }).then(() => {
+            if (mySession) {
+              mySession.disconnect();
+            }
+            this.OV = null;
+            this.setState({
+              session: "",
+              subscribers: [],
+              mySessionId: "",
+              mainStreamManager: undefined,
+              publisher: undefined,
+            });
+            window.location.replace("/lobby");
+          });
+          setTimeout(() => {
+            if (mySession) {
+              mySession.disconnect();
+            }
+            this.OV = null;
+            this.setState({
+              session: "",
+              subscribers: [],
+              mySessionId: "",
+              mainStreamManager: undefined,
+              publisher: undefined,
+            });
+            window.location.replace("/lobby");
+          }, 3000);
         });
         mySession.on("exception", (exception) => {});
 
@@ -360,12 +379,6 @@ class GameRoom extends Component {
           mySession
             .connect(token, { clientData: this.state.myUserNick })
             .then(async () => {
-              this.updateHost().then((firstUser) => {
-                const host = JSON.parse(firstUser).clientData;
-                if (this.state.myUserNick === host) {
-                  this.setState({ ishost: true });
-                }
-              });
               let publisher = await this.OV.initPublisherAsync(undefined, {
                 audioSource: undefined,
                 videoSource: undefined,
@@ -381,37 +394,10 @@ class GameRoom extends Component {
                 mainStreamManager: publisher,
                 publisher,
               });
-            })
-            .then(() => console.log(this.state.ishost));
+            });
         });
       }
     );
-  }
-
-  updateHost() {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        type: "GET",
-        url: `${"https://i8e107.p.ssafy.io:8443/openvidu/api/sessions/"}${
-          this.state.mySessionId
-        }/connection`,
-        headers: {
-          Authorization: `Basic ${btoa(
-            `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-          )}`,
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,POST",
-        },
-        success: (response) => {
-          let content = response.content;
-          content.sort((a, b) => a.createAt - b.createdAt);
-          console.log(content[0].clientData);
-
-          resolve(content[0].clientData);
-        },
-        error: (error) => reject(error),
-      });
-    });
   }
 
   start() {
@@ -437,11 +423,18 @@ class GameRoom extends Component {
 
   leaveSession() {
     const mySession = this.state.session;
+    if (this.state.ishost) {
+      mySession.signal({
+        data: "",
+        to: [],
+        type: "room-exploded",
+      });
+    }
     if (mySession) {
       mySession.disconnect();
     }
     axios
-      .delete("http://localhost:8080/api/room/" + this.state.mySessionId, {})
+      .delete(APPLICATION_SERVER_URL + "room/" + this.state.mySessionId, {})
       .then(() => {
         this.OV = null;
         this.setState({
@@ -450,6 +443,8 @@ class GameRoom extends Component {
           mySessionId: "",
           mainStreamManager: undefined,
           publisher: undefined,
+          roomLeave: true,
+          ishost: false,
         });
       });
 
@@ -589,23 +584,6 @@ class GameRoom extends Component {
           }
         });
     });
-
-    // const response = await axios.post(
-    //   `${OPENVIDU_URL}/openvidu/api/sessions`,
-    //   data,
-    //   {
-    //     headers: {
-    //       Authorization: `Basic ${btoa(
-    //         `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-    //       )}`,
-    //       "Content-Type": "application/json",
-    //       "Access-Control-Allow-Origin": "*",
-    //       "Access-Control-Allow-Methods": "GET,POST",
-    //     },
-    //   }
-    // )
-    // console.log(response.data);
-    // return response.data.sessionId;
   }
 
   async createToken(sessionId) {
@@ -753,6 +731,11 @@ class GameRoom extends Component {
                   ref={this.state.myRef}
                   sessionId={this.state.mySessionId}
                 />
+                {this.state.ishost ? (
+                  <button>GAME START</button>
+                ) : (
+                  <button>READY</button>
+                )}
                 {this.state.chaton ? (
                   <div className="chatbox">
                     <div className="chatbox-header" />

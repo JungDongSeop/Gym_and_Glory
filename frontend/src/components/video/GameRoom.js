@@ -200,8 +200,6 @@ class GameRoom extends Component {
     this.setState({
       chat: "",
     });
-    console.log("채팅 보냄");
-    console.log(this.state.chats);
   }
 
   sendChatByEnter(e) {
@@ -231,8 +229,6 @@ class GameRoom extends Component {
         chat: "",
       });
     }
-    console.log("채팅 보냄");
-    console.log(this.state.chats);
   }
 
   handleMainVideoStream(stream) {
@@ -307,33 +303,8 @@ class GameRoom extends Component {
             button: "확인",
             icon: "error",
           }).then(() => {
-            if (mySession) {
-              mySession.disconnect();
-            }
-            this.OV = null;
-            this.setState({
-              session: "",
-              subscribers: [],
-              mySessionId: "",
-              mainStreamManager: undefined,
-              publisher: undefined,
-            });
-            window.location.replace("/lobby");
+            this.leaveSession();
           });
-          setTimeout(() => {
-            if (mySession) {
-              mySession.disconnect();
-            }
-            this.OV = null;
-            this.setState({
-              session: "",
-              subscribers: [],
-              mySessionId: "",
-              mainStreamManager: undefined,
-              publisher: undefined,
-            });
-            window.location.replace("/lobby");
-          }, 5000);
         });
         mySession.on("streamDestroyed", (event) => {
           this.deleteSubscriber(event.stream.streamManager);
@@ -341,37 +312,12 @@ class GameRoom extends Component {
         mySession.on("signal:room-exploded", (event) => {
           const mySession = this.state.session;
           swal({
-            text: "방장이 방을 나가 방이 폭파되었습니다.\n확인 클릭 또는 3초 후에 로비로 이동합니다.",
+            text: "방장이 방을 나가 방이 폭파되었습니다.\n확인 클릭 시 로비로 이동합니다.",
             button: "확인",
             icon: "error",
           }).then(() => {
-            if (mySession) {
-              mySession.disconnect();
-            }
-            this.OV = null;
-            this.setState({
-              session: "",
-              subscribers: [],
-              mySessionId: "",
-              mainStreamManager: undefined,
-              publisher: undefined,
-            });
-            window.location.replace("/lobby");
+            this.leaveSession();
           });
-          setTimeout(() => {
-            if (mySession) {
-              mySession.disconnect();
-            }
-            this.OV = null;
-            this.setState({
-              session: "",
-              subscribers: [],
-              mySessionId: "",
-              mainStreamManager: undefined,
-              publisher: undefined,
-            });
-            window.location.replace("/lobby");
-          }, 3000);
         });
         mySession.on("exception", (exception) => {});
 

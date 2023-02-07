@@ -1,0 +1,22 @@
+.lobby {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+hr {
+  width: 100%;
+}
+
+.roomsearch {
+  width: 80%;
+  border-radius: 20px;
+  border: 1px;
+  padding: 10px 20px;
+  transition: 0.5s;
+}
+
+.searchContainer {
+  display: flex;
+  width: 65%;
+  justify-content: right;
+}

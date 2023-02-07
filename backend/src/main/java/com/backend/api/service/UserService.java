@@ -101,11 +101,17 @@ public class UserService {
 
     public void changeNick(Integer userSequence, String nickName) {
         User cur = userRepository.findByUserSequence(userSequence);
-        System.out.println(userSequence);
-        System.out.println(nickName);
         cur.setNickname(nickName);
         userRepository.save(cur);
     }
+    public void changeTel(Integer userSequence, String telNumber) {
+        System.out.println("유저 시퀀스"+ userSequence);
+        User cur = userRepository.findByUserSequence(userSequence);
+        System.out.println("현재 유저의 닉네임"+ cur.getNickname());
+        cur.setTelNumber(telNumber);
+        userRepository.save(cur);
+    }
+
 
     public List<User> getList(Integer userSequence) {
         List<User> list = userRepository.findUser(userSequence);
@@ -126,4 +132,6 @@ public class UserService {
         List<User> list = userRepository.findByNicknameLike(word);
         return list;
     }
+
+
 }

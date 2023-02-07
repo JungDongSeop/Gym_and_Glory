@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ChangeNickReq {
+public class ChangeUserInfoReq {
     private Integer userSequence;
     private String nickName;
+    private String telNumber;
 }

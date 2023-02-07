@@ -1,6 +1,6 @@
 package com.backend.api.controller;
 
-import com.backend.api.request.ChangeNickReq;
+import com.backend.api.request.ChangeUserInfoReq;
 import com.backend.api.request.TelEmailReq;
 import com.backend.api.request.SignUpReq;
 import com.backend.api.service.UserService;
@@ -117,8 +117,14 @@ public class UserController {
     }
 
     @PutMapping("/user/modify/nickname")
-    public ResponseEntity<?> modifyNick(@RequestBody ChangeNickReq changeNickReq){
-        userService.changeNick(changeNickReq.getUserSequence(), changeNickReq.getNickName());
+    public ResponseEntity<?> modifyNick(@RequestBody ChangeUserInfoReq changeUserInfoReq){
+        userService.changeNick(changeUserInfoReq.getUserSequence(), changeUserInfoReq.getNickName());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/user/modify/telNumber")
+    public ResponseEntity<?> modifyTel(@RequestBody ChangeUserInfoReq changeUserInfoReq){
+        userService.changeTel(changeUserInfoReq.getUserSequence(), changeUserInfoReq.getTelNumber());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

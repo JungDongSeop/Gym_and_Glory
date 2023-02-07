@@ -36,4 +36,6 @@ public class UserBadgeController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+
+
 }

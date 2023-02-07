@@ -46,7 +46,7 @@ const Comment = () => {
     alert("댓글이 작성되었습니다.");
 
     axios
-      .post(`/board/comment`, {
+      .post(`${RestApi()}/board/comment`, {
         userSequence: userSequence,
         articleSequence: articleSequence,
         contents: newComment.contents,
@@ -115,8 +115,8 @@ const Comment = () => {
         ))}
         <div>
           <form onSubmit={handleSubmit} className={classes.commentForm}>
-            <label>
-              내용:
+            <label className={classes.submitForm}>
+              {/* 내용: */}
               <textarea
                 name="contents"
                 value={newComment.contents}
@@ -124,7 +124,7 @@ const Comment = () => {
                 required
               />
             </label>
-            <br />
+            {/* <br /> */}
             <input type="submit" value="제출" />
           </form>
         </div>

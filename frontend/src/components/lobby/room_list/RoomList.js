@@ -15,51 +15,49 @@ class RoomList extends Component {
 
     this.state = {
       rooms: [],
+      intervalFun: undefined,
     };
   }
 
   componentDidMount() {
-    axios
-      .get("https://i8e107.p.ssafy.io:8443/openvidu/api/sessions", {
-        headers: {
-          Authorization: `Basic ${btoa(`OPENVIDUAPP:MY_SECRET`)}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      });
-    setInterval(() => {
-      axios
-        .get(`${RestApi()}/lobby`, {
-          headers: {
-            Authorization: `Basic ${btoa(`OPENVIDUAPP:MY_SECRET`)}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data.content);
-          const info = response.data.content.map((room) => {
-            const title = room.title;
-            const teamName = room.teamName;
-            const peopleNum = room.count;
-            const isopened = !room.privateStatus;
-            const roomPassword = room.password;
-            const roomId = room.sessionKey;
-            const roomStatus = room.roomStatus;
+    this.setState({
+      intervalFun: setInterval(() => {
+        axios
+          .get(`${RestApi()}/lobby`, {
+            headers: {
+              Authorization: `Basic ${btoa(`OPENVIDUAPP:MY_SECRET`)}`,
+            },
+          })
+          .then((response) => {
+            console.log(response.data.content);
+            const info = response.data.content.map((room) => {
+              const title = room.title;
+              const teamName = room.teamName;
+              const peopleNum = room.count;
+              const isopened = !room.privateStatus;
+              const roomPassword = room.password;
+              const roomId = room.sessionKey;
+              const roomStatus = room.roomStatus;
 
-            return {
-              title,
-              teamName,
-              peopleNum,
-              isopened,
-              roomPassword,
-              roomId,
-              roomStatus,
-            };
+              return {
+                title,
+                teamName,
+                peopleNum,
+                isopened,
+                roomPassword,
+                roomId,
+                roomStatus,
+              };
+            });
+            console.log(info);
+            this.setState({ rooms: info });
           });
-          console.log(info);
-          this.setState({ rooms: info });
-        });
-    }, 1000);
+      }, 1000),
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalFun);
   }
 
   render() {

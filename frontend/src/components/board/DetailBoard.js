@@ -52,7 +52,7 @@ const DetailBoard = () => {
 
   return (
     <main>
-      <h1>게시판 상세페이지 입니다.</h1>
+      <h3>게시판 상세페이지 입니다.</h3>
       <div className={classes.divset}>
         <div className={classes.boardDetail}>
           {/* 게시판  */}

@@ -108,11 +108,13 @@ const Comment = () => {
           {comments.map((comment, index) => (
             <ul key={index}>
               {/* 댓글 상세 표시, 댓글 좋아요, 댓글 삭제 */}
-              <div>
-                <h3>{comment.contents}</h3>
+              <div className={classes.commentbox}>
                 <p>{comment.boardArticle.user.nickname}</p>
+                <div className={classes.textbox}>
+                  <h3>{comment.contents}</h3>
+                </div>
+                추천 : {comment.goodCount}.{" "}
               </div>
-              추천 : {comment.goodCount}.{" "}
               <button onClick={() => handleGood(comment.commentSequence)}>
                 ❤
               </button>
@@ -134,10 +136,10 @@ const Comment = () => {
                 required
                 ref={commentInputRef}
               />
+              {/* <br /> */}
+              <input type="submit" value="제출" />
+              {/* <button>제출</button> */}
             </label>
-            {/* <br /> */}
-            <input type="submit" value="제출" />
-            {/* <button>제출</button> */}
           </form>
         </div>
       </div>

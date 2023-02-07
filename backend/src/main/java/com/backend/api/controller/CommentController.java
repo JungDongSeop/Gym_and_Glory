@@ -31,12 +31,14 @@ public class CommentController {
         this.goodService = goodService;
     }
 
+    //댓글 쓰기
     @PostMapping
     public ResponseEntity write(@RequestBody CommentReq commentReq) {
         commentService.writeComment(commentReq);
         return new ResponseEntity("글쓰기 완료", HttpStatus.OK);
     }
 
+    //댓글 삭제
     @DeleteMapping("/{commentSequence}")
     public ResponseEntity delete(@PathVariable int commentSequence) {
         int flag = commentService.deleteComment(commentSequence);
@@ -46,12 +48,14 @@ public class CommentController {
             return new ResponseEntity("삭제 실패", HttpStatus.OK);
     }
 
+    //댓글 리스트 받아오기
     @GetMapping("/{articleSequence}")
     public List<Comment> getList(@PathVariable int articleSequence) {
         List<Comment> commentList = commentService.getAllList(articleSequence);
         return commentList;
     }
 
+    //댓글에 좋아요 누르기
     @GetMapping("/good/{userSequence}/{commentSequence}")
     public ResponseEntity<?> commentGood(@PathVariable Integer userSequence, @PathVariable Integer commentSequence) {
 

@@ -3,6 +3,7 @@ package com.backend.api.service;
 import com.backend.db.entity.Badge;
 import com.backend.db.entity.User;
 import com.backend.db.entity.UserBadge;
+import com.backend.db.repository.BadgeRepository;
 import com.backend.db.repository.UserBadgeRepository;
 import com.backend.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,15 @@ public class UserBadgeService {
 
     private UserBadgeRepository userBadgeRepository;
     private UserRepository userRepository;
+    private BadgeRepository badgeRepository;
 
     @Autowired
-    public UserBadgeService(UserBadgeRepository userBadgeRepository,UserRepository userRepository){
+    public UserBadgeService(UserBadgeRepository userBadgeRepository
+            ,UserRepository userRepository
+            ,BadgeRepository badgeRepository){
         this.userBadgeRepository = userBadgeRepository;
         this.userRepository = userRepository;
+        this.badgeRepository = badgeRepository;
     }
 
     public List<Badge> getList(Integer userSequence) {
@@ -38,5 +43,10 @@ public class UserBadgeService {
         System.out.println("현재result" + result.size());
 
         return result;
+    }
+
+    public List<Badge> getAll() {
+        List<Badge> list = badgeRepository.findAll();
+        return list;
     }
 }

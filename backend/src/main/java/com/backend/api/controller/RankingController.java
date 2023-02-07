@@ -26,9 +26,9 @@ public class RankingController {
         this.rankingService = rankingService;
     }
 
+    //랭킹 리스트 불러오기
     @GetMapping("/list")
     public ResponseEntity<?> getList(){
-        System.out.println("컨트롤러까지들어옴");
         List<TeamLogRes> TeamList = rankingService.getList();
         return new ResponseEntity<List<TeamLogRes>>(TeamList,HttpStatus.OK);
     }

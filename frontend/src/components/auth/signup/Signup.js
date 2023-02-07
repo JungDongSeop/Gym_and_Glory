@@ -34,14 +34,25 @@ const Signup = () => {
 
   const nicknameChangeHandler = () => {
     setIsCheckedNickname(false);
+    let nickLength = 0;
     let specialCheck = /[`~!@#$%^&*|\\;:?]/gi;
     let nicknameValue = document.getElementById("nickname").value;
 
+    for (let i = 0; i < nicknameValue.length; i++) {
+      const nick = nicknameValue.charAt(i);
+      if (escape(nick).length > 4) {
+        nickLength += 2;
+      } else {
+        nickLength += 1;
+      }
+    }
     if (
       nicknameValue.search(/\s/) !== -1 ||
       specialCheck.test(nicknameValue) ||
-      nicknameValue.length < 2 ||
-      nicknameValue.length > 10
+      // nicknameValue.length < 2 ||
+      // nicknameValue.length > 10
+      nickLength < 2 ||
+      nickLength > 20
     ) {
       setIsValidNickname(false);
       // nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";

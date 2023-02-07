@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import axios from "axios";
 import classes from "./Comment.module.css";
 import RestApi from "../api/RestApi";
+
 // import { useNavigate } from 'react-router-dom';
 
 const Comment = () => {
   // Link 쓰기 위한 네비게이터
   // const navigate = useNavigate();
+
+  const commentInputRef = useRef();
 
   // url params 받아오는 변수
   const { articleSequence } = useParams();
@@ -30,6 +33,7 @@ const Comment = () => {
     axios
       .get(`${RestApi()}/board/comment/${articleSequence}`)
       .then((response) => {
+        console.log(response.data);
         setComments(response.data);
       })
       .catch((error) => {
@@ -42,11 +46,11 @@ const Comment = () => {
 
   // 댓글 create axios 요청
   const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("댓글이 작성되었습니다.");
+    // e.preventDefault();
+    // alert("댓글이 작성되었습니다.");
 
     axios
-      .post(`/board/comment`, {
+      .post(`${RestApi()}/board/comment`, {
         userSequence: userSequence,
         articleSequence: articleSequence,
         contents: newComment.contents,
@@ -55,6 +59,7 @@ const Comment = () => {
         setComments([...comments, response.data]);
         setNewComment({ title: "", text: "" });
         commentRead(articleSequence);
+        commentInputRef.current.value = "";
       })
       .catch((error) => {
         console.log(error);
@@ -64,7 +69,9 @@ const Comment = () => {
   // 댓글 좋아요 axios 요청
   const handleGood = async (commentSequence) => {
     try {
-      await axios(`/board/comment/good/${userSequence}/${commentSequence}`);
+      await axios(
+        `${RestApi()}/board/comment/good/${userSequence}/${commentSequence}`
+      );
       alert("댓글을 추천하였습니다.");
       // Show a success message or refresh the comments list
       commentRead(articleSequence);
@@ -76,7 +83,7 @@ const Comment = () => {
   // 댓글 지우기
   const handleDelete = async (commentSequence) => {
     try {
-      await axios.delete(`/board/comment/${commentSequence}`);
+      await axios.delete(`${RestApi()}/board/comment/${commentSequence}`);
       alert("댓글이 삭제되었습니다.");
       // Show a success message or refresh the comments list
       commentRead(articleSequence);
@@ -91,41 +98,46 @@ const Comment = () => {
   };
 
   return (
-    <div>
+    <div className={classes.commentForm}>
       {/* <h2>댓글 기능 구현합시다.</h2> */}
 
       {/* 댓글 달기 */}
       <div>
-        {/* 댓글 목록 axios 요청 */}
-        {comments.map((comment, index) => (
-          <ul key={index}>
-            {/* 댓글 상세 표시, 댓글 좋아요, 댓글 삭제 */}
-            <h1>
-              {comment.commentSequence}, 내용 : {comment.contents} 작성자 :{" "}
-              {comment.userSequence}
-            </h1>
-            추천 : {comment.goodCount}.{" "}
-            <button onClick={() => handleGood(comment.commentSequence)}>
-              ❤
-            </button>
-            <button onClick={() => handleDelete(comment.commentSequence)}>
-              삭제
-            </button>
-          </ul>
-        ))}
+        <div className={classes.commentList}>
+          {/* 댓글 목록 axios 요청 */}
+          {comments.map((comment, index) => (
+            <ul key={index}>
+              {/* 댓글 상세 표시, 댓글 좋아요, 댓글 삭제 */}
+              <div>
+                <h3>{comment.contents}</h3>
+                <p>{comment.boardArticle.user.nickname}</p>
+              </div>
+              추천 : {comment.goodCount}.{" "}
+              <button onClick={() => handleGood(comment.commentSequence)}>
+                ❤
+              </button>
+              <button onClick={() => handleDelete(comment.commentSequence)}>
+                삭제
+              </button>
+            </ul>
+          ))}
+        </div>
         <div>
           <form onSubmit={handleSubmit} className={classes.commentForm}>
-            <label>
-              내용:
-              <textarea
+            <label className={classes.submitForm}>
+              {/* 내용: */}
+              <input
+                type="text"
                 name="contents"
                 value={newComment.contents}
                 onChange={handleChange}
                 required
+                ref={commentInputRef}
               />
             </label>
-            <br />
+            {/* <br /> */}
             <input type="submit" value="제출" />
+            {/* <button>제출</button> */}
           </form>
         </div>
       </div>

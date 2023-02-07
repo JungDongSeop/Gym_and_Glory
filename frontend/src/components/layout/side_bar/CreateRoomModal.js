@@ -4,6 +4,7 @@ import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RestApi from "../../api/RestApi";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const APPLICATION_SERVER_URL = `${RestApi()}/`;
 
@@ -20,8 +21,6 @@ const CreateRoom = () => {
     setModalOpen(false);
   };
 
-  // const { makeroom } = useContext(GameContext);
-
   const [roomId, setRoomId] = useState("");
   const [roomTitle, setRoomTitle] = useState("");
   const [teamTitle, setTeamTitle] = useState("");
@@ -29,13 +28,14 @@ const CreateRoom = () => {
   const [roomPassword, setRoomPassword] = useState(undefined);
   const [ischecked, setIschecked] = useState(false);
 
+  const [visibility, setVisibility] = useState(false);
+
   const handleRoomTitleChange = (event) => {
     setRoomTitle(event.target.value);
   };
 
   const handleTeamTitleChange = (event) => {
     setTeamTitle(event.target.value);
-    console.log(teamTitle);
   };
 
   const handleIsopenedChange = () => {
@@ -59,7 +59,7 @@ const CreateRoom = () => {
   const makeRoom = () => {
     axios
       .post(
-        APPLICATION_SERVER_URL + "api/rooms",
+        APPLICATION_SERVER_URL + "rooms",
         {
           title: roomTitle,
           teamName: teamTitle,
@@ -86,10 +86,15 @@ const CreateRoom = () => {
           roomId,
           roomTitle,
           teamTitle,
+          isHost: true,
         },
       });
     }
   }, [roomId]);
+
+  const handleVisibility = () => {
+    setVisibility(!visibility);
+  };
 
   return (
     <div>
@@ -122,10 +127,28 @@ const CreateRoom = () => {
             </label>
           </p>
           {!isopened ? (
-            <p>
-              비밀번호 :
-              <input type="text" required onChange={handleRoomPasswordChange} />
-            </p>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <p>
+                비밀번호 :
+                <input
+                  type={visibility ? "text" : "password"}
+                  required
+                  onChange={handleRoomPasswordChange}
+                  style={{ marginLeft: 4, marginRight: 4 }}
+                />
+              </p>
+              {visibility ? (
+                <VisibilityOff
+                  onClick={handleVisibility}
+                  style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <Visibility
+                  onClick={handleVisibility}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
+            </div>
           ) : null}
           <button type="submit">방 만들기</button>
         </form>

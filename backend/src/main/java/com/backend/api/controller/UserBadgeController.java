@@ -23,17 +23,24 @@ public class UserBadgeController {
     public UserBadgeController(UserBadgeService userBadgeService){
         this.userBadgeService = userBadgeService;
     }
-    //유저 아이디 하나 넘어오면 뱃지리스트 쫙
+
+    //유저별 뱃지 목록 조회
     @GetMapping("/list/{userSequence}")
     public ResponseEntity<?> getList(@PathVariable Integer userSequence){
 
-        log.info("이게 된다고?");
-        //DTO가 원래 있어야된다.
-        //ENTITY넘기면 안도ㅒ!!!!!!!!!!!!!!!!
         List<Badge> list = userBadgeService.getList(userSequence);
         Badge badge = list.get(0);
         System.out.println(badge.getDescription());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    //전체 뱃지 목록 조회
+    @GetMapping("/list")
+    public ResponseEntity<?> AllList(){
+        List<Badge> list = userBadgeService.getAll();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+
 
 }

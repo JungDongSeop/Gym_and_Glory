@@ -117,16 +117,16 @@
 }
 
 .storySection{
-  & > img{
-    width: 35vw;
-    margin-left: 0;
-    margin-bottom: 3vw;
-    float: left;
-  }
+  // & > img{
+  //   width: 35vw;
+  //   margin-left: 0;
+  //   margin-bottom: 3vw;
+  //   float: left;
+  // }
 }
 
 
-.StorytextDiv{
+.StorytextDiv {
   float: right;
   user-select: none;
   padding: 10px;
@@ -134,6 +134,8 @@
   margin-top: -8vw;
   margin-right: 0;
   margin-bottom: 3vw;
+  position: relative;
+  z-index: 1;
 
   & > p{
     font-size: calc(8px + 0.8vw);

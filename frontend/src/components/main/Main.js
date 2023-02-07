@@ -4,7 +4,7 @@ import classes from "./Main.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Carousel } from "antd";
 import AuthContext from "../../store/auth-context";
-
+import { Controller, Scene } from 'react-scrollmagic';
 import Logo from "../../assets/logo.png";
 import story_img1 from "../../assets/story_img1.PNG";
 import story_img2 from "../../assets/story_img2.PNG";
@@ -20,6 +20,7 @@ const Main = () => {
 
   // 캐러셀 페이지 넘기기
   const carouselRef = React.createRef();
+
   // 스토리Div. 스크롤 파악용
   const storyDivRev = useRef();
   const storyContentRef = useRef([]);
@@ -29,21 +30,42 @@ const Main = () => {
     document.getElementById("storyDiv").scrollTop = 0;
   };
 
-  //   const ContentDiv = styled.div`
-  //   &.animation {
-  //     animation-name: opacity;
-  //     animation-duration: 5000ms;
+  const ClassToggleStyled = styled.div`  
+  .section {
 
-  //     @keyframes opacity {
-  //       from {
-  //         opacity: 0;
-  //       }
-  //       to {
-  //         opacity: 1;
-  //       }
-  //     }
-  //   }
-  // `
+  }
+
+  .fadeComp1 {
+    height:50px;
+	  transition: 0.5s ease-out;
+    opacity: 0;
+
+    & > img:nth-child(odd){
+      width: 35vw;
+      margin-left: 0;
+      margin-bottom: 3vw;
+      float: left;
+    }
+
+    & > img:nth-child(even){
+      width: 35vw;
+      margin-left: 0;
+      margin-bottom: 3vw;
+      float: right;
+    }
+
+  }
+
+  .fadeComp2 {
+	  transition: 0.5s ease-out;
+    opacity: 0;
+  }
+
+  .fadeIn {
+    opacity: 1;
+    transform: translate3d(0 , -20px, 0);
+  }
+`;
 
   return (
     <div>
@@ -94,74 +116,155 @@ const Main = () => {
             <div ref={storyDivRev} className={classes.storyDiv} id="storyDiv">
               <h2>스토리</h2>
 
-              <div
-                ref={(el) => (storyContentRef.current[0] = el)}
-                className={classes.storySection}
-              >
-                <img src={story_img1} alt={story_img1}></img>
-                <div
-                  className={classes.StorytextDiv}
-                  style={{ backgroundImage: `url(${story_textbg})` }}
-                >
-                  <p>
-                    여러분은 이 땅에서 가장 위대한 드래곤 슬레이어가 되는 꿈을
-                    꾸며 여행을 떠나는 젊은 강아지들입니다. (때때로 당신은
-                    사람일 수도 있습니다.)
-                  </p>
-                </div>
-              </div>
 
-              <div
-                ref={(el) => (storyContentRef.current[1] = el)}
-                className={classes.storySection}
-              >
-                <img src={story_img2} alt={story_img2}></img>
-                <div
-                  className={classes.StorytextDiv}
-                  style={{ backgroundImage: `url(${story_textbg})` }}
-                >
-                  <p>
-                    이 목표를 달성하기 위해서는 먼저 신체적으로 강하고 전투에
-                    능숙해야 합니다. 이를 위해서는 스쿼트, 팔 굽혀 펴기 및 기타
-                    운동과 같은 일상적인 근육 훈련에 참여해야 합니다.
-                  </p>
-                </div>
-              </div>
+            <div
+              ref={(el) => (storyContentRef.current[0] = el)}
+              className={classes.storySection}
+            >
+              <ClassToggleStyled>
+                <div className="section" />
+                <div id="trigger" />
+                <Controller>
+                  <Scene duration={400} classToggle="fadeIn" triggerElement="#trigger" indicators={false}>
+                    {(progress, event) => (
+                      <div className="fadeComp1">
+                        <img src={story_img1} alt={story_img1}></img>
+                      </div>
+                    )}
+                  </Scene>
+                  <Scene duration={400} classToggle="fadeIn" triggerElement="#trigger" indicators={false}>
+                    {(progress, event) => (
+                      <div className="fadeComp2">
+                          <div
+                          className={classes.StorytextDiv}
+                          style={{ backgroundImage: `url(${story_textbg})` }}
+                          id="story1"
+                        >
+                          <p>
+                            여러분은 이 땅에서 가장 위대한 드래곤 슬레이어가 되는 꿈을
+                            꾸며 여행을 떠나는 젊은 강아지들입니다. (때때로 당신은
+                            사람일 수도 있습니다.)
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </Scene>
+                </Controller>
+              </ClassToggleStyled>
+            </div>
 
-              <div
-                ref={(el) => (storyContentRef.current[2] = el)}
-                className={classes.storySection}
-              >
-                <img src={story_img3} alt={story_img3}></img>
-                <div
-                  className={classes.StorytextDiv}
-                  style={{ backgroundImage: `url(${story_textbg})` }}
-                >
-                  <p>
-                    당신은 여행을 떠나며 점점 더 강하고 다양한 드래곤과 만나
+            <div
+              ref={(el) => (storyContentRef.current[0] = el)}
+              className={classes.storySection}
+            >
+              <ClassToggleStyled>
+                <div className="section" />
+                <div id="trigger" />
+                <Controller>
+                  <Scene duration={400} classToggle="fadeIn" triggerElement="#story1" indicators={false}>
+                    {(progress, event) => (
+                      <div className="fadeComp1">
+                        <img src={story_img2} alt={story_img2} id="storyImg2"></img>
+                      </div>
+                    )}
+                  </Scene>
+                  <Scene duration={400} classToggle="fadeIn" triggerElement="#storyImg2" indicators={false}>
+                    {(progress, event) => (
+                      <div className="fadeComp2">
+                          <div
+                          className={classes.StorytextDiv}
+                          style={{ backgroundImage: `url(${story_textbg})` }}
+                          id="story2"
+                        >
+                          <p>
+                          이 목표를 달성하기 위해서는 먼저 신체적으로 강하고 전투에
+                          능숙해야 합니다. 이를 위해서는 스쿼트, 팔 굽혀 펴기 및 기타
+                          운동과 같은 일상적인 근육 훈련에 참여해야 합니다.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </Scene>
+                </Controller>
+              </ClassToggleStyled>
+            </div>
+
+
+            <div
+              ref={(el) => (storyContentRef.current[0] = el)}
+              className={classes.storySection}
+            >
+              <ClassToggleStyled>
+                <div className="section" />
+                <Controller>
+                  <Scene duration={400} classToggle="fadeIn" triggerElement="#story2" indicators={false}>
+                    {(progress, event) => (
+                      <div className="fadeComp1">
+                        <img src={story_img3} alt={story_img3} id="storyImg3"></img>
+                      </div>
+                    )}
+                  </Scene>
+                  <Scene duration={400} classToggle="fadeIn" triggerElement="#storyImg3" indicators={false}>
+                    {(progress, event) => (
+                      <div className="fadeComp2">
+                          <div
+                          className={classes.StorytextDiv}
+                          style={{ backgroundImage: `url(${story_textbg})` }}
+                          id="story3"
+                        >
+                          <p>
+                          당신은 여행을 떠나며 점점 더 강하고 다양한 드래곤과 만나
                     전투를 벌이게 됩니다. 힘과 기술이 성장함에 따라 당신은 결국
                     가장 무시무시한, 전설 속 붉은 숲의 고대 드래곤과의 마지막
                     사투에 직면하게 될 것입니다.
-                  </p>
-                </div>
-              </div>
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </Scene>
+                </Controller>
+              </ClassToggleStyled>
+            </div>
 
-              <div
-                ref={(el) => (storyContentRef.current[3] = el)}
-                className={classes.storySection}
-              >
-                <img src={story_img4} alt={story_img4}></img>
-                <div
-                  className={classes.StorytextDiv}
-                  style={{ backgroundImage: `url(${story_textbg})` }}
-                >
-                  <p>
-                    만약 당신이 그 드래곤을 무찌른다면 드래곤 머슬 마스터라는
+            <div
+              ref={(el) => (storyContentRef.current[0] = el)}
+              className={classes.storySection}
+            >
+              <ClassToggleStyled>
+                <div className="section" />
+                <Controller>
+                  <Scene duration={400} classToggle="fadeIn" triggerElement="#story3" indicators={false}>
+                    {(progress, event) => (
+                      <div className="fadeComp1">
+                        <img src={story_img4} alt={story_img4} id="storyImg4"></img>
+                      </div>
+                    )}
+                  </Scene>
+                  <Scene duration={400} classToggle="fadeIn" triggerElement="#storyImg4" indicators={false}>
+                    {(progress, event) => (
+                      <div className="fadeComp2">
+                          <div
+                          className={classes.StorytextDiv}
+                          style={{ backgroundImage: `url(${story_textbg})` }}
+                        >
+                          <p>
+                          만약 당신이 그 드래곤을 무찌른다면 드래곤 머슬 마스터라는
                     칭호를 얻고 지상 최고의 드래곤 슬레이어가 됩니다. 그 이름은
                     영원토록 (DB가 허용하는 기간동안) 후세에 전해질 것입니다.
-                  </p>
-                </div>
-              </div>
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </Scene>
+                </Controller>
+              </ClassToggleStyled>
+            </div>
+            
+            <div style={{
+              display:'inline-block',
+              height:'500px'
+            }}></div>
+
             </div>
             <br />
             <span

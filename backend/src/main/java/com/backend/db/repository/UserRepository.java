@@ -4,6 +4,7 @@ import com.backend.db.entity.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,12 +21,18 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByNickname(String nickname);
 
-    @Query("select u from User u where u.userSequence not in " +
-            "(select f.getSequence from Friend f where f.sendSequence =:userSequence)")
-    List<User> findUser(Integer userSequence);
-
     User findByTelNumber(String telNum);
 
     @Query("select u from User u where u.nickname like %:word%")
     List<User> findByNicknameLike(String word);
+
+    // 보낸 친구, 받은 친구 다 제외하고 유저 검색될 수 있도록 유저 검색
+    @Query(value = "select * from user " +
+            "where user_sequence not in ( " +
+            "select user_sequence from friends where frd_user_id = :userSequence) " +
+            "and user_sequence not in ( " +
+            "select frd_user_id from friends where user_sequence = :userSequence) " +
+            "and nickName like %:nickName%", nativeQuery = true)
+    List<User> findBySearchFriendNative(@Param("userSequence") Integer userSequence, @Param("nickName") String nickName);
+
 }

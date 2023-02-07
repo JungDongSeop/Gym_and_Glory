@@ -33,18 +33,17 @@ const ExerciseGraph = (props) => {
           today.getTime() - xAxisMin * 24 * 60 * 60 * 1000
         );
 
-        // 1주일 관련한 함수
+        // 1주일 관련한 함수 (date가 포함된 주의 첫 번째 날 출력)
         function getWeek(date) {
-          const firstDayOfWeek = getFirstDayOfWeek(fewDaysAgo);
-          const week = Math.ceil(
-            ((date - firstDayOfWeek) / 86400000 + firstDayOfWeek.getDay() + 1) /
-              7
-          );
-          return `week-${week}`;
+          // 이건 안쓰지만, 혹시나 해서 (fewDaysAgo 로부터 몇 번째 주인지 판단하는 함수)
+          // const firstDayOfWeek = getFirstDayOfWeek(fewDaysAgo);
+          // const week = Math.ceil(((date - firstDayOfWeek) / 86400000 + firstDayOfWeek.getDay() + 1) / 7);
+          const targetDate = getFirstDayOfWeek(date)
+          return `${targetDate.toDateString().slice(4, 10)}`;
         }
         function getFirstDayOfWeek(date) {
           const day = date.getDay();
-          const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+          const diff = date.getDate() - day;
           return new Date(date.setDate(diff));
         }
 
@@ -92,24 +91,16 @@ const ExerciseGraph = (props) => {
 
         // 그래프에 줄 데이터
         const dates = [];
-        for (
-          let i = new Date(fewDaysAgo);
-          i <= today;
-          i.setDate(i.getDate() + xUnit)
-        ) {
-          const key =
-            xUnit === 1
-              ? new Date(i).toDateString().slice(4, 10)
-              : xUnit === 7
-              ? getWeek(new Date(i))
-              : new Date(i).getFullYear() + "-" + (new Date(i).getMonth() + 1);
-
+        for ( let i = new Date(fewDaysAgo); i <= today; i.setDate(i.getDate() + xUnit)) {
+          const key = 
+            xUnit === 1 ? 
+            new Date(i).toDateString().slice(4, 10) 
+            : (xUnit === 7 ? getWeek(new Date(i)) : new Date(i).getFullYear() + "-" + (new Date(i).getMonth() + 1));
           dates.push({
             date: key,
             count: groupedData[key] ? groupedData[key] : 0,
           });
         }
-
         setExerciseData(dates);
       });
   }, [userSequence, exerciseKind, xAxisMin, xUnit]);
@@ -146,14 +137,37 @@ const ExerciseGraph = (props) => {
             position: "top",
           },
           title: {
-            display: true,
+            display: false,
             text: `${[0, '스쿼트', '푸쉬업', '버피'][exerciseKind]}`
           }
         },
         scales: {
-          x: {},
+          x: {
+            ticks: {
+              maxRotation: 0,
+              // For a category axis, the val is the index so the lookup via getLabelForValue is needed
+                callback: function(val, index) {
+                // x축 값이 너무 많으면 2 혹은 4개씩 건너뛰기
+                if (xAxisMin / xUnit < 30) {
+                  return this.getLabelForValue(val)
+                } else if (xAxisMin / xUnit < 54) {
+                  return index % 3 === 0 ? this.getLabelForValue(val) : '';
+                } else {
+                  return index % 10 === 0 ? this.getLabelForValue(val) : '';
+                }
+              },  
+            },
+            grid: {
+              display: false,
+              offset: true,
+            },
+          },
           y: {
             min: 0,
+            ticks: {
+              // precision: 0
+              // stepSize: Math.max(5, ),
+            }
           },
         },
         animations: {
@@ -171,7 +185,7 @@ const ExerciseGraph = (props) => {
         },
       },
     });
-  }, [exerciseData, xUnit]);
+  }, [exerciseData, xUnit, exerciseKind, xAxisMin]);
 
   return (
     <div className={classes.container}>

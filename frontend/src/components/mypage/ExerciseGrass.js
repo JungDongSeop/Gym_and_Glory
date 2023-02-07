@@ -10,7 +10,10 @@ const ExerciseGrass = () => {
 
   // 출석 정보 axsio 요청
   const [attendanceData, setAttendanceData] = useState([]);
+  // 통계의 첫날
   const [fewDaysAgo, setFewDaysAgo] = useState()
+  // 여태까지 며칠이나 게임했는지
+  // const [many, setMany] = useState(0)
   // 잔디 출석 정보 계산
   useEffect(() => {
     axios.get(`${RestApi()}/exerciseLog/grace/${userSequence}`).then((res) => {
@@ -35,13 +38,16 @@ const ExerciseGrass = () => {
       }
 
       const tmp = res.data;
+      // let manyTmp = 0
       // 잔디를 채워나가기 (범위 밖은 -1, 운동 안 한 날은 0, 한 날은 1)
       let grass = Array.from({length: 53}, () => Array(7).fill(0))
       // 운동한 날짜는 1로 지정
       for (const d of tmp) { 
         const date = new Date(d)
-        grass[getWeek(date)-1][date.getDay()] = 1;        
+        grass[getWeek(date)-1][date.getDay()] = 1;
+        // manyTmp += 1;
       }
+      // setMany(manyTmp);
       // 1년의 범위 밖을 나타내는 상자는 표시하지 않기 위해, -1로 지정
       const startDay = today.getDay();
       for (let i = 0; i < startDay; i++) {
@@ -78,6 +84,8 @@ const ExerciseGrass = () => {
 
     return (
       <div className={classes.container}>
+        {/* 며칠이나 게임했는지 */}
+        {/* <span>{many}</span> */}
         {/* 요일 출력 */}
         <div >          
           <div className={`${classes.cellDays}`}>
@@ -102,6 +110,7 @@ const ExerciseGrass = () => {
             {days[6]}
           </div>
         </div>
+        
 
         {/* 잔디 표시 */}
         {attendanceData.map((col, j) => (

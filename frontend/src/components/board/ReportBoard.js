@@ -38,6 +38,7 @@ const ReportBoard = () => {
       const fetchBoard = async () => {
         const result = await axios(`${RestApi()}/report/user/${userSequence}`);
         setBoard(result.data);
+        console.log("dfsfsdf", result.data);
       };
       fetchBoard();
     }
@@ -111,9 +112,15 @@ const ReportBoard = () => {
                     }
                   >
                     {/* from : <UserIdToNickname userId={item.sendSequence}/>, to : <UserIdToNickname userId={item.getSequence}/>, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents} */}
-                    from : {item.sendUser.nickname}, to :{" "}
-                    {item.getUser.nickname}, 종류 : {reportKinds[item.kind]},
-                    내용 : {item.contents}
+                    from :{" "}
+                    {item.sendUser
+                      ? item.sendUser.nickname
+                      : "존재하지 않는 회원입니다"}
+                    , to :{" "}
+                    {item.getUser
+                      ? item.getUser.nickname
+                      : "존재하지 않는 회원입니다"}
+                    , 종류 : {reportKinds[item.kind]}, 내용 : {item.contents}
                   </li>
                 ) : (
                   // 관리자가 확인했으면

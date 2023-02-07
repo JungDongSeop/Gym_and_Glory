@@ -11,14 +11,24 @@
 .commentDiv {
   width: 35%;
   margin-right: 30px;
+  
+}
+.commentList {
   border: 5px solid black;
   border-radius: 10px;
   flex-direction: column;
-  align-items: space-between;
+  /* align-items: space-between; */
+  height: 60vh;
+  overflow-y: scroll;
 }
 
+.commentList ::-webkit-scrollbar {
+  display: none;
+}
 .commentForm {
   display: flex;
+  height: 10vh;
+
   
 }
 
@@ -27,16 +37,17 @@
   word-break: break-all;
   margin-right: 5%;
   background-color: antiquewhite;
+  
 }
 .submitForm {
   width: 100%;
 }
-.submitForm textarea {
+.submitForm input[type="text"] {
   /* position: inherit; */
   resize: none;
-  width: 80%;
-  /* height: 10rem; */
-  padding: 1rem;
+  width: 100%;
+  height: 10vh;
+  /* padding: 1rem; */
   font-size: 1.2rem;
   border: 1px solid lightgray;
   border-radius: 6px;

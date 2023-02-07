@@ -31,8 +31,11 @@ const UnityGame = forwardRef((props, ref) => {
     if (signal === "connectGamelobby") {
       sendMessage("GameManager", "GameStart");
       console.log("공격 신호 받아서 유니티로 보낸다");
+    } else if (signal === "GameStart") {
+      sendMessage("PhotonInit", "GameStart");
+    } else if (signal === "attack") {
+      sendMessage("Player" + myNum + "(Clone)", "Attack", 1);
     }
-    // sendMessage("Player1(Clone)", "Attack");
   }
 
   useImperativeHandle(ref, () => ({
@@ -49,7 +52,6 @@ const UnityGame = forwardRef((props, ref) => {
   // }, []);
 
   const handleNameSet = useCallback((nameset) => {
-    console.log(nameset);
     setNameset(nameset);
   }, []);
 

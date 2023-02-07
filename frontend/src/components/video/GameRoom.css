@@ -186,3 +186,30 @@
   cursor: pointer;
   background-color: #469f59;
 }
+
+.activeGameStart {
+  background-color: rgb(203, 94, 94);
+  font-weight: 800;
+  border-radius: 10px;
+}
+
+.activeGameStart:hover {
+  cursor: pointer;
+}
+
+.inactiveGameStart {
+  background-color: grey;
+  font-weight: 800;
+  border-radius: 10px;
+}
+
+.Ready {
+  background-color: rgb(203, 94, 94);
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.Ready:hover {
+  cursor: pointer;
+}

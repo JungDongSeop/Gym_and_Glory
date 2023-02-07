@@ -19,6 +19,8 @@ public class FileUserController {
 
     private final FileUserService fileUserService;
 
+
+    //DB에 사진 올리기
     @PostMapping("/user/{userSequence}")
     public ResponseEntity<?> createBoard(@RequestParam("files") List<MultipartFile> files,
                                          @PathVariable Integer userSequence) throws Exception {
@@ -31,6 +33,7 @@ public class FileUserController {
         return ResponseEntity.ok().build();
     }
 
+    //유저별 경로 받아오기
     @GetMapping("/user/{userSequence}")
     public String getBoard(@PathVariable Integer userSequence) {
         FileUser fileUser = fileUserService.findFileUser(userSequence).orElseThrow(RuntimeException::new);

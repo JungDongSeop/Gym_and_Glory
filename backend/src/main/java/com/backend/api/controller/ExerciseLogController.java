@@ -24,6 +24,7 @@ public class ExerciseLogController {
         this.exerciseLogService= exerciseLogService;
     }
 
+    //운동 기록 받아오기
     @GetMapping("/list/{userSequence}/{div}")
     public ResponseEntity<?> getList(@PathVariable Integer userSequence, @PathVariable Integer div){
 
@@ -32,6 +33,7 @@ public class ExerciseLogController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    //운동 시간 받아오기
     @GetMapping("/grace/{userSequence}")
     public ResponseEntity<?> getTimeList(@PathVariable Integer userSequence){
 

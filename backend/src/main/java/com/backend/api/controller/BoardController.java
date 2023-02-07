@@ -35,20 +35,22 @@ public class BoardController {
     }
 
 
+    //글쓰기
     @PostMapping
     public ResponseEntity write(@RequestBody WriteReq writeReq){
-        System.out.println("된다:============================================="+writeReq);
         boardService.writeArticle(writeReq);
 
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    //글 디테일한 정보 조회
     @GetMapping("/{articleSeqeunce}")
     public ResponseEntity<?> detail(@PathVariable Integer articleSeqeunce){
         BoardArticle boardArticle = boardService.getOne(articleSeqeunce);
         return new ResponseEntity<BoardArticle>(boardArticle,HttpStatus.OK);
     }
 
+    //글 수정
     @Transactional
     @PutMapping
     public ResponseEntity<?> modify(@RequestBody BoardPostReq boardPostReq){
@@ -56,6 +58,7 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //글 삭제
     @Transactional
     @DeleteMapping("/{articleSeqeunce}")
     public ResponseEntity<?> delete(@PathVariable Integer articleSeqeunce){
@@ -66,26 +69,23 @@ public class BoardController {
             return new ResponseEntity("삭제 실패",HttpStatus.OK);
     }
 
+    //글 종류 구분해서 글 목록 받아오기
     @GetMapping("/list/{div}")
     public List<BoardArticle> getList(@PathVariable Integer div){
         List<BoardArticle> boardList = boardService.getAllList(div);
         return boardList;
     }
 
+    //게시글 좋아요
     @GetMapping("/good/{userSequence}/{articleSequence}")
     public ResponseEntity<?> boardGood(@PathVariable Integer userSequence,@PathVariable Integer articleSequence){
-        System.out.println("들어오고");
         User user = userService.getOne(userSequence);
-        System.out.println("닉네임은?"+user.getNickname());
         BoardArticle article = boardService.getOne(articleSequence);
-        System.out.println("타이틀은?"+article.getTitle());
 
         boolean flag = goodService.findBoardGood(user,article);
         System.out.println(flag);
         if(flag==true){
-            System.out.println("여기까지 오면 성공");
             //null이면 등록하고
-            System.out.println(userSequence+"헤헤"+articleSequence);
             goodService.addGoodBoard(userSequence,articleSequence);
             boardService.addGoodArticle(articleSequence);
         }

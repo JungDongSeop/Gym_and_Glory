@@ -42,12 +42,13 @@ public class User implements UserDetails {
     private Time totalPlayTime;
     @Column(name = "profile_image_path")
     private String imagePath;
+    
     private String role;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
+
 
     @Override
     public String getUsername() {

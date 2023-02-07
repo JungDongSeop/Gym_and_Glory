@@ -4,7 +4,8 @@ import classes from "./Main.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Carousel } from "antd";
 import AuthContext from "../../store/auth-context";
-import { Controller, Scene } from 'react-scrollmagic';
+// import { Controller, Scene } from 'react-scrollmagic';
+
 import Logo from "../../assets/logo.png";
 import story_img1 from "../../assets/story_img1.PNG";
 import story_img2 from "../../assets/story_img2.PNG";
@@ -117,7 +118,7 @@ const Main = () => {
               <h2>스토리</h2>
 
 
-            <div
+            {/* <div
               ref={(el) => (storyContentRef.current[0] = el)}
               className={classes.storySection}
             >
@@ -188,7 +189,6 @@ const Main = () => {
                 </Controller>
               </ClassToggleStyled>
             </div>
-
 
             <div
               ref={(el) => (storyContentRef.current[0] = el)}
@@ -263,7 +263,7 @@ const Main = () => {
             <div style={{
               display:'inline-block',
               height:'500px'
-            }}></div>
+            }}></div> */}
 
             </div>
             <br />

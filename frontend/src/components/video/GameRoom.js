@@ -7,9 +7,7 @@ import UserVideoComponent from "./UserVideoComponent";
 import UnityGame from "./UnityGame";
 import Chats from "../chat/Chats";
 import "./GameRoom.css";
-import $ from "jquery";
 import styled from "styled-components";
-import swal from "sweetalert";
 import {
   ChatOutlined,
   SpeakerNotesOffOutlined,
@@ -107,7 +105,8 @@ class GameRoom extends Component {
       myRef: createRef({}),
       selectedExercise: undefined,
       loadingStatus: false,
-      roomLeave: false,
+      readyCount: 0,
+      readyStatus: false,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -127,6 +126,8 @@ class GameRoom extends Component {
     this.handleVideoStatus = this.handleVideoStatus.bind(this);
     this.handleSelectedExercise = this.handleSelectedExercise.bind(this);
     this.chatContainer = createRef(null);
+    this.sendReady = this.sendReady.bind(this);
+    this.sendGameStart = this.sendGameStart.bind(this);
   }
 
   componentDidMount() {
@@ -146,6 +147,7 @@ class GameRoom extends Component {
         mySessionTitle: roomTitle,
         myTeamTitle: teamTitle,
         ishost: isHost,
+        roomLeave: false,
       });
 
       this.setmodel();
@@ -158,9 +160,8 @@ class GameRoom extends Component {
 
   componentWillUnmount() {
     window.location.reload();
-    if (!this.state.roomLeave) {
-      this.leaveSession();
-    }
+    const mySession = this.state.session;
+    mySession.disconnect();
   }
 
   componentDidUpdate(previousProps, previousState) {
@@ -298,26 +299,70 @@ class GameRoom extends Component {
         });
         mySession.on("signal:get-out", (event) => {
           const mySession = this.state.session;
-          swal({
-            text: "방장에 의해 강퇴당하셨습니다.\n확인 클릭 또는 5초 후에 로비로 이동합니다.",
-            button: "확인",
-            icon: "error",
-          }).then(() => {
-            this.leaveSession();
-          });
+          const { navigate } = this.props;
+          if (mySession) {
+            mySession.disconnect();
+          }
+          axios
+            .delete(
+              APPLICATION_SERVER_URL + "room/" + this.state.mySessionId,
+              {}
+            )
+            .then(() => {
+              this.OV = null;
+              this.setState({
+                session: "",
+                subscribers: [],
+                mySessionId: "",
+                mainStreamManager: undefined,
+                publisher: undefined,
+                ishost: false,
+              });
+            })
+            .then(() => {
+              navigate("/lobby", { state: "getOut" });
+            });
+        });
+        mySession.on("signal:Ready", (event) => {
+          if (this.state.ishost) {
+            if (event.data) {
+              this.setState({ readyCount: this.state.readyCount + 1 });
+              console.log(this.state.readyCount);
+            } else {
+              this.setState({ readyCount: this.state.readyCount - 1 });
+            }
+          }
         });
         mySession.on("streamDestroyed", (event) => {
           this.deleteSubscriber(event.stream.streamManager);
         });
         mySession.on("signal:room-exploded", (event) => {
-          const mySession = this.state.session;
-          swal({
-            text: "방장이 방을 나가 방이 폭파되었습니다.\n확인 클릭 시 로비로 이동합니다.",
-            button: "확인",
-            icon: "error",
-          }).then(() => {
-            this.leaveSession();
-          });
+          if (!this.state.ishost) {
+            const mySession = this.state.session;
+            const { navigate } = this.props;
+            if (mySession) {
+              mySession.disconnect();
+            }
+            axios
+              .delete(
+                APPLICATION_SERVER_URL + "room/" + this.state.mySessionId,
+                {}
+              )
+              .then(() => {
+                this.OV = null;
+                this.setState({
+                  session: "",
+                  subscribers: [],
+                  mySessionId: "",
+                  mainStreamManager: undefined,
+                  publisher: undefined,
+                  ishost: false,
+                });
+              })
+              .then(() => {
+                navigate("/lobby", { state: "roomExploded" });
+              });
+          }
         });
         mySession.on("exception", (exception) => {});
 
@@ -389,13 +434,11 @@ class GameRoom extends Component {
           mySessionId: "",
           mainStreamManager: undefined,
           publisher: undefined,
-          roomLeave: true,
           ishost: false,
         });
+        const { navigate } = this.props;
+        navigate("/lobby");
       });
-
-    const { navigate } = this.props;
-    navigate("/lobby");
   }
 
   async setmodel() {
@@ -498,7 +541,7 @@ class GameRoom extends Component {
 
   async sendKey() {
     console.log("공격 신호 보낸다");
-    this.state.myRef.current.sendSignal();
+    this.state.myRef.current.sendSignal("attack");
   }
 
   async getToken() {
@@ -549,6 +592,25 @@ class GameRoom extends Component {
       }
     );
     return response.data.token;
+  }
+
+  sendReady() {
+    const mySession = this.state.session;
+    this.setState({ readyStatus: !this.state.readyStatus }, () => {
+      mySession.signal({
+        data: this.state.readyStatus,
+        to: [],
+        type: "Ready",
+      });
+      if (this.state.readyStatus === true) {
+        this.start();
+      }
+    });
+  }
+
+  sendGameStart() {
+    this.start();
+    this.state.myRef.current.sendSignal("GameStart");
   }
 
   render() {
@@ -677,11 +739,46 @@ class GameRoom extends Component {
                   ref={this.state.myRef}
                   sessionId={this.state.mySessionId}
                 />
-                {this.state.ishost ? (
-                  <button>GAME START</button>
-                ) : (
-                  <button>READY</button>
-                )}
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  {this.state.ishost &&
+                    this.state.readyCount === this.state.subscribers.length && (
+                      <button
+                        onClick={this.sendGameStart}
+                        className="activeGameStart"
+                        style={{ width: 210, height: 50 }}
+                      >
+                        GAME START
+                      </button>
+                    )}
+                  {this.state.ishost &&
+                    this.state.readyCount !== this.state.subscribers.length && (
+                      <button
+                        onClick={this.sendGameStart}
+                        className="inactiveGameStart"
+                        style={{ width: 210, height: 50 }}
+                      >
+                        GAME START
+                      </button>
+                    )}
+                  {!this.state.ishost && !this.state.readyStatus && (
+                    <button
+                      onClick={this.sendReady}
+                      className="Ready"
+                      style={{ width: 210, height: 50 }}
+                    >
+                      준비 완료
+                    </button>
+                  )}
+                  {!this.state.ishost && this.state.readyStatus && (
+                    <button
+                      onClick={this.sendReady}
+                      className="Ready"
+                      style={{ width: 210, height: 50 }}
+                    >
+                      준비 취소
+                    </button>
+                  )}
+                </div>
                 {this.state.chaton ? (
                   <div className="chatbox">
                     <div className="chatbox-header" />

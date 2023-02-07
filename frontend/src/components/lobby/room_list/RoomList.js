@@ -56,6 +56,16 @@ class RoomList extends Component {
     });
   }
 
+  componentDidUpdate() {
+    if (this.props.searchText) {
+      axios
+        .get(`${RestApi()}/room/search`, { title: this.props.searchText })
+        .then((response) => {
+          console.log(response);
+        });
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.state.intervalFun);
   }

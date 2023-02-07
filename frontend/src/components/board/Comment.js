@@ -64,7 +64,9 @@ const Comment = () => {
   // 댓글 좋아요 axios 요청
   const handleGood = async (commentSequence) => {
     try {
-      await axios(`/board/comment/good/${userSequence}/${commentSequence}`);
+      await axios(
+        `${RestApi()}/board/comment/good/${userSequence}/${commentSequence}`
+      );
       alert("댓글을 추천하였습니다.");
       // Show a success message or refresh the comments list
       commentRead(articleSequence);
@@ -76,7 +78,7 @@ const Comment = () => {
   // 댓글 지우기
   const handleDelete = async (commentSequence) => {
     try {
-      await axios.delete(`/board/comment/${commentSequence}`);
+      await axios.delete(`${RestApi()}/board/comment/${commentSequence}`);
       alert("댓글이 삭제되었습니다.");
       // Show a success message or refresh the comments list
       commentRead(articleSequence);
@@ -126,6 +128,7 @@ const Comment = () => {
             </label>
             {/* <br /> */}
             <input type="submit" value="제출" />
+            {/* <button>제출</button> */}
           </form>
         </div>
       </div>

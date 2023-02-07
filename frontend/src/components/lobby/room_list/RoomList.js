@@ -30,12 +30,12 @@ class RoomList extends Component {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.content);
         const info = response.data.content.map((room) => {
           const title = room.title;
           const teamName = room.teamName;
           const peopleNum = room.count;
-          const isopened = room.privateStatus;
+          const isopened = !room.privateStatus;
           const roomPassword = room.password;
           const roomId = room.sessionKey;
           const roomStatus = room.roomStatus;

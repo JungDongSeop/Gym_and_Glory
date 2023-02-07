@@ -27,6 +27,7 @@ const Nickname = styled.p`
 class Chat extends Component {
   render() {
     const { text, userNick } = this.props;
+    console.log(this.props.chatOwner);
 
     return (
       <ChatContainer>

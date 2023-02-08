@@ -5,29 +5,43 @@ import './Modal.css';
 
 const Modal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트, footer 존재 여부를 부모로부터 받아옴
-  const { open, close, header, isfooter } = props;
+  const { open, close, width, height } = props;
 
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
     <div className={open ? 'openModal modal' : 'modal'}>
       {open ? (
-        <section>
-          <header>
-            {header}
-            <button className="close" onClick={close}>
-              &times;
-            </button>
-          </header>
-          <div>{props.children}</div>
-          {/* footer 조건에 따라 없애기 */}
-          { isfooter
-            ? <footer>
-                <button className="close" onClick={close}>
-                  close
-                </button>
-              </footer>
-              : null
-          }
+        <section
+          style={{
+            width: width,
+            height: height,
+          }}
+        >
+          <div
+            style={{
+              position: 'relative',              
+            }}
+            >
+            <div
+              style={{
+                height: '40px'
+              }}
+              >
+              <button 
+                className="close"
+                onClick={close}
+                style={{
+                  position: 'absolute',
+                  right: '0',
+                  top: '0'
+                }}
+                >
+                &times;
+              </button>
+            </div>
+
+            {props.children}
+          </div>
         </section>
       ) : null}
     </div>

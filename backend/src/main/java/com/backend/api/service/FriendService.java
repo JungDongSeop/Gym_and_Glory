@@ -2,6 +2,7 @@ package com.backend.api.service;
 
 import com.backend.api.request.FrdReq;
 import com.backend.api.response.FrdRes;
+import com.backend.db.entity.FrdInterface;
 import com.backend.db.entity.Friend;
 import com.backend.db.entity.User;
 import com.backend.db.repository.FriendRepository;
@@ -12,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Tuple;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,19 +28,22 @@ public class FriendService {
     // 서로 수락한 친구 조회하기
     @Transactional(readOnly = true)
     public List<FrdRes> getFrindSearchList(Integer userSequence) {
-        List<FrdRes> getFriendList = friendRepository.findFrindList(userSequence);
+        List<Tuple> frdResTuples = friendRepository.findFrindList(userSequence);
+        List<FrdRes> frdResList = frdResTuples.stream()
+                .map(t -> new FrdRes(
+                        t.get(0,Integer.class),
+                        t.get(1,Integer.class),
+                        t.get(2,String.class),
+                        t.get(3,String.class)
+                )).collect(Collectors.toList());
 
-        return getFriendList;
+        return frdResList;
     }
 
     // 친구목록에서 유저 검색하기
     @Transactional(readOnly = true)
     public List<User> getUserSearchList(Integer userSequence, String nickName) {
         List<User> userSearchList = userRepository.findBySearchFriendNative(userSequence, nickName);
-
-        if(userSearchList.size() == 0) {
-            throw new EntityNotFoundException("검색된 유저가 없습니다.");
-        }
 
         return userSearchList;
     }
@@ -76,21 +82,14 @@ public class FriendService {
         // 취소하려는 친구 데이터를 찾는다.
        Friend findFrd = friendRepository.findByFrd(userId, frdId);
 
-       if(findFrd !=  null) { // 아직 상대방이 친구 수락 안했다면
+       // 보낸 친구의 유저 아이디를 가져온다.(나중에 리스트 조회를 위함, 보낸 친구 기준으로)
+       Integer sendUserId = findFrd.getUser().getUserSequence();
+       friendRepository.delete(findFrd);  // 데이터 삭제
 
-           // 보낸 친구의 유저 아이디를 가져온다.(나중에 리스트 조회를 위함, 보낸 친구 기준으로)
-           Integer sendUserId = findFrd.getUser().getUserSequence();
-           friendRepository.delete(findFrd);  // 데이터 삭제
+       List<FrdRes> getFrdList= friendRepository.findSendFrdResList(sendUserId); // 보낸 친구 유저아이디를 통해 리스트 조회
 
-           List<FrdRes> getFrdList= friendRepository.findSendFrdResList(sendUserId); // 보낸 친구 유저아이디를 통해 리스트 조회
+       return getFrdList;
 
-           return getFrdList;
-
-       } else {
-
-           throw new EntityNotFoundException("상대방이 친구를 수락하였습니다.");
-
-       }
     }
 
     // 받는 친구 목록 조회
@@ -101,11 +100,6 @@ public class FriendService {
         User recvUser = userRepository.findByNickname(NickName);
 
         List<FrdRes> recvFrdResList = friendRepository.findRecvFrdResList(recvUser.getUserSequence());
-
-        if(recvFrdResList.size() == 0) {
-            throw new EntityNotFoundException("받은 신청 유저가 없습니다.");
-        }
-
         return recvFrdResList;
     }
 
@@ -116,20 +110,14 @@ public class FriendService {
         // 취소하려는 친구 데이터를 찾는다.
         Friend findFrd = friendRepository.findByFrd(userId, frdId);
 
-        if(findFrd != null) { // 아직 상대방이 친구 수락 안했다면
+        // 받은 친구의 유저 아이디를 가져온다.(나중에 리스트 조회를 위함, 받은 친구의 기준으로)
+        Integer recvUserId = findFrd.getUser().getUserSequence();
+        friendRepository.delete(findFrd);  // 데이터 삭제
 
-            // 받은 친구의 유저 아이디를 가져온다.(나중에 리스트 조회를 위함, 받은 친구의 기준으로)
-            Integer recvUserId = findFrd.getUser().getUserSequence();
-            friendRepository.delete(findFrd);  // 데이터 삭제
+        List<FrdRes> getFrdList= friendRepository.findRecvFrdResList(recvUserId); // 받은 친구 유저아이디를 통해 리스트 조회
 
-            List<FrdRes> getFrdList= friendRepository.findRecvFrdResList(recvUserId); // 받은 친구 유저아이디를 통해 리스트 조회
+        return getFrdList;
 
-            return getFrdList;
-
-        } else {
-
-            throw new EntityNotFoundException("상대방이 친구를 수락하였습니다.");
-        }
     }
 
 
@@ -139,17 +127,13 @@ public class FriendService {
         // 수락하려는 친구 데이터를 찾는다.
         Friend findFrd = friendRepository.findByFrd(userId, frdId);
 
-        if(findFrd != null) {
+        Integer recvUserId = findFrd.getUser().getUserSequence();
+        findFrd.setReceive(true);
+        friendRepository.save(findFrd);
 
-            Integer recvUserId = findFrd.getUser().getUserSequence();
-            findFrd.setReceive(true);
-            friendRepository.save(findFrd);
+        List<FrdRes> getFrdList = friendRepository.findRecvFrdResList(recvUserId);
 
-            List<FrdRes> getFrdList = friendRepository.findRecvFrdResList(recvUserId);
+        return getFrdList;
 
-            return getFrdList;
-        } else {
-            throw new EntityNotFoundException("수락할 친구가 없습니다.");
-        }
     }
 }

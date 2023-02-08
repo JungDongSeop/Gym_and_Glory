@@ -1,12 +1,13 @@
 package com.backend.db.repository;
 
 import com.backend.api.response.FrdRes;
+import com.backend.db.entity.FrdInterface;
 import com.backend.db.entity.Friend;
-import com.backend.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 public interface FriendRepository extends JpaRepository<Friend,Integer> {
@@ -47,5 +48,5 @@ public interface FriendRepository extends JpaRepository<Friend,Integer> {
             "join user b on a.user_sequence = b.user_sequence " +
             "where a.frd_user_id = :userId " +
             "and a.is_rev = true", nativeQuery = true)
-    List<FrdRes> findFrindList(@Param("userId") Integer userid);
+    List<Tuple> findFrindList(@Param("userId") Integer userid);
 }

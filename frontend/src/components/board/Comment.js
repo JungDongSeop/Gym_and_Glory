@@ -29,41 +29,56 @@ const Comment = () => {
   });
 
   // 댓글 read axios 요청
-  const commentRead = (articleSequence) => {
-    axios
-      .get(`${RestApi()}/board/comment/${articleSequence}`)
-      .then((response) => {
-        console.log(response.data);
-        setComments(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  // const commentRead = (articleSequence) => {
+  //   axios
+  //     .get(`${RestApi()}/board/comment/${articleSequence}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setComments(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  const commentRead = async (articleSequence) => {
+    const result = await axios(`${RestApi()}/board/comment/${articleSequence}`);
+    setComments(result.data.reverse());
+    console.log(result.data, "댓글들");
   };
   useEffect(() => {
-    commentRead(articleSequence);
+    const commentRead = async () => {
+      const result = await axios(
+        `${RestApi()}/board/comment/${articleSequence}`
+      );
+      setComments(result.data.reverse());
+      console.log(result.data);
+    };
+    commentRead();
   }, [articleSequence]);
 
   // 댓글 create axios 요청
   const handleSubmit = (e) => {
     // e.preventDefault();
     // alert("댓글이 작성되었습니다.");
-
-    axios
-      .post(`${RestApi()}/board/comment`, {
-        userSequence: userSequence,
-        articleSequence: articleSequence,
-        contents: newComment.contents,
-      })
-      .then((response) => {
-        setComments([...comments, response.data]);
-        setNewComment({ title: "", text: "" });
-        commentRead(articleSequence);
-        commentInputRef.current.value = "";
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const enteredcomment = commentInputRef.current.value;
+    {
+      enteredcomment.length > 0 &&
+        axios
+          .post(`${RestApi()}/board/comment`, {
+            userSequence: userSequence,
+            articleSequence: articleSequence,
+            contents: enteredcomment,
+          })
+          .then((response) => {
+            setComments([...comments, response.data]);
+            setNewComment({ title: "", text: "" });
+            commentRead(articleSequence);
+            commentInputRef.current.value = "";
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
   };
 
   // 댓글 좋아요 axios 요청
@@ -98,50 +113,56 @@ const Comment = () => {
   };
 
   return (
-    <div className={classes.commentForm}>
-      {/* <h2>댓글 기능 구현합시다.</h2> */}
+    <div>
+      {comments.map((comment, index) => {
+        <p>{comment.content}</p>;
+      })}
+      <div className={classes.replyWrap}>
+        <div className={classes.replyTitle}>
+          <h2>
+            댓글
+            <span> {comments.length}</span>
+          </h2>
+        </div>
 
-      {/* 댓글 달기 */}
-      <div>
-        <div className={classes.commentList}>
-          {/* 댓글 목록 axios 요청 */}
-          {comments.map((comment, index) => (
-            <ul key={index}>
-              {/* 댓글 상세 표시, 댓글 좋아요, 댓글 삭제 */}
-              <div className={classes.commentbox}>
-                <p>{comment.boardArticle.user.nickname}</p>
-                <div className={classes.textbox}>
-                  <h3>{comment.contents}</h3>
-                </div>
-                추천 : {comment.goodCount}.{" "}
+        <ul className={classes.replyUl}>
+          {comments.map((item, index) => {
+            <li key={index}>
+              {/* <p>ddd</p> */}
+              <div className={classes.reply}>
+                <p className={classes.commonCharId}>
+                  <img
+                    src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/world_icon/icon_11.png"
+                    alt="프로필 이미지"
+                  />
+                  {item.user ? item.user.nickname : null}
+                  <span>{item.registerTime}</span>
+                </p>
+                {/* <ul className={classes.replyBtnWrap}>
+                <li>
+                </li>
+              </ul> */}
+                <div className={classes.replyText}>{item.contents}</div>
               </div>
-              <button onClick={() => handleGood(comment.commentSequence)}>
-                ❤
-              </button>
-              <button onClick={() => handleDelete(comment.commentSequence)}>
-                삭제
-              </button>
-            </ul>
-          ))}
-        </div>
-        <div>
-          <form onSubmit={handleSubmit} className={classes.commentForm}>
-            <label className={classes.submitForm}>
-              {/* 내용: */}
-              <input
-                type="text"
-                name="contents"
-                value={newComment.contents}
-                onChange={handleChange}
-                required
-                ref={commentInputRef}
-              />
-              {/* <br /> */}
+            </li>;
+          })}
+        </ul>
+      </div>
+      <div className={classes.bottomTxarWrap}>
+        <form onSubmit={handleSubmit} className={classes.bottomTxarCtracker}>
+          <textarea
+            name="comment"
+            cols="30"
+            rows="10"
+            placeholder="댓글을 입력해주세요"
+            ref={commentInputRef}
+          ></textarea>
+          <div className={classes.bottomTxarBtn}>
+            <div className={classes.txarRightBtn}>
               <input type="submit" value="제출" />
-              {/* <button>제출</button> */}
-            </label>
-          </form>
-        </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   );

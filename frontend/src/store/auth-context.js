@@ -9,6 +9,7 @@ const AuthContext = React.createContext({
   level: "",
   imagePath: "",
   gender: "",
+  role: "",
   isLoggedIn: false,
   login: (token) => {},
   logout: () => {},

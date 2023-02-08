@@ -19,30 +19,39 @@ const ReportBoard = () => {
   // url 이동을 위한 함수.
   const navigate = useNavigate();
 
-  // redux로 user 정보 가져오기
-  const isAdmin = useSelector((state) => state.user.isAdmin);
-  const { userSequence } = useContext(AuthContext);
-
   // 게시판에 쓴 글들을 저장할 변수
   const [board, setBoard] = useState([]);
 
-  // 게시글 전체 조회 axios (관리자, 유저)
+  // redux로 user 정보 가져오기
+  // const isAdmin = useSelector((state) => state.user.isAdmin);
+  const email = sessionStorage.getItem("email");
+
+  let isAdmin = false;
   useEffect(() => {
-    if (isAdmin) {
-      const fetchBoard = async () => {
-        const result = await axios(`${RestApi()}/report`);
-        setBoard(result.data);
-      };
-      fetchBoard();
-    } else {
-      const fetchBoard = async () => {
-        const result = await axios(`${RestApi()}/report/user/${userSequence}`);
-        setBoard(result.data);
-        console.log("dfsfsdf", result.data);
-      };
-      fetchBoard();
-    }
-  }, [userSequence, isAdmin]);
+    const getReport = async () => {
+      const result = await axios(`${RestApi()}/report/${email}`);
+      console.log(result.data);
+    };
+    getReport();
+  }, [email]);
+
+  // 게시글 전체 조회 axios (관리자, 유저)
+  // useEffect(() => {
+  //   if (isAdmin) {
+  //     const fetchBoard = async () => {
+  //       const result = await axios(`${RestApi()}/report`);
+  //       setBoard(result.data);
+  //     };
+  //     fetchBoard();
+  //   } else {
+  //     const fetchBoard = async () => {
+  //       const result = await axios(`${RestApi()}/report/user/${userSequence}`);
+  //       setBoard(result.data);
+  //       console.log("dfsfsdf", result.data);
+  //     };
+  //     fetchBoard();
+  //   }
+  // }, [userSequence, isAdmin]);
 
   // 페이지네이션을 위한 변수
   const [currentPage, setCurrentPage] = useState(1);

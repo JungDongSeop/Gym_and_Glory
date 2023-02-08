@@ -1,35 +1,34 @@
 package com.backend.api.controller;
 
+import com.backend.api.request.TeamReq;
 import com.backend.api.response.TeamLogRes;
 import com.backend.api.service.RankingService;
+import com.google.api.Http;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
-@RestController
+
+@Controller
 @RequestMapping("/api/ranking")
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class RankingController {
 
-    private RankingService rankingService;
+    private final RankingService rankingService;
 
-    @Autowired
-    public RankingController (RankingService rankingService){
-        this.rankingService = rankingService;
-    }
+    // 팀 로그 저장하기
+    @PostMapping(value = "/teamlog")
+    public @ResponseBody ResponseEntity InsertTeamLog(@RequestBody TeamReq teamReq) {
 
-    //랭킹 리스트 불러오기
-    @GetMapping("/list")
-    public ResponseEntity<?> getList(){
-        List<TeamLogRes> TeamList = rankingService.getList();
-        return new ResponseEntity<List<TeamLogRes>>(TeamList,HttpStatus.OK);
+        rankingService.insertTeamLogList(teamReq);
+        return new ResponseEntity("저장 완료", HttpStatus.OK);
+
     }
 }

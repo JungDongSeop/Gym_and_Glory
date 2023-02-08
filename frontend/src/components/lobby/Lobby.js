@@ -45,8 +45,11 @@ const Lobby = () => {
     setInputText(event.target.value);
   };
 
-  const handleKeyPress = () => {
-    setSearchInput(inputText);
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      console.log("바꿈");
+      setSearchInput(inputText);
+    }
   };
 
   const handleClick = () => {
@@ -63,7 +66,7 @@ const Lobby = () => {
             <input
               type="text"
               className="roomsearch"
-              onKeyPress={handleKeyPress}
+              onKeyUp={handleKeyPress}
               onChange={handleInputText}
               value={inputText}
             />

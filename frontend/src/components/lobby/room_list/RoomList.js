@@ -29,7 +29,6 @@ class RoomList extends Component {
             },
           })
           .then((response) => {
-            console.log(response.data.content);
             const info = response.data.content.map((room) => {
               const title = room.title;
               const teamName = room.teamName;
@@ -58,8 +57,11 @@ class RoomList extends Component {
 
   componentDidUpdate() {
     if (this.props.searchText) {
+      clearInterval(this.state.intervalFun);
       axios
-        .get(`${RestApi()}/room/search`, { title: this.props.searchText })
+        .get(`${RestApi()}/room/search`, {
+          params: { title: this.props.searchText },
+        })
         .then((response) => {
           console.log(response);
         });

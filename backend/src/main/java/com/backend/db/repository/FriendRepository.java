@@ -1,7 +1,6 @@
 package com.backend.db.repository;
 
 import com.backend.api.response.FrdRes;
-import com.backend.api.response.searchFrdRes;
 import com.backend.db.entity.Friend;
 import com.backend.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,15 +36,16 @@ public interface FriendRepository extends JpaRepository<Friend,Integer> {
     Friend findByFrd(@Param("userId") Integer userId, @Param("frdId") Integer frdId);
 
     // 수락해서 친구 된 목록 조회
-    @Query(value = "select a.user_sequence, a.frd_user_id, '', b.nickname " +
+    @Query(value = "select a.user_sequence, a.frd_user_id, 'none', b.nickname " +
             "from friends a " +
             "join user b on a.frd_user_id = b.user_sequence " +
             "where a.user_sequence = :userId " +
             "and a.is_rev = true " +
             "union all " +
-            "select a.frd_user_id, a.user_sequence, '', b.nickname from friends a " +
+            "select a.frd_user_id, a.user_sequence, 'none', b.nickname " +
+            "from friends a " +
             "join user b on a.user_sequence = b.user_sequence " +
-            "where frd_user_id = :userId " +
-            "and is_rev = true", nativeQuery = true)
+            "where a.frd_user_id = :userId " +
+            "and a.is_rev = true", nativeQuery = true)
     List<FrdRes> findFrindList(@Param("userId") Integer userid);
 }

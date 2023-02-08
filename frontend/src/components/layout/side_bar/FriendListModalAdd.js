@@ -2,9 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { useContext } from "react";
 import AuthContext from "../../../store/auth-context";
 import axios from "axios";
+import classes from './FriendListModalAdd.module.css'
 import RestApi from "../../api/RestApi";
 
-const FriendListModalAdd = (props) => {
+const FriendListModalAdd = () => {
   // redux로 user 정보 가져오기
   const { userSequence, nickname } = useContext(AuthContext);
 
@@ -18,8 +19,7 @@ const FriendListModalAdd = (props) => {
     const reportUserName = enteredusername.current.value;
     // 닉네임이 있으면 해당 닉네임으로 axios 요청
     if (reportUserName.trim()) {
-      await axios
-        .get(`http://localhost:8080/api/search?${userSequence}&nickName?${reportUserName}`)
+      await axios.get(`${RestApi()}/friend/search?userSequence=${userSequence}&nickName=${reportUserName.trim()}`)
         .then((res) => {
           setSearchedDatas(res.data);
         })
@@ -31,7 +31,7 @@ const FriendListModalAdd = (props) => {
   const handleSendFriendRequest = async (getterSequence) => {
     alert("친구 요청을 보냈습니다.");
     // await axios.get(`${RestApi()}/friend/send`, {
-    await axios.post('http://localhost:8080/api/friend/send', {
+    await axios.post(`${RestApi()}/friend/send`, {
       sendFrd: userSequence,
       recvFrd: getterSequence
     });
@@ -41,13 +41,9 @@ const FriendListModalAdd = (props) => {
   const [getFriendRequests, setGetFriendRequests] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      await axios(`http://localhost:8080/api/friend/receive?nickName=${nickname}`)
+      await axios(`${RestApi()}/friend/receive?nickName=${nickname}`)
       .then((res) => {
-        console.log('받은 요청을 출력합니다.', res.data)
         setGetFriendRequests(res.data);
-      })
-      .then(() => {
-        console.log('wow', getFriendRequests)
       })
       .catch(() => {
         console.log('받은 신청 유저 없음')
@@ -60,7 +56,7 @@ const FriendListModalAdd = (props) => {
   // 친구 요청 수락, 이후 새로운 친구 목록 출력
   const handleAcceptFriendRequest = async (sender, getter) => {
     alert('친구 요청을 수락하셨습니다.')
-    await axios.put(`http://localhost:8080/api/friend/receive/ok`, {
+    await axios.put(`${RestApi()}/friend/receive/ok`, {
       sendFrd: sender,
       recvFrd: getter
     })
@@ -71,7 +67,7 @@ const FriendListModalAdd = (props) => {
   // 친구 요청 거절
   const handleCancelFriendRequest = async (sender, getter) => {
     alert('친구 요청을 거절하셨습니다.')
-    await axios.post(`http://localhost:8080/api/friend/receive/cancel`, {
+    await axios.post(`${RestApi()}/friend/receive/cancel`, {
       sendFrd: sender,
       recvFrd: getter
     })
@@ -90,17 +86,17 @@ const FriendListModalAdd = (props) => {
       />
       {/* 검색해서 나온 친구 목록 출력 */}
       {Array.isArray(searchedDatas) ? (
-        <div>
+        <div className={classes.popUp}>
           {searchedDatas.map((d, index) => {
             return (
-              <div key={index}>
+              <div key={index} className={classes.popUpDetail}>
                 {/* 유저 정보 출력 */}
                 <img src={d.profile_img_path} alt="" />
                 Lv.{d.level}
                 {d.nickname}
                 {/* 친구 요청 버튼 */}
-                <button onClick={() => handleSendFriendRequest(d.userSequence)}>
-                  V
+                <button className={classes.friendRequest} onClick={() => handleSendFriendRequest(d.userSequence)}>
+                  요청
                 </button>
               </div>
             );
@@ -112,6 +108,7 @@ const FriendListModalAdd = (props) => {
 
       {/* 유저가 받은 친구 요청 */}
       <div>
+        <p>받은 친구 요청</p>
         {Array.isArray(getFriendRequests) && getFriendRequests.map((data, index) => {
             return (
               <div key={index}>

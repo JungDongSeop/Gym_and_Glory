@@ -4,6 +4,7 @@ import AuthContext from "../../../store/auth-context";
 import FriendListModalDetail from "./FriendListModalDetail";
 import FriendListModalAdd from "./FriendListModalAdd";
 import axios from "axios";
+import classes from './FriendListModal.module.css';
 import Modal from "../../UI/Modal";
 import Button from "../../UI/Button";
 import RestApi from "../../../components/api/RestApi";
@@ -52,12 +53,12 @@ const FriendList = () => {
       <Modal
         open={modalOpen}
         close={closeModal}
-        header="친구목록"
-        isfooter="true"
+        width="700px"
+        height="500px"
       >
         {/* 창 선택 */}
-        <button onClick={() => setPage(1)}>목록</button>
-        <button onClick={() => setPage(2)}>신청</button>
+        <button className={`${classes.modalButton} ${page === 1 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(1)}>목록</button>
+        <button className={`${classes.modalButton} ${page === 2 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(2)}>신청</button>
 
         {/* 창 표시 */}
         {page === 1 ? (

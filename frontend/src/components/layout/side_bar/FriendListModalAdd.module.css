@@ -1,0 +1,16 @@
+.popUp {
+  position: absolute;
+  background-color: white;;
+}
+
+.popUpDetail {
+  border-bottom: 1px solid black;
+}
+/* .popUpDetail:hover {
+  background-color: rgb(218, 218, 218);
+} */
+
+.popUpDetail .friendRequest {
+  /* background-color: orange; */
+  border: 0;
+}

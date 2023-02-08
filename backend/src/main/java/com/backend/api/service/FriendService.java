@@ -40,6 +40,30 @@ public class FriendService {
         return frdResList;
     }
 
+    // 서로 수락한 친구 삭제
+    public List<FrdRes> delFriendList(FrdReq frdReq) {
+
+        Friend frd = friendRepository.findByFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
+
+        if(frd == null) {
+            throw new EntityNotFoundException("현재 데이터가 없습니다.");
+        }
+
+        Integer userSequence = frd.getUser().getUserSequence(); // 현재 로그인된 유저 아이디를 가져온다.
+        friendRepository.delete(frd);
+
+        List<Tuple> frdResTuples = friendRepository.findFrindList(userSequence);
+        List<FrdRes> frdResList = frdResTuples.stream()
+                .map(t -> new FrdRes(
+                        t.get(0,Integer.class),
+                        t.get(1,Integer.class),
+                        t.get(2,String.class),
+                        t.get(3,String.class)
+                )).collect(Collectors.toList());
+
+        return frdResList;
+    }
+
     // 친구목록에서 유저 검색하기
     @Transactional(readOnly = true)
     public List<User> getUserSearchList(Integer userSequence, String nickName) {
@@ -47,6 +71,7 @@ public class FriendService {
 
         return userSearchList;
     }
+
 
     // 친구 신청하기
     public void sendFriend(FrdReq frdReq) {
@@ -80,7 +105,7 @@ public class FriendService {
     public List<FrdRes> sendFrdCancel(Integer userId, Integer frdId) {
 
         // 취소하려는 친구 데이터를 찾는다.
-       Friend findFrd = friendRepository.findByFrd(userId, frdId);
+       Friend findFrd = friendRepository.findByFrdFalse(userId, frdId);
 
        // 보낸 친구의 유저 아이디를 가져온다.(나중에 리스트 조회를 위함, 보낸 친구 기준으로)
        Integer sendUserId = findFrd.getUser().getUserSequence();
@@ -108,7 +133,7 @@ public class FriendService {
     public List<FrdRes> recvFrdCancel(Integer userId, Integer frdId) {
 
         // 취소하려는 친구 데이터를 찾는다.
-        Friend findFrd = friendRepository.findByFrd(userId, frdId);
+        Friend findFrd = friendRepository.findByFrdFalse(userId, frdId);
 
         // 받은 친구의 유저 아이디를 가져온다.(나중에 리스트 조회를 위함, 받은 친구의 기준으로)
         Integer recvUserId = findFrd.getUser().getUserSequence();
@@ -125,7 +150,7 @@ public class FriendService {
     public List<FrdRes> recvFrdOk(Integer userId, Integer frdId) {
 
         // 수락하려는 친구 데이터를 찾는다.
-        Friend findFrd = friendRepository.findByFrd(userId, frdId);
+        Friend findFrd = friendRepository.findByFrdFalse(userId, frdId);
 
         Integer recvUserId = findFrd.getUser().getUserSequence();
         findFrd.setReceive(true);

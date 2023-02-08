@@ -3,7 +3,6 @@ package com.backend.api.controller;
 import com.backend.api.request.FrdReq;
 import com.backend.api.response.FrdRes;
 import com.backend.api.service.FriendService;
-import com.backend.db.entity.FrdInterface;
 import com.backend.db.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,20 +24,25 @@ public class FriendController {
     // 내 친구 목록 조회 ( 보내고 수락하고 다 한 경우 )
     @GetMapping(value="/friend/{userSequence}")
     public  @ResponseBody ResponseEntity getFriendList(@PathVariable Integer userSequence ) {
-        List<FrdRes> getFriendList = null;
-        try {
-            getFriendList = friendService.getFrindSearchList(userSequence);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        List<FrdRes> getFriendList = friendService.getFrindSearchList(userSequence);
 
-        return new ResponseEntity(getFriendList, HttpStatus.OK);
+        return new ResponseEntity<>(getFriendList, HttpStatus.OK);
+    }
+
+    // 서로 수락한 친구 삭제
+    @DeleteMapping(value="/friend/{userSequence}")
+    public @ResponseBody ResponseEntity delFriend(@RequestBody FrdReq frdReq) {
+
+        List<FrdRes> getFriendList = friendService.delFriendList(frdReq);
+
+        return new ResponseEntity<>(getFriendList, HttpStatus.OK);
     }
 
     // 친구목록의 유저 검색
     @GetMapping(value = "/friend/search")
     public ResponseEntity<?> getSearchUser(@RequestParam(value = "userSequence") Integer userSequence, @RequestParam(value = "nickName") String nickName) {
         List<User> searchUserList = friendService.getUserSearchList(userSequence, nickName);
+
         return new ResponseEntity<>(searchUserList, HttpStatus.OK);
     }
     
@@ -60,17 +64,11 @@ public class FriendController {
     @GetMapping(value="/friend/send")
     public ResponseEntity<?> sendFrdSearch(@RequestParam String nickName) {
 
-        List<FrdRes> sendFrdList = new ArrayList<>();
-
-        try {
-            sendFrdList = friendService.sendFrdSearch(nickName);
-        } catch (Exception e){
-            return new ResponseEntity<String>(e.getMessage(),
-                    HttpStatus.BAD_REQUEST);
-        }
+        List<FrdRes> sendFrdList = friendService.sendFrdSearch(nickName);
 
         return new ResponseEntity<>(sendFrdList, HttpStatus.OK);
     }
+
     // 보낸 사람이 친구 취소
     // 보낸 사람 관점에서 받을 때
     // userId가 보낸 사람
@@ -78,17 +76,8 @@ public class FriendController {
     @PostMapping(value="/friend/send/cancel")
     public @ResponseBody ResponseEntity sendFriendCancel(@RequestBody FrdReq frdReq) {
 
-        List<FrdRes> sendFrdList = new ArrayList<>();
+        List<FrdRes> sendFrdList = friendService.sendFrdCancel(frdReq.getSendFrd(), frdReq.getRecvFrd());
 
-        try {
-
-            sendFrdList = friendService.sendFrdCancel(frdReq.getSendFrd(), frdReq.getRecvFrd());
-
-        } catch (Exception e) {
-
-            return new ResponseEntity<>(e.getMessage(),
-                    HttpStatus.BAD_REQUEST);
-        }
         return new ResponseEntity<>(sendFrdList, HttpStatus.OK);
     }
 
@@ -97,14 +86,7 @@ public class FriendController {
     @GetMapping(value="/friend/receive")
     public ResponseEntity<?> recvFrdSearch(@RequestParam String nickName) {
 
-        List<FrdRes> recvFrdList = new ArrayList<>();
-
-        try {
-            recvFrdList = friendService.recvFrdSearch(nickName);
-        } catch (Exception e){
-            return new ResponseEntity<String>(e.getMessage(),
-                    HttpStatus.BAD_REQUEST);
-        }
+        List<FrdRes> recvFrdList = friendService.recvFrdSearch(nickName);
 
         return new ResponseEntity<>(recvFrdList, HttpStatus.OK);
 
@@ -117,14 +99,8 @@ public class FriendController {
     @PostMapping(value="/friend/receive/cancel")
     public @ResponseBody ResponseEntity recvFriendCancel(@RequestBody FrdReq frdReq) {
 
-        List<FrdRes> recvFrdList = new ArrayList<>();
+        List<FrdRes> recvFrdList = friendService.recvFrdCancel(frdReq.getSendFrd(), frdReq.getRecvFrd());
 
-        try {
-            recvFrdList = friendService.recvFrdCancel(frdReq.getSendFrd(), frdReq.getRecvFrd());
-        } catch (Exception e) {
-            return new ResponseEntity<String>(e.getMessage(),
-                    HttpStatus.BAD_REQUEST);
-        }
         return new ResponseEntity<>(recvFrdList, HttpStatus.OK);
     }
 
@@ -132,14 +108,7 @@ public class FriendController {
     @PutMapping(value="/friend/receive/ok")
     public @ResponseBody ResponseEntity recvFriendOk(@RequestBody FrdReq frdReq) {
 
-        List<FrdRes> recvFrdList = new ArrayList<>();
-
-        try {
-            recvFrdList = friendService.recvFrdOk(frdReq.getSendFrd(), frdReq.getRecvFrd());
-        } catch (Exception e) {
-            return new ResponseEntity<String>(e.getMessage(),
-                    HttpStatus.BAD_REQUEST);
-        }
+        List<FrdRes> recvFrdList = friendService.recvFrdOk(frdReq.getSendFrd(), frdReq.getRecvFrd());
 
         return new ResponseEntity<>(recvFrdList, HttpStatus.OK);
     }

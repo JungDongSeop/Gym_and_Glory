@@ -34,7 +34,7 @@ public interface FriendRepository extends JpaRepository<Friend,Integer> {
             "where f.user.userSequence = :userId " +
             "and f.frdUser.userSequence = :frdId " +
             "and f.isReceive = false ")
-    Friend findByFrd(@Param("userId") Integer userId, @Param("frdId") Integer frdId);
+    Friend findByFrdFalse(@Param("userId") Integer userId, @Param("frdId") Integer frdId);
 
     // 수락해서 친구 된 목록 조회
     @Query(value = "select a.user_sequence, a.frd_user_id, 'none', b.nickname " +
@@ -49,4 +49,13 @@ public interface FriendRepository extends JpaRepository<Friend,Integer> {
             "where a.frd_user_id = :userId " +
             "and a.is_rev = true", nativeQuery = true)
     List<Tuple> findFrindList(@Param("userId") Integer userid);
+
+    // 수락해서 친구된 친구 테이블에 있는지 확인
+    @Query ("select f " +
+            "from Friend f " +
+            "where f.user.userSequence = :userId " +
+            "and f.frdUser.userSequence = :frdId " +
+            "and f.isReceive = true ")
+    Friend findByFrdTrue(@Param("userId") Integer userId, @Param("frdId") Integer frdId);
+
 }

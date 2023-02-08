@@ -109,6 +109,7 @@ class GameRoom extends Component {
       readyStatus: false,
       gameStatus: false,
       middleState: false,
+      nicknames: [sessionStorage.getItem("nickname")],
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -203,7 +204,7 @@ class GameRoom extends Component {
     const mySession = this.state.session;
 
     mySession.signal({
-      data: `${this.state.myUserNick}, ${this.state.chat}`,
+      data: `${this.state.myUserNick},${this.state.chat}`,
       to: [],
       type: "chat",
     });
@@ -231,7 +232,7 @@ class GameRoom extends Component {
       const mySession = this.state.session;
 
       mySession.signal({
-        data: `${this.state.myUserNick}, ${this.state.chat}`,
+        data: `${this.state.myUserNick},${this.state.chat}`,
         to: [],
         type: "chat",
       });
@@ -334,13 +335,40 @@ class GameRoom extends Component {
             });
         });
         mySession.on("signal:Ready", (event) => {
+          let readydata = event.data.split(",");
+          console.log(readydata[0], readydata[1]);
           if (this.state.ishost) {
-            if (event.data) {
-              this.setState({ readyCount: this.state.readyCount + 1 }, () => {
-                console.log(this.state.readyCount);
-              });
+            if (readydata[0] === "true") {
+              console.log("닉네임 추가");
+              let pushnick = [...this.state.nicknames, readydata[1]];
+              this.setState(
+                {
+                  readyCount: this.state.readyCount + 1,
+                  nicknames: pushnick,
+                },
+                () => {
+                  console.log(this.state.readyCount, this.state.nicknames);
+                }
+              );
             } else {
-              this.setState({ readyCount: this.state.readyCount - 1 });
+              console.log("닉네임 제거");
+              const filternicknames = this.state.nicknames.filter((nick) => {
+                console.log(nick);
+                if (nick === readydata[1]) {
+                  console.log(nick);
+                } else {
+                  return nick;
+                }
+              });
+              this.setState(
+                {
+                  readyCount: this.state.readyCount - 1,
+                  nicknames: filternicknames,
+                },
+                () => {
+                  console.log(this.state.readyCount, this.state.nicknames);
+                }
+              );
             }
           }
         });
@@ -377,9 +405,20 @@ class GameRoom extends Component {
         });
         mySession.on("signal:readyCountDown", (e) => {
           if (this.state.ishost) {
-            this.setState({ readyCount: this.state.readyCount - 1 }, () => {
-              console.log(this.state.readyCount);
+            const filternicknames = this.state.nicknames.filter((nick) => {
+              if (nick !== e.data) {
+                return nick;
+              }
             });
+            this.setState(
+              {
+                readyCount: this.state.readyCount - 1,
+                nicknames: filternicknames,
+              },
+              () => {
+                console.log(this.state.readyCount, this.state.nicknames);
+              }
+            );
           }
         });
         mySession.on("signal:gameStart", (e) => {
@@ -445,7 +484,7 @@ class GameRoom extends Component {
     }
     if (this.state.readyStatus) {
       mySession.signal({
-        data: "",
+        data: `${this.state.myUserNick}`,
         to: [],
         type: "readyCountDown",
       });
@@ -652,7 +691,7 @@ class GameRoom extends Component {
     const mySession = this.state.session;
     this.setState({ readyStatus: !this.state.readyStatus }, () => {
       mySession.signal({
-        data: this.state.readyStatus,
+        data: `${this.state.readyStatus},${this.state.myUserNick}`,
         to: [],
         type: "Ready",
       });
@@ -808,6 +847,8 @@ class GameRoom extends Component {
                 <UnityGame
                   ref={this.state.myRef}
                   sessionId={this.state.mySessionId}
+                  nicknames={this.state.nicknames}
+                  team={this.state.myTeamTitle}
                   handleMiddleState={this.handleMiddleState}
                 />
                 <div style={{ display: "flex", justifyContent: "center" }}>

@@ -23,13 +23,24 @@ const UnityGame = forwardRef((props, ref) => {
       productVersion: "0.1",
     });
 
+  const teamRecord = {
+    title: props.team,
+    nickname: props.nicknames,
+    time: 0,
+  };
+  const myRecord = {
+    nickname: sessionStorage.getItem("nickname"),
+    exercise: [],
+    damage: 0,
+  };
   let myDamage;
+  // let clearTime;
   let myExercise = [];
   const [myNum, setMyNum] = useState(0);
   const [isconnect, setIsConnect] = useState(0);
   const [nameset, setNameset] = useState(0);
   // const [myExercise, setMyExercise] = useState([]);
-  const [clearTime, setClearTime] = useState(undefined);
+  // const [clearTime, setClearTime] = useState(0);
   // const [myDamage, setMyDamage] = useState(0);
 
   function sendSignal(signal) {
@@ -82,10 +93,6 @@ const UnityGame = forwardRef((props, ref) => {
     setMyNum(num);
   }, []);
 
-  // useEffect(() => {
-  //   myPNum = myNum;
-  // }, [myNum]);
-
   useEffect(() => {
     addEventListener("UserInfo", handleUserInfo);
     return () => {
@@ -108,11 +115,13 @@ const UnityGame = forwardRef((props, ref) => {
     };
   }, [addEventListener, removeEventListener, handleNextStage]);
 
-  const handleClearTime = (response) => {
-    setClearTime(response);
-    // console.log(response);
-    // clearTime = response;
-  };
+  const handleClearTime = useCallback(
+    (response) => {
+      console.log(typeof response, response);
+      teamRecord.time = response;
+    },
+    [teamRecord]
+  );
 
   useEffect(() => {
     addEventListener("clearTime", handleClearTime);
@@ -130,20 +139,28 @@ const UnityGame = forwardRef((props, ref) => {
         myExercise.push(cnt);
         myDamage = damage;
       }
-      console.log(num, type, cnt, damage);
-      console.log(myNum, myExercise, clearTime, myDamage);
+      console.log(num, type, cnt, myDamage);
+      console.log(myNum, myExercise, teamRecord.time, myDamage);
+      myRecord.exercise = myExercise;
+      myRecord.damage = myDamage;
       // console.log(myExercise);
       // console.log(cleartime);
     },
-    [myNum]
+    [myNum, myRecord]
   );
 
-  // useEffect(() => {
-  //   addEventListener('GameEnd', handleGameEnd)
-  //   return () => {
-  //     removeEventListener('GameEnd', handleGameEnd)
-  //   }
-  // }, [addEventListener, removeEventListener, handleGameEnd])
+  const handleGameEnd = useCallback(() => {
+    console.log(myNum);
+    console.log(myRecord);
+    console.log(teamRecord);
+  }, [myNum, myRecord, teamRecord]);
+
+  useEffect(() => {
+    addEventListener("GameEnd", handleGameEnd);
+    return () => {
+      removeEventListener("GameEnd", handleGameEnd);
+    };
+  }, [addEventListener, removeEventListener, handleGameEnd]);
 
   useEffect(() => {
     addEventListener("userHealthInfo", handleUserExercise);

@@ -104,7 +104,6 @@ public class FriendController {
 
     }
 
-
     // 받은 사람이 친구 취소
     // userId를 가져와야 한다.
     // userId가 나한테 보낸 사람
@@ -115,8 +114,7 @@ public class FriendController {
         List<FrdRes> recvFrdList = new ArrayList<>();
 
         try {
-            System.out.println("여기 아닌가?");
-            recvFrdList = friendService.sendFrdCancel(frdReq.getSendFrd(), frdReq.getRecvFrd());
+            recvFrdList = friendService.recvFrdCancel(frdReq.getSendFrd(), frdReq.getRecvFrd());
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(),
                     HttpStatus.BAD_REQUEST);

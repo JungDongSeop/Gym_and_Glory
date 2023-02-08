@@ -122,7 +122,7 @@ public class FriendService {
             Integer recvUserId = findFrd.getUser().getUserSequence();
             friendRepository.delete(findFrd);  // 데이터 삭제
 
-            List<FrdRes> getFrdList= friendRepository.findRecvFrdResList(recvUserId); // 보낸 친구 유저아이디를 통해 리스트 조회
+            List<FrdRes> getFrdList= friendRepository.findRecvFrdResList(recvUserId); // 받은 친구 유저아이디를 통해 리스트 조회
 
             return getFrdList;
 

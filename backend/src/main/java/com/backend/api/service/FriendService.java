@@ -43,10 +43,11 @@ public class FriendService {
     // 서로 수락한 친구 삭제
     public List<FrdRes> delFriendList(FrdReq frdReq) {
 
-        Friend frd = friendRepository.findByFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
+        Friend frd = friendRepository.findBySendFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
 
-        if(frd == null) {
-            throw new EntityNotFoundException("현재 데이터가 없습니다.");
+        if(frd == null) { // 보냈을 때 상대방이 수락한 경우가 없다면 받아서 수락한 유저이다.
+
+            frd = friendRepository.findByRecvFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
         }
 
         Integer userSequence = frd.getUser().getUserSequence(); // 현재 로그인된 유저 아이디를 가져온다.

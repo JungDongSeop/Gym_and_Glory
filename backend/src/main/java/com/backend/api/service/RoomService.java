@@ -1,7 +1,6 @@
 package com.backend.api.service;
 
 import com.backend.api.request.RoomReq;
-import com.backend.api.response.RoomRes;
 import com.backend.db.entity.Room;
 import com.backend.db.repository.RoomRepository;
 import com.backend.db.repository.UserRepository;

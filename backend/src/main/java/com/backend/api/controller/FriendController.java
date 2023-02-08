@@ -2,7 +2,6 @@ package com.backend.api.controller;
 
 import com.backend.api.request.FrdReq;
 import com.backend.api.response.FrdRes;
-import com.backend.api.response.searchFrdRes;
 import com.backend.api.service.FriendService;
 import com.backend.db.entity.User;
 import lombok.RequiredArgsConstructor;

@@ -128,12 +128,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/list/{userSequence}")
-    public ResponseEntity<?> getList(@PathVariable Integer userSequence){
-        List<User> list =userService.getList(userSequence);
-        return new ResponseEntity<>(list,HttpStatus.OK);
-    }
-
 
     @PostMapping("/cross_check")
     public ResponseEntity<?> passwordReset(@RequestBody TelEmailReq telEmailReq){

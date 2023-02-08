@@ -112,12 +112,6 @@ public class UserService {
         userRepository.save(cur);
     }
 
-
-    public List<User> getList(Integer userSequence) {
-        List<User> list = userRepository.findUser(userSequence);
-        return list;
-    }
-
     public boolean crossCheck(TelEmailReq telEmailReq) {
         User user1 = userRepository.findByTelNumber(telEmailReq.getTelNum());
         User user2 = userRepository.findOneByEmail(telEmailReq.getEmail());

@@ -34,20 +34,12 @@ public class ReportController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //신고 리스트 (관리자용)
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping
-    public ResponseEntity<?> getList(){
-        List<Report> list = reportService.getList();
+    @GetMapping("/user/{userSequence}")
+    public ResponseEntity<?> getReport(@PathVariable String email){
+        List<Report> list = reportService.getDivReport(email);
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
-    //신고한 내역 보기
-    @GetMapping("/user/{userSequence}")
-    public ResponseEntity<?> getListByUser(@PathVariable Integer userSequence){
-        List<Report> list = reportService.getListByUser(userSequence);
-        return new ResponseEntity<>(list,HttpStatus.OK);
-    }
 
     //신고한 것 확인하기, 확인 후 매너온도 내려감
     @GetMapping("/confirm/{reportSequence}")

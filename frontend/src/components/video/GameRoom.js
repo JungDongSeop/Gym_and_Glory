@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
   height: auto;
   width: 100%;
-  background-color: black;
+  background-color: #52784a;
   overflow-y: hidden;
 `;
 
@@ -39,7 +39,7 @@ const NavWrapper = styled.div`
   justify-content: center;
   width: 100%;
   align-items: center;
-  background-color: grey;
+  background-color: #78ae6d;
 `;
 
 const HeadWrapper = styled.div`
@@ -68,7 +68,7 @@ const FooterWrapper = styled.div`
   position: absolute;
   bottom: 0;
   align-items: center;
-  background-color: grey;
+  background-color: #78ae6d;
 `;
 
 const Footer = styled.div`
@@ -107,6 +107,9 @@ class GameRoom extends Component {
       loadingStatus: false,
       readyCount: 0,
       readyStatus: false,
+      gameStatus: false,
+      middleState: false,
+      nicknames: [sessionStorage.getItem("nickname")],
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -128,6 +131,7 @@ class GameRoom extends Component {
     this.chatContainer = createRef(null);
     this.sendReady = this.sendReady.bind(this);
     this.sendGameStart = this.sendGameStart.bind(this);
+    this.handleMiddleState = this.handleMiddleState.bind(this);
   }
 
   componentDidMount() {
@@ -161,6 +165,13 @@ class GameRoom extends Component {
   componentWillUnmount() {
     window.location.reload();
     const mySession = this.state.session;
+    if (this.state.ishost) {
+      mySession.signal({
+        data: "",
+        to: [],
+        type: "room-exploded",
+      });
+    }
     mySession.disconnect();
   }
 
@@ -193,7 +204,7 @@ class GameRoom extends Component {
     const mySession = this.state.session;
 
     mySession.signal({
-      data: `${this.state.myUserNick}, ${this.state.chat}`,
+      data: `${this.state.myUserNick},${this.state.chat}`,
       to: [],
       type: "chat",
     });
@@ -221,7 +232,7 @@ class GameRoom extends Component {
       const mySession = this.state.session;
 
       mySession.signal({
-        data: `${this.state.myUserNick}, ${this.state.chat}`,
+        data: `${this.state.myUserNick},${this.state.chat}`,
         to: [],
         type: "chat",
       });
@@ -324,12 +335,40 @@ class GameRoom extends Component {
             });
         });
         mySession.on("signal:Ready", (event) => {
+          let readydata = event.data.split(",");
+          console.log(readydata[0], readydata[1]);
           if (this.state.ishost) {
-            if (event.data) {
-              this.setState({ readyCount: this.state.readyCount + 1 });
-              console.log(this.state.readyCount);
+            if (readydata[0] === "true") {
+              console.log("닉네임 추가");
+              let pushnick = [...this.state.nicknames, readydata[1]];
+              this.setState(
+                {
+                  readyCount: this.state.readyCount + 1,
+                  nicknames: pushnick,
+                },
+                () => {
+                  console.log(this.state.readyCount, this.state.nicknames);
+                }
+              );
             } else {
-              this.setState({ readyCount: this.state.readyCount - 1 });
+              console.log("닉네임 제거");
+              const filternicknames = this.state.nicknames.filter((nick) => {
+                console.log(nick);
+                if (nick === readydata[1]) {
+                  console.log(nick);
+                } else {
+                  return nick;
+                }
+              });
+              this.setState(
+                {
+                  readyCount: this.state.readyCount - 1,
+                  nicknames: filternicknames,
+                },
+                () => {
+                  console.log(this.state.readyCount, this.state.nicknames);
+                }
+              );
             }
           }
         });
@@ -364,6 +403,29 @@ class GameRoom extends Component {
               });
           }
         });
+        mySession.on("signal:readyCountDown", (e) => {
+          if (this.state.ishost) {
+            const filternicknames = this.state.nicknames.filter((nick) => {
+              if (nick !== e.data) {
+                return nick;
+              }
+            });
+            this.setState(
+              {
+                readyCount: this.state.readyCount - 1,
+                nicknames: filternicknames,
+              },
+              () => {
+                console.log(this.state.readyCount, this.state.nicknames);
+              }
+            );
+          }
+        });
+        mySession.on("signal:gameStart", (e) => {
+          this.setState({ gameStatus: true, middleState: true }, () =>
+            console.log(this.state.gameStatus)
+          );
+        });
         mySession.on("exception", (exception) => {});
 
         this.getToken().then((token) => {
@@ -393,13 +455,12 @@ class GameRoom extends Component {
 
   start() {
     console.log(this.state.model);
-    setTimeout(() => {
-      this.setState({
-        count: 0,
-        status: "stand",
-      });
-      this.init();
-    }, 3000);
+
+    this.setState({
+      count: 0,
+      status: "stand",
+    });
+    this.init();
   }
 
   chattoggle() {
@@ -421,6 +482,13 @@ class GameRoom extends Component {
         type: "room-exploded",
       });
     }
+    if (this.state.readyStatus) {
+      mySession.signal({
+        data: `${this.state.myUserNick}`,
+        to: [],
+        type: "readyCountDown",
+      });
+    }
     if (mySession) {
       mySession.disconnect();
     }
@@ -435,6 +503,8 @@ class GameRoom extends Component {
           mainStreamManager: undefined,
           publisher: undefined,
           ishost: false,
+          selectedExercise: undefined,
+          readyStatus: false,
         });
         const { navigate } = this.props;
         navigate("/lobby");
@@ -455,9 +525,14 @@ class GameRoom extends Component {
     const metadataURL =
       "https://teachablemachine.withgoogle.com/models/M7lirMMFj/metadata.json";
 
-    this.setState({
-      model: await tmPose.load(modelURL, metadataURL),
-    });
+    this.setState(
+      {
+        model: await tmPose.load(modelURL, metadataURL),
+      },
+      () => {
+        this.start();
+      }
+    );
 
     // const a = await tmPose.load(metadataURL, modelURL);
     // console.log(a);
@@ -477,6 +552,16 @@ class GameRoom extends Component {
 
   async handleSelectedExercise(exercise) {
     if (this.state.loadingStatus === true) {
+      return;
+    }
+    if (this.state.readyStatus) {
+      alert(
+        "준비 완료일때는 선택한 운동을 바꿀 수 없습니다.\n준비 완료를 해제하고 다시 시도해주세요."
+      );
+      return;
+    }
+    if (this.state.middleState) {
+      alert("라운드 진행 중에는 선택한 운동을 바꿀 수 없습니다!");
       return;
     }
     if (this.state.selectedExercise === exercise) {
@@ -595,10 +680,18 @@ class GameRoom extends Component {
   }
 
   sendReady() {
+    if (!this.state.selectedExercise) {
+      alert("어떤 운동을 할지 선택해주세요!");
+      return;
+    }
+    if (this.state.loadingStatus) {
+      alert("운동 모델을 받아오는 도중에는 준비 완료를 할 수 없습니다.");
+      return;
+    }
     const mySession = this.state.session;
     this.setState({ readyStatus: !this.state.readyStatus }, () => {
       mySession.signal({
-        data: this.state.readyStatus,
+        data: `${this.state.readyStatus},${this.state.myUserNick}`,
         to: [],
         type: "Ready",
       });
@@ -609,8 +702,24 @@ class GameRoom extends Component {
   }
 
   sendGameStart() {
+    if (!this.state.selectedExercise) {
+      alert("어떤 운동을 할 지 선택해주세요!");
+      return;
+    }
+    const mySession = this.state.session;
+    mySession.signal({
+      data: "",
+      to: [],
+      type: "gameStart",
+    });
     this.start();
     this.state.myRef.current.sendSignal("GameStart");
+  }
+
+  handleMiddleState() {
+    this.setState({ middleState: !this.state.middleState }, () => {
+      console.log(this.state.middleState);
+    });
   }
 
   render() {
@@ -738,9 +847,13 @@ class GameRoom extends Component {
                 <UnityGame
                   ref={this.state.myRef}
                   sessionId={this.state.mySessionId}
+                  nicknames={this.state.nicknames}
+                  team={this.state.myTeamTitle}
+                  handleMiddleState={this.handleMiddleState}
                 />
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   {this.state.ishost &&
+                    !this.state.gameStatus &&
                     this.state.readyCount === this.state.subscribers.length && (
                       <button
                         onClick={this.sendGameStart}
@@ -751,33 +864,37 @@ class GameRoom extends Component {
                       </button>
                     )}
                   {this.state.ishost &&
+                    !this.state.gameStatus &&
                     this.state.readyCount !== this.state.subscribers.length && (
                       <button
-                        onClick={this.sendGameStart}
                         className="inactiveGameStart"
                         style={{ width: 210, height: 50 }}
                       >
                         GAME START
                       </button>
                     )}
-                  {!this.state.ishost && !this.state.readyStatus && (
-                    <button
-                      onClick={this.sendReady}
-                      className="Ready"
-                      style={{ width: 210, height: 50 }}
-                    >
-                      준비 완료
-                    </button>
-                  )}
-                  {!this.state.ishost && this.state.readyStatus && (
-                    <button
-                      onClick={this.sendReady}
-                      className="Ready"
-                      style={{ width: 210, height: 50 }}
-                    >
-                      준비 취소
-                    </button>
-                  )}
+                  {!this.state.ishost &&
+                    !this.state.readyStatus &&
+                    !this.state.gameStatus && (
+                      <button
+                        onClick={this.sendReady}
+                        className="Ready"
+                        style={{ width: 210, height: 50 }}
+                      >
+                        준비 완료
+                      </button>
+                    )}
+                  {!this.state.ishost &&
+                    this.state.readyStatus &&
+                    !this.state.gameStatus && (
+                      <button
+                        onClick={this.sendReady}
+                        className="Ready"
+                        style={{ width: 210, height: 50 }}
+                      >
+                        준비 취소
+                      </button>
+                    )}
                 </div>
                 {this.state.chaton ? (
                   <div className="chatbox">

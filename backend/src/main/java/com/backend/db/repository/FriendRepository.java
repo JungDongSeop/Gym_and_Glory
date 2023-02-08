@@ -1,12 +1,13 @@
 package com.backend.db.repository;
 
 import com.backend.api.response.FrdRes;
+import com.backend.db.entity.FrdInterface;
 import com.backend.db.entity.Friend;
-import com.backend.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 public interface FriendRepository extends JpaRepository<Friend,Integer> {
@@ -33,7 +34,7 @@ public interface FriendRepository extends JpaRepository<Friend,Integer> {
             "where f.user.userSequence = :userId " +
             "and f.frdUser.userSequence = :frdId " +
             "and f.isReceive = false ")
-    Friend findByFrd(@Param("userId") Integer userId, @Param("frdId") Integer frdId);
+    Friend findByFrdFalse(@Param("userId") Integer userId, @Param("frdId") Integer frdId);
 
     // 수락해서 친구 된 목록 조회
     @Query(value = "select a.user_sequence, a.frd_user_id, 'none', b.nickname " +
@@ -47,5 +48,21 @@ public interface FriendRepository extends JpaRepository<Friend,Integer> {
             "join user b on a.user_sequence = b.user_sequence " +
             "where a.frd_user_id = :userId " +
             "and a.is_rev = true", nativeQuery = true)
-    List<FrdRes> findFrindList(@Param("userId") Integer userid);
+    List<Tuple> findFrindList(@Param("userId") Integer userid);
+
+    // 수락해서 보낸 친구로 수락한 친구 테이블에 있는지 확인
+    @Query ("select f " +
+            "from Friend f " +
+            "where f.user.userSequence = :userId " +
+            "and f.frdUser.userSequence = :frdId " +
+            "and f.isReceive = true ")
+    Friend findBySendFrdTrue(@Param("userId") Integer userId, @Param("frdId") Integer frdId);
+
+    @Query ("select f " +
+            "from Friend f " +
+            "where f.user.userSequence = :frdId " +
+            "and f.frdUser.userSequence = :userId " +
+            "and f.isReceive = true ")
+    Friend findByRecvFrdTrue(@Param("userId") Integer userId, @Param("frdId") Integer frdId);
+
 }

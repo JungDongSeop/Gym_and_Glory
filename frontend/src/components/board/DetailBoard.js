@@ -14,6 +14,7 @@ import classes from "./Comment.module.css";
 const DetailBoard = () => {
   // url 이동을 위한 함수
   const navigate = useNavigate();
+  const [typeresult, setTyperesult] = useState("");
 
   // URL의 params를 쓰기 위한 state
   const { type, articleSequence } = useParams();
@@ -32,6 +33,7 @@ const DetailBoard = () => {
   useEffect(() => {
     const readBoard = async () => {
       const result = await axios(`${RestApi()}/board/${articleSequence}`);
+      console.log(result.data);
       setData(result.data);
     };
     readBoard();
@@ -50,38 +52,95 @@ const DetailBoard = () => {
     navigate("/board/notice");
   };
 
+  // let typeresult = "";
+
+  useEffect(() => {
+    if (type === "notice") {
+      setTyperesult("공지사항");
+    } else if (type === "getTeam") {
+      setTyperesult("팀원모집");
+    } else if (type === "free") {
+      setTyperesult("자유게시판");
+    }
+  }, [type]);
+
   return (
     <main>
-      <h1>게시판 상세페이지 입니다.</h1>
-      <div className={classes.divset}>
-        <div className={classes.boardDetail}>
-          {/* 게시판  */}
-          <p>제목 : </p>
-          <p>{data.title}</p>
-          <p>내용 : </p>
-          <p>{data.contents}</p>
-          <p>작성자 : </p>
-          {/* <p><UserIdToNickname userId={data.userSequence}/></p> */}
-          <p>{data.user ? data.user.nickname : null}</p>
-          <br />
-          {/* 게시글 수정 구현 */}
-          <button
-            onClick={() => navigate(`/board/${type}/update/${articleSequence}`)}
-          >
-            게시글 수정
-          </button>
-          {/* 게시글 좋아요 구현 */}
-          추천 : {data.goodCount}
-          <button onClick={() => goodClick()}>좋아요</button>
-          {/* 게시글 삭제 구현 */}
-          <button onClick={() => deleteClick()}>삭제</button>
-          {/* 댓글 */}
+      {/* 전체 감싸는 wrap */}
+      <div className={classes.contentsWrap}>
+        {/* 게시판 타입 */}
+        <h1 className={classes.conTitle}>{typeresult}</h1>
+        {/* 게시물 제목 */}
+        <p className={classes.qsTitle}>
+          <span>{data.title}</span>
+        </p>
+        {/* 작성자 정보 */}
+        <div className={classes.qsInfoWrap}>
+          <span className={classes.qsId}>
+            {data.user ? data.user.nickname : null}
+          </span>
+          <div className={classes.qsInfo}>
+            {/* 작성 시간 */}
+            <p className={classes.last}>
+              <img
+                src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png"
+                alt="작성 시간"
+              />
+              {data.registerTime ? data.registerTime : null}
+            </p>
+          </div>
         </div>
-        <div className={classes.commentDiv}>
-          <Comment />
+        <div className={classes.qsText}>{data.contents}</div>
+        <div className={classes.qsEmpathyWrap}>
+          <div className={classes.empathyInfo}>
+            <button href="#a" onClick={goodClick}>
+              <img src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/empathy_btn_off.png"></img>
+            </button>
+            <div>
+              <span>{data.goodCount}명</span>
+            </div>
+          </div>
         </div>
+        <Comment />
       </div>
     </main>
+    // <main>
+    //   {/* <h3>게시판 상세페이지 입니다.</h3> */}
+    //   <div className={classes.divset}>
+    //     <div className={classes.boardDetail}>
+    //       {/* 게시판  */}
+    //       <div className={classes.articleTitle}>
+    //         <div>
+    //           <h1>{data.title}</h1>
+    //         </div>
+    //         <div>
+    //           <h5>[작성자]</h5>
+    //           <p>{data.user ? data.user.nickname : null}</p>
+    //         </div>
+    //       </div>
+    //       <p>내용 : </p>
+    //       <p>{data.contents}</p>
+    //       {/* <p>작성자 : </p> */}
+    //       {/* <p><UserIdToNickname userId={data.userSequence}/></p> */}
+    //       <br />
+    //       {/* 게시글 수정 구현 */}
+    //       <button
+    //         onClick={() => navigate(`/board/${type}/update/${articleSequence}`)}
+    //       >
+    //         게시글 수정
+    //       </button>
+    //       {/* 게시글 좋아요 구현 */}
+    //       추천 : {data.goodCount}
+    //       <button onClick={() => goodClick()}>좋아요</button>
+    //       {/* 게시글 삭제 구현 */}
+    //       <button onClick={() => deleteClick()}>삭제</button>
+    //       {/* 댓글 */}
+    //     </div>
+    //     <div className={classes.commentDiv}>
+    //       <Comment />
+    //     </div>
+    //   </div>
+    // </main>
   );
 };
 

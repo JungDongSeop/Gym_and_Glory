@@ -191,10 +191,26 @@
   background-color: rgb(203, 94, 94);
   font-weight: 800;
   border-radius: 10px;
+  box-shadow: 0 0 0 1px #e03c3c inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 8px 0 0 rgba(87, 60, 60, 0.7), 0 8px 0 1px rgba(0, 0, 0, 0.4),
+    0 8px 8px 1px rgba(0, 0, 0, 0.5);
+  transition: top 0.01s linear;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
 }
 
 .activeGameStart:hover {
   cursor: pointer;
+}
+
+.activeGameStart:active {
+  background-color: rgb(203, 94, 94);
+  font-weight: 800;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px #e03c3c inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.4);
+  transition: top 0.01s linear;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  transform: translateY(6px);
 }
 
 .inactiveGameStart {
@@ -208,8 +224,25 @@
   font-weight: bold;
   border-radius: 10px;
   font-size: 15px;
+  box-shadow: 0 0 0 1px #e03c3c inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 8px 0 0 rgba(87, 60, 60, 0.7), 0 8px 0 1px rgba(0, 0, 0, 0.4),
+    0 8px 8px 1px rgba(0, 0, 0, 0.5);
+  transition: top 0.01s linear;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
 }
 
 .Ready:hover {
   cursor: pointer;
+}
+
+.Ready:active {
+  background-color: rgb(203, 94, 94);
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 15px;
+  box-shadow: 0 0 0 1px #e03c3c inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.4);
+  transition: top 0.01s linear;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  transform: translateY(6px);
 }

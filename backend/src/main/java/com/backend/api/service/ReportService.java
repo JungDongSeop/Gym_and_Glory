@@ -1,3 +1,4 @@
+
 package com.backend.api.service;
 
 import com.backend.api.request.ReportReq;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,5 +61,17 @@ public class ReportService {
         Report report = reportRepository.findByReportSequence(reportSequence);
         report.setConfirmation(1);
         reportRepository.save(report);
+    }
+
+    public List<Report> getDivReport(String email) {
+        User user = userRepository.findOneByEmail(email);
+        List<Report> list = new ArrayList<>();
+        if(user.getRole().equals("ROLE_ADMIN")){
+            list = reportRepository.findAll();
+        }
+        else{
+            list = reportRepository.findBySendUser(user);
+        }
+        return list;
     }
 }

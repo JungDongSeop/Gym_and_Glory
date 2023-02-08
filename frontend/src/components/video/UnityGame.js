@@ -23,17 +23,22 @@ const UnityGame = forwardRef((props, ref) => {
       productVersion: "0.1",
     });
 
-  const [myNum, setMyNum] = useState(undefined);
+  let myDamage;
+  let myExercise = [];
+  const [myNum, setMyNum] = useState(0);
   const [isconnect, setIsConnect] = useState(0);
   const [nameset, setNameset] = useState(0);
+  // const [myExercise, setMyExercise] = useState([]);
+  const [clearTime, setClearTime] = useState(undefined);
+  // const [myDamage, setMyDamage] = useState(0);
 
   function sendSignal(signal) {
     if (signal === "connectGamelobby") {
       sendMessage("GameManager", "GameStart");
-      console.log("공격 신호 받아서 유니티로 보낸다");
     } else if (signal === "GameStart") {
       sendMessage("PhotonInit", "GameStart");
     } else if (signal === "attack") {
+      console.log("공격 신호 받아서 유니티로 보낸다");
       sendMessage("Player" + myNum + "(Clone)", "Attack", 1);
     }
   }
@@ -42,17 +47,8 @@ const UnityGame = forwardRef((props, ref) => {
     sendSignal,
   }));
 
-  // const handleGameIn = useCallback((isconnect) => {
-  //   if (isconnect === 1) {
-  //     setIsConnect(isconnect);
-  //     let nick = sessionStorage.getItem("nickname");
-  //     console.log(nick, "닉 보내냐", typeof nick);
-  //     sendMessage("PhotonInit", "setUserInfo", nick);
-  //   }
-  // }, []);
-
-  const handleNameSet = useCallback((nameset) => {
-    setNameset(nameset);
+  const handleNameSet = useCallback((name) => {
+    setNameset(name);
   }, []);
 
   useEffect(() => {
@@ -83,9 +79,12 @@ const UnityGame = forwardRef((props, ref) => {
   }, [nameset]);
 
   const handleUserInfo = useCallback((num, nick) => {
-    console.log(num, nick);
     setMyNum(num);
   }, []);
+
+  // useEffect(() => {
+  //   myPNum = myNum;
+  // }, [myNum]);
 
   useEffect(() => {
     addEventListener("UserInfo", handleUserInfo);
@@ -93,6 +92,65 @@ const UnityGame = forwardRef((props, ref) => {
       removeEventListener("UserInfo", handleUserInfo);
     };
   }, [addEventListener, removeEventListener, handleUserInfo]);
+
+  const handleNextStage = useCallback(() => {
+    props.handleMiddleState();
+    setTimeout(() => {
+      sendMessage("Player1(Clone)", "nextStage");
+      props.handleMiddleState();
+    }, 10000);
+  });
+
+  useEffect(() => {
+    addEventListener("stageClear", handleNextStage);
+    return () => {
+      removeEventListener("stageClear", handleNextStage);
+    };
+  }, [addEventListener, removeEventListener, handleNextStage]);
+
+  const handleClearTime = (response) => {
+    setClearTime(response);
+    // console.log(response);
+    // clearTime = response;
+  };
+
+  useEffect(() => {
+    addEventListener("clearTime", handleClearTime);
+    return () => {
+      removeEventListener("clearTime", handleClearTime);
+    };
+  }, [addEventListener, removeEventListener, handleClearTime]);
+
+  const handleUserExercise = useCallback(
+    (num, type, cnt, damage) => {
+      console.log("왜그러는데" + myNum);
+      if (num === myNum) {
+        // setMyExercise(myExercise.push(cnt));
+        // setMyDamage(damage);
+        myExercise.push(cnt);
+        myDamage = damage;
+      }
+      console.log(num, type, cnt, damage);
+      console.log(myNum, myExercise, clearTime, myDamage);
+      // console.log(myExercise);
+      // console.log(cleartime);
+    },
+    [myNum]
+  );
+
+  // useEffect(() => {
+  //   addEventListener('GameEnd', handleGameEnd)
+  //   return () => {
+  //     removeEventListener('GameEnd', handleGameEnd)
+  //   }
+  // }, [addEventListener, removeEventListener, handleGameEnd])
+
+  useEffect(() => {
+    addEventListener("userHealthInfo", handleUserExercise);
+    return () => {
+      removeEventListener("userHealthInfo", handleUserExercise);
+    };
+  }, [addEventListener, removeEventListener, handleUserExercise]);
 
   return (
     <div>

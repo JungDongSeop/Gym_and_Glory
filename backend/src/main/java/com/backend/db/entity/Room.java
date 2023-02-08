@@ -69,5 +69,9 @@ public class Room {
         int restCount = this.count - countNumber;
         this.count = restCount;
     }
+
+    public void modifyRoomStatus(RoomStatus roomStatus) {
+        this.setRoomStatus(roomStatus);
+    }
     
 }

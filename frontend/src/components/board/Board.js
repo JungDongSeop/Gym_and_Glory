@@ -26,7 +26,7 @@ const Board = () => {
     const types = { notice: 1, free: 2, party: 3 };
     const fetchData = async () => {
       const result = await axios(`${RestApi()}/board/list/${types[type]}`);
-      console.log("data", result.data);
+      console.log(result.data);
       setBoard(result.data.reverse());
     };
     fetchData();

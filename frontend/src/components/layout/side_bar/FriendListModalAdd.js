@@ -4,6 +4,11 @@ import AuthContext from "../../../store/auth-context";
 import axios from "axios";
 import classes from './FriendListModalAdd.module.css'
 import RestApi from "../../api/RestApi";
+import SearchIcon from '@mui/icons-material/Search';
+import Box from '@mui/material/Box';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import TextField from '@mui/material/TextField';
+
 
 const FriendListModalAdd = () => {
   // redux로 user 정보 가져오기
@@ -77,13 +82,25 @@ const FriendListModalAdd = () => {
   };
 
   return (
-    <div>
-      <span>유저 검색 :</span>
-      <input
-        type="text"
-        onChange={handleReportUserNicknameChange}
-        ref={enteredusername}
-      />
+    <div className={classes.container}>
+      <div style={{display: 'flex', alignContent: 'flex-start'}}>
+        <SearchIcon  sx={{ fontSize: 80 }}/>
+          <input
+            type="text"
+            className={classes.searchBar}
+            onChange={handleReportUserNicknameChange}
+            ref={enteredusername}
+          />
+        {/* <Box sx={{ display: 'flex', alignItems: 'self-end', fontSize: 10000, position: 'relative' }}> */}
+          {/* <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5, fontSize: 70 }} />
+          <TextField fullWidth id="input-with-sx" margin="normal" label="닉네임 검색" variant="standard" sx={{fontSize: '300px'}} 
+            style={{}} 
+            type="text"
+
+            onChange={handleReportUserNicknameChange}
+            ref={enteredusername}/> */}
+        {/* </Box> */}
+      </div>
       {/* 검색해서 나온 친구 목록 출력 */}
       {Array.isArray(searchedDatas) ? (
         <div className={classes.popUp}>
@@ -91,11 +108,13 @@ const FriendListModalAdd = () => {
             return (
               <div key={index} className={classes.popUpDetail}>
                 {/* 유저 정보 출력 */}
-                <img src={d.profile_img_path} alt="" />
-                Lv.{d.level}
-                {d.nickname}
+                <div>
+                  <img src={d.profile_img_path} alt="" />
+                  Lv.{d.level}
+                  {d.nickname}
+                </div>
                 {/* 친구 요청 버튼 */}
-                <button className={classes.friendRequest} onClick={() => handleSendFriendRequest(d.userSequence)}>
+                <button onClick={() => handleSendFriendRequest(d.userSequence)}>
                   요청
                 </button>
               </div>

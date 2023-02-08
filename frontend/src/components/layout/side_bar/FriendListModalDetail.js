@@ -3,6 +3,10 @@ import { useContext } from "react";
 import AuthContext from "../../../store/auth-context";
 import axios from "axios";
 import RestApi from "../../api/RestApi";
+// import classes from './FriendListModalDetail.module.css'
+// import DefaultProfile from '../../../assets/defaultProfile.png'
+
+
 const FriendListModalDetail = (props) => {
   // redux로 user 정보 가져오기
   const { userSequence } = useContext(AuthContext);
@@ -16,6 +20,7 @@ const FriendListModalDetail = (props) => {
     const fetchData = async () => {
       const result = await axios(`${RestApi()}/user/detail/${friendId}`);
       setFriendInfo(result.data);
+      console.log(result.data)
     };
     fetchData();
   }, [friendId]);
@@ -33,7 +38,7 @@ const FriendListModalDetail = (props) => {
     <span>
       {isShow ? (
         <div>
-          <img src={friendInfo.profile_image_path} alt="" />
+          {/* <img src={friendInfo.profile_image_path} alt={DefaultProfile} /> */}
           Lv.{friendInfo.level ? friendInfo.level : "00"}
           {friendInfo.nickname}
           <button

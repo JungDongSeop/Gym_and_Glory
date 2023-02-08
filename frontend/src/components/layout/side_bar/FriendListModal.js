@@ -29,15 +29,18 @@ const FriendList = () => {
   const [friends, setFriends] = useState([]);
   // 친구 목록 axios 요청
   // const readFriends = async (userSequence) => {
-  //   await axios(`http://localhost:8080/friend/list/${userSequence}`)
+  //   await axios(`${RestApi()}/friend/${userSequence}`)
   //   .then((res) => {
   //     setFriends(res.data)
   //   });
   // };
   // 시작할 때 친구 목록 요청. 이후 friends 바뀔 때마다 실행
   useEffect(() => {
+    console.log('wow')
     const fetchData = async () => {
-      await axios(`${RestApi()}/friend/list/${userSequence}`).then((res) => {
+      await axios(`${RestApi()}/friend/${userSequence}`)
+      .then((res) => {
+        console.log('친구들', res.data)
         setFriends(res.data);
       });
     };
@@ -56,29 +59,33 @@ const FriendList = () => {
         width="700px"
         height="500px"
       >
-        {/* 창 선택 */}
-        <button className={`${classes.modalButton} ${page === 1 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(1)}>목록</button>
-        <button className={`${classes.modalButton} ${page === 2 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(2)}>신청</button>
+        <div className={classes.container}>
 
-        {/* 창 표시 */}
-        {page === 1 ? (
-          <div>
-            <ul>
-              {friends.map((friend, index) => (
-                <li key={index}>
-                  <FriendListModalDetail
-                    friendId={friend.sendSequence}
-                    onClick={() => {
-                      setPage(1);
-                    }}
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <FriendListModalAdd />
-        )}
+          {/* 창 선택 */}
+          <button className={`${classes.modalButton} ${page === 1 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(1)}>목록</button>
+          <button className={`${classes.modalButton} ${page === 2 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(2)}>신청</button>
+
+          {/* 창 표시 */}
+          {page === 1 ? (
+            <div>
+              <ul className={classes.friendsWrap}>
+                {friends.map((friend, index) => (
+                  <li key={index} className={classes.friend}>
+                    <FriendListModalDetail
+                      friendId={friend.sendSequence}
+                      onClick={() => {
+                        setPage(1);
+                      }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <FriendListModalAdd />
+          )}
+        </div>
+
       </Modal>
     </div>
   );

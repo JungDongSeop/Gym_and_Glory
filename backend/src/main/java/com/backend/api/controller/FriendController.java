@@ -3,6 +3,7 @@ package com.backend.api.controller;
 import com.backend.api.request.FrdReq;
 import com.backend.api.response.FrdRes;
 import com.backend.api.service.FriendService;
+import com.backend.db.entity.FrdInterface;
 import com.backend.db.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,13 @@ public class FriendController {
     // 내 친구 목록 조회 ( 보내고 수락하고 다 한 경우 )
     @GetMapping(value="/friend/{userSequence}")
     public  @ResponseBody ResponseEntity getFriendList(@PathVariable Integer userSequence ) {
+        List<FrdRes> getFriendList = null;
+        try {
+            getFriendList = friendService.getFrindSearchList(userSequence);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
 
-        List<FrdRes> getFriendList = friendService.getFrindSearchList(userSequence);
         return new ResponseEntity(getFriendList, HttpStatus.OK);
     }
 

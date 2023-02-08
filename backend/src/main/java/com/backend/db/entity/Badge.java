@@ -19,7 +19,7 @@ public class Badge {
 
     @Id
     @Column(name = "badge_sequence")
-    private Long badgeSequence;
+    private Integer badgeSequence;
     private String description;
     private String path;
 

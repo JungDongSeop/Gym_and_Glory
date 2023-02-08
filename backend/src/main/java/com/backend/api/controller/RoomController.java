@@ -1,7 +1,6 @@
 package com.backend.api.controller;
 
 import com.backend.api.request.RoomReq;
-import com.backend.api.response.RoomRes;
 import com.backend.api.service.RoomService;
 import com.backend.db.entity.Room;
 import lombok.RequiredArgsConstructor;

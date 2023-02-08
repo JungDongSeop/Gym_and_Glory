@@ -1,7 +1,6 @@
 package com.backend.db.repository;
 
 import com.backend.api.response.FrdRes;
-import com.backend.api.response.searchFrdRes;
 import com.backend.db.entity.Friend;
 import com.backend.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

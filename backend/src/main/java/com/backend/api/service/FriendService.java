@@ -2,7 +2,6 @@ package com.backend.api.service;
 
 import com.backend.api.request.FrdReq;
 import com.backend.api.response.FrdRes;
-import com.backend.api.response.searchFrdRes;
 import com.backend.db.entity.Friend;
 import com.backend.db.entity.User;
 import com.backend.db.repository.FriendRepository;

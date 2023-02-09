@@ -82,6 +82,7 @@ const CreateRoom = () => {
   useEffect(() => {
     if (roomId !== "") {
       navigate("/gameroom", {
+        replace: true,
         state: {
           roomId,
           roomTitle,

@@ -1,9 +1,8 @@
+/* eslint-disable */
 import "./Lobby.css";
 import RoomList from "./room_list/RoomList";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import styled from "styled-components";
-import { SearchOutlined } from "@mui/icons-material";
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import swal from "sweetalert";
@@ -21,11 +20,10 @@ const SearchWrapper = styled.div`
 `;
 
 const Lobby = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [inputText, setInputText] = useState("");
   const location = useLocation();
 
   useEffect(() => {
+    console.log(location);
     if (location.state === "getOut") {
       swal({
         text: "방장에 의해 강퇴당하셨습니다.",
@@ -41,20 +39,17 @@ const Lobby = () => {
     }
   }, []);
 
-  const handleInputText = (event) => {
-    setInputText(event.target.value);
+  const handleEvent = () => {
+    history.pushState(null, "", location.href);
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      console.log("바꿈");
-      setSearchInput(inputText);
-    }
-  };
-
-  const handleClick = () => {
-    setSearchInput(inputText);
-  };
+  useEffect(() => {
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", handleEvent);
+    return () => {
+      window.removeEventListener("popstate", handleEvent);
+    };
+  }, []);
 
   return (
     <main>
@@ -62,24 +57,10 @@ const Lobby = () => {
       <Wrapper>
         <SearchWrapper>
           <span style={{ fontSize: 27 }}>방 목록</span>
-          <div className="searchContainer">
-            <input
-              type="text"
-              className="roomsearch"
-              onKeyUp={handleKeyPress}
-              onChange={handleInputText}
-              value={inputText}
-            />
-            <SearchOutlined
-              fontSize="large"
-              style={{ cursor: "pointer" }}
-              onClick={handleClick}
-            />
-          </div>
         </SearchWrapper>
         <hr />
         <br />
-        <RoomList searchText={searchInput} />
+        <RoomList />
       </Wrapper>
     </main>
   );

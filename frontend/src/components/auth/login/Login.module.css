@@ -2,7 +2,7 @@
   width: 50%;
   height: 100vh;
   display: flex;
-  object-fit: contain;
+  /* object-fit: contain; */
   align-items: center;
   flex-direction: column;
   justify-content: center;
@@ -122,4 +122,14 @@ hr {
 
 .loginBtnDiv{
   margin-top:20px;
+}
+
+.backbutton {
+  display: flex;
+  margin-left: 0 auto;
+  margin-top: 0 auto;
+  left: 25%;
+  top: 0;
+  position: absolute;
+  size: 1000px;
 }

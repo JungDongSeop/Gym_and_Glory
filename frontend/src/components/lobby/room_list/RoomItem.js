@@ -8,7 +8,6 @@ import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Dialog,
   DialogContent,
-  DialogContentText,
   DialogActions,
   DialogTitle,
   Button,
@@ -58,6 +57,11 @@ const RoomItem = (props) => {
       return;
     }
 
+    if (props.room.roomStatus !== "READY") {
+      alert("게임 중인 방에는 들어갈 수 없습니다.");
+      return;
+    }
+
     axios
       .put(APPLICATION_SERVER_URL + "room/" + props.room.roomId)
       .then((response) => {
@@ -86,6 +90,11 @@ const RoomItem = (props) => {
   };
 
   const enterPrivate = () => {
+    if (props.room.roomStatus !== "READY") {
+      alert("게임 중인 방에는 들어갈 수 없습니다.");
+      return;
+    }
+
     if (inputPassword === props.room.roomPassword) {
       axios
         .put(APPLICATION_SERVER_URL + "room/" + props.room.roomId)

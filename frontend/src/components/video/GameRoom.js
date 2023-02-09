@@ -110,6 +110,7 @@ class GameRoom extends Component {
       gameStatus: false,
       middleState: false,
       nicknames: [sessionStorage.getItem("nickname")],
+      exerciseNum: undefined,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -132,16 +133,22 @@ class GameRoom extends Component {
     this.sendReady = this.sendReady.bind(this);
     this.sendGameStart = this.sendGameStart.bind(this);
     this.handleMiddleState = this.handleMiddleState.bind(this);
+    this.handleEvent = this.handleEvent.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener("beforeunload", () => {
       this.componentWillUnmount();
     });
+    const { location } = this.props;
+    const { roomId, roomTitle, teamTitle, isHost } = location.state;
+    const info = { roomId, roomTitle, teamTitle, isHost };
+    history.pushState(info, "", location.href);
+    window.addEventListener("popstate", this.handleEvent);
     setTimeout(() => {
-      const { location } = this.props;
       if (location.state === null) {
         const { navigate } = this.props;
+        console.log("로비로 이동");
         navigate("/lobby");
       }
       const { roomId, roomTitle, teamTitle, isHost } = location.state;
@@ -151,7 +158,6 @@ class GameRoom extends Component {
         mySessionTitle: roomTitle,
         myTeamTitle: teamTitle,
         ishost: isHost,
-        roomLeave: false,
       });
 
       this.setmodel();
@@ -163,6 +169,7 @@ class GameRoom extends Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener("popstate", this.handleEvent);
     window.location.reload();
     const mySession = this.state.session;
     if (this.state.ishost) {
@@ -173,6 +180,13 @@ class GameRoom extends Component {
       });
     }
     mySession.disconnect();
+  }
+
+  handleEvent() {
+    const { location } = this.props;
+    const { roomId, roomTitle, teamTitle, isHost } = location.state;
+    const info = { roomId, roomTitle, teamTitle, isHost };
+    history.pushState(info, "", location.href);
   }
 
   componentDidUpdate(previousProps, previousState) {
@@ -492,22 +506,26 @@ class GameRoom extends Component {
     if (mySession) {
       mySession.disconnect();
     }
+    const { navigate } = this.props;
     axios
       .delete(APPLICATION_SERVER_URL + "room/" + this.state.mySessionId, {})
       .then(() => {
         this.OV = null;
-        this.setState({
-          session: "",
-          subscribers: [],
-          mySessionId: "",
-          mainStreamManager: undefined,
-          publisher: undefined,
-          ishost: false,
-          selectedExercise: undefined,
-          readyStatus: false,
-        });
-        const { navigate } = this.props;
-        navigate("/lobby");
+        this.setState(
+          {
+            session: "",
+            subscribers: [],
+            mySessionId: "",
+            mainStreamManager: undefined,
+            publisher: undefined,
+            ishost: false,
+            selectedExercise: undefined,
+            readyStatus: false,
+          },
+          () => {
+            navigate("/lobby");
+          }
+        );
       });
   }
 
@@ -565,7 +583,7 @@ class GameRoom extends Component {
       return;
     }
     if (this.state.selectedExercise === exercise) {
-      this.setState({ selectedExercise: undefined });
+      this.setState({ selectedExercise: undefined, exerciseNum: undefined });
     } else {
       this.setState({ selectedExercise: exercise, loadingStatus: true });
       if (exercise === "squat") {
@@ -576,13 +594,23 @@ class GameRoom extends Component {
         this.setState({
           model: await tmPose.load(modelURL, metadataURL),
           loadingStatus: false,
+          exerciseNum: 1,
         });
       } else if (exercise === "lunge") {
-        setTimeout(() => this.setState({ loadingStatus: false }), 3000);
+        setTimeout(
+          () => this.setState({ loadingStatus: false, exerciseNum: 2 }),
+          3000
+        );
       } else if (exercise === "pushup") {
-        setTimeout(() => this.setState({ loadingStatus: false }), 3000);
+        setTimeout(
+          () => this.setState({ loadingStatus: false, exerciseNum: 3 }),
+          3000
+        );
       } else {
-        setTimeout(() => this.setState({ loadingStatus: false }), 3000);
+        setTimeout(
+          () => this.setState({ loadingStatus: false, exerciseNum: 4 }),
+          3000
+        );
       }
     }
   }
@@ -626,7 +654,7 @@ class GameRoom extends Component {
 
   async sendKey() {
     console.log("공격 신호 보낸다");
-    this.state.myRef.current.sendSignal("attack");
+    this.state.myRef.current.sendSignal("attack", this.state.exerciseNum);
   }
 
   async getToken() {
@@ -706,14 +734,21 @@ class GameRoom extends Component {
       alert("어떤 운동을 할 지 선택해주세요!");
       return;
     }
-    const mySession = this.state.session;
-    mySession.signal({
-      data: "",
-      to: [],
-      type: "gameStart",
-    });
-    this.start();
-    this.state.myRef.current.sendSignal("GameStart");
+    axios
+      .put(APPLICATION_SERVER_URL + "game", {
+        sessionKey: this.state.mySessionId,
+      })
+      .then(() => {
+        const mySession = this.state.session;
+        mySession.signal({
+          data: "",
+          to: [],
+          type: "gameStart",
+        });
+        this.start();
+        this.state.myRef.current.sendSignal("GameStart");
+      })
+      .catch((error) => console.log(error));
   }
 
   handleMiddleState() {

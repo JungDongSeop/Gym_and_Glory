@@ -24,7 +24,7 @@ const UnityGame = forwardRef((props, ref) => {
     });
 
   const teamRecord = {
-    title: props.team,
+    teamName: props.team,
     nickname: props.nicknames,
     time: 0,
   };
@@ -43,14 +43,15 @@ const UnityGame = forwardRef((props, ref) => {
   // const [clearTime, setClearTime] = useState(0);
   // const [myDamage, setMyDamage] = useState(0);
 
-  function sendSignal(signal) {
+  function sendSignal(signal, num) {
     if (signal === "connectGamelobby") {
       sendMessage("GameManager", "GameStart");
     } else if (signal === "GameStart") {
       sendMessage("PhotonInit", "GameStart");
     } else if (signal === "attack") {
       console.log("공격 신호 받아서 유니티로 보낸다");
-      sendMessage("Player" + myNum + "(Clone)", "Attack", 1);
+      console.log(myNum, num);
+      sendMessage("Player" + myNum + "(Clone)", "Attack", num);
     }
   }
 
@@ -132,15 +133,12 @@ const UnityGame = forwardRef((props, ref) => {
 
   const handleUserExercise = useCallback(
     (num, type, cnt, damage) => {
-      console.log("왜그러는데" + myNum);
       if (num === myNum) {
         // setMyExercise(myExercise.push(cnt));
         // setMyDamage(damage);
         myExercise.push(cnt);
         myDamage = damage;
       }
-      console.log(num, type, cnt, myDamage);
-      console.log(myNum, myExercise, teamRecord.time, myDamage);
       myRecord.exercise = myExercise;
       myRecord.damage = myDamage;
       // console.log(myExercise);

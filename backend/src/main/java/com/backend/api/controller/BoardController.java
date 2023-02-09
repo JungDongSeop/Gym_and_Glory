@@ -62,11 +62,9 @@ public class BoardController {
     @Transactional
     @DeleteMapping("/{articleSeqeunce}")
     public ResponseEntity<?> delete(@PathVariable Integer articleSeqeunce){
-        int flag = boardService.delete(articleSeqeunce);
-        if(flag==1)
-            return new ResponseEntity("삭제 완료",HttpStatus.OK);
-        else
-            return new ResponseEntity("삭제 실패",HttpStatus.OK);
+        System.out.println("시작");
+
+        return new ResponseEntity("삭제 완료",HttpStatus.OK);
     }
 
     //글 종류 구분해서 글 목록 받아오기

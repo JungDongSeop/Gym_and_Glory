@@ -114,9 +114,6 @@ const Comment = () => {
 
   return (
     <div>
-      {comments.map((comment, index) => {
-        <p>{comment.content}</p>;
-      })}
       <div className={classes.replyWrap}>
         <div className={classes.replyTitle}>
           <h2>
@@ -136,23 +133,32 @@ const Comment = () => {
                     alt="프로필 이미지"
                   /> */}
                   {comment.user ? comment.user.nickname : null}
-                  <span>{comment.registerTime}</span>
+                  <span>
+                    {new Date(comment.registerTime).toLocaleString("default", {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                    })}
+                  </span>
                 </p>
                 <ul className={classes.replyBtnWrap}>
                   <li className={classes.replyBtn}>
                     <button onClick={() => handleGood(comment.commentSequence)}>
                       추천
                     </button>
-
-                    {sessionStorage.getItem("userSequence") ===
-                      comment.userSequence && (
+                  </li>
+                  {sessionStorage.getItem("userSequence") ==
+                  comment.user.userSequence ? (
+                    <li className={classes.replyBtn}>
                       <button
                         onClick={() => handleDelete(comment.commentSequence)}
                       >
                         삭제
                       </button>
-                    )}
-                  </li>
+                    </li>
+                  ) : null}
                 </ul>
                 <div className={classes.replyText}>{comment.contents}</div>
               </div>

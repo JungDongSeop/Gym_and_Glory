@@ -86,7 +86,15 @@ const DetailBoard = () => {
                 src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png"
                 alt="작성 시간"
               />
-              {data.registerTime ? data.registerTime : null}
+              {data.registerTime
+                ? new Date(data.registerTime).toLocaleString("default", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                  })
+                : null}
             </p>
           </div>
         </div>
@@ -101,6 +109,28 @@ const DetailBoard = () => {
             </div>
           </div>
         </div>
+        {
+          <div className={classes.qsBtn}>
+            <ul>
+              <li>
+                <button>
+                  <img
+                    src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/view_btn01.png"
+                    alt="수정"
+                  />
+                </button>
+              </li>
+              <li>
+                <button onClick={deleteClick}>
+                  <img
+                    src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/view_btn02.png"
+                    alt="삭제"
+                  />
+                </button>
+              </li>
+            </ul>
+          </div>
+        }
         <Comment />
       </div>
     </main>

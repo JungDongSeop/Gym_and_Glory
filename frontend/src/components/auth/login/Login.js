@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
 import classes from "./Login.module.css";
 import RestApi from "../../api/RestApi";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 // API_KEY
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
@@ -111,10 +112,10 @@ const Login = () => {
   return (
     <div className={classes.whiteBox}>
       {/* <h1 >{<<}</h1> */}
-      <ArrowBackIcon
+      <ArrowBackIosNewIcon
         className={classes.backbutton}
         onClick={() => navigate("/")}
-        sx={{ fontSize: 70, color: "skyblue" }}
+        sx={{ fontSize: 50 }}
       />
       <img
         className={classes.logoSmall}

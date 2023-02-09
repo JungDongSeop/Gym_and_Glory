@@ -26,6 +26,7 @@ public class ReportController {
         this.reportService = reportService;
     }
 
+    //신고 접수
     @PostMapping
     public ResponseEntity<?> registerReport(@RequestBody ReportReq reportReq){
 

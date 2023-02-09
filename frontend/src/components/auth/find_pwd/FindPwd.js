@@ -33,8 +33,8 @@ const FindPwd = () => {
 
     // 가입한 이메일인지 확인하는 작업
     setIsLoading(true);
-    // const response = await axios(`${RestApi()}/reset_pwd`);
-    // console.log(response);
+    // const response = await axios.post(`${RestApi()}/reset_pwd`);
+    // console.log(response.data);
     fetch(`${RestApi()}/reset_pwd`, {
       method: "POST",
       body: JSON.stringify({
@@ -44,34 +44,48 @@ const FindPwd = () => {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => {
-      console.log(res);
-
-      // 만약 가입안한 이메일이거나 유효성검증에서 탈락했다면 다시 입력
-      console.log(isLoading);
-      fetch(URL, {
-        method: "POST",
-        body: JSON.stringify({
-          requestType: "PASSWORD_RESET",
-          email: enteredEmail,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "x-firebase-locale": "ko",
-        },
+    })
+      .then((res) => {
+        return res.json();
       })
-        .then((res) => {
-          setIsLoading(false);
-          console.log(res.json());
+      .then(async (data) => {
+        console.log(data);
+
+        if (data === true) {
+          // 만약 가입안한 이메일이거나 유효성검증에서 탈락했다면 다시 입력
+          console.log(isLoading);
+
+          fetch(URL, {
+            method: "POST",
+            body: JSON.stringify({
+              requestType: "PASSWORD_RESET",
+              email: enteredEmail,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+              "x-firebase-locale": "ko",
+            },
+          })
+            .then((res) => {
+              setIsLoading(false);
+              console.log(res.json());
+              alert(
+                "확인 이메일을 발송하였습니다 확인후 비밀번호를 재설정해주세요"
+              );
+              navigate("/login");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
           alert(
-            "확인 이메일을 발송하였습니다 확인후 비밀번호를 재설정해주세요"
+            "가입하지 않은 회원이거나 아이디 혹은 전화번호가 잘못되었습니다."
           );
-          navigate("/login");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

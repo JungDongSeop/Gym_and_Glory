@@ -45,6 +45,10 @@ public class User implements UserDetails {
 
     private String role;
 
+    public void updateExp(Float saveExp) {
+        this.exp += saveExp;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

@@ -1,35 +1,46 @@
 package com.backend.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name ="teamlog")
-public class TeamLog {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Getter
+@Setter
+public class TeamLog extends BaseTimeEntity {
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "team_sequence")
     private Integer teamSequence;
 
-    @Column(name = "clear_time")
-    private Time clearTime;
+    @Column(name = "team_name")
+    private String teamName;
 
-    @Column(name = "user_sequence1")
-    private Integer userSequence1;
-    @Column(name = "user_sequence2")
-    private Integer userSequence2;
-    @Column(name = "user_sequence3")
-    private Integer userSequence3;
-    @Column(name = "user_sequence4")
-    private Integer userSequence4;
+    @Column(name = "clear_time")
+    private int clearTime;
+
+    @OneToMany(mappedBy = "teamLog", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<TeamLogItem> teamLogItems = new ArrayList<>();
+
+    public void addTeamLogItem(TeamLogItem teamLogItem) {
+        teamLogItems.add(teamLogItem);
+        teamLogItem.setTeamLog(this);
+
+    }
+
+    public static TeamLog createTeamLog(String teamName, int clearTime, List<TeamLogItem> teamLogItems) {
+
+        TeamLog teamLog = new TeamLog();
+        teamLog.setTeamName(teamName);
+        teamLog.setClearTime(clearTime);
+
+        for(TeamLogItem teamLogItem : teamLogItems) {
+            teamLog.addTeamLogItem(teamLogItem);
+        }
+
+        return teamLog;
+    }
 
 }

@@ -53,7 +53,7 @@ public class RoomController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity(sessionKey, HttpStatus.OK);
+        return new ResponseEntity<>(sessionKey, HttpStatus.OK);
     }
 
     // 로비 방 조회
@@ -70,7 +70,7 @@ public class RoomController {
     public ResponseEntity<?> searchRoom(@RequestParam String title) {
         List<Room> searchRoomList = roomService.getSearchRoom(title);
 
-        return new ResponseEntity(searchRoomList, HttpStatus.OK);
+        return new ResponseEntity<>(searchRoomList, HttpStatus.OK);
     }
 
     // 선택한 방 들어가기
@@ -87,7 +87,7 @@ public class RoomController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 선택한 방 나가기
@@ -98,7 +98,7 @@ public class RoomController {
         roomService.leaveRoom(sessionKey);
 
         // 방에 나가졌으면 OK
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

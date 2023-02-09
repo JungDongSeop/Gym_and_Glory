@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RankingRepository extends JpaRepository<TeamLog,Integer > {
+public interface TeamLogRepository extends JpaRepository<TeamLog,Integer> {
 
     @Query("SELECT R FROM TeamLog AS R")
     List<TeamLog> orderByTime(Sort sort);

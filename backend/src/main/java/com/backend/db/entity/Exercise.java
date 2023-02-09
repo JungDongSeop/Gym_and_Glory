@@ -14,7 +14,7 @@ public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "exercise_code")
-    private Integer exercise_code; // 운동 종류 코드
+    private Integer exerciseCode; // 운동 종류 코드
 
     @Column(name = "name")
     private String name; // 운동 명

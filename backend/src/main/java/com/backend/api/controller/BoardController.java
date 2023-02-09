@@ -63,6 +63,7 @@ public class BoardController {
     @DeleteMapping("/{articleSeqeunce}")
     public ResponseEntity<?> delete(@PathVariable Integer articleSeqeunce){
         System.out.println("시작");
+        boardService.delete(articleSeqeunce);
 
         return new ResponseEntity("삭제 완료",HttpStatus.OK);
     }

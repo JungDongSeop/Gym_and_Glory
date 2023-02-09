@@ -2,9 +2,11 @@
 package com.backend.api.request;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@NoArgsConstructor
 public class FrdReq {
 
     private Integer sendFrd; // 보낸 친구 id

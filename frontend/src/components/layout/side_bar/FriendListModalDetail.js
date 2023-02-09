@@ -28,7 +28,7 @@ const FriendListModalDetail = (props) => {
   // 친구 delete axios 요청 (이후 api 만들어지면 붙이기)
   const handleDelete = async () => {
     console.log('친구요청삭제', typeof(userSequence), typeof(friendId), `${RestApi()}/friend/${userSequence}`);
-    await axios.delete(`${RestApi()}/friend/${userSequence}`, {
+    await axios.post(`${RestApi()}/friend`, {
       sendFrd: userSequence,
       recvFrd: friendId
     });

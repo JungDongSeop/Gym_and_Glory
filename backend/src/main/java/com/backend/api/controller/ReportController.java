@@ -37,6 +37,7 @@ public class ReportController {
     //신고 권한에 따라서 다른 리스트를 뿌려줌
     @GetMapping("/user/{email}")
     public ResponseEntity<?> getReport(@PathVariable String email){
+        System.out.println(email);
         List<Report> list = reportService.getDivReport(email);
         return new ResponseEntity<>(list,HttpStatus.OK);
     }

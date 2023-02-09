@@ -130,9 +130,9 @@ public class UserService {
 
 
     public Boolean doubleCheck(CheckEmailAndNumber checkEmailAndNumber) {
-        User user1 = userRepository.findOneByTelNumber(checkEmailAndNumber.getTelNumber());
-        User user2 = userRepository.findOneByEmail(checkEmailAndNumber.getEmail());
-        if(user1 == user2)
+        User user1 = userRepository.findOneByTelNumberAndEmail(checkEmailAndNumber.getTelNumber(),checkEmailAndNumber.getEmail());
+        System.out.print("----------------------------------------------------------------------------------------"+ user1);
+        if(user1 != null)
             return true;
 
         return false;

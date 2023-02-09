@@ -35,5 +35,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "and nickName like %:nickName%", nativeQuery = true)
     List<User> findBySearchFriendNative(@Param("userSequence") Integer userSequence, @Param("nickName") String nickName);
 
-    User findOneByTelNumber(String telNumber);
+    User findOneByTelNumberAndEmail(String telNumber, String email);
 }

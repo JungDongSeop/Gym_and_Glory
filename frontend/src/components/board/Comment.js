@@ -130,14 +130,14 @@ const Comment = () => {
             <li key={index}>
               {/* <p>ddd</p> */}
               <div className={classes.reply}>
-                <p className={classes.commonCharId}>
+                {/* <p className={classes.commonCharId}>
                   <img
                     src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/world_icon/icon_11.png"
                     alt="프로필 이미지"
                   />
                   {item.user ? item.user.nickname : null}
                   <span>{item.registerTime}</span>
-                </p>
+                </p> */}
                 {/* <ul className={classes.replyBtnWrap}>
                 <li>
                 </li>

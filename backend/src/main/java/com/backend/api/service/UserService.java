@@ -1,5 +1,6 @@
 package com.backend.api.service;
 
+import com.backend.api.request.CheckEmailAndNumber;
 import com.backend.api.request.TelEmailReq;
 import com.backend.api.request.SignUpReq;
 import com.backend.db.entity.User;
@@ -128,4 +129,12 @@ public class UserService {
     }
 
 
+    public Boolean doubleCheck(CheckEmailAndNumber checkEmailAndNumber) {
+        User user1 = userRepository.findOneByTelNumber(checkEmailAndNumber.getTelNumber());
+        User user2 = userRepository.findOneByEmail(checkEmailAndNumber.getEmail());
+        if(user1 == user2)
+            return true;
+
+        return false;
+    }
 }

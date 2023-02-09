@@ -1,6 +1,7 @@
 package com.backend.api.controller;
 
 import com.backend.api.request.ChangeUserInfoReq;
+import com.backend.api.request.CheckEmailAndNumber;
 import com.backend.api.request.TelEmailReq;
 import com.backend.api.request.SignUpReq;
 import com.backend.api.service.UserService;
@@ -9,6 +10,7 @@ import com.backend.util.RequestUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,6 +50,13 @@ public class UserController {
         userService.signup(signUpReq);
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("reset_pwd")
+    public ResponseEntity<?> reset_pwd(@RequestBody CheckEmailAndNumber checkEmailAndNumber){
+        Boolean flag = userService.doubleCheck(checkEmailAndNumber);
+
+        return new ResponseEntity<>(flag,HttpStatus.OK);
     }
 
     @PostMapping("/login")

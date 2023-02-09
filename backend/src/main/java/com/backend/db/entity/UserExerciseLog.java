@@ -1,35 +1,46 @@
 package com.backend.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.backend.api.request.UserExcerciseReq;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 @Table(name ="user_exercise_log")
-public class UserExerciseLog {
+public class UserExerciseLog extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_exercise_sequence")
-    private Integer userExerciseSequence;
+    private Integer userExerciseSequence; // 운동 로그 PK
 
-    @Column(name = "user_sequence")
-    private Integer userSequence;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_sequence")
+    private User user; // 유저 PK
 
+    @CreatedDate
     @Column(name = "exercise_date")
-    private LocalDateTime date;
+    private LocalDateTime date; // 운동한 datetime
 
-    private Integer count;
+    private Integer count; // 운동 카운트
 
-    @Column(name = "div_exercise")
-    private Integer div;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exercise_code")
+    private Exercise exercise; // 운동 종류 코드
+
+    public static UserExerciseLog createUserLog(User user, int count, Exercise exercise) {
+        UserExerciseLog userExerciseLog = new UserExerciseLog();
+
+        userExerciseLog.setUser(user);
+        userExerciseLog.setCount(count);
+        userExerciseLog.setExercise(exercise);
+
+        return userExerciseLog;
+    }
 
 }

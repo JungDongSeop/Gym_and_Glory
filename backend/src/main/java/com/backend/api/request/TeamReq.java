@@ -8,7 +8,8 @@ import java.util.List;
 @Getter @Setter
 public class TeamReq {
 
-    private List<String> nickNameList;
-    private int clearTime;
     private String teamName;
+    private List<String> nickname;
+    private int time;
+
 }

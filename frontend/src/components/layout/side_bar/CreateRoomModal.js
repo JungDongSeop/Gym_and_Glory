@@ -101,12 +101,7 @@ const CreateRoom = () => {
     <div>
       {/* 방 생성 모달 */}
       <Button onClick={openModal}>방 생성</Button>
-      <Modal
-        open={modalOpen}
-        close={closeModal}
-        header="게임 방 생성"
-        isfooter={false}
-      >
+      <Modal open={modalOpen} close={closeModal} width="500px" height="300px">
         {/* Modal.js <main> {props.children} </main>에 내용이 입력된다. 리액트 함수형 모달 */}
         <form onSubmit={handelSubmit}>
           <p>

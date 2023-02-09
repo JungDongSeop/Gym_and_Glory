@@ -15,33 +15,27 @@ const Modal = (props) => {
           style={{
             width: width,
             height: height,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
           }}
         >
-          <div
-            style={{
-              position: 'relative',              
-            }}
-            >
-            <div
-              style={{
-                height: '40px'
-              }}
-              >
-              <button 
-                className="close"
-                onClick={close}
-                style={{
-                  position: 'absolute',
-                  right: '0',
-                  top: '0'
-                }}
-                >
-                &times;
-              </button>
-            </div>
-
+          <div>
             {props.children}
           </div>
+
+          <button 
+            className="close"
+            onClick={close}
+            style={{
+              width: '200px',
+              height: '80px',
+              margin: '20px auto',
+              backgroundColor: 'crimson'
+            }}
+            >
+            &times;
+          </button>
         </section>
       ) : null}
     </div>

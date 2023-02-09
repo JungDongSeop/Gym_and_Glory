@@ -3,7 +3,7 @@ import { useContext } from "react";
 import AuthContext from "../../../store/auth-context";
 import axios from "axios";
 import RestApi from "../../api/RestApi";
-// import classes from './FriendListModalDetail.module.css'
+import classes from './FriendListModalDetail.module.css'
 // import DefaultProfile from '../../../assets/defaultProfile.png'
 
 
@@ -27,24 +27,29 @@ const FriendListModalDetail = (props) => {
 
   // 친구 delete axios 요청 (이후 api 만들어지면 붙이기)
   const handleDelete = async () => {
-    alert("친구 요청 삭제");
-    await axios.delete(`${RestApi()}/friend/list/${userSequence}/${friendId}`);
+    console.log('친구요청삭제', typeof(userSequence), typeof(friendId), `${RestApi()}/friend/${userSequence}`);
+    await axios.delete(`${RestApi()}/friend/${userSequence}`, {
+      sendFrd: userSequence,
+      recvFrd: friendId
+    });
   };
 
   // 삭제 버튼 누르면 그냥 null로 만들어서 없애기 (왜 axios 요청을 해도, FriendListModal 컴포넌트에서 friends가 바뀌는데도 표시되는 게 갱신 안되는지 모르겠다.)
   const [isShow, setIsShow] = useState(true);
 
   return (
-    <span>
+    <div style={{width: '100%'}}>
       {isShow ? (
-        <div>
-          {/* <img src={friendInfo.profile_image_path} alt={DefaultProfile} /> */}
-          Lv.{friendInfo.level ? friendInfo.level : "00"}
-          {friendInfo.nickname}
+        <div className={classes.detailWrap}>
+          <div>
+            {/* <img src={friendInfo.profile_image_path} alt={DefaultProfile} /> */}
+            Lv.{friendInfo.level ? friendInfo.level : "00"}
+            {friendInfo.nickname}
+          </div>
+
           <button
             onClick={() => {
               handleDelete();
-              props.onClick();
               setIsShow(false);
             }}
           >
@@ -52,7 +57,7 @@ const FriendListModalDetail = (props) => {
           </button>
         </div>
       ) : null}
-    </span>
+    </div>
   );
 };
 

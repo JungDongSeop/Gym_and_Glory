@@ -36,4 +36,8 @@
   width: 100%;
   list-style-type: none;
   background-color: aqua;
+  border-bottom: 1px solid black;
+  height: 80px;
+  display: flex;
+  align-items: center;
 }

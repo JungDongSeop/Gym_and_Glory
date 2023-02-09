@@ -46,3 +46,10 @@
 .popUpDetail button:hover {
   background-color: rgb(110, 202, 239);
 }
+
+.container .friendRequest {
+  margin: 0;
+  width: 100%;
+  list-style-type: none;
+  background-color: aqua;
+}

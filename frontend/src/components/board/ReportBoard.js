@@ -27,9 +27,10 @@ const ReportBoard = () => {
   const email = sessionStorage.getItem("email");
 
   let isAdmin = false;
+
   useEffect(() => {
     const getReport = async () => {
-      const result = await axios(`${RestApi()}/report/${email}`);
+      const result = await axios(`${RestApi()}/report/user/${email}`);
       console.log(result.data);
     };
     getReport();

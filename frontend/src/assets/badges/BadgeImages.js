@@ -36,8 +36,10 @@ const BadgeImages = () => {
 
   return (
     <div className={classes.container}>
-      {items.map((badge, index) => (
-        <span key={index}>
+      {items.map((badge, index) => {
+
+        return(
+        <div key={index}>
           <img 
             className={badgeList.includes(index) ? classes.have : classes.notHave} 
             src={badge} 
@@ -46,7 +48,8 @@ const BadgeImages = () => {
             onMouseEnter={() => setShowDescription(index)}
             onMouseLeave={() => setShowDescription(false)}
             />
-          {showDescription === index && (
+          
+          {showDescription === index ? (
             <div 
               className={classes.descriptionBox}
               style={{
@@ -57,8 +60,8 @@ const BadgeImages = () => {
             >
               {index}번째 뱃지입니다. 설명 작성
             </div>
-          )}
-      </span>))}
+          ) : null}
+      </div>)})}
     </div>
   )
 }

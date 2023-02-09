@@ -19,8 +19,8 @@ const BadgeModal = () => {
     <div>
       {/* 방 생성 모달 */}
       <Button onClick={openModal}>뱃지 목록</Button>
-      <Modal open={modalOpen} close={closeModal} header="뱃지 목록" isfooter={false}>
-        <BadgeImages />
+      <Modal open={modalOpen} close={closeModal} height='400px'>
+        <BadgeImages/>
       </Modal>
     </div>
   );

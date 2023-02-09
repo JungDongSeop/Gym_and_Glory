@@ -389,6 +389,32 @@ class GameRoom extends Component {
         mySession.on("streamDestroyed", (event) => {
           this.deleteSubscriber(event.stream.streamManager);
         });
+        mySession.on("signal:gameEnd", (event) => {
+          const mySession = this.state.session;
+          const { navigate } = this.props;
+          if (mySession) {
+            mySession.disconnect();
+          }
+          axios
+            .delete(
+              APPLICATION_SERVER_URL + "room/" + this.state.mySessionId,
+              {}
+            )
+            .then(() => {
+              this.OV = null;
+              this.setState({
+                session: "",
+                subscribers: [],
+                mySessionId: "",
+                mainStreamManager: undefined,
+                publisher: undefined,
+                ishost: false,
+              });
+            })
+            .then(() => {
+              navigate("/lobby", { state: "gameEnd" });
+            });
+        });
         mySession.on("signal:room-exploded", (event) => {
           if (!this.state.ishost) {
             const mySession = this.state.session;
@@ -885,6 +911,7 @@ class GameRoom extends Component {
                   nicknames={this.state.nicknames}
                   team={this.state.myTeamTitle}
                   handleMiddleState={this.handleMiddleState}
+                  session={this.state.session}
                 />
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   {this.state.ishost &&

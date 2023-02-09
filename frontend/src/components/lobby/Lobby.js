@@ -22,28 +22,18 @@ const SearchWrapper = styled.div`
 const Lobby = () => {
   const location = useLocation();
 
-  useEffect(() => {
-    console.log(location);
-    if (location.state === "getOut") {
-      swal({
-        text: "방장에 의해 강퇴당하셨습니다.",
-        button: "확인",
-        icon: "error",
-      });
-    } else if (location.state === "roomExploded") {
-      swal({
-        text: "방장이 방을 폭파시켜 로비로 이동했습니다.",
-        button: "확인",
-        icon: "error",
-      });
-    }
-  }, []);
-
   const handleEvent = () => {
     history.pushState(null, "", location.href);
   };
 
   useEffect(() => {
+    if (location.state === "getOut") {
+      alert("방장에 의해 강퇴당하셨습니다.");
+    } else if (location.state === "roomExploded") {
+      alert("방장이 방을 폭파시켜 로비로 이동했습니다");
+    } else if (location.state === "gameEnd") {
+      alert("게임이 종료되어 로비로 이동합니다.");
+    }
     history.pushState(null, "", location.href);
     window.addEventListener("popstate", handleEvent);
     return () => {

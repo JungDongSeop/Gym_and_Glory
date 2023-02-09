@@ -189,7 +189,7 @@ div {
   text-align: center;
   position: relative;
   margin-bottom: 25px;
-  z-index: 999999;
+  z-index: 9;
 }
 
 .empathyInfo {

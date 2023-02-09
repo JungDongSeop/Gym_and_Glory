@@ -113,7 +113,11 @@ const DetailBoard = () => {
           <div className={classes.qsBtn}>
             <ul>
               <li>
-                <button>
+                <button
+                  onClick={() =>
+                    navigate(`/board/${type}/update/${articleSequence}`)
+                  }
+                >
                   <img
                     src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/view_btn01.png"
                     alt="수정"

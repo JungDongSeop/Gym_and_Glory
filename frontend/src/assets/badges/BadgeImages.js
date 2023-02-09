@@ -51,7 +51,7 @@ const BadgeImages = () => {
       })
     }
     fetchData();
-  }, []);
+  }, [userSequence]);
 
   // 마우스 호버 시 설명 창 나타내기
   const [showDescription, setShowDescription] = useState(false);
@@ -63,7 +63,7 @@ const BadgeImages = () => {
         return(
         <div key={index} className={classes.badge}>
           <img
-            className={badgeAllList.includes(index) ? classes.have : classes.notHave} 
+            className={userBadges.includes(index) ? classes.have : classes.notHave} 
             src={item} 
             alt="badge" 
             id={index}
@@ -76,11 +76,11 @@ const BadgeImages = () => {
               className={classes.descriptionBox}
               style={{
                 // 마우스 호버 시, 해당 그림의 우측 하단에 설명창 표시
-                left: document.getElementById(`${index}`).getBoundingClientRect().right - 10,
-                top: document.getElementById(`${index}`).getBoundingClientRect().bottom - 10,
+                left: document.getElementById(`${index}`).getBoundingClientRect().right + 20,
+                top: document.getElementById(`${index}`).getBoundingClientRect().bottom,
               }}
             >
-              {badgeAllList ? badgeAllList[index].description : null}
+              {badgeAllList[index] ? badgeAllList[index].description : null}
             </div>
           ) : null}
       </div>)})}

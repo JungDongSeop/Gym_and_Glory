@@ -6,7 +6,6 @@ import FriendListModalAdd from "./FriendListModalAdd";
 import axios from "axios";
 import classes from './FriendListModal.module.css';
 import Modal from "../../UI/Modal";
-import Button from "../../UI/Button";
 import RestApi from "../../../components/api/RestApi";
 
 const FriendList = () => {
@@ -17,13 +16,13 @@ const FriendList = () => {
   const { userSequence } = useContext(AuthContext);
 
   // 모달을 열고 닫는 함수
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  // const [modalOpen, setModalOpen] = useState(false);
+  // const openModal = () => {
+  //   setModalOpen(true);
+  // };
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  // };
 
   // 친구 목록 저장할 변수
   const [friends, setFriends] = useState([]);
@@ -51,13 +50,12 @@ const FriendList = () => {
   return (
     <div>
       {/* 방 생성 모달 */}
-      <Button onClick={openModal}>친구 목록</Button>
+      {/* <Button onClick={openModal}>친구 목록</Button> */}
 
       <Modal
-        open={modalOpen}
-        close={closeModal}
-        width="700px"
-        height="500px"
+        buttonTitle='친구 목록'
+        width='700px'
+        height='500px'
       >
         <div className={classes.container}>
 
@@ -85,8 +83,40 @@ const FriendList = () => {
             <FriendListModalAdd />
           )}
         </div>
-
       </Modal>
+
+      {/* <Modal
+        open={modalOpen}
+        close={closeModal}
+        width="700px"
+        height="500px"
+      >
+        <div className={classes.container}>
+
+          <button className={`${classes.modalButton} ${page === 1 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(1)}>목록</button>
+          <button className={`${classes.modalButton} ${page === 2 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(2)}>신청</button>
+
+          {page === 1 ? (
+            <div>
+              <ul className={classes.friendsWrap}>
+                {friends.map((friend, index) => (
+                  <li key={index} className={classes.friend}>
+                    <FriendListModalDetail
+                      friendId={friend.frdUserId}
+                      onClick={() => {
+                        setPage(1);
+                      }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <FriendListModalAdd />
+          )}
+        </div>
+
+      </Modal> */}
     </div>
   );
 };

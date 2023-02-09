@@ -18,11 +18,8 @@
 }
 .modal > section {
   margin: 0 auto;
-  animation: modal-show 0.3s;
-  overflow: hidden;
-}
-
-.modal > section > div {
+  /* animation: modal-show 0.3s; */
+  /* overflow: hidden; */
   padding-left: 20px;
   padding-right: 20px;
   height: 100%;
@@ -30,6 +27,10 @@
   /* border-top: 1px solid #dee2e6; */
   background-color: rgba(218, 218, 218, 0.768);
   border-radius: 0.3rem;
+}
+
+.modal > section > div {
+
 }
 
 .modal.openModal {

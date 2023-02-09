@@ -72,7 +72,7 @@ const FriendList = () => {
                 {friends.map((friend, index) => (
                   <li key={index} className={classes.friend}>
                     <FriendListModalDetail
-                      friendId={friend.sendSequence}
+                      friendId={friend.frdUserId}
                       onClick={() => {
                         setPage(1);
                       }}

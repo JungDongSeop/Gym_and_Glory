@@ -5,9 +5,6 @@ import axios from "axios";
 import classes from './FriendListModalAdd.module.css'
 import RestApi from "../../api/RestApi";
 import SearchIcon from '@mui/icons-material/Search';
-import Box from '@mui/material/Box';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import TextField from '@mui/material/TextField';
 
 
 const FriendListModalAdd = () => {
@@ -130,7 +127,7 @@ const FriendListModalAdd = () => {
         <p>받은 친구 요청</p>
         {Array.isArray(getFriendRequests) && getFriendRequests.map((data, index) => {
             return (
-              <div key={index}>
+              <div key={index} className={classes.friendRequest}>
                 {data.sendNickName}
                 {/* 수락 버튼 */}
                 <button onClick={() => handleAcceptFriendRequest(data.userId, data.frdUserId)}>V</button>

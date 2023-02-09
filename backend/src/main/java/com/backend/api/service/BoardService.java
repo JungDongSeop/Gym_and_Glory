@@ -29,7 +29,7 @@ public class BoardService {
 
     @Transactional
     public List<BoardArticle> getAllList(Integer div) {
-
+        System.out.println("들어온다");
         List<BoardArticle> test = boardRepository.findByDiv(div);
         return test;
     }

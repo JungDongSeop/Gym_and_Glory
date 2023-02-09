@@ -72,6 +72,7 @@ public class BoardController {
     //글 종류 구분해서 글 목록 받아오기
     @GetMapping("/list/{div}")
     public List<BoardArticle> getList(@PathVariable Integer div){
+        System.out.println("들어온다");
         List<BoardArticle> boardList = boardService.getAllList(div);
         return boardList;
     }

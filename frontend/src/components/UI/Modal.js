@@ -28,10 +28,8 @@ const Modal = (props) => {
             className="close"
             onClick={close}
             style={{
-              width: '200px',
-              height: '80px',
-              margin: '20px auto',
-              backgroundColor: 'crimson'
+
+
             }}
             >
             &times;

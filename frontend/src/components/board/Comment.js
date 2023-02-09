@@ -126,26 +126,38 @@ const Comment = () => {
         </div>
 
         <ul className={classes.replyUl}>
-          {comments.map((item, index) => {
+          {comments.map((comment, index) => (
             <li key={index}>
               {/* <p>ddd</p> */}
               <div className={classes.reply}>
-                {/* <p className={classes.commonCharId}>
-                  <img
+                <p className={classes.commonCharId}>
+                  {/* <img
                     src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/world_icon/icon_11.png"
                     alt="프로필 이미지"
-                  />
-                  {item.user ? item.user.nickname : null}
-                  <span>{item.registerTime}</span>
-                </p> */}
-                {/* <ul className={classes.replyBtnWrap}>
-                <li>
-                </li>
-              </ul> */}
-                <div className={classes.replyText}>{item.contents}</div>
+                  /> */}
+                  {comment.user ? comment.user.nickname : null}
+                  <span>{comment.registerTime}</span>
+                </p>
+                <ul className={classes.replyBtnWrap}>
+                  <li className={classes.replyBtn}>
+                    <button onClick={() => handleGood(comment.commentSequence)}>
+                      추천
+                    </button>
+
+                    {sessionStorage.getItem("userSequence") ===
+                      comment.userSequence && (
+                      <button
+                        onClick={() => handleDelete(comment.commentSequence)}
+                      >
+                        삭제
+                      </button>
+                    )}
+                  </li>
+                </ul>
+                <div className={classes.replyText}>{comment.contents}</div>
               </div>
-            </li>;
-          })}
+            </li>
+          ))}
         </ul>
       </div>
       <div className={classes.bottomTxarWrap}>

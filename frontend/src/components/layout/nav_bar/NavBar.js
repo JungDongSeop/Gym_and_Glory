@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
 import AuthContext from "../../../store/auth-context";
 import "./NavBar.module.css";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 // 네브바 만들기. 이후 추가 예정
 const Navbar = () => {
@@ -55,6 +56,7 @@ const Navbar = () => {
         <div>
           <Link to="/" onClick={logoutHandler}>
             로그아웃
+            <LogoutIcon />
           </Link>
           <Link to="/mypage">
             <img className="logo" src={Logo} alt="마이페이지로" />

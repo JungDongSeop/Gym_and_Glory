@@ -16,8 +16,8 @@ import java.util.List;
 @Service
 public class ReportService {
 
-    private ReportRepository reportRepository;
-    private UserRepository userRepository;
+    private final ReportRepository reportRepository;
+    private final UserRepository userRepository;
     @Autowired
     public ReportService(ReportRepository reportRepository,UserRepository userRepository){
         this.reportRepository = reportRepository;

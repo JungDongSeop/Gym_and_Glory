@@ -18,8 +18,12 @@ import java.util.List;
 public class FileHandler {
 
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public FileHandler(UserService userService){
+        this.userService = userService;
+    }
     public List<FileUser> parseFileInfo(Integer userID, List<MultipartFile> multipartFiles) throws Exception {
 
         // 반환을 할 파일 리스트
@@ -76,14 +80,19 @@ public class FileHandler {
                 }
                 // 각 이름은 겹치면 안되므로 나노 초까지 동원하여 지정
                 String new_file_name = System.nanoTime() + originalFileExtension;
+
+                System.out.println(userID);
+
                 // 생성 후 리스트에 추가
-                User user= userService.getOne(userID);
+                User user= userService.getOne(9);
+
                 FileUser fileUser = FileUser.builder()
                         .userSequence(userID)
                         .originalFileName(multipartFile.getOriginalFilename())
                         .storedFileName(path + "/" + new_file_name)
                         .fileSize((int)multipartFile.getSize())
                         .build();
+                user.setImagePath(path + "/" + new_file_name);
                 fileList.add(fileUser);
 
                 // 저장된 파일로 변경하여 이를 보여주기 위함

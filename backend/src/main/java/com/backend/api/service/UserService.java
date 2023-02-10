@@ -89,7 +89,8 @@ public class UserService {
     }
 
     public User getOne(Integer userSequence) {
-        return userRepository.findByUserSequence(userSequence);
+        System.out.println(userSequence + "dddd");
+        return userRepository.findById(userSequence).orElse(null);
     }
 
     public User getFindByEmail(String email) {

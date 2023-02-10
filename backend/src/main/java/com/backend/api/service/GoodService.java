@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoodService {
 
-    private BoardGoodRepository boardGoodRepository;
-    private CommentGoodRepository commentGoodRepository;
-    private CommentRepository commentRepository;
-    private UserRepository userRepository;
-    private BoardRepository boardRepository;
+    private final BoardGoodRepository boardGoodRepository;
+    private final CommentGoodRepository commentGoodRepository;
+    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
     @Autowired
     public GoodService(BoardGoodRepository boardGoodRepository,
                        CommentGoodRepository commentGoodRepository,

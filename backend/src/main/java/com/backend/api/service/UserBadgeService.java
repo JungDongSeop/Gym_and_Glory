@@ -15,9 +15,9 @@ import java.util.List;
 @Service
 public class UserBadgeService {
 
-    private UserBadgeRepository userBadgeRepository;
-    private UserRepository userRepository;
-    private BadgeRepository badgeRepository;
+    private final UserBadgeRepository userBadgeRepository;
+    private final UserRepository userRepository;
+    private final BadgeRepository badgeRepository;
 
     @Autowired
     public UserBadgeService(UserBadgeRepository userBadgeRepository

@@ -19,9 +19,9 @@ import static java.time.LocalTime.now;
 @Service
 public class CommentService {
 
-    private CommentRepository commentRepository;
-    private UserRepository userRepository;
-    private BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
     @Autowired
     public CommentService(CommentRepository commentRepository,
                           UserRepository userRepository,

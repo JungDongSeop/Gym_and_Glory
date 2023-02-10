@@ -45,6 +45,16 @@ public class GoodService {
         boardGoodRepository.save(boardGood);
     }
 
+    public void minusGoodBoard(Integer userSequence, Integer articleSequence) {
+        User user = userRepository.findById(userSequence).get();
+        BoardArticle boardArticle = boardRepository.findById(articleSequence).get();
+        BoardGood boardGood = boardGoodRepository.findByUserAndArticle(user,boardArticle);
+        boardArticle.setGoodCount(boardArticle.getGoodCount()-1);
+        System.out.println("현재 좋아요 누른 사람의 시퀀스"+boardGood.getUser().getUserSequence());
+        System.out.println("현재 글 번호"+ boardGood.getBoardGoodSequence());
+        boardGoodRepository.delete(boardGood);
+    }
+
     public CommentGood findCommentGood(Integer userSequence, Integer commentSequence) {
         return commentGoodRepository.findByUserSequenceAndCommentSequence(userSequence,commentSequence);
     }
@@ -56,4 +66,6 @@ public class GoodService {
         commentRepository.save(comment);
         commentGoodRepository.save(commentGood);
     }
+
+
 }

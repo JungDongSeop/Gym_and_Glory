@@ -88,7 +88,24 @@ public class BoardController {
             //null이면 등록하고
             goodService.addGoodBoard(userSequence,articleSequence);
             boardService.addGoodArticle(articleSequence);
+        }else{
+            goodService.minusGoodBoard(userSequence,articleSequence);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        int cnt = boardService.getOne(articleSequence).getGoodCount();
+
+        return new ResponseEntity<>(cnt,HttpStatus.OK);
     }
+
+    @GetMapping("/IsGood/{userSequence}/{articleSequence}")
+    public ResponseEntity<?> boardIsGood(@PathVariable Integer userSequence,@PathVariable Integer articleSequence){
+        User user = userService.getOne(userSequence);
+        BoardArticle article = boardService.getOne(articleSequence);
+        boolean flag = goodService.findBoardGood(user,article);
+        System.out.println(flag);
+        flag= !flag;
+        return new ResponseEntity<>(flag,HttpStatus.OK);
+    }
+
+
 }

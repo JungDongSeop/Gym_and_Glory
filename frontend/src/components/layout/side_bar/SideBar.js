@@ -1,6 +1,7 @@
 import BadgeModal from "./BadgeModal";
 import { useContext } from "react";
 import AuthContext from "../../../store/auth-context";
+import SideWebcam from './SideWebcam'
 import CreateRoomModal from "./CreateRoomModal";
 import FriendListModal from "./FriendListModal";
 import Button from "../../UI/Button";
@@ -18,6 +19,8 @@ const SideBar = (props) => {
 
   return (
     <aside>
+      {/* 웹캠 */}
+      <SideWebcam />
       {/* 유저 프로필 */}
       <div>
         <Link to="/mypage">{authCtx.nickname}</Link>

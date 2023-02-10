@@ -93,7 +93,8 @@ const Login = () => {
             response.data.telNumber,
             // response.data.level,
             response.data.imagePath,
-            response.data.gender
+            response.data.gender,
+            response.data.role
           );
           navigate("/");
           // console.log(authCtx);

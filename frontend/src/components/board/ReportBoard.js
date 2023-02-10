@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
-import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import NavigateButtons from "./NavigateButtons";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import axios from "axios";
@@ -19,19 +18,17 @@ const ReportBoard = () => {
   // url 이동을 위한 함수.
   const navigate = useNavigate();
 
+  const authCtx = useContext(AuthContext);
+
   // 게시판에 쓴 글들을 저장할 변수
   const [board, setBoard] = useState([]);
-
-  // redux로 user 정보 가져오기
-  // const isAdmin = useSelector((state) => state.user.isAdmin);
   const email = sessionStorage.getItem("email");
-
-  let isAdmin = false;
 
   useEffect(() => {
     const getReport = async () => {
       const result = await axios(`${RestApi()}/report/user/${email}`);
       console.log(result.data);
+      setBoard(result.data);
     };
     getReport();
   }, [email]);
@@ -81,7 +78,7 @@ const ReportBoard = () => {
       </Button>
 
       {/* 신고게시판 내용 */}
-      {isAdmin ? (
+      {authCtx.role === "ROLE_ADMIN" ? (
         // 관리자의 신고페이지
         <div>
           <h2>관리자의 신고페이지.</h2>

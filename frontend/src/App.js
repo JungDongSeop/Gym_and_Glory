@@ -43,7 +43,7 @@ const GameRoom = lazy(() => import("./components/video/GameRoom"));
 
 function App() {
   const authCtx = useContext(AuthContext);
-  // console.log(authCtx);
+  console.log(authCtx);
 
   return (
     <div>

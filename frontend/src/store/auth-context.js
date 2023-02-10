@@ -26,7 +26,7 @@ export const AuthContextProvider = (props) => {
   const initialImagePath = sessionStorage.getItem("imagePath");
   // const initialExp = sessionStorage.getItem("exp");
   // const initialMannerPoint = sessionStorage.getItem("mannerPoint");
-  // const initialRole = sessionStorage.getItem("role");
+  const initialRole = sessionStorage.getItem("role");
   // const initialTotalPlayTime = sessionStorage.getItem("totalPlayTime");
 
   const [token, setToken] = useState(initialToken);
@@ -36,6 +36,7 @@ export const AuthContextProvider = (props) => {
   const [gender, setGender] = useState(initialGender);
   const [telNumber, setTelNumber] = useState(initialTelNumber);
   const [imagePath, setImagePath] = useState(initialImagePath);
+  const [role, setRole] = useState(initialRole);
 
   // 로그인 여부 (토큰 여부)
   const userIsLoggedIn = !!token;
@@ -47,7 +48,8 @@ export const AuthContextProvider = (props) => {
     nickname,
     telNumber,
     imagePath,
-    gender
+    gender,
+    role
   ) => {
     // 로그인 할 때는 토큰을 인자로 받아 저장
     setToken(token);
@@ -56,6 +58,7 @@ export const AuthContextProvider = (props) => {
     setNickname(nickname);
     setTelNumber(telNumber);
     setImagePath(imagePath);
+    setRole(role);
 
     if (gender === 1) {
       gender = "남자";
@@ -71,6 +74,7 @@ export const AuthContextProvider = (props) => {
     sessionStorage.setItem("gender", gender);
     sessionStorage.setItem("telNumber", telNumber);
     sessionStorage.setItem("imagePath", imagePath);
+    sessionStorage.setItem("role", role);
   };
 
   const logoutHandler = () => {
@@ -81,6 +85,7 @@ export const AuthContextProvider = (props) => {
     setUserSequence(0);
     setTelNumber("");
     setImagePath("");
+    setRole("");
 
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("email");
@@ -89,6 +94,7 @@ export const AuthContextProvider = (props) => {
     sessionStorage.removeItem("gender");
     sessionStorage.removeItem("telNumber");
     sessionStorage.removeItem("imagePath");
+    sessionStorage.removeItem("role");
   };
 
   const contextValue = {
@@ -100,6 +106,8 @@ export const AuthContextProvider = (props) => {
     telNumber: telNumber,
     imagePath: imagePath,
     isLoggedIn: userIsLoggedIn,
+    role: role,
+
     login: loginHandler,
     logout: logoutHandler,
   };

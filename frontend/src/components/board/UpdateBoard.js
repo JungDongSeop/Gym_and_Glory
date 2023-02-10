@@ -78,7 +78,6 @@ const UpdateBoard = () => {
           <div className={classes.board_write_wrap}>
             <h1>{typename()}</h1>
             <p>{typeDescription()}</p>
-            <p>{typeDescription}</p>
             <div className={classes.board_write}>
               <div className={classes.title}>
                 <dl>
@@ -108,7 +107,10 @@ const UpdateBoard = () => {
               <button type="submit" className={classes.on}>
                 등록
               </button>
-              <button type="submit" onClick={() => navigate(`/board/${type}`)}>
+              <button
+                type="submit"
+                onClick={() => navigate(`/board/${type}/${articleSequence}`)}
+              >
                 취소
               </button>
             </div>

@@ -7,6 +7,8 @@ import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import axios from "axios";
 import RestApi from "../api/RestApi";
 import classes from "./Comment.module.css";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 // 게시판 상세페이지
 // 이후 notice, getTeam, report 등으로 분리할 예정
@@ -25,28 +27,43 @@ const DetailBoard = () => {
   // 게시글 read를 위한 axios 요청
   // data : 게시글 상세 정보를 담은 변수
   const [data, setData] = useState([]);
+  const [like, setLike] = useState(false);
 
   const readBoard = async () => {
     const result = await axios(`${RestApi()}/board/${articleSequence}`);
     const isLikePeople = await axios(
-      `${RestApi()}/board/${articleSequence}/${userSequence}`
+      `${RestApi()}/board/IsGood/${userSequence}/${articleSequence}`
     );
+    console.log(isLikePeople.data);
+    console.log(result.data);
+    setLike(isLikePeople.data);
     setData(result.data);
   };
   useEffect(() => {
     const readBoard = async () => {
       const result = await axios(`${RestApi()}/board/${articleSequence}`);
+      const isLikePeople = await axios(
+        `${RestApi()}/board/IsGood/${userSequence}/${articleSequence}`
+      );
       console.log(result.data);
+      console.log(isLikePeople.data);
+
+      setLike(isLikePeople.data);
       setData(result.data);
     };
     readBoard();
   }, [articleSequence]);
 
   // 초기 좋아요 한 사람인지 유무 확인
+
   // 게시글 좋아요를 위한 axios
   const goodClick = async () => {
     await axios(`${RestApi()}/board/good/${userSequence}/${articleSequence}`);
-    alert("추천하였습니다");
+    if (like === true) {
+      alert("취소하였습니다.");
+    } else {
+      alert("추천하였습니다");
+    }
     readBoard();
   };
 
@@ -105,15 +122,30 @@ const DetailBoard = () => {
         <div className={classes.qsText}>{data.contents}</div>
         <div className={classes.qsEmpathyWrap}>
           <div className={classes.empathyInfo}>
-            <button href="#a" onClick={goodClick}>
-              <img src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/empathy_btn_off.png"></img>
-            </button>
+            {like ? (
+              <button href="#a" onClick={goodClick}>
+                <ThumbUpAltIcon
+                  sx={{
+                    fontSize: "70px",
+                    background: "white",
+                  }}
+                />
+              </button>
+            ) : (
+              <button href="#a" onClick={goodClick}>
+                <ThumbUpOffAltIcon
+                  sx={{ fontSize: "70px", background: "white" }}
+                />
+              </button>
+            )}
+
             <div>
+              {/* <span>{like ? "좋아요누름" : "안누름"}</span> */}
               <span>{data.goodCount}명</span>
             </div>
           </div>
         </div>
-        {
+        {data.user && data.user.email === sessionStorage.getItem("email") && (
           <div className={classes.qsBtn}>
             <ul>
               <li>
@@ -138,7 +170,7 @@ const DetailBoard = () => {
               </li>
             </ul>
           </div>
-        }
+        )}
         <Comment />
       </div>
     </main>

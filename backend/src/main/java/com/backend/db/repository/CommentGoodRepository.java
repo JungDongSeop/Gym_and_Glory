@@ -1,6 +1,8 @@
 package com.backend.db.repository;
 
+import com.backend.db.entity.Comment;
 import com.backend.db.entity.CommentGood;
+import com.backend.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

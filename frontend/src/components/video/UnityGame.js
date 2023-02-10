@@ -96,6 +96,7 @@ const UnityGame = forwardRef((props, ref) => {
 
   const handleUserInfo = useCallback((num, nick) => {
     setMyNum(num);
+    props.handleEnterDelay();
   }, []);
 
   useEffect(() => {

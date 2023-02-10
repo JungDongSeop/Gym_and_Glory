@@ -77,7 +77,13 @@ const Main = () => {
             <img className={classes.smallLogo} src={Logo} alt={Logo}></img>
             <div ref={storyDivRev} className={classes.storyDiv} id="storyDiv">
               <h2>스토리</h2>
+<<<<<<< HEAD
               <div
+=======
+
+
+            <div
+>>>>>>> 127962a587dfaad2c8964953a0b0e8ba4d250c05
               ref={(el) => (storyContentRef.current[0] = el)}
               className={classes.storySection}
             >
@@ -180,7 +186,11 @@ const Main = () => {
             
             <div style={{
               display:'inline-block',
+<<<<<<< HEAD
               height:'200px'
+=======
+              height:'500px'
+>>>>>>> 127962a587dfaad2c8964953a0b0e8ba4d250c05
             }}></div>
 
             </div>

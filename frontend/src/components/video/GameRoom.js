@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
   height: auto;
   width: 100%;
-  background-color: #161e26;
+  background-color: #1e1d23;
   overflow-y: hidden;
 `;
 
@@ -39,7 +39,7 @@ const NavWrapper = styled.div`
   justify-content: center;
   width: 100%;
   align-items: center;
-  background: linear-gradient(#000c40, #4a4a68);
+  background: linear-gradient(#030719, #3a3a4e);
 `;
 
 const HeadWrapper = styled.div`
@@ -68,7 +68,7 @@ const FooterWrapper = styled.div`
   position: absolute;
   bottom: 0;
   align-items: center;
-  background: linear-gradient(#4a4a68, #000c40);
+  background: linear-gradient(#3a3a4e, #030719);
 `;
 
 const Footer = styled.div`
@@ -467,6 +467,11 @@ class GameRoom extends Component {
             console.log(this.state.gameStatus)
           );
         });
+        mySession.on("signal:middleState", (e) => {
+          this.setState({ middleState: !this.state.middleState }, () =>
+            console.log(this.state.middleState)
+          );
+        });
         mySession.on("exception", (exception) => {});
 
         this.getToken().then((token) => {
@@ -591,22 +596,24 @@ class GameRoom extends Component {
   }
 
   async handleSelectedExercise(exercise) {
-    if (this.state.loadingStatus === true) {
-      return;
-    }
-    if (this.state.readyStatus) {
-      alert(
-        "준비 완료일때는 선택한 운동을 바꿀 수 없습니다.\n준비 완료를 해제하고 다시 시도해주세요."
-      );
-      return;
-    }
     if (this.state.enterDelay) {
       alert("게임에 접속 중입니다. 잠시만 기다려 주세요");
+      return;
+    }
+    if (this.state.loadingStatus === true) {
       return;
     }
     if (this.state.middleState) {
       alert("라운드 진행 중에는 선택한 운동을 바꿀 수 없습니다!");
       return;
+    }
+    if (!this.state.ishost && this.state.readyStatus) {
+      if (!this.state.gameStatus) {
+        alert(
+          "준비 완료일때는 선택한 운동을 바꿀 수 없습니다.\n준비 완료를 해제하고 다시 시도해주세요."
+        );
+        return;
+      }
     }
     if (this.state.selectedExercise === exercise) {
       this.setState({ selectedExercise: undefined, exerciseNum: undefined });
@@ -782,9 +789,16 @@ class GameRoom extends Component {
   }
 
   handleMiddleState() {
-    this.setState({ middleState: !this.state.middleState }, () => {
-      console.log(this.state.middleState);
+    const mySession = this.state.session;
+    mySession.signal({
+      data: "",
+      to: [],
+      type: "middleState",
     });
+    console.log("전부에게 중간 타임이라고 신호 보냄");
+    // this.setState({ middleState: !this.state.middleState }, () => {
+    //   console.log(this.state.middleState);
+    // });
   }
 
   handleEnterDelay() {
@@ -801,11 +815,14 @@ class GameRoom extends Component {
       <Wrapper>
         <NavWrapper>
           <HeadWrapper>
-            <TitleWrapper>
-              <p className="p-margin">방제 : {this.state.mySessionTitle}</p>
-              <p className="p-margin">팀명 : {this.state.myTeamTitle}</p>
-              <p className="p-margin">방 ID : {this.state.mySessionId}</p>
-            </TitleWrapper>
+            {/* <TitleWrapper> */}
+            <div className="titleBox">
+              <p style={{ marginTop: 9 }}>{this.state.mySessionTitle}</p>
+            </div>
+            <div className="titleBox">
+              <p style={{ marginTop: 9 }}>팀명 : {this.state.myTeamTitle}</p>
+            </div>
+            {/* </TitleWrapper> */}
             <button onClick={this.leaveSession}>나가기</button>
           </HeadWrapper>
         </NavWrapper>
@@ -971,7 +988,7 @@ class GameRoom extends Component {
                 </div>
                 {this.state.chaton ? (
                   <div className="chatbox">
-                    <div className="chatbox-header" />
+                    {/* <div className="chatbox-header" /> */}
                     <div className="chatbox-chats" ref="chatoutput">
                       <Chats chats={chats} />
                     </div>
@@ -1042,6 +1059,7 @@ class GameRoom extends Component {
                 fontSize="large"
                 onClick={this.handleVideoStatus}
                 className="hover-pointer"
+                sx={{ color: "#b1b8b0" }}
               />
             ) : (
               <VideocamOffOutlined
@@ -1049,6 +1067,7 @@ class GameRoom extends Component {
                 fontSize="large"
                 onClick={this.handleVideoStatus}
                 className="hover-pointer"
+                sx={{ color: "#b1b8b0" }}
               />
             )}
             {this.state.audiostate ? (
@@ -1057,6 +1076,7 @@ class GameRoom extends Component {
                 fontSize="large"
                 onClick={this.handleAudioStatus}
                 className="hover-pointer"
+                sx={{ color: "#b1b8b0" }}
               />
             ) : (
               <MicOffOutlined
@@ -1064,6 +1084,7 @@ class GameRoom extends Component {
                 fontSize="large"
                 onClick={this.handleAudioStatus}
                 className="hover-pointer"
+                sx={{ color: "#b1b8b0" }}
               />
             )}
             {this.state.chaton ? (
@@ -1072,6 +1093,7 @@ class GameRoom extends Component {
                 fontSize="large"
                 onClick={this.chattoggle}
                 className="hover-pointer"
+                sx={{ color: "#b1b8b0" }}
               />
             ) : (
               <SpeakerNotesOffOutlined
@@ -1079,6 +1101,7 @@ class GameRoom extends Component {
                 fontSize="large"
                 onClick={this.chattoggle}
                 className="hover-pointer"
+                sx={{ color: "#b1b8b0" }}
               />
             )}
           </Footer>

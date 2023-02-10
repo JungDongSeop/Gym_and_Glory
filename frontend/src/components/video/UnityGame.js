@@ -161,7 +161,8 @@ const UnityGame = forwardRef((props, ref) => {
         type: "gameEnd",
       });
     }, 15000);
-    if (myNum === 1) {
+
+    if (myNum === 1 && teamRecord.time !== 0) {
       axios
         .post(APPLICATION_SERVER_URL + "game/teamlog", teamRecord)
         .then(() => {

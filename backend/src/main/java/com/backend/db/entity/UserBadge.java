@@ -2,8 +2,10 @@ package com.backend.db.entity;
 
 
 import com.backend.db.compositkey.UserBadgePK;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.implementation.bind.annotation.AllArguments;
 
 import javax.persistence.*;
 
@@ -12,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @IdClass(UserBadgePK.class)
 public class UserBadge {
+
 
     @Id
     @ManyToOne
@@ -22,6 +25,12 @@ public class UserBadge {
     @ManyToOne
     @JoinColumn(name = "badge_sequence")
     private Badge badge;
+
+
+    public UserBadge(User user,Badge badge){
+        this.user =user;
+        this.badge=badge;
+    }
 
 //    repository.findById(PK);
 

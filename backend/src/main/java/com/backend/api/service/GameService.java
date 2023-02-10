@@ -77,11 +77,14 @@ public class GameService {
 
         user.setExp(damage);
         userRepository.save(user); // 유저 경험치 저장
-        
+
         int i = 0;
         for(int count : exerciseCntList) {
 
+            System.out.println("카운트 다운"+ count);
             Exercise exercise = exerciseRepository.getById(i+1);
+            int before = exerciseLogRepository.sumByDivAndUser(user, exercise);
+//            if(before);
             UserExerciseLog userExerciseLog = UserExerciseLog.createUserLog(user, count, exercise);
             exerciseLogRepository.save(userExerciseLog);
             i++;

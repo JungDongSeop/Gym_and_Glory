@@ -70,13 +70,9 @@ public class ReportService {
         String cur = user.getRole();
         System.out.println(cur);
         if(user.getRole().equals("ROLE_ADMIN")){
-            System.out.println("여기 들어옴");
             list = reportRepository.findAll();
-            System.out.println("여기 들어옴");
         } else {
-            System.out.println("들어옴");
             list = reportRepository.findBySendUser(user);
-            System.out.println("들어옴");
         }
         return list;
     }

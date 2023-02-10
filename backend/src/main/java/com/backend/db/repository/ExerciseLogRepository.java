@@ -1,5 +1,7 @@
 package com.backend.db.repository;
 
+import com.backend.db.entity.Exercise;
+import com.backend.db.entity.User;
 import com.backend.db.entity.UserExerciseLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +23,6 @@ public interface ExerciseLogRepository extends JpaRepository <UserExerciseLog, I
             "where ue.user.userSequence =:userSequence")
     List<UserExerciseLog> findByUserSequenceList(@Param("userSequence") Integer userSequence);
 
+    @Query("select SUM(se.count) from UserExerciseLog se where se.user=:user and se.exercise=:exercise ")
+    int sumByDivAndUser(User user, Exercise exercise);
 }

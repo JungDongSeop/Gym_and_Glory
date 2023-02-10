@@ -93,7 +93,8 @@ const ReportBoard = () => {
                     navigate(`/board/report/${item.reportSequence}`)
                   }
                 >
-                  from : {item.sendSequence}, to : {item.getSequence}, 종류 :{" "}
+                  from : {item.sendUser.nickname}, to :{" "}
+                  {item.getUser ? item.getUser.nickname : null}, 종류 :{" "}
                   {reportKinds[item.kind]}, 내용 : {item.contents}
                 </li>
               ))}

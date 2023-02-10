@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import "./UnityGame.css";
+import RestApi from "../api/RestApi";
+import axios from "axios";
 
 const UnityGame = forwardRef((props, ref) => {
   const { unityProvider, sendMessage, addEventListener, removeEventListener } =
@@ -22,6 +24,8 @@ const UnityGame = forwardRef((props, ref) => {
       productName: "3D_test",
       productVersion: "0.1",
     });
+
+  const APPLICATION_SERVER_URL = `${RestApi()}/`;
 
   const teamRecord = {
     teamName: props.team,
@@ -92,6 +96,7 @@ const UnityGame = forwardRef((props, ref) => {
 
   const handleUserInfo = useCallback((num, nick) => {
     setMyNum(num);
+    props.handleEnterDelay();
   }, []);
 
   useEffect(() => {
@@ -148,9 +153,24 @@ const UnityGame = forwardRef((props, ref) => {
   );
 
   const handleGameEnd = useCallback(() => {
-    console.log(myNum);
-    console.log(myRecord);
-    console.log(teamRecord);
+    setTimeout(() => {
+      const mySession = props.session;
+      mySession.signal({
+        data: "게임이 종료되어 로비로 이동합니다.",
+        to: [],
+        type: "gameEnd",
+      });
+    }, 15000);
+    if (myNum === 1) {
+      axios
+        .post(APPLICATION_SERVER_URL + "game/teamlog", teamRecord)
+        .then(() => {
+          console.log("팀 로그 보내기");
+        });
+    }
+    axios.post(APPLICATION_SERVER_URL + "game/userlog", myRecord).then(() => {
+      console.log("개인 기록 보내기");
+    });
   }, [myNum, myRecord, teamRecord]);
 
   useEffect(() => {

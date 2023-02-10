@@ -62,11 +62,10 @@ public class BoardController {
     @Transactional
     @DeleteMapping("/{articleSeqeunce}")
     public ResponseEntity<?> delete(@PathVariable Integer articleSeqeunce){
-        int flag = boardService.delete(articleSeqeunce);
-        if(flag==1)
-            return new ResponseEntity("삭제 완료",HttpStatus.OK);
-        else
-            return new ResponseEntity("삭제 실패",HttpStatus.OK);
+        System.out.println("시작");
+        boardService.delete(articleSeqeunce);
+
+        return new ResponseEntity("삭제 완료",HttpStatus.OK);
     }
 
     //글 종류 구분해서 글 목록 받아오기
@@ -89,7 +88,24 @@ public class BoardController {
             //null이면 등록하고
             goodService.addGoodBoard(userSequence,articleSequence);
             boardService.addGoodArticle(articleSequence);
+        }else{
+            goodService.minusGoodBoard(userSequence,articleSequence);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        int cnt = boardService.getOne(articleSequence).getGoodCount();
+
+        return new ResponseEntity<>(cnt,HttpStatus.OK);
     }
+
+    @GetMapping("/IsGood/{userSequence}/{articleSequence}")
+    public ResponseEntity<?> boardIsGood(@PathVariable Integer userSequence,@PathVariable Integer articleSequence){
+        User user = userService.getOne(userSequence);
+        BoardArticle article = boardService.getOne(articleSequence);
+        boolean flag = goodService.findBoardGood(user,article);
+        System.out.println(flag);
+        flag= !flag;
+        return new ResponseEntity<>(flag,HttpStatus.OK);
+    }
+
+
 }

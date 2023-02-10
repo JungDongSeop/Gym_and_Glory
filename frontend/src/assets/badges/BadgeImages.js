@@ -1,48 +1,70 @@
-import badge1 from './badge01.png';
-import badge2 from './badge02.png';
-import badge3 from './badge03.png';
-import badge4 from './badge04.png';
-import badge5 from './badge05.png';
-import badge6 from './badge06.png';
-import badge7 from './badge07.png';
-import badge8 from './badge08.png';
+import newbie1 from './newbie1.png';
+import newbie2 from './newbie2.png';
+import newbie3 from './newbie3.png';
+import newbie4 from './newbie4.png';
+import mountain1 from './mountain1.png';
+import mountain2 from './mountain2.png';
+import mountain3 from './mountain3.png';
+import mountain4 from './mountain4.png';
+import galaxy1 from './galaxy1.png';
+import galaxy2 from './galaxy2.png';
+import galaxy3 from './galaxy3.png';
+import galaxy4 from './galaxy4.png';
+import startBadge from './startBadge.png';
+
 import classes from './BadgeImages.module.css';
 
-import React, { useState } from "react";
-// import axios from 'axios';
-// import { useContext } from "react";
-// import AuthContext from "../../store/auth-context";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import { useContext } from "react";
+import AuthContext from "../../store/auth-context";
+import RestApi from '../../components/api/RestApi';
 
 const BadgeImages = () => {
   // user 정보 가져오기
-  // const { userSequence } = useContext(AuthContext);
+  const { userSequence } = useContext(AuthContext);
+  
+  // 뱃지 전체 목록 가져오기
+  // const badgeList = [0, 2, 4];
+  const [badgeAllList, setBadgeAllList] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios(`${RestApi()}/badge/list`)
+      .then((res) => {
+        console.log('뱃지', res.data)
+        console.log(res.data[0].path)
+        setBadgeAllList(res.data);
+      });
+    };
+    fetchData();
+  }, []);
+  const items = [newbie1, newbie2, newbie3, newbie4, mountain1, mountain2, mountain3, mountain4, galaxy1, galaxy2, galaxy3, galaxy4, startBadge]
 
-  // 뱃지 목록 가져오기
-  const badgeList = [0, 2, 4];
-  // const [badgeList, setBadgeLIst] = useState([0, 2, 4]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await axios(`http://localhost:8080/list`)
-  //     .then((res) => {
-  //       setBoard(res.data);
-  //     });
-  //   };
-  //   fetchData();
-  // }, [type]);
-  const items = [badge1, badge2, badge3, badge4, badge5, badge6, badge7, badge8];
+  // 뱃지 유저 목록 가져오기
+  const [userBadges, setUserBadges] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios(`${RestApi()}/badge/list/${userSequence}`)
+      .then((res) => {
+        console.log('뱃지 유저', res.data)
+        setUserBadges(res.data)
+      })
+    }
+    fetchData();
+  }, [userSequence]);
 
   // 마우스 호버 시 설명 창 나타내기
   const [showDescription, setShowDescription] = useState(false);
 
   return (
     <div className={classes.container}>
-      {items.map((badge, index) => {
+      {items.map((item, index) => {
 
         return(
-        <div key={index}>
-          <img 
-            className={badgeList.includes(index) ? classes.have : classes.notHave} 
-            src={badge} 
+        <div key={index} className={classes.badge}>
+          <img
+            className={userBadges.includes(index) ? classes.have : classes.notHave} 
+            src={item} 
             alt="badge" 
             id={index}
             onMouseEnter={() => setShowDescription(index)}
@@ -54,11 +76,11 @@ const BadgeImages = () => {
               className={classes.descriptionBox}
               style={{
                 // 마우스 호버 시, 해당 그림의 우측 하단에 설명창 표시
-                left: document.getElementById(`${index}`).getBoundingClientRect().right - 10,
-                top: document.getElementById(`${index}`).getBoundingClientRect().bottom - 10,
+                left: document.getElementById(`${index}`).getBoundingClientRect().right + 20,
+                top: document.getElementById(`${index}`).getBoundingClientRect().bottom,
               }}
             >
-              {index}번째 뱃지입니다. 설명 작성
+              {badgeAllList[index] ? badgeAllList[index].description : null}
             </div>
           ) : null}
       </div>)})}

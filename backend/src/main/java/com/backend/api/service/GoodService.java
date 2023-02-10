@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoodService {
 
-    private BoardGoodRepository boardGoodRepository;
-    private CommentGoodRepository commentGoodRepository;
-    private CommentRepository commentRepository;
-    private UserRepository userRepository;
-    private BoardRepository boardRepository;
+    private final BoardGoodRepository boardGoodRepository;
+    private final CommentGoodRepository commentGoodRepository;
+    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
     @Autowired
     public GoodService(BoardGoodRepository boardGoodRepository,
                        CommentGoodRepository commentGoodRepository,
@@ -45,15 +45,37 @@ public class GoodService {
         boardGoodRepository.save(boardGood);
     }
 
+    public void minusGoodBoard(Integer userSequence, Integer articleSequence) {
+        User user = userRepository.findById(userSequence).get();
+        BoardArticle boardArticle = boardRepository.findById(articleSequence).get();
+        BoardGood boardGood = boardGoodRepository.findByUserAndArticle(user,boardArticle);
+        boardArticle.setGoodCount(boardArticle.getGoodCount()-1);
+        System.out.println("현재 좋아요 누른 사람의 시퀀스"+boardGood.getUser().getUserSequence());
+        System.out.println("현재 글 번호"+ boardGood.getBoardGoodSequence());
+        boardGoodRepository.delete(boardGood);
+    }
+
     public CommentGood findCommentGood(Integer userSequence, Integer commentSequence) {
         return commentGoodRepository.findByUserSequenceAndCommentSequence(userSequence,commentSequence);
     }
 
     public void addGoodComment(Integer userSequence, Integer commentSequence) {
+        System.out.println("들어옴");
         CommentGood commentGood = CommentGood.builder().userSequence(userSequence).commentSequence(commentSequence).build();
+        commentGoodRepository.save(commentGood);
+        System.out.println("좋아요 추가");
+
         Comment comment = commentRepository.findByCommentSequence(commentSequence);
         comment.setGoodCount(comment.getGoodCount()+1);
         commentRepository.save(comment);
-        commentGoodRepository.save(commentGood);
+    }
+
+
+    public void minusGoodComment(Integer userSequence, Integer commentSequence) {
+        CommentGood commentGood = commentGoodRepository.findByUserSequenceAndCommentSequence(userSequence,commentSequence);
+        commentGoodRepository.delete(commentGood);
+        Comment comment = commentRepository.findById(commentSequence).get();
+        comment.setGoodCount(comment.getGoodCount()-1);
+        commentRepository.save(comment);
     }
 }

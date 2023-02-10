@@ -44,6 +44,7 @@ public class UserService {
                 .nickname(signUpReq.getNickname())
                 .gender(signUpReq.getGender())
                 .telNumber(signUpReq.getTelNumber())
+                .role("ROLE_USER")
                 .build();
         //사진이 들어올 경우
         //작업 넣어주고 userSeuqence빼주고 사진을 넣어주면
@@ -89,7 +90,8 @@ public class UserService {
     }
 
     public User getOne(Integer userSequence) {
-        return userRepository.findByUserSequence(userSequence);
+        System.out.println(userSequence + "dddd");
+        return userRepository.findById(userSequence).orElse(null);
     }
 
     public User getFindByEmail(String email) {

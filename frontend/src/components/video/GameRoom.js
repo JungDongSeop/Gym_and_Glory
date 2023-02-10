@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
   height: auto;
   width: 100%;
-  background-color: #52784a;
+  background-color: #161e26;
   overflow-y: hidden;
 `;
 
@@ -39,7 +39,7 @@ const NavWrapper = styled.div`
   justify-content: center;
   width: 100%;
   align-items: center;
-  background-color: #78ae6d;
+  background: linear-gradient(#000c40, #4a4a68);
 `;
 
 const HeadWrapper = styled.div`
@@ -68,7 +68,7 @@ const FooterWrapper = styled.div`
   position: absolute;
   bottom: 0;
   align-items: center;
-  background-color: #78ae6d;
+  background: linear-gradient(#4a4a68, #000c40);
 `;
 
 const Footer = styled.div`
@@ -111,6 +111,7 @@ class GameRoom extends Component {
       middleState: false,
       nicknames: [sessionStorage.getItem("nickname")],
       exerciseNum: undefined,
+      enterDelay: true,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -119,7 +120,6 @@ class GameRoom extends Component {
     this.sendChatByClick = this.sendChatByClick.bind(this);
     this.sendChatByEnter = this.sendChatByEnter.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
-    this.startButton = this.startButton.bind(this);
     this.loop = this.loop.bind(this);
     this.start = this.start.bind(this);
     this.init = this.init.bind(this);
@@ -134,6 +134,7 @@ class GameRoom extends Component {
     this.sendGameStart = this.sendGameStart.bind(this);
     this.handleMiddleState = this.handleMiddleState.bind(this);
     this.handleEvent = this.handleEvent.bind(this);
+    this.handleEnterDelay = this.handleEnterDelay.bind(this);
   }
 
   componentDidMount() {
@@ -389,6 +390,32 @@ class GameRoom extends Component {
         mySession.on("streamDestroyed", (event) => {
           this.deleteSubscriber(event.stream.streamManager);
         });
+        mySession.on("signal:gameEnd", (event) => {
+          const mySession = this.state.session;
+          const { navigate } = this.props;
+          if (mySession) {
+            mySession.disconnect();
+          }
+          axios
+            .delete(
+              APPLICATION_SERVER_URL + "room/" + this.state.mySessionId,
+              {}
+            )
+            .then(() => {
+              this.OV = null;
+              this.setState({
+                session: "",
+                subscribers: [],
+                mySessionId: "",
+                mainStreamManager: undefined,
+                publisher: undefined,
+                ishost: false,
+              });
+            })
+            .then(() => {
+              navigate("/lobby", { state: "gameEnd" });
+            });
+        });
         mySession.on("signal:room-exploded", (event) => {
           if (!this.state.ishost) {
             const mySession = this.state.session;
@@ -468,23 +495,18 @@ class GameRoom extends Component {
   }
 
   start() {
+    // teachable machine 작동 시작
     console.log(this.state.model);
 
-    this.setState({
-      count: 0,
-      status: "stand",
-    });
+    // this.setState({
+    //   count: 0,
+    //   status: "stand",
+    // });
     this.init();
   }
 
   chattoggle() {
     this.setState({ chaton: !this.state.chaton });
-  }
-
-  startButton() {
-    let mySession = this.state.session;
-    // axios 요청을 back으로 보낼지 말지
-    // 참고용 자료에서는 back으로 게임 중이라는 상태를 보냈음
   }
 
   leaveSession() {
@@ -576,6 +598,10 @@ class GameRoom extends Component {
       alert(
         "준비 완료일때는 선택한 운동을 바꿀 수 없습니다.\n준비 완료를 해제하고 다시 시도해주세요."
       );
+      return;
+    }
+    if (this.state.enterDelay) {
+      alert("게임에 접속 중입니다. 잠시만 기다려 주세요");
       return;
     }
     if (this.state.middleState) {
@@ -734,6 +760,10 @@ class GameRoom extends Component {
       alert("어떤 운동을 할 지 선택해주세요!");
       return;
     }
+    if (this.state.loadingStatus) {
+      alert("운동 모델을 받아오는 도중에는 게임을 시작할 수 없습니다.");
+      return;
+    }
     axios
       .put(APPLICATION_SERVER_URL + "game", {
         sessionKey: this.state.mySessionId,
@@ -754,6 +784,12 @@ class GameRoom extends Component {
   handleMiddleState() {
     this.setState({ middleState: !this.state.middleState }, () => {
       console.log(this.state.middleState);
+    });
+  }
+
+  handleEnterDelay() {
+    this.setState({ enterDelay: false }, () => {
+      console.log(this.state.enterDelay);
     });
   }
 
@@ -885,6 +921,8 @@ class GameRoom extends Component {
                   nicknames={this.state.nicknames}
                   team={this.state.myTeamTitle}
                   handleMiddleState={this.handleMiddleState}
+                  session={this.state.session}
+                  handleEnterDelay={this.handleEnterDelay}
                 />
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   {this.state.ishost &&

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import NavigateButtons from "./NavigateButtons";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import axios from "axios";
@@ -16,6 +16,10 @@ const UpdateBoard = () => {
   // 게시판에 쓴 글들을 저장할 변수
   const [board, setBoard] = useState([]);
 
+  // 수정내용
+  const enteredNewTitle = useRef("");
+  const enteredNewContent = useRef("");
+
   // 게시글 read axios
   useEffect(() => {
     const fetchBoard = async () => {
@@ -25,9 +29,9 @@ const UpdateBoard = () => {
     fetchBoard();
   }, [articleSequence]);
 
-  const handleChange = (event) => {
-    setBoard({ ...board, [event.target.name]: event.target.value });
-  };
+  // const handleChange = (event) => {
+  //   setBoard({ ...board, [event.target.name]: event.target.value });
+  // };
 
   // 게시판 수정 axios
   const handleSubmit = (event) => {
@@ -35,8 +39,8 @@ const UpdateBoard = () => {
     axios
       .put(`${RestApi()}/board/`, {
         articleSequence: articleSequence,
-        title: board.title,
-        contents: board.contents,
+        title: enteredNewTitle,
+        contents: enteredNewContent,
       })
       .then(() => {
         navigate(`/board/${type}`);
@@ -74,7 +78,6 @@ const UpdateBoard = () => {
           <div className={classes.board_write_wrap}>
             <h1>{typename()}</h1>
             <p>{typeDescription()}</p>
-            <p>{typeDescription}</p>
             <div className={classes.board_write}>
               <div className={classes.title}>
                 <dl>
@@ -84,7 +87,8 @@ const UpdateBoard = () => {
                       type="text"
                       placeholder="제목을 입력하세요"
                       defaultValue={board.title}
-                      onChange={handleChange}
+                      // onChange={handleChange}
+                      ref={enteredNewTitle}
                     />
                   </dd>
                 </dl>
@@ -93,7 +97,8 @@ const UpdateBoard = () => {
                 <textarea
                   placeholder="내용을 입력하세요"
                   defaultValue={board.contents}
-                  onChange={handleChange}
+                  // onChange={handleChange}
+                  ref={enteredNewContent}
                 ></textarea>
               </div>
             </div>
@@ -102,7 +107,10 @@ const UpdateBoard = () => {
               <button type="submit" className={classes.on}>
                 등록
               </button>
-              <button type="submit" onClick={() => navigate(`/board/${type}`)}>
+              <button
+                type="submit"
+                onClick={() => navigate(`/board/${type}/${articleSequence}`)}
+              >
                 취소
               </button>
             </div>

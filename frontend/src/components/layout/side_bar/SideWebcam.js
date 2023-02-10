@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 
 const SideWebcam = () => {
-  const [isShowVideo, setIsShowVideo] = useState(false);
+  const [isShowVideo, setIsShowVideo] = useState(true);
   const videoElement = useRef(null);
 
   const videoConstraints = {
@@ -23,8 +23,8 @@ const SideWebcam = () => {
   };
 
   return (
-    <div>
-      <div className="camView">
+    <div style={{width: '280px', height: '260px'}}>
+      <div className="camView" style={{margin: 'auto', width:'280px' ,height: '210px', backgroundColor: 'gray'}}>
         {isShowVideo && (
           <Webcam
             audio={false}
@@ -33,8 +33,10 @@ const SideWebcam = () => {
           />
         )}
       </div>
-      <button onClick={startCam}>Start Video</button>
-      <button onClick={stopCam}>Stop Video</button>
+      <div style={{margin: '0 auto', padding: 'auto'}}>
+        <button onClick={startCam}>Start Video</button>
+        <button onClick={stopCam}>Stop Video</button>
+      </div>
     </div>
   );
 };

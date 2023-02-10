@@ -5,6 +5,8 @@ import AuthContext from "../../store/auth-context";
 import axios from "axios";
 import classes from "./Comment.module.css";
 import RestApi from "../api/RestApi";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 // import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +24,7 @@ const Comment = () => {
 
   // 댓글 읽기 위한 state
   const [comments, setComments] = useState([]);
+
   // 댓글 쓰기 위한 state
   const [newComment, setNewComment] = useState({
     userSequence: userSequence,
@@ -42,9 +45,36 @@ const Comment = () => {
   // };
   const commentRead = async (articleSequence) => {
     const result = await axios(`${RestApi()}/board/comment/${articleSequence}`);
+    // const isCommentLike = await axios(
+    //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
+    // );
     setComments(result.data.reverse());
     console.log(result.data, "댓글들");
   };
+
+  // const LIKE = (isCommentLike) => {
+  //   if (isCommentLike) {
+  //     return <div>굿굿</div>;
+  //   } else {
+  //     return <div>노놉</div>;
+  //   }
+  // };
+
+  const isCommentLike = async (commentSequence) => {
+    // const response = await axios(
+    //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
+    // );
+    // return response.data
+    await axios(
+      `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
+    ).then((res) => {
+      console.log(res.data);
+    });
+
+    // setCommentLike(response.data);
+    // console.log(response.data);
+  };
+
   useEffect(() => {
     const commentRead = async () => {
       const result = await axios(
@@ -114,9 +144,6 @@ const Comment = () => {
 
   return (
     <div>
-      {comments.map((comment, index) => {
-        <p>{comment.content}</p>;
-      })}
       <div className={classes.replyWrap}>
         <div className={classes.replyTitle}>
           <h2>
@@ -126,26 +153,57 @@ const Comment = () => {
         </div>
 
         <ul className={classes.replyUl}>
-          {comments.map((item, index) => {
+          {comments.map((comment, index) => (
             <li key={index}>
-              {/* <p>ddd</p> */}
               <div className={classes.reply}>
-                {/* <p className={classes.commonCharId}>
-                  <img
+                <p className={classes.commonCharId}>
+                  {/* <img
                     src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/world_icon/icon_11.png"
                     alt="프로필 이미지"
-                  />
-                  {item.user ? item.user.nickname : null}
-                  <span>{item.registerTime}</span>
-                </p> */}
-                {/* <ul className={classes.replyBtnWrap}>
-                <li>
-                </li>
-              </ul> */}
-                <div className={classes.replyText}>{item.contents}</div>
+                  /> */}
+                  {comment.user ? comment.user.nickname : null}
+                  <span>
+                    {new Date(comment.registerTime).toLocaleString("default", {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                    })}
+                  </span>
+                </p>
+                <ul className={classes.replyBtnWrap}>
+                  <li className={classes.replyBtn}>
+                    <p>추천 수: {comment.goodCount}</p>
+                    <p>
+                      {/* {isCommentLike(comment.commentSequence, userSequence)} */}
+                    </p>
+                  </li>
+                  {
+                    <li className={classes.replyBtn}>
+                      <button
+                        onClick={() => handleGood(comment.commentSequence)}
+                      >
+                        <ThumbUpAltIcon />
+                      </button>
+                    </li>
+                  }
+
+                  {+sessionStorage.getItem("userSequence") ===
+                  +comment.user.userSequence ? (
+                    <li className={classes.replyBtn}>
+                      <button
+                        onClick={() => handleDelete(comment.commentSequence)}
+                      >
+                        삭제
+                      </button>
+                    </li>
+                  ) : null}
+                </ul>
+                <div className={classes.replyText}>{comment.contents}</div>
               </div>
-            </li>;
-          })}
+            </li>
+          ))}
         </ul>
       </div>
       <div className={classes.bottomTxarWrap}>

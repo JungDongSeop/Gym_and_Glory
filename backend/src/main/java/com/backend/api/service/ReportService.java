@@ -16,8 +16,8 @@ import java.util.List;
 @Service
 public class ReportService {
 
-    private ReportRepository reportRepository;
-    private UserRepository userRepository;
+    private final ReportRepository reportRepository;
+    private final UserRepository userRepository;
     @Autowired
     public ReportService(ReportRepository reportRepository,UserRepository userRepository){
         this.reportRepository = reportRepository;
@@ -66,12 +66,17 @@ public class ReportService {
     public List<Report> getDivReport(String email) {
         User user = userRepository.findOneByEmail(email);
         System.out.println(user.getNickname());
-        List<Report> list;
+        List<Report> list= new ArrayList<>();
+        String cur = user.getRole();
+        System.out.println(cur);
         if(user.getRole().equals("ROLE_ADMIN")){
+            System.out.println("여기 들어옴");
             list = reportRepository.findAll();
-        }
-        else{
+            System.out.println("여기 들어옴");
+        } else {
+            System.out.println("들어옴");
             list = reportRepository.findBySendUser(user);
+            System.out.println("들어옴");
         }
         return list;
     }

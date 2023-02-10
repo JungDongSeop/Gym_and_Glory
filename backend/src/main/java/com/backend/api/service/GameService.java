@@ -67,13 +67,17 @@ public class GameService {
     public void insertUserLogList(UserExcerciseReq userExcerciseReq) {
 
         String nickName = userExcerciseReq.getNickname(); // 개인 로그 들어가야할 유저 닉네임
-        int damage = userExcerciseReq.getDamage(); // 유저 경험치
+        float damage = (float) userExcerciseReq.getDamage(); // 유저 경험치
         List<Integer> exerciseCntList = userExcerciseReq.getExercise(); // 운동 카운트
 
         User user = userRepository.findByNickname(nickName); // 닉네임을 통해 유저를 찾는다.
         if(user == null) {
             throw new EntityNotFoundException("유저가 없어요 ㅠㅠ");
         }
+
+        user.setExp(damage);
+        userRepository.save(user); // 유저 경험치 저장
+        
         int i = 0;
         for(int count : exerciseCntList) {
 

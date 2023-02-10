@@ -44,6 +44,7 @@ public class FriendService {
     public List<FrdRes> delFriendList(FrdReq frdReq) {
 
         Friend frd = friendRepository.findBySendFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
+        System.out.println("유저 닉네임"+ frd.getFrdUser().getNickname());
 
         if(frd == null) { // 보냈을 때 상대방이 수락한 경우가 없다면 받아서 수락한 유저이다.
 
@@ -51,6 +52,7 @@ public class FriendService {
         }
 
         Integer userSequence = frd.getUser().getUserSequence(); // 현재 로그인된 유저 아이디를 가져온다.
+        System.out.println("시퀀스는 현재 로그인된 유저 아디는??"+userSequence);
         friendRepository.delete(frd);
 
         List<Tuple> frdResTuples = friendRepository.findFrindList(userSequence);

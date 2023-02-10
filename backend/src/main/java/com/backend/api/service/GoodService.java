@@ -60,12 +60,22 @@ public class GoodService {
     }
 
     public void addGoodComment(Integer userSequence, Integer commentSequence) {
+        System.out.println("들어옴");
         CommentGood commentGood = CommentGood.builder().userSequence(userSequence).commentSequence(commentSequence).build();
+        commentGoodRepository.save(commentGood);
+        System.out.println("좋아요 추가");
+
         Comment comment = commentRepository.findByCommentSequence(commentSequence);
         comment.setGoodCount(comment.getGoodCount()+1);
         commentRepository.save(comment);
-        commentGoodRepository.save(commentGood);
     }
 
 
+    public void minusGoodComment(Integer userSequence, Integer commentSequence) {
+        CommentGood commentGood = commentGoodRepository.findByUserSequenceAndCommentSequence(userSequence,commentSequence);
+        commentGoodRepository.delete(commentGood);
+        Comment comment = commentRepository.findById(commentSequence).get();
+        comment.setGoodCount(comment.getGoodCount()-1);
+        commentRepository.save(comment);
+    }
 }

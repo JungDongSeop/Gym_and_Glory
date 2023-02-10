@@ -63,8 +63,23 @@ public class CommentController {
 
         if (flag == null) {
             goodService.addGoodComment(userSequence, commentSequence);
+        }else{
+            goodService.minusGoodComment(userSequence, commentSequence);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        Comment comment = commentService.findCommentCount(commentSequence);
+
+        return new ResponseEntity<>(comment.getGoodCount(),HttpStatus.OK);
     }
+
+    @GetMapping("/IsGood/{userSequence}/{commentSequence}")
+    public ResponseEntity<?> IsCommentGood(@PathVariable Integer userSequence, @PathVariable Integer commentSequence) {
+        CommentGood flag = goodService.findCommentGood(userSequence, commentSequence);
+        System.out.println(flag);
+        if(flag==null){
+            return new ResponseEntity<>(false,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(true,HttpStatus.OK);
+    }
+
 }

@@ -66,4 +66,8 @@ public class CommentService {
     public int deleteComment(int commentSequence) {
         return commentRepository.deleteByCommentSequence(commentSequence);
     }
+
+    public Comment findCommentCount(Integer commentSequence) {
+        return commentRepository.findById(commentSequence).get();
+    }
 }

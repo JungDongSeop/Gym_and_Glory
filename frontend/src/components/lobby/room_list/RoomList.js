@@ -53,20 +53,30 @@ class RoomList extends Component {
           });
       }, 1000),
     });
+    axios
+      .get("https://i8e107.p.ssafy.io:8443/openvidu/api/sessions", {
+        headers: {
+          Authorization: `Basic ${btoa(`OPENVIDUAPP:MY_SECRET`)}`,
+          // "Content-Type": "application/json",
+          // "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Methods": "GET,POST",
+        },
+      })
+      .then((res) => console.log(res));
   }
 
-  componentDidUpdate() {
-    if (this.props.searchText) {
-      clearInterval(this.state.intervalFun);
-      axios
-        .get(`${RestApi()}/room/search`, {
-          params: { title: this.props.searchText },
-        })
-        .then((response) => {
-          console.log(response);
-        });
-    }
-  }
+  // componentDidUpdate() {
+  //   axios
+  //     .get("https://i8e107.p.ssafy.io:8443/openvidu/api/sessions", {
+  //       headers: {
+  //         Authorization: `Basic ${btoa(`OPENVIDUAPP:MY_SECRET`)}`,
+  //         // "Content-Type": "application/json",
+  //         // "Access-Control-Allow-Origin": "*",
+  //         // "Access-Control-Allow-Methods": "GET,POST",
+  //       },
+  //     })
+  //     .then((res) => console.log(res));
+  // }
 
   componentWillUnmount() {
     clearInterval(this.state.intervalFun);

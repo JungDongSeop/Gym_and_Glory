@@ -24,6 +24,7 @@ const Comment = () => {
 
   // 댓글 읽기 위한 state
   const [comments, setComments] = useState([]);
+
   // 댓글 쓰기 위한 state
   const [newComment, setNewComment] = useState({
     userSequence: userSequence,
@@ -44,9 +45,30 @@ const Comment = () => {
   // };
   const commentRead = async (articleSequence) => {
     const result = await axios(`${RestApi()}/board/comment/${articleSequence}`);
+    // const isCommentLike = await axios(
+    //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
+    // );
     setComments(result.data.reverse());
     console.log(result.data, "댓글들");
   };
+
+  const isCommentLike = async (commentSequence) => {
+    // const response = await axios(
+    //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
+    // );
+    // return response.data
+    let isLike = "false";
+    await axios(
+      `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
+    ).then((res) => {
+      isLike = res.data;
+    });
+    return isLike;
+
+    // setCommentLike(response.data);
+    // console.log(response.data);
+  };
+
   useEffect(() => {
     const commentRead = async () => {
       const result = await axios(
@@ -127,7 +149,6 @@ const Comment = () => {
         <ul className={classes.replyUl}>
           {comments.map((comment, index) => (
             <li key={index}>
-              {/* <p>ddd</p> */}
               <div className={classes.reply}>
                 <p className={classes.commonCharId}>
                   {/* <img
@@ -146,8 +167,16 @@ const Comment = () => {
                   </span>
                 </p>
                 <ul className={classes.replyBtnWrap}>
+                  {isCommentLike(comment.commentSequence) === true ? (
+                    <span>굿굿</span>
+                  ) : (
+                    <span>노놉</span>
+                  )}
                   <li className={classes.replyBtn}>
                     <p>추천 수: {comment.goodCount}</p>
+                    <p>
+                      {/* {isCommentLike(comment.commentSequence, userSequence)} */}
+                    </p>
                   </li>
                   <li className={classes.replyBtn}>
                     <button onClick={() => handleGood(comment.commentSequence)}>

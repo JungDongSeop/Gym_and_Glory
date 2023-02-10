@@ -52,26 +52,23 @@ const Comment = () => {
     console.log(result.data, "댓글들");
   };
 
-  const LIKE = (isCommentLike) => {
-    if (isCommentLike) {
-      return <div>굿굿</div>;
-    } else {
-      return <div>노놉</div>;
-    }
-  };
+  // const LIKE = (isCommentLike) => {
+  //   if (isCommentLike) {
+  //     return <div>굿굿</div>;
+  //   } else {
+  //     return <div>노놉</div>;
+  //   }
+  // };
 
   const isCommentLike = async (commentSequence) => {
     // const response = await axios(
     //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
     // );
     // return response.data
-    let isLike = "false";
     await axios(
       `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
     ).then((res) => {
-      // setComments([...comments]);
-      console.log(res.data, 111111111);
-      return res.data;
+      console.log(res.data);
     });
 
     // setCommentLike(response.data);
@@ -182,11 +179,16 @@ const Comment = () => {
                       {/* {isCommentLike(comment.commentSequence, userSequence)} */}
                     </p>
                   </li>
-                  <li className={classes.replyBtn}>
-                    <button onClick={() => handleGood(comment.commentSequence)}>
-                      <ThumbUpAltIcon />
-                    </button>
-                  </li>
+                  {
+                    <li className={classes.replyBtn}>
+                      <button
+                        onClick={() => handleGood(comment.commentSequence)}
+                      >
+                        <ThumbUpAltIcon />
+                      </button>
+                    </li>
+                  }
+
                   {+sessionStorage.getItem("userSequence") ===
                   +comment.user.userSequence ? (
                     <li className={classes.replyBtn}>

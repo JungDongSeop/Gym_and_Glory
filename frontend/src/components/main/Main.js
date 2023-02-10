@@ -1,10 +1,8 @@
 import React, { useContext, useRef } from "react";
-import styled from "@emotion/styled";
 import classes from "./Main.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Carousel } from "antd";
 import AuthContext from "../../store/auth-context";
-// import { Controller, Scene } from 'react-scrollmagic';
 
 import Logo from "../../assets/logo.png";
 import story_img1 from "../../assets/story_img1.PNG";
@@ -30,43 +28,6 @@ const Main = () => {
   const storyDivScrollUp = () => {
     document.getElementById("storyDiv").scrollTop = 0;
   };
-
-  const ClassToggleStyled = styled.div`  
-  .section {
-
-  }
-
-  .fadeComp1 {
-    height:50px;
-	  transition: 0.5s ease-out;
-    opacity: 0;
-
-    & > img:nth-child(odd){
-      width: 35vw;
-      margin-left: 0;
-      margin-bottom: 3vw;
-      float: left;
-    }
-
-    & > img:nth-child(even){
-      width: 35vw;
-      margin-left: 0;
-      margin-bottom: 3vw;
-      float: right;
-    }
-
-  }
-
-  .fadeComp2 {
-	  transition: 0.5s ease-out;
-    opacity: 0;
-  }
-
-  .fadeIn {
-    opacity: 1;
-    transform: translate3d(0 , -20px, 0);
-  }
-`;
 
   return (
     <div>
@@ -116,25 +77,21 @@ const Main = () => {
             <img className={classes.smallLogo} src={Logo} alt={Logo}></img>
             <div ref={storyDivRev} className={classes.storyDiv} id="storyDiv">
               <h2>스토리</h2>
+<<<<<<< HEAD
+              <div
+=======
 
 
-            {/* <div
+            <div
+>>>>>>> 127962a587dfaad2c8964953a0b0e8ba4d250c05
               ref={(el) => (storyContentRef.current[0] = el)}
               className={classes.storySection}
             >
-              <ClassToggleStyled>
-                <div className="section" />
-                <div id="trigger" />
-                <Controller>
-                  <Scene duration={400} classToggle="fadeIn" triggerElement="#trigger" indicators={false}>
-                    {(progress, event) => (
+
                       <div className="fadeComp1">
                         <img src={story_img1} alt={story_img1}></img>
                       </div>
-                    )}
-                  </Scene>
-                  <Scene duration={400} classToggle="fadeIn" triggerElement="#trigger" indicators={false}>
-                    {(progress, event) => (
+                    
                       <div className="fadeComp2">
                           <div
                           className={classes.StorytextDiv}
@@ -148,29 +105,20 @@ const Main = () => {
                           </p>
                         </div>
                       </div>
-                    )}
-                  </Scene>
-                </Controller>
-              </ClassToggleStyled>
+
+      
             </div>
 
             <div
               ref={(el) => (storyContentRef.current[0] = el)}
               className={classes.storySection}
             >
-              <ClassToggleStyled>
-                <div className="section" />
-                <div id="trigger" />
-                <Controller>
-                  <Scene duration={400} classToggle="fadeIn" triggerElement="#story1" indicators={false}>
-                    {(progress, event) => (
+
+
                       <div className="fadeComp1">
                         <img src={story_img2} alt={story_img2} id="storyImg2"></img>
                       </div>
-                    )}
-                  </Scene>
-                  <Scene duration={400} classToggle="fadeIn" triggerElement="#storyImg2" indicators={false}>
-                    {(progress, event) => (
+
                       <div className="fadeComp2">
                           <div
                           className={classes.StorytextDiv}
@@ -184,28 +132,16 @@ const Main = () => {
                           </p>
                         </div>
                       </div>
-                    )}
-                  </Scene>
-                </Controller>
-              </ClassToggleStyled>
             </div>
 
             <div
               ref={(el) => (storyContentRef.current[0] = el)}
               className={classes.storySection}
             >
-              <ClassToggleStyled>
-                <div className="section" />
-                <Controller>
-                  <Scene duration={400} classToggle="fadeIn" triggerElement="#story2" indicators={false}>
-                    {(progress, event) => (
                       <div className="fadeComp1">
                         <img src={story_img3} alt={story_img3} id="storyImg3"></img>
                       </div>
-                    )}
-                  </Scene>
-                  <Scene duration={400} classToggle="fadeIn" triggerElement="#storyImg3" indicators={false}>
-                    {(progress, event) => (
+
                       <div className="fadeComp2">
                           <div
                           className={classes.StorytextDiv}
@@ -220,28 +156,18 @@ const Main = () => {
                           </p>
                         </div>
                       </div>
-                    )}
-                  </Scene>
-                </Controller>
-              </ClassToggleStyled>
             </div>
 
             <div
               ref={(el) => (storyContentRef.current[0] = el)}
               className={classes.storySection}
             >
-              <ClassToggleStyled>
-                <div className="section" />
-                <Controller>
-                  <Scene duration={400} classToggle="fadeIn" triggerElement="#story3" indicators={false}>
-                    {(progress, event) => (
+  
                       <div className="fadeComp1">
                         <img src={story_img4} alt={story_img4} id="storyImg4"></img>
                       </div>
-                    )}
-                  </Scene>
-                  <Scene duration={400} classToggle="fadeIn" triggerElement="#storyImg4" indicators={false}>
-                    {(progress, event) => (
+
+
                       <div className="fadeComp2">
                           <div
                           className={classes.StorytextDiv}
@@ -254,16 +180,18 @@ const Main = () => {
                           </p>
                         </div>
                       </div>
-                    )}
-                  </Scene>
-                </Controller>
-              </ClassToggleStyled>
+
+      
             </div>
             
             <div style={{
               display:'inline-block',
+<<<<<<< HEAD
+              height:'200px'
+=======
               height:'500px'
-            }}></div> */}
+>>>>>>> 127962a587dfaad2c8964953a0b0e8ba4d250c05
+            }}></div>
 
             </div>
             <br />

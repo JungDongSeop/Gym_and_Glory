@@ -1,0 +1,172 @@
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.myDiv{
+  display: grid;
+  justify-content: center;
+}
+
+.formDiv{
+  display: grid;
+  justify-items: center;
+  padding-top: 3vw;
+  padding-bottom: 3vw;
+  background: linear-gradient(-45deg, #cfb7b739, #b4889a32, #c29ba33f, #e6c1ff3b);
+  background-size: 400% 400%;
+  animation: gradient 20s ease infinite;
+  // padding-left: 10vw;
+  // padding-right: 10vw;
+  border: 2px solid  rgb(195, 168, 168);
+  border-radius: 30px;
+  width: 50vw;
+  height: calc(2vw + 400px);
+
+
+  box-shadow: 0px 0px 1px rgb(162, 124, 124),
+  0px 0px 4px rgb(191, 136, 136),
+  0px 0px 10px rgb(255, 200, 200),
+  0px 0px 20px rgb(255, 255, 255);
+
+
+
+
+  & > h1{
+    color: rgb(136, 64, 64);
+    text-shadow: 0px 0px 2px rgb(136, 64, 64),
+    0px 1px 3px rgb(255, 255, 255);
+    font-size: 2.2vw;
+    white-space:nowrap; 
+  }
+
+  & > form{
+    width: 70%;
+  }
+
+  & > form > div{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column-gap: 40px;
+    margin-bottom: calc(3vw + 15px);
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+
+  }
+
+  & > form > div> label{
+    position: absolute;
+    margin-top: calc(-1.5vw - 10px);
+    font-size: calc(0.5vw + 10px);
+    font-weight: bold;
+
+    background: -webkit-linear-gradient(rgb(255, 98, 98), rgb(120, 0, 0));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 0px 2px  rgb(107, 43, 43),
+    0px 1px 3px rgb(255, 255, 255);
+    transition: 0.4s;
+    
+  }
+
+  & > form > div> label:hover,
+  & > form > div> label:focus{
+    background: -webkit-linear-gradient(rgb(255, 18, 18), rgb(255, 81, 81));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 0px 2px  rgb(230, 93, 93),
+    0px 1px 3px rgb(255, 255, 255);
+  }
+
+  & > form > div> label:hover ~   input[type=password],
+  & > form > div> label:hover ~   input[type=text]
+  {
+    outline: none;
+    width: 100%;
+    border: none;
+    border-bottom: solid 2px rgb(255, 174, 174);
+    box-shadow: 0px 0px 1px rgb(155, 13, 13),
+    0px 4px 10px rgb(255, 189, 189),
+    0px 4px 15px rgb(255, 255, 255);
+    padding: 5px;
+    background-color: rgb(255, 255, 255);
+  }
+
+  & > form > div > input[type=password],
+  & > form > div > input[type=text]
+  {
+      outline: none;
+      width: 100%;
+      border: none; 
+      border-bottom: solid 2px rgb(136, 64, 64);
+      box-shadow: 0px 0px 1px rgb(161, 105, 105),
+      0px 4px 4px rgb(182, 114, 114),
+      0px 4px 5px rgb(255, 255, 255);
+      padding: 5px;
+      transition: 0.4s;
+      background-color: rgba(255, 255, 255, 0.819);
+  }
+
+
+
+  & > form > div > input[type=password]:focus,
+  & > form > div > input[type=text]:focus
+  {
+      outline: none;
+      width: 100%;
+      border: none;
+      border-bottom: solid 2px rgb(255, 174, 174);
+      box-shadow: 0px 0px 1px rgb(155, 13, 13),
+      0px 4px 10px rgb(255, 189, 189),
+      0px 4px 15px rgb(255, 255, 255);
+      padding: 5px;
+      background-color: rgb(255, 255, 255);
+  }
+
+
+  & > form > div > button{
+    outline: none;
+    width: 8vw;
+    padding:4px;
+    border: solid 2px   rgb(136, 64, 64);
+    background-color:   rgb(136, 64, 64);
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    transition: 0.4s;
+
+    
+    box-shadow: 0px 0px 1px rgb(155, 13, 13),
+    0px 4px 4px rgb(174, 118, 118),
+    0px 4px 5px rgb(255, 255, 255);
+  }
+
+  & > form > div > button:hover,
+  & > form > div > button:active
+  {
+    outline: none;
+    padding:4px;
+    border: solid 2px  rgb(233, 110, 110);
+    background-color:  rgb(233, 110, 110);
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0px 0px 2px rgb(153, 0, 120),
+    0px 1px 3px rgb(255, 255, 255);
+
+  }
+
+  & > form > div > button:active{
+    transform: translateY(3px);
+  }
+
+}

@@ -5,6 +5,7 @@ import axios from "axios";
 import AuthContext from "../../../store/auth-context";
 import WithNavBarAndSideBar from "../../layout/WithNavBarAndSideBar";
 import RestApi from "../../api/RestApi";
+import classes from "./Update.module.scss";
 
 // 이후 와이어프레임에 맞춰 수정
 
@@ -187,8 +188,12 @@ const Update = () => {
       });
     }
   };
+
   return (
     <main>
+      <div className={classes.myDiv}>
+      <div className={classes.formDiv}>
+        <h1> 회원 정보 수정 </h1>
       <form onSubmit={passwordCheck}>
         <div>
           <label htmlFor="new-password">새 비밀번호</label>
@@ -220,6 +225,8 @@ const Update = () => {
           <input type="submit" value="전화번호 변경" />
         </div>
       </form>
+      </div>
+      </div>
     </main>
   );
 };

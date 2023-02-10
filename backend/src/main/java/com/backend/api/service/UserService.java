@@ -44,6 +44,7 @@ public class UserService {
                 .nickname(signUpReq.getNickname())
                 .gender(signUpReq.getGender())
                 .telNumber(signUpReq.getTelNumber())
+                .role("ROLE_USER")
                 .build();
         //사진이 들어올 경우
         //작업 넣어주고 userSeuqence빼주고 사진을 넣어주면

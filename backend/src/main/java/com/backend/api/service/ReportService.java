@@ -67,10 +67,14 @@ public class ReportService {
         User user = userRepository.findOneByEmail(email);
         System.out.println(user.getNickname());
         List<Report> list= new ArrayList<>();
+        String cur = user.getRole();
+        System.out.println(cur);
         if(user.getRole().equals("ROLE_ADMIN")){
+            System.out.println("여기 들어옴");
             list = reportRepository.findAll();
-        }
-        else {
+            System.out.println("여기 들어옴");
+        } else {
+            System.out.println("들어옴");
             list = reportRepository.findBySendUser(user);
             System.out.println("들어옴");
         }

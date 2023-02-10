@@ -12,14 +12,14 @@ const CreateRoom = () => {
   // 네비게이션을 위한 함수
   const navigate = useNavigate();
 
-  // 모달을 열고 닫는 함수
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  // // 모달을 열고 닫는 함수
+  // const [modalOpen, setModalOpen] = useState(false);
+  // const openModal = () => {
+  //   setModalOpen(true);
+  // };
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  // };
 
   const [roomId, setRoomId] = useState("");
   const [roomTitle, setRoomTitle] = useState("");
@@ -100,8 +100,8 @@ const CreateRoom = () => {
   return (
     <div>
       {/* 방 생성 모달 */}
-      <Button onClick={openModal}>방 생성</Button>
-      <Modal open={modalOpen} close={closeModal} width="500px" height="300px">
+      {/* <Button onClick={openModal}>방 생성</Button> */}
+      <Modal buttonTitle='방 생성' width="500px" height="300px">
         {/* Modal.js <main> {props.children} </main>에 내용이 입력된다. 리액트 함수형 모달 */}
         <form onSubmit={handelSubmit}>
           <p>

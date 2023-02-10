@@ -23,7 +23,7 @@ const ExerciseGraph = (props) => {
   // 운동 데이터 axios 요청
   useEffect(() => {
     axios
-      .get(`${RestApi()}/exerciseLog/list/${userSequence}/${exerciseKind}`)
+      .get(`${RestApi()}/mypage/${userSequence}/${exerciseKind}`)
       .then((res) => {
         const exerciseDatas = res.data;
         // 오늘 날짜

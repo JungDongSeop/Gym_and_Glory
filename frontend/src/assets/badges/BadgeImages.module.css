@@ -1,13 +1,22 @@
 .container {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 100px 100px 100px 100px;
+  margin: auto;
+  width: 100%;
   background-color: blue;
+}
+
+.container .badge {
+  width: 100%;
+  margin: auto;
 }
 
 .container img {
   width: 100px;
   height: 100px;
   z-index: 0;
+  margin: 20px;
+
 }
 
 .descriptionBox {

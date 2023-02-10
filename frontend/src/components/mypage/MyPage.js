@@ -21,6 +21,7 @@ const MyPage = () => {
     axios
       .get(`${RestApi()}/user/detail/${authCtx.userSequence}`)
       .then((res) => {
+        console.log('user', res.data)
         setUser(res.data);
       })
       .catch((err) => {
@@ -38,6 +39,34 @@ const MyPage = () => {
   // 통계에서 x축 단위 구별
   const [xUnit, setXUnit] = useState(1);
 
+  // ======================================================================
+  // 프로필 사진 업로드 기능
+  const [profileImage, setProfileImage] = useState(null);
+  // const fileInput = useRef(null);
+  // 사진 선택
+  const handleFileSelect = (e) => {
+    console.log('e.target.files[0]', e.target.files[0])
+    setProfileImage(e.target.files[0]);
+  };
+  // 사진 db에 저장
+  const handleFileUpload = async () => {
+    const formData = new FormData();
+    formData.append('files', profileImage);
+    console.log('formData update', typeof(formData));
+    console.log('formData', formData);
+    try {
+      await axios.post(`${RestApi()}/file/user/${authCtx.userSequence}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+    } catch (error) {
+      console.log('에러 폼 데이터', typeof(formData))
+      console.error(error);
+    }
+  };
+  
+
   return (
     <main>
       {user ? (
@@ -50,7 +79,9 @@ const MyPage = () => {
               alt="프로필"
               // onMouseEnter={() => {setIsChangeProfile(true)}}
               // onMouseLeave={() => {setIsChangeProfile(false)}}
-              />
+            />
+<input type="file" onChange={handleFileSelect} />
+<button onClick={handleFileUpload}>Upload</button>
 
             {/* <h2>유저 pk : {authCtx.userSequence}</h2> */}
             <p>

@@ -5,6 +5,8 @@ import AuthContext from "../../store/auth-context";
 import axios from "axios";
 import classes from "./Comment.module.css";
 import RestApi from "../api/RestApi";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 // import { useNavigate } from 'react-router-dom';
 
@@ -145,12 +147,15 @@ const Comment = () => {
                 </p>
                 <ul className={classes.replyBtnWrap}>
                   <li className={classes.replyBtn}>
+                    <p>추천 수: {comment.goodCount}</p>
+                  </li>
+                  <li className={classes.replyBtn}>
                     <button onClick={() => handleGood(comment.commentSequence)}>
-                      추천
+                      <ThumbUpAltIcon />
                     </button>
                   </li>
-                  {sessionStorage.getItem("userSequence") ==
-                  comment.user.userSequence ? (
+                  {+sessionStorage.getItem("userSequence") ===
+                  +comment.user.userSequence ? (
                     <li className={classes.replyBtn}>
                       <button
                         onClick={() => handleDelete(comment.commentSequence)}

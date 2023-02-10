@@ -28,6 +28,9 @@ const DetailBoard = () => {
 
   const readBoard = async () => {
     const result = await axios(`${RestApi()}/board/${articleSequence}`);
+    const isLikePeople = await axios(
+      `${RestApi()}/board/${articleSequence}/${userSequence}`
+    );
     setData(result.data);
   };
   useEffect(() => {
@@ -39,6 +42,7 @@ const DetailBoard = () => {
     readBoard();
   }, [articleSequence]);
 
+  // 초기 좋아요 한 사람인지 유무 확인
   // 게시글 좋아요를 위한 axios
   const goodClick = async () => {
     await axios(`${RestApi()}/board/good/${userSequence}/${articleSequence}`);

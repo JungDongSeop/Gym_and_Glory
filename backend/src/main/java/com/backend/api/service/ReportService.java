@@ -66,12 +66,13 @@ public class ReportService {
     public List<Report> getDivReport(String email) {
         User user = userRepository.findOneByEmail(email);
         System.out.println(user.getNickname());
-        List<Report> list;
+        List<Report> list= new ArrayList<>();
         if(user.getRole().equals("ROLE_ADMIN")){
             list = reportRepository.findAll();
         }
-        else{
+        else {
             list = reportRepository.findBySendUser(user);
+            System.out.println("들어옴");
         }
         return list;
     }

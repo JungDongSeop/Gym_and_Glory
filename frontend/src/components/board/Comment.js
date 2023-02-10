@@ -52,6 +52,14 @@ const Comment = () => {
     console.log(result.data, "댓글들");
   };
 
+  const LIKE = (isCommentLike) => {
+    if (isCommentLike) {
+      return <div>굿굿</div>;
+    } else {
+      return <div>노놉</div>;
+    }
+  };
+
   const isCommentLike = async (commentSequence) => {
     // const response = await axios(
     //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
@@ -61,9 +69,10 @@ const Comment = () => {
     await axios(
       `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
     ).then((res) => {
-      isLike = res.data;
+      // setComments([...comments]);
+      console.log(res.data, 111111111);
+      return res.data;
     });
-    return isLike;
 
     // setCommentLike(response.data);
     // console.log(response.data);
@@ -167,11 +176,6 @@ const Comment = () => {
                   </span>
                 </p>
                 <ul className={classes.replyBtnWrap}>
-                  {isCommentLike(comment.commentSequence) === true ? (
-                    <span>굿굿</span>
-                  ) : (
-                    <span>노놉</span>
-                  )}
                   <li className={classes.replyBtn}>
                     <p>추천 수: {comment.goodCount}</p>
                     <p>

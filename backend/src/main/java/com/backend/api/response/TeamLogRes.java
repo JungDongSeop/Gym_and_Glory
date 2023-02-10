@@ -1,23 +1,21 @@
 package com.backend.api.response;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Time;
 
-@Data
+@Getter @Setter
 public class TeamLogRes {
-    private Time clear_time;
-    private String nickname1;
-    private String nickname2;
-    private String nickname3;
-    private String nickname4;
+    private String teamName;
+    private Time clearTime;
+    private String users;
 
-    public TeamLogRes(Time clear_time, String nickname1, String nickname2, String nickname3, String nickname4) {
-        this.clear_time = clear_time;
-        this.nickname1 = nickname1;
-        this.nickname2 = nickname2;
-        this.nickname3 = nickname3;
-        this.nickname4 = nickname4;
+
+
+    public TeamLogRes(String teamName, Time clearTime, String users) {
+        this.teamName = teamName;
+        this.clearTime = clearTime;
+        this.users = users;
     }
 }

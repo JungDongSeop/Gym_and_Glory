@@ -1,5 +1,6 @@
 package com.backend.db.repository;
 
+import com.backend.api.response.UserRankRes;
 import com.backend.db.entity.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Tuple;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,4 +38,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findBySearchFriendNative(@Param("userSequence") Integer userSequence, @Param("nickName") String nickName);
 
     User findOneByTelNumberAndEmail(String telNumber, String email);
+
+    // 개인 랭킹 조회
+    @Query( value = "select nickname, ifnull(cast(truncate(exp/10000, 0) + 1 as signed Integer),1), ifnull(exp,0) " +
+            "from user " +
+            "order by exp desc " +
+            "limit 10 ", nativeQuery = true)
+    List<Tuple> findByUserRankingList();
 }

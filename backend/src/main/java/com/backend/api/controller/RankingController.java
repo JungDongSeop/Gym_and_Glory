@@ -1,13 +1,10 @@
 package com.backend.api.controller;
-
-import com.backend.api.request.TeamReq;
+;
+import com.backend.api.response.RankRes;
 import com.backend.api.response.TeamLogRes;
-import com.backend.api.service.GameService;
+import com.backend.api.response.UserRankRes;
 import com.backend.api.service.RankingService;
-import com.google.api.Http;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,10 +14,24 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/api/ranking")
+@RequestMapping("/api")
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class RankingController {
 
+    private final RankingService rankingService;
 
+    @GetMapping(value = "/ranking")
+    public @ResponseBody ResponseEntity getRanking() {
+
+        List<TeamLogRes> teamLogRes = rankingService.getTeamRankingList();
+        List<UserRankRes> userRankRes = rankingService.getUserRankingList();
+//
+//        // 팀, 개인 랭킹 정보
+        RankRes rankRes = new RankRes();
+        rankRes.setTeamLogResList(teamLogRes);
+        rankRes.setUserRankResList(userRankRes);
+
+        return new ResponseEntity<>(rankRes, HttpStatus.OK);
+    }
 }

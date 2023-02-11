@@ -12,8 +12,8 @@ const ExerciseGrass = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   // 통계의 첫날
   const [fewDaysAgo, setFewDaysAgo] = useState()
-  // 여태까지 며칠이나 게임했는지
-  // const [many, setMany] = useState(0)
+  // 여태까지 며칠이나 게임했는지 가능하면 추가
+
   // 잔디 출석 정보 계산
   useEffect(() => {
     axios.get(`${RestApi()}/mypage/grace/${userSequence}`).then((res) => {
@@ -38,7 +38,6 @@ const ExerciseGrass = () => {
       }
 
       const tmp = res.data;
-      // let manyTmp = 0
       // 잔디를 채워나가기 (범위 밖은 -1, 운동 안 한 날은 0, 한 날은 1)
       let grass = Array.from({length: 53}, () => Array(7).fill(0))
       // 운동한 날짜는 1로 지정
@@ -149,38 +148,6 @@ const ExerciseGrass = () => {
       </div>
     );
   };
-
-  // 쓸모없는 코드지만, 혹시나...
-  // const grassDates = () => {
-  //   const today = new Date();
-  //   const fewDaysAgo = new Date(today.getTime() - 364 * 24 * 60 * 60 * 1000);
-  //   const result = [];
-  //   for (let j = 0; j < 53; j++) {
-  //     for (let i=0; i < 7; i++) {
-  //       const ijDate = (new Date(fewDaysAgo.getTime() + (- fewDaysAgo.getDay() + i + 7 * j + 1)*24*60*60*1000))
-  //       // console.log('여기', ijDate)
-  //       if (ijDate.getDate() === 2) {
-  //         console.log(i, j, ijDate.getDate(), ijDate)
-  //         // result.push(<div key={`${i}-${j}-dates`} className={classes.cellDays}>{ijDate.getMonth()}월</div>)
-  //         result.push(
-  //           <div 
-  //             key={`${j}-target`} 
-  //             className={classes.cellDays}
-  //             style={{
-  //               // // 마우스 호버 시, 해당 그림의 우측 하단에 설명창 표시
-  //               left: (document.getElementById(`6-${j}`)? document.getElementById(`6-${j}`).getBoundingClientRect().right : null),
-  //               top: (document.getElementById(`6-${j}`)? document.getElementById(`6-${j}`).getBoundingClientRect().bottom : null),
-  //             }}
-  //           >
-  //             {ijDate.getMonth()}, {ijDate.getDate()}, {j}
-  //           </div>)
-  //         break
-  //       }
-  //     }
-  //     // result.push(<div key={`${j}-nontarget`} className={classes.cell}></div>)
-  //   } 
-  //   return result;
-  // }
 
   return (
     <div>

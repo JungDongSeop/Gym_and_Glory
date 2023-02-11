@@ -23,9 +23,7 @@ const SideBar = (props) => {
       {/* 웹캠 */}
       <SideWebcam />
       {/* 유저 프로필 */}
-      <div>
-        <Link to="/mypage">{authCtx.nickname}</Link>
-      </div>
+      <Link to="/mypage">{authCtx.nickname}</Link>
 
       {isMyPage ? (
         <div className={classes.container}>

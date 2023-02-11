@@ -5,8 +5,8 @@ import BadgeImages from '../../../assets/badges/BadgeImages'
 const BadgeModal = () => {
 
   return (
-    <div>
-      <Modal buttonTitle='뱃지 목록' width='500px' height='500px' style={{overflowY: 'hidden'}}>
+    <div style={{margin: 'auto'}}>
+      <Modal buttonTitle='뱃지 목록' width='500px' height='500px'>
         <BadgeImages/>
       </Modal>
     </div>

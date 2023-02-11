@@ -100,8 +100,9 @@ const MyPage = () => {
             <div className={classes.graphButtonWrap}>
               <div>
                 <button className={`${classes.graphButton} ${exerciseType === 1 ? classes.checked : ''}`} onClick={() => setExerciseData(1)}>스쿼트</button>
-                <button className={`${classes.graphButton} ${exerciseType === 2 ? classes.checked : ''}`} onClick={() => setExerciseData(2)}>푸쉬업</button>
-                <button className={`${classes.graphButton} ${exerciseType === 3 ? classes.checked : ''}`} onClick={() => setExerciseData(3)}>버피</button>
+                <button className={`${classes.graphButton} ${exerciseType === 2 ? classes.checked : ''}`} onClick={() => setExerciseData(2)}>런지</button>
+                <button className={`${classes.graphButton} ${exerciseType === 3 ? classes.checked : ''}`} onClick={() => setExerciseData(3)}>푸쉬업</button>
+                <button className={`${classes.graphButton} ${exerciseType === 4 ? classes.checked : ''}`} onClick={() => setExerciseData(4)}>점핑잭</button>
               </div>
               {/* 총 기간 */}
               <div>

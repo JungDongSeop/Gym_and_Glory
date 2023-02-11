@@ -1,79 +1,41 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
+// import { useContext } from "react";
+// import AuthContext from "../../store/auth-context";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import classes from "./Ranking.module.css";
+import RestApi from "../api/RestApi";
+
 
 const Ranking = () => {
-  const soloranking = [
-    {
-      nickname: "정동섬1",
-      level: 2,
-    },
-    {
-      nickname: "정동섬2",
-      level: 7,
-    },
-    {
-      nickname: "정동섬3",
-      level: 8,
-    },
-    {
-      nickname: "정동섬4",
-      level: 1,
-    },
-  ];
 
-  const teamranking = [
-    {
-      teamname: "밥알1",
-      cleartime: "12:42:12s",
-      users: {
-        user1: "정동섬1",
-        user2: "정동섬2",
-        user3: "정동섬3",
-        user4: "정동섬4",
-      },
-    },
-    {
-      teamname: "밥알2",
-      cleartime: "12:42:12s",
-      users: {
-        user1: "정동섬1",
-        user2: "정동섬2",
-        user3: "정동섬3",
-        user4: "정동섬4",
-      },
-    },
-    {
-      teamname: "밥알3",
-      cleartime: "12:42:12s",
-      users: {
-        user1: "정동섬1",
-        user2: "정동섬2",
-        user3: "정동섬3",
-        user4: "정동섬4",
-      },
-    },
-    {
-      teamname: "밥알4",
-      cleartime: "12:42:12s",
-      users: {
-        user1: "정동섬1",
-        user2: "정동섬2",
-        user3: "정동섬3",
-        user4: "정동섬4",
-      },
-    },
-  ];
+  // 개인랭킹 변수
+  const [soloRanking, setSoloRanking] = useState();
+  const [teamRanking, setTeamRanking] = useState();
+
+  // 랭킹 정보 받아오기
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios(
+        `${RestApi()}/ranking`
+      ).then((res) => {
+        setSoloRanking(res.data.userRankResList)
+        setTeamRanking(res.data.teamLogResList)
+      })
+    };
+    fetchData();
+  })
+  
   return (
     <main className={classes.main}>
       <div>
         <p>개인 랭킹</p>
         <ul>
-          {soloranking.map((user, index) => (
+          {soloRanking && soloRanking.map((user, index) => (
             <li key={index}>
-              {user.nickname}
+              {user.nickName}
               <br />
-              {user.level}
+              LV. {user.level}
             </li>
           ))}
         </ul>
@@ -82,10 +44,12 @@ const Ranking = () => {
       <div>
         <p>단체 랭킹</p>
         <ul>
-          {teamranking.map((team, index) => (
+          {teamRanking && teamRanking.map((team, index) => (
             <li key={index}>
-              {team.teamname}
-              <div>{team.users.user1}</div>
+              {team.teamName}
+              <br />
+              {team.clearTime}
+              <div>{team.users}</div>
             </li>
           ))}
         </ul>

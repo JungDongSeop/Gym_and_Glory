@@ -1,25 +1,119 @@
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import RestApi from "../api/RestApi";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import classes from './CommentDetail.module.css';
 
+// 댓글 좋아요 여부 출력만을 위해 사용
 const CommentDetail = (props) => {
+  // 댓글 pk
   const comment = props.comment;
+  const userSequence = props.userSequence;
+  const [goodCount, setGoodCount] = useState(props.goodCount);
 
   // 댓글 지우는 axios 요청
-  const handleDelete = async (comment) => {
+  // const handleDelete = async (comment) => {
+  //   try {
+  //     await axios.delete(`/board/comment/${comment.commentSequence}`);
+  //     // Show a success message or refresh the comments list
+  //   } catch (error) {
+  //     console.error(error);
+  //     // Show an error message
+  //   }
+  // }
+
+  // 댓글 좋아요 여부 axios 요청
+  const [isCommentLike, setIsCommentLike] = useState(false)
+  const [isToggle, setIsToggle] = useState(false)
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios(
+        `${RestApi()}/board/comment/IsGood/${userSequence}/${comment.commentSequence}`
+      ).then((res) => {
+        setIsCommentLike(res.data);
+      })
+    };
+    fetchData();
+  })
+
+  // 댓글 좋아요 요청
+  const handleGood = async () => {
     try {
-      await axios.delete(`/board/comment/${comment.commentSequence}`);
+      await axios(
+        `${RestApi()}/board/comment/good/${userSequence}/${comment.commentSequence}`
+      );
+      // alert("댓글을 추천하였습니다.");
       // Show a success message or refresh the comments list
     } catch (error) {
-      console.error(error);
-      // Show an error message
+      setIsCommentLike(!isCommentLike)
     }
-  }
+    setIsToggle(!isToggle)
+    setGoodCount(isCommentLike ? goodCount - 1 : goodCount + 1)
+  };
+
+  // 댓글 지우기
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`${RestApi()}/board/comment/${comment.commentSequence}`);
+      alert("댓글이 삭제되었습니다.");
+      // Show a success message or refresh the comments list
+      // commentRead(articleSequence);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <div>
-      <h1>{comment.commentSequence}, 작성자 : {comment.userSequence}, 추천 : {comment.goodCount}</h1>
-      <button onClick={() => handleDelete()}>삭제</button>
-      
-    </div>
+    <li>
+      <div className={classes.reply}>
+        <p className={classes.commonCharId}>
+          {/* <img
+            src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/world_icon/icon_11.png"
+            alt="프로필 이미지"
+          /> */}
+          {comment.user ? comment.user.nickname : null}
+          <span>
+            {new Date(comment.registerTime).toLocaleString("default", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            })}
+          </span>
+        </p>
+      </div>
+    
+      <ul className={classes.replyBtnWrap}>
+
+        <li className={classes.replyBtn}>
+          <p>추천 수: {goodCount}</p>
+          <p>
+            {isCommentLike}
+          </p>
+        </li>
+
+        <li className={classes.replyBtn}>
+          {isCommentLike ? 
+            <ThumbUpAltIcon onClick={handleGood}/> 
+            : 
+            <ThumbUpOffAltIcon onClick={handleGood}/>}
+        </li>
+
+        {+sessionStorage.getItem("userSequence") ===
+        +comment.user.userSequence ? (
+          <li className={classes.replyBtn}>
+            <button
+              onClick={() => handleDelete(comment.commentSequence)}
+            >
+              삭제
+            </button>
+          </li>
+        ) : null}
+
+      </ul>
+    </li>
   );
 };
 

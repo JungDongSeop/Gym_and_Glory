@@ -77,9 +77,13 @@
 
 .descriptionBox {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100px;
   height: 30px;
   margin: 0;
+  padding: 0;
   background-color: black;
   color: white;
   text-align: center;

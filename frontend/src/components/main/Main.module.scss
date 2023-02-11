@@ -23,8 +23,10 @@
   text-align: center;
   height: 100vh;
   position: relative;
-  display: flex;
+  display: grid;
   flex-direction: column;
+  justify-items: center;
+  // justify-content: center;
 }
 
 .carouselBox img {
@@ -45,11 +47,18 @@
   margin: 0;
 }
 
+.carouselBox h2 {
+  margin: 0;
+  margin-bottom: 50px;
+}
+
 .carousel .smallLogo {
   width: 10rem;
   height: 10rem;
   margin: 0;
 }
+
+
 
 .carouselBox .leftword {
   color: #be1616;
@@ -99,11 +108,18 @@
   // margin-bottom: -30px;
 }
 
+.storySection{
+  & > .fadeComp1{
+    width: 30px;
+  }
+}
+
 
 .storyDiv{
+  width: 45vw;
   font-family: 'Jua', sans-serif;
-  margin-left: 50px;
-  margin-right: 50px;
+  // margin-left: 50px;
+  // margin-right: 50px;
   overflow-y: scroll; 
   height:72vh;
   & > h2{
@@ -116,23 +132,13 @@
   display: none; /* Chrome, Safari, Opera */
 }
 
-.storySection{
-  // & > img{
-  //   width: 35vw;
-  //   margin-left: 0;
-  //   margin-bottom: 3vw;
-  //   float: left;
-  // }
-}
-
 
 .StorytextDiv {
   float: right;
   user-select: none;
-  padding: 10px;
+  padding: 15px;
   width: 30vw;
-  margin-top: -8vw;
-  margin-right: 0;
+  margin-top: -4vw;
   margin-bottom: 3vw;
   position: relative;
   z-index: 1;

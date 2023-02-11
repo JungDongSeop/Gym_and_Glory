@@ -100,7 +100,7 @@ const FindPwd = () => {
             className={classes.inputText}
             type="email"
             required
-            placeholder=""
+            placeholder=" "
             ref={emailInputRef}
           />
 
@@ -114,7 +114,7 @@ const FindPwd = () => {
             className={classes.inputText}
             type="text"
             required
-            placeholder=""
+            placeholder=" "
             ref={phoneInputRef}
           />
           <p className={classes.labelText}>phone</p>

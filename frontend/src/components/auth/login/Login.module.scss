@@ -11,10 +11,11 @@
 }
 
 .whiteBox form{
-  width: 25%;
+  width: 50vw;
   display: grid;
   justify-content: center;
   justify-items: center;
+  margin-top: -20px;
 }
 
 .whiteBox .logoSmall {
@@ -27,7 +28,7 @@
 
 
 .whiteBox .inputText {
-  width: 30%;
+  width: 50vw;
   height: 5%;
 
   margin: 0 auto;
@@ -55,26 +56,72 @@
 
 .control {
   margin-bottom: 0.31vw;
-  width: 100%;
+  width: 15vw;
+
 }
 
 .control label {
-  display: block;
-  color: #8f1010;
+  display: grid;
+  color: #b1b1b1;
   font-weight: bold;
-  margin-bottom: 0.5rem;
+  margin-top: 20px;
+  transition: 0.3s;
+
+  & > p{
+    margin-top: -30px;
+    margin-left: 10px;
+    transition: 0.3s;
+  }
+}
+
+.control label:hover,
+.control label:focus,
+{
+  & > p{
+    color: #972727;
+    font-weight: bold;
+    // margin-bottom: 0.5rem;
+    font-weight: bold;
+    text-shadow: 0 1px 3px rgb(255, 178, 178);
+    transform: translate(-10px, -30px);
+  }
+}
+
+.control label:hover ~  input ,
+.control label:focus ~  input {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #8f1111;
 }
 
 .control input {
-  font: inherit;
-  background-color: white;
-  color: #38015c;
-  border-radius: 4px;
-  border: 0px solid white;
-  width: 100%;
-  text-align: left;
-  padding: 0.25rem;
+  width: 15vw;
+  height: 30px;
+  margin: 0 auto;
+  background: #ffffffc3;
+  border: none;
+  border-bottom: 2px solid #686868;
+  transition: 0.3s;
 }
+
+.control input:hover,
+.control input:focus,
+.control input:not(:placeholder-shown)
+{
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #ba0808;
+
+  & ~ p{
+    color: #972727;
+    font-weight: bold;
+    // margin-bottom: 0.5rem;
+    font-weight: bold;
+    text-shadow: 0 1px 3px rgb(255, 178, 178);
+    transform: translate(-10px, -30px);
+  }
+}
+
 
 .actions {
   margin-top: 1.5rem;
@@ -126,10 +173,17 @@ hr {
 
 .backbutton {
   display: flex;
-  margin-left: 0 auto;
-  margin-top: 0 auto;
+  margin-left: 10px;
+  margin-top: 0px;
   left: 25%;
   top: 0;
   position: absolute;
   size: 1000px;
+  font-size: 100px;
+  transition: 0.3s;
+  width: 30px !important;
+}
+
+.backbutton:hover {
+  color: red;
 }

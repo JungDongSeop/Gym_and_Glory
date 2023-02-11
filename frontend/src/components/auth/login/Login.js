@@ -5,7 +5,7 @@ import AuthContext from "../../../store/auth-context";
 import Button from "../../UI/Button";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
-import classes from "./Login.module.css";
+import classes from "./Login.module.scss";
 import RestApi from "../../api/RestApi";
 // import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -117,7 +117,7 @@ const Login = () => {
         className={classes.backbutton}
         onClick={() => navigate("/")}
         sx={{ fontSize: 50 }}
-      />
+      /> 
       <img
         className={classes.logoSmall}
         src={Logo}
@@ -130,17 +130,22 @@ const Login = () => {
       {/* 로그인 폼 */}
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
-          <label htmlFor="email">아이디 입력</label>
-          <input type="email" id="email" required ref={emailInputRef} />
+          <label htmlFor="email">
+          <input type="email" id="email" required ref={emailInputRef} placeholder=" "/>
+          <p className={classes.labelText}>아이디 입력</p>
+          </label>
         </div>
         <div className={classes.control}>
-          <label htmlFor="password">비밀번호 입력</label>
+          <label htmlFor="password">
           <input
             type="password"
             id="password"
             required
             ref={passwordInputRef}
+            placeholder=" "
           />
+          <p className={classes.labelText}>비밀번호 입력</p>
+          </label>
         </div>
         <div className={classes.loginBtnDiv}>
           {!isLoading && (

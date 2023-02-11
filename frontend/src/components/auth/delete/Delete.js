@@ -4,6 +4,8 @@ import AuthContext from "../../../store/auth-context";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RestApi from "../../api/RestApi";
+
+import Logo from "../../../assets/logo.png";
 import classes from "./Delete.module.scss";
 
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
@@ -58,6 +60,7 @@ const Delete = () => {
   return (
     <main>
       <div className={classes.myDiv}>
+      <img src={Logo} alt={Logo}/>
       <div className={classes.formDiv}>
       <h1> 비록 떠나시더라도 운동을 잊지는 마세요! </h1>
       <form onSubmit={handleSubmit}>
@@ -65,8 +68,9 @@ const Delete = () => {
         <label>
           Password: 
         </label>
-          <input type="password" name="password" />
-        <br />
+          <input type="password" name="password" placeholder=" " 
+          />
+        {/* <br /> */}
         <button type="submit">Save</button>
         </div>
       </form>

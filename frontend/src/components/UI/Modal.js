@@ -32,7 +32,8 @@ const Modal = ({ buttonTitle, children, width, height }) => {
             maxHeight: 'none',
             maxWidth: 'none',
             backgroundColor: 'rgba(200, 200, 200, 0.9)',
-            overflow: 'auto'
+            overflow: 'hidden',
+            
           }
         }}
       >

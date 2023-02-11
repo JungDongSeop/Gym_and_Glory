@@ -32,7 +32,7 @@ const BadgeImages = () => {
       await axios(`${RestApi()}/badge/list`)
       .then((res) => {
         console.log('뱃지', res.data)
-        console.log(res.data[0].path)
+        console.log(res.data[0])
         setBadgeAllList(res.data);
       });
     };
@@ -58,12 +58,15 @@ const BadgeImages = () => {
 
   return (
     <div className={classes.container}>
+      {/* 뱃지들 출력 */}
       {items.map((item, index) => {
-
         return(
         <div key={index} className={classes.badge}>
           <img
-            className={userBadges.includes(index) ? classes.have : classes.notHave} 
+          // 이렇게 한 이유. js는 객체를 비교할 때 값이 아니라 메모리의 위치를 비교하므로, 값이 같아도 false 반환
+          // 그래서 객체를 json 형태로 바꿔야, 객체의 값을 비교할 수 있다.
+          // 사실 백엔드에서 뱃지 pk로만 된 리스트를 주는 게 더 효율적일 듯
+            className={JSON.stringify(userBadges).includes(JSON.stringify(badgeAllList[index])) ? null : classes.notHave} 
             src={item} 
             alt="badge" 
             id={index}
@@ -76,8 +79,8 @@ const BadgeImages = () => {
               className={classes.descriptionBox}
               style={{
                 // 마우스 호버 시, 해당 그림의 우측 하단에 설명창 표시
-                left: document.getElementById(`${index}`).getBoundingClientRect().right + 20,
-                top: document.getElementById(`${index}`).getBoundingClientRect().bottom,
+                left: document.getElementById(`${index}`).getBoundingClientRect().right - 20,
+                top: document.getElementById(`${index}`).getBoundingClientRect().bottom - 20,
               }}
             >
               {badgeAllList[index] ? badgeAllList[index].description : null}

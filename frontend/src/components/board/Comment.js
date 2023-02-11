@@ -3,10 +3,9 @@ import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import axios from "axios";
+import CommentDetail from "./CommentDetail";
 import classes from "./Comment.module.css";
 import RestApi from "../api/RestApi";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 // import { useNavigate } from 'react-router-dom';
 
@@ -60,20 +59,20 @@ const Comment = () => {
   //   }
   // };
 
-  const isCommentLike = async (commentSequence) => {
-    // const response = await axios(
-    //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
-    // );
-    // return response.data
-    await axios(
-      `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
-    ).then((res) => {
-      console.log(res.data);
-    });
+  // const isCommentLike = async (commentSequence) => {
+  //   // const response = await axios(
+  //   //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
+  //   // );
+  //   // return response.data
+  //   await axios(
+  //     `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
+  //   ).then((res) => {
+  //     console.log(res.data);
+  //   });
 
-    // setCommentLike(response.data);
-    // console.log(response.data);
-  };
+  //   // setCommentLike(response.data);
+  //   // console.log(response.data);
+  // };
 
   useEffect(() => {
     const commentRead = async () => {
@@ -81,7 +80,7 @@ const Comment = () => {
         `${RestApi()}/board/comment/${articleSequence}`
       );
       setComments(result.data.reverse());
-      console.log(result.data);
+      console.log('댓글 목록', result.data);
     };
     commentRead();
   }, [articleSequence]);
@@ -179,16 +178,9 @@ const Comment = () => {
                       {/* {isCommentLike(comment.commentSequence, userSequence)} */}
                     </p>
                   </li>
-                  {
-                    <li className={classes.replyBtn}>
-                      <button
-                        onClick={() => handleGood(comment.commentSequence)}
-                      >
-                        <ThumbUpAltIcon />
-                      </button>
-                    </li>
-                  }
-
+                  <li className={classes.replyBtn}>
+                    <CommentDetail commentSequence={comment.commentSequence} userSequence={userSequence} goodCount={comment.goodCount} />
+                  </li>
                   {+sessionStorage.getItem("userSequence") ===
                   +comment.user.userSequence ? (
                     <li className={classes.replyBtn}>

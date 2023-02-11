@@ -4,6 +4,7 @@ import AuthContext from "../../../store/auth-context";
 import SideWebcam from './SideWebcam'
 import CreateRoomModal from "./CreateRoomModal";
 import FriendListModal from "./FriendListModal";
+import Ranking from "./Ranking";
 import Button from "../../UI/Button";
 import classes from "./SideBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -49,9 +50,7 @@ const SideBar = (props) => {
           <FriendListModal />
 
           {/* 실시간 랭킹 */}
-          <div>
-            <p>실시간 랭킹</p>
-          </div>
+          <Ranking />
         </div>
       )}
     </aside>

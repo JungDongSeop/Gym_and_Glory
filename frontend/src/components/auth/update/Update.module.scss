@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Song+Myung&display=swap');
+
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
@@ -11,24 +13,25 @@
 }
 
 .myDiv{
+  margin-top: 4vw;
   display: grid;
   justify-content: center;
+  
 }
 
 .formDiv{
   display: grid;
   justify-items: center;
-  padding-top: 3vw;
-  padding-bottom: 3vw;
-  background: linear-gradient(-45deg, #cfb7b739, #b4889a32, #c29ba33f, #e6c1ff3b);
+  align-items: center;
+  // padding-top: 3vw;
+  // padding-bottom: 3vw;
+  // background: linear-gradient(-45deg, #c1c1c167, #ffd5e661, #dcd8ff5f, #f3deff5d);
   background-size: 400% 400%;
-  animation: gradient 20s ease infinite;
-  // padding-left: 10vw;
-  // padding-right: 10vw;
-  border: 2px solid  rgb(195, 168, 168);
+  animation: gradient 10s ease infinite;
+  // border: 2px solid  rgb(195, 168, 168);
   border-radius: 30px;
-  width: 50vw;
-  height: calc(2vw + 400px);
+  width: 40vw;
+  height: calc(3vw + 450px);
 
 
   box-shadow: 0px 0px 1px rgb(162, 124, 124),
@@ -36,37 +39,106 @@
   0px 0px 10px rgb(255, 200, 200),
   0px 0px 20px rgb(255, 255, 255);
 
+  font-family: 'Song Myung', serif;
+
+  border: 6px solid transparent;
+  border-radius: 20px;
+  background-image: linear-gradient(#ffffff, #ececec), linear-gradient(to right, #fff5c4be, #ff7c7caa, #65d3ffaa);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
 
 
+  & > h1{  
 
-  & > h1{
-    color: rgb(136, 64, 64);
-    text-shadow: 0px 0px 2px rgb(136, 64, 64),
-    0px 1px 3px rgb(255, 255, 255);
-    margin-bottom: 6vw;
+    color: rgb(56, 56, 56);
+    // text-shadow: 0px 0px 2px rgb(136, 64, 64),
+    // 0px 1px 3px rgb(255, 255, 255);
+    font-size: 2vw;
+    white-space:nowrap;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    // background: linear-gradient(to right,  #c2b054be, #da4f4faa, #48b7e2aa);
+    // -webkit-background-clip: text;
+    // -webkit-text-fill-color: transparent;
+    // background-size: 400% 400%;
+    // animation: gradient 10s ease infinite;
+  
   }
 
+  & > form{
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+  }
+  
   & > form > div{
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-column-gap: 40px;
     margin-bottom: calc(3vw + 15px);
+    width: 90%;
+    
+  }
+
+
+  & > form > div:hover,
+  & > form > div:focus
+  {
+
+    & > label{
+      background: -webkit-linear-gradient(rgb(255, 18, 18), rgb(255, 81, 81));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 0px 2px  rgb(230, 93, 93),
+      0px 1px 3px rgb(255, 255, 255);
+    }
+
+    & > input[type=password],
+    & > input[type=text]
+    {
+      outline: none;
+      border: none;
+      border-bottom: solid 2px rgb(255, 174, 174);
+      box-shadow: 0px 0px 1px rgb(155, 13, 13),
+      0px 4px 10px rgb(255, 189, 189),
+      0px 4px 15px rgb(255, 255, 255);
+      padding: 5px;
+      background-color: rgb(255, 255, 255);
+    }
 
   }
 
+  & > form > div > input[type=password]:not(:placeholder-shown),
+  & > form > div > input[type=text]:not(:placeholder-shown)
+  {
+    outline: none;
+    border: none;
+    border-bottom: solid 2px rgb(255, 174, 174);
+    box-shadow: 0px 0px 1px rgb(155, 13, 13),
+    0px 4px 10px rgb(255, 189, 189),
+    0px 4px 15px rgb(255, 255, 255);
+    padding: 5px;
+    background-color: rgb(255, 255, 255);
+  }
+
+
+
   & > form > div> label{
     position: absolute;
-    margin-top: calc(-1.5vw - 10px);
+    margin-top: calc(-1vw - 10px);
     font-size: calc(0.5vw + 10px);
     font-weight: bold;
 
+    font-size: calc(0.5vw + 10px);
+    font-weight: bold;
     background: -webkit-linear-gradient(rgb(255, 98, 98), rgb(120, 0, 0));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0px 0px 2px  rgb(107, 43, 43),
+    text-shadow: 0px 0px 2px  rgb(49, 49, 49),
     0px 1px 3px rgb(255, 255, 255);
-    transition: 0.4s;
+    transition: 0.3s;
     
+    margin-left: 5px;
   }
 
   & > form > div> label:hover,
@@ -83,7 +155,6 @@
   & > form > div> label:hover ~   input[type=text]
   {
     outline: none;
-    width: 100%;
     border: none;
     border-bottom: solid 2px rgb(255, 174, 174);
     box-shadow: 0px 0px 1px rgb(155, 13, 13),
@@ -96,49 +167,33 @@
   & > form > div > input[type=password],
   & > form > div > input[type=text]
   {
-      outline: none;
-      width: 100%;
-      border: none; 
-      border-bottom: solid 2px rgb(136, 64, 64);
-      box-shadow: 0px 0px 1px rgb(161, 105, 105),
-      0px 4px 4px rgb(182, 114, 114),
-      0px 4px 5px rgb(255, 255, 255);
-      padding: 5px;
-      transition: 0.4s;
-      background-color: rgba(255, 255, 255, 0.819);
-  }
-
-
-
-  & > form > div > input[type=password]:focus,
-  & > form > div > input[type=text]:focus
-  {
-      outline: none;
-      width: 100%;
-      border: none;
-      border-bottom: solid 2px rgb(255, 174, 174);
-      box-shadow: 0px 0px 1px rgb(155, 13, 13),
-      0px 4px 10px rgb(255, 189, 189),
-      0px 4px 15px rgb(255, 255, 255);
-      padding: 5px;
-      background-color: rgb(255, 255, 255);
+    outline: none;
+    border: none; 
+    border-radius: 5px;
+    border-bottom: solid 2px rgb(105, 105, 105);
+    box-shadow: 0px 0px 1px rgb(146, 146, 146),
+    0px 4px 4px rgb(167, 167, 167),
+    0px 4px 5px rgb(255, 255, 255);
+    padding: 5px;
+    transition: 0.3s;
+    background-color: rgba(255, 255, 255, 0.819);
   }
 
 
   & > form > div > input[type=submit]{
     outline: none;
-    width: 8vw;
+    width: 6vw;
     padding:4px;
-    border: solid 2px   rgb(136, 64, 64);
-    background-color:   rgb(136, 64, 64);
+    border: solid 2px   rgb(84, 84, 84);
+    background-color:   rgb(78, 78, 78);
     border-radius: 10px;
     font-weight: bold;
     color: white;
     transition: 0.4s;
 
     
-    box-shadow: 0px 0px 1px rgb(155, 13, 13),
-    0px 4px 4px rgb(174, 118, 118),
+    box-shadow: 0px 0px 1px rgb(130, 130, 130),
+    0px 4px 4px rgb(175, 175, 175),
     0px 4px 5px rgb(255, 255, 255);
   }
 
@@ -154,6 +209,10 @@
     color: white;
     text-shadow: 0px 0px 2px rgb(153, 0, 120),
     0px 1px 3px rgb(255, 255, 255);
+
+    box-shadow: 0px 0px 1px rgb(155, 13, 13),
+    0px 4px 4px rgb(174, 118, 118),
+    0px 4px 5px rgb(255, 255, 255);
 
   }
 

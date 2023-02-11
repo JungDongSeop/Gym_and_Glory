@@ -193,11 +193,11 @@ const Update = () => {
     <main>
       <div className={classes.myDiv}>
       <div className={classes.formDiv}>
-        <h1> 회원 정보 수정 </h1>
+        <h1> 회원정보 수정 </h1>
       <form onSubmit={passwordCheck}>
         <div>
           <label htmlFor="new-password">새 비밀번호</label>
-          <input type="password" id="new-password" ref={newPasswordInputRef} />
+          <input type="password" id="new-password" ref={newPasswordInputRef}  placeholder=" " />
           <input type="submit" value="비밀번호 변경" />
         </div>
       </form>
@@ -209,6 +209,7 @@ const Update = () => {
             id="new-nickname"
             defaultValue={sessionStorage.getItem("nickname")}
             ref={newNicknameInputRef}
+            placeholder=" " 
           />
           <input type="submit" value="닉네임 변경" />
         </div>
@@ -221,6 +222,7 @@ const Update = () => {
             id="new-tel-number"
             defaultValue={sessionStorage.getItem("telNumber")}
             ref={newTelNumberInputRef}
+            placeholder=" " 
           />
           <input type="submit" value="전화번호 변경" />
         </div>

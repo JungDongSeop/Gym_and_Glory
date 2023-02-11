@@ -86,45 +86,46 @@ public class GameService {
         UserBadge userBadge = null;
         for(int count : exerciseCntList) {
 
+
+//            int before = exerciseLogRepository.sumByDivAndUser(user, exercise);
+//            if(before<1000&&before+count>=1000){//운동 1000개 돌파
+//                //운동 종류에 따른 분기처리
+//                if(exercise.getExerciseCode()==1){
+//                    badgeInsert(user,2);
+//                }else if(exercise.getExerciseCode()==2){
+//                    badgeInsert(user,3);
+//                }else if(exercise.getExerciseCode()==3){
+//                    badgeInsert(user,4);
+//                }else if(exercise.getExerciseCode()==4){
+//                    badgeInsert(user,5);
+//                }
+//
+//            }else if(1000 < before && before < 5000 && before+count >= 5000){//운동 5000개 돌파
+//                //운동 종류에 따른 분기처리
+//                if(exercise.getExerciseCode()==1){
+//                    badgeInsert(user,6);
+//                }else if(exercise.getExerciseCode()==2){
+//                    badgeInsert(user,7);
+//                }else if(exercise.getExerciseCode()==3){
+//                    badgeInsert(user,8);
+//                }else if(exercise.getExerciseCode()==4){
+//                    badgeInsert(user,9);
+//                }
+//
+//            }else if(5000 < before && before < 10000 && before+count >=10000){//운동 10000개 돌파
+//                //운동 종류에 따른 분기처리
+//                if(exercise.getExerciseCode()==1){
+//                    badgeInsert(user,10);
+//                }else if(exercise.getExerciseCode()==2){
+//                    badgeInsert(user,11);
+//                }else if(exercise.getExerciseCode()==3){
+//                    badgeInsert(user,12);
+//                }else if(exercise.getExerciseCode()==4){
+//                    badgeInsert(user,13);
+//                }
+//
+//            }
             Exercise exercise = exerciseRepository.getById(i+1);
-            int before = exerciseLogRepository.sumByDivAndUser(user, exercise);
-            if(before<1000&&before+count>=1000){//운동 1000개 돌파
-                //운동 종류에 따른 분기처리
-                if(exercise.getExerciseCode()==1){
-                    badgeInsert(user,2);
-                }else if(exercise.getExerciseCode()==2){
-                    badgeInsert(user,3);
-                }else if(exercise.getExerciseCode()==3){
-                    badgeInsert(user,4);
-                }else if(exercise.getExerciseCode()==4){
-                    badgeInsert(user,5);
-                }
-
-            }else if(1000 < before && before < 5000 && before+count >= 5000){//운동 5000개 돌파
-                //운동 종류에 따른 분기처리
-                if(exercise.getExerciseCode()==1){
-                    badgeInsert(user,6);
-                }else if(exercise.getExerciseCode()==2){
-                    badgeInsert(user,7);
-                }else if(exercise.getExerciseCode()==3){
-                    badgeInsert(user,8);
-                }else if(exercise.getExerciseCode()==4){
-                    badgeInsert(user,9);
-                }
-
-            }else if(5000 < before && before < 10000 && before+count >=10000){//운동 10000개 돌파
-                //운동 종류에 따른 분기처리
-                if(exercise.getExerciseCode()==1){
-                    badgeInsert(user,10);
-                }else if(exercise.getExerciseCode()==2){
-                    badgeInsert(user,11);
-                }else if(exercise.getExerciseCode()==3){
-                    badgeInsert(user,12);
-                }else if(exercise.getExerciseCode()==4){
-                    badgeInsert(user,13);
-                }
-
-            }
             UserExerciseLog userExerciseLog = UserExerciseLog.createUserLog(user, count, exercise);
             exerciseLogRepository.save(userExerciseLog);
             i++;

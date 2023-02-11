@@ -87,8 +87,13 @@ public class GameService {
         for(int count : exerciseCntList) {
 
             Exercise exercise = exerciseRepository.getById(i+1);
+            UserExerciseLog userExerciseLog = UserExerciseLog.createUserLog(user, count, exercise);
+            exerciseLogRepository.save(userExerciseLog);
+
             int before = exerciseLogRepository.sumByDivAndUser(user, exercise);
-            if(before<1000&&before+count>=1000){//운동 1000개 돌파
+
+
+            if(before>=1000){//운동 1000개 돌파
                 //운동 종류에 따른 분기처리
                 if(exercise.getExerciseCode()==1){
                     badgeInsert(user,2);
@@ -100,7 +105,7 @@ public class GameService {
                     badgeInsert(user,5);
                 }
 
-            }else if(1000 < before && before < 5000 && before+count >= 5000){//운동 5000개 돌파
+            }else if(before >= 5000){//운동 5000개 돌파
                 //운동 종류에 따른 분기처리
                 if(exercise.getExerciseCode()==1){
                     badgeInsert(user,6);
@@ -112,7 +117,7 @@ public class GameService {
                     badgeInsert(user,9);
                 }
 
-            }else if(5000 < before && before < 10000 && before+count >=10000){//운동 10000개 돌파
+            }else if(before >=10000){//운동 10000개 돌파
                 //운동 종류에 따른 분기처리
                 if(exercise.getExerciseCode()==1){
                     badgeInsert(user,10);
@@ -125,8 +130,7 @@ public class GameService {
                 }
 
             }
-            UserExerciseLog userExerciseLog = UserExerciseLog.createUserLog(user, count, exercise);
-            exerciseLogRepository.save(userExerciseLog);
+
             i++;
         }
 

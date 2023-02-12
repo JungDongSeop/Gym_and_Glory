@@ -1,5 +1,5 @@
 /* eslint-disable */
-import "./Lobby.css";
+import classes from "./Lobby.css";
 import RoomList from "./room_list/RoomList";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import styled from "styled-components";
@@ -50,7 +50,9 @@ const Lobby = () => {
         </SearchWrapper>
         <hr />
         <br />
-        <RoomList />
+        <div className={classes.roomListDiv}>
+          <RoomList />
+        </div>
       </Wrapper>
     </main>
   );

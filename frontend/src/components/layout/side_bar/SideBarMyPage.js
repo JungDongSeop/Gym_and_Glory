@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import AuthContext from "../../../store/auth-context"
 import BadgeModal from './BadgeModal';
 import FriendListModal from './FriendListModal';
-import Button from '../../UI/Button'
+import Button from "../../UI/LobbyButton";
 import './SideBar.module.css';
 import { Link, useNavigate } from "react-router-dom";
 // import Button from '../../UI/Button';
@@ -29,6 +29,7 @@ const SideBar = () => {
         <Link to="/mypage">LV.25 정동섬</Link>
       </p>
 
+      
       {/* 뱃지 모달 */}
       <BadgeModal />
 

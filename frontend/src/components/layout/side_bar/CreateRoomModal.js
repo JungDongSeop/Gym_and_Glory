@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Modal from "../../UI/Modal";
-import Button from "../../UI/Button";
+import Button from "../../UI/LobbyButton";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RestApi from "../../api/RestApi";

@@ -5,7 +5,7 @@ import SideWebcam from './SideWebcam'
 import CreateRoomModal from "./CreateRoomModal";
 import FriendListModal from "./FriendListModal";
 import Ranking from "./Ranking";
-import Button from "../../UI/Button";
+import Button from "../../UI/LobbyButton";
 import classes from "./SideBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -40,13 +40,14 @@ const SideBar = (props) => {
           <Button onClick={() => navigate("/delete")}>회원 탈퇴</Button>
         </div>
       ) : (
-        <div>
+        <div className={classes.container}>
           {/* 방 생성 모달 */}
           <CreateRoomModal />
 
           {/* 친구 목록 모달 */}
           <FriendListModal />
 
+        
           {/* 실시간 랭킹 */}
           <Ranking />
         </div>

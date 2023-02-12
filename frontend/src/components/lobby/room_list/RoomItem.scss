@@ -1,18 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+
 .card {
   border-radius: 10px;
-  background-color: rgba(220, 220, 220, 0.453);
+  background-color: rgba(60, 54, 54, 0.453);
+  box-shadow: 0 0px 10px rgb(68, 72, 69);
   transition: 0.5s;
   font-size: 20px;
   padding: 20px;
   width: 200px;
   height: 180px;
+  background: radial-gradient(ellipse at 50% 150%, rgb(255, 255, 255) 0%, rgba(0, 0, 0, 0) 80%);
+  background-color: rgba(128, 133, 124, 0.608);
+  border: 1px solid rgb(121, 121, 121);
+  font-weight: bold;
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 16px;
+
+  // margin-left:50px;
+
+  & > div{
+    padding-top:10px;
+  }
 }
 
 .card:hover {
-  border: 2px solid red;
-  box-shadow: 0 0 5px rgb(255, 200, 200);
-  background-color: rgba(103, 103, 103, 0.758);
+  border: 1px solid rgb(255, 255, 255);
+  box-shadow: 0 0 5px rgb(255, 255, 255);
+  background-color: rgba(209, 209, 209, 0.758);
   width: 210px;
   height: 190px;
   transform: translate(-5px, -5px);
+}
+
+.card:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  direction: rtl;
+  z-index: -1;
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+  background: radial-gradient(ellipse at 50% 150%, rgb(255, 255, 255) 0%, rgba(0, 0, 0, 0) 80%);
+}
+.card:hover {
+  color: #000;
+}
+.card:hover:after {
+  left: auto;
+  right: 0;
+  width: 100%;
+  
+}
+.card:active {
+  top: 2px;
 }

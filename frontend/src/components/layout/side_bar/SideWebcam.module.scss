@@ -7,11 +7,12 @@
   padding:5px;
   border-radius: 0px;
   border:0px solid rgb(0, 61, 47);
-  transition: 0.3s;
+  transition: 0.2s;
   // font-weight: bold;
   font-family: 'Song Myung', serif;
   color: rgb(217, 219, 218);
-  background:linear-gradient(to bottom left,rgb(45, 76, 60) , rgb(19, 35, 23));
+  background:linear-gradient(to bottom left,rgb(63, 91, 63) , rgb(14, 36, 6));
+  
   margin-top: -24px;
   width: 100%;
   z-index: 1;
@@ -25,4 +26,5 @@
   // ;
   background:linear-gradient(to bottom left,rgb(45, 76, 60) , rgb(171, 194, 176));
   color: white;
+  text-shadow: 0 0px 3px white;
 }

@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
 import AuthContext from "../../../store/auth-context";
-import "./NavBar.module.css";
+import classes from "./NavBar.module.css";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 // 네브바 만들기. 이후 추가 예정
@@ -30,24 +30,28 @@ const Navbar = () => {
         {isLoggedIn && (
           <Link
             to="/lobby"
-            style={{ color: location.pathname === "/lobby" ? "red" : "white" }}
+            className={classes.navText}
+            style={{ color: location.pathname === "/lobby" ? "rgb(84, 154, 54)" : "white" }}
           >
             로비
+   
           </Link>
         )}
         <Link
           to="/ranking"
-          style={{ color: location.pathname === "/ranking" ? "red" : "white" }}
+          className={classes.navText}
+          style={{ color: location.pathname === "/ranking" ? "rgb(84, 154, 54)" : "white" }}
         >
-          랭킹
+           랭킹
         </Link>
         <Link
           to="/board/notice"
+          className={classes.navText}
           style={{
-            color: location.pathname.includes("/board") ? "red" : "white",
+            color: location.pathname.includes("/board") ? "rgb(84, 154, 54)" : "white",
           }}
         >
-          게시판
+           게시판
         </Link>
       </div>
 
@@ -55,8 +59,10 @@ const Navbar = () => {
       {isLoggedIn && (
         <div>
           <Link to="/" onClick={logoutHandler}>
-            로그아웃
+          <div className={classes.outIconDiv}>
+            <p>로그아웃</p>
             <LogoutIcon />
+          </div>
           </Link>
           <Link to="/mypage">
             <img className="logo" src={Logo} alt="마이페이지로" />

@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+
 .lobby {
   display: flex;
   flex-wrap: nowrap;
+  
 }
 
 hr {
@@ -19,4 +22,14 @@ hr {
   display: flex;
   width: 65%;
   justify-content: right;
+}
+
+span{
+  font-family: 'Nanum Myeongjo', serif;
+  font-weight: bold;
+}
+
+.roomListDiv{
+  background-color: aqua;
+  width: 100px;
 }

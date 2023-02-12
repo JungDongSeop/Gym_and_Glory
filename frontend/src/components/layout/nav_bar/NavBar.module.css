@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Song+Myung&display=swap');
+
 /* Navigation Bar Styles */
 
 nav {
@@ -7,6 +9,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: 70px;
+  font-family: 'Song Myung', sans-serif;
+  font-size: 20px;
 }
 
 nav div {
@@ -18,11 +22,56 @@ nav div {
 }
 
 nav a {
+  
   margin: 0 10px;
   color: #fff;
   text-decoration: none;
+  margin-top:5px;
 }
 
 nav img {
   height: 70px;
+  /* margin-left:20px; */
+  margin-top:5px;
 }
+
+.navText{
+  /* font-weight: bold; */
+  color: rgb(124, 164, 108);
+  transition: 0.3s;
+  text-shadow: 0 1px 3px black;
+}
+
+.navText:hover
+{
+  text-shadow: 0 0px 3px rgb(35, 102, 49), 0 0px 5px rgb(222, 255, 211);
+}
+
+.navText:active{
+  color:green;
+}
+
+
+.outIconDiv{
+  color:white;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  justify-content: right;
+  justify-items: right;
+  align-items: center;
+  text-align: right;
+  margin-right:-6px;
+  transition: 0.3s;
+  text-shadow: 0 1px 3px black;
+  font-size: 18px;
+}
+
+.outIconDiv p{
+  margin-bottom: 15px;
+}
+.outIconDiv:hover{
+  /* text-shadow: 0 0px 5px white; */
+  filter:drop-shadow(0 0 3px rgb(255, 255, 255)) drop-shadow(0 0 10px rgb(255, 255, 255));
+  transform: translateX(5px);
+}
+

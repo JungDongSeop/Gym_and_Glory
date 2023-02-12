@@ -85,7 +85,13 @@ class RoomList extends Component {
   render() {
     return (
       <RoomContainer>
-        <Grid container spacing={6}>
+        <div                
+        style={{
+          display:"grid",
+          gridTemplateColumns:"1fr 1fr 1fr 1fr",
+          gridColumnGap:10,
+      }}>
+        {/* <Grid container spacing={6}> */}
           {this.state.rooms.map((room, i) => {
             return (
               <Grid
@@ -98,6 +104,7 @@ class RoomList extends Component {
                   paddingLeft: 20,
                   paddingBottom: 20,
                   paddingRight: 20,
+                  
                 }}
                 key={i}
               >
@@ -105,7 +112,8 @@ class RoomList extends Component {
               </Grid>
             );
           })}
-        </Grid>
+        {/* </Grid> */}
+        </div>
       </RoomContainer>
     );
   }

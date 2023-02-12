@@ -99,7 +99,7 @@
   text-align: center;
   height: 100%;
   border-radius: 6px;
-  transition: top 0.01s linear;
+  transition: top 0.1s linear;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
   margin-bottom: 20px;
   color: #dce2e5;
@@ -118,7 +118,7 @@
   background-color: #222529;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
   margin-bottom: 6px;
-  box-shadow: 0 0 0 2px #b70e0e inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+  box-shadow: 0 0 4px 2px #86a1e2 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
     0 0 0 1px rgba(0, 0, 0, 0.4);
   color: #d7f3ff;
 }

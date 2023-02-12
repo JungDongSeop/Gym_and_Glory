@@ -1,5 +1,5 @@
 /* eslint-disable */
-import classes from "./Lobby.css";
+import classes from "./Lobby.module.scss";
 import RoomList from "./room_list/RoomList";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import styled from "styled-components";
@@ -46,7 +46,10 @@ const Lobby = () => {
       {/* 방 검색 + 방 목록 */}
       <Wrapper>
         <SearchWrapper>
-          <span style={{ fontSize: 27 }}>방 목록</span>
+          {/* <div className={classes.roomListText}> */}
+            <span className={classes.roomListText}>방 목록</span>
+          {/* </div> */}
+
         </SearchWrapper>
         <hr />
         <br />

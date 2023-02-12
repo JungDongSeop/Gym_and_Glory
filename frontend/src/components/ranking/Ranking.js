@@ -3,7 +3,7 @@ import axios from "axios";
 // import { useContext } from "react";
 // import AuthContext from "../../store/auth-context";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
-import classes from "./Ranking.module.css";
+import classes from "./Ranking.module.scss";
 import RestApi from "../api/RestApi";
 
 

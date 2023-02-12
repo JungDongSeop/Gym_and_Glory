@@ -80,7 +80,7 @@ const Comment = () => {
         `${RestApi()}/board/comment/${articleSequence}`
       );
       setComments(result.data.reverse());
-      console.log('댓글 목록', result.data);
+      console.log("댓글 목록", result.data);
     };
     commentRead();
   }, [articleSequence]);
@@ -199,52 +199,57 @@ const Comment = () => {
 
         <ul className={classes.replyUl}>
           {comments.map((comment, index) => (
-            <CommentDetail key={index} comment={comment} userSequence={userSequence} goodCount={comment.goodCount} />
+            <CommentDetail
+              key={index}
+              comment={comment}
+              userSequence={userSequence}
+              goodCount={comment.goodCount}
+              content={comment.contents}
+            />
             // <li key={index}>
             //   <div className={classes.reply}>
-                // <p className={classes.commonCharId}>
-                //   <img
-                //     src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/world_icon/icon_11.png"
-                //     alt="프로필 이미지"
-                //   />
-                //   {comment.user ? comment.user.nickname : null}
-                //   <span>
-                //     {new Date(comment.registerTime).toLocaleString("default", {
-                //       year: "numeric",
-                //       month: "numeric",
-                //       day: "numeric",
-                //       hour: "numeric",
-                //       minute: "numeric",
-                //     })}
-                //   </span>
-                // </p>
+            // <p className={classes.commonCharId}>
+            //   <img
+            //     src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/world_icon/icon_11.png"
+            //     alt="프로필 이미지"
+            //   />
+            //   {comment.user ? comment.user.nickname : null}
+            //   <span>
+            //     {new Date(comment.registerTime).toLocaleString("default", {
+            //       year: "numeric",
+            //       month: "numeric",
+            //       day: "numeric",
+            //       hour: "numeric",
+            //       minute: "numeric",
+            //     })}
+            //   </span>
+            // </p>
             //     <ul className={classes.replyBtnWrap}>
-                  // <li className={classes.replyBtn}>
-                  //   <p>추천 수: {comment.goodCount}</p>
-                  //   <p>
-                  //     {isCommentLike(comment.commentSequence, userSequence)}
-                  //   </p>
-                  // </li>
+            // <li className={classes.replyBtn}>
+            //   <p>추천 수: {comment.goodCount}</p>
+            //   <p>
+            //     {isCommentLike(comment.commentSequence, userSequence)}
+            //   </p>
+            // </li>
             //       <li className={classes.replyBtn}>
             //         <CommentDetail commentSequence={comment.commentSequence} userSequence={userSequence} goodCount={comment.goodCount} />
             //       </li>
-                  // {+sessionStorage.getItem("userSequence") ===
-                  // +comment.user.userSequence ? (
-                  //   <li className={classes.replyBtn}>
-                  //     <button
-                  //       onClick={() => handleDelete(comment.commentSequence)}
-                  //     >
-                  //       삭제
-                  //     </button>
-                  //   </li>
-                  // ) : null}
+            // {+sessionStorage.getItem("userSequence") ===
+            // +comment.user.userSequence ? (
+            //   <li className={classes.replyBtn}>
+            //     <button
+            //       onClick={() => handleDelete(comment.commentSequence)}
+            //     >
+            //       삭제
+            //     </button>
+            //   </li>
+            // ) : null}
             //     </ul>
             //     <div className={classes.replyText}>{comment.contents}</div>
             //   </div>
             // </li>
           ))}
         </ul>
-
       </div>
       <div className={classes.bottomTxarWrap}>
         <form onSubmit={handleSubmit} className={classes.bottomTxarCtracker}>

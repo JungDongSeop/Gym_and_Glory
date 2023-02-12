@@ -62,7 +62,6 @@
   background-color: yellow;
 } */
 
-
 /* .boardDetail {
   width: 65%;
   height: 50vh;
@@ -184,7 +183,6 @@ div {
   background-color: white;
 }
 
-
 .qsEmpathyWrap {
   width: 100%;
   float: left;
@@ -273,7 +271,7 @@ div {
   border-top: 1px solid #e3e3e3;
 }
 
-.replyUl > li  {
+.replyUl > li {
   float: left;
   /* width: 876px; */
   width: 96%;
@@ -290,20 +288,19 @@ li {
   float: left;
   margin-top: 40px;
   width: 100%;
-  height: 205px; 
+  height: 205px;
 }
 
 .bottomTxarCtracker {
   height: 203px;
   background-color: #e8eaee;
   border: 1px solid #dcdde1;
-
 }
 
 .bottomTxarCtracker textarea {
   float: left;
   padding: 20px;
-  width: 868px;
+  width: 95%;
   height: 90px;
   margin-top: 10px;
   margin-left: 10px;
@@ -311,7 +308,6 @@ li {
   resize: none;
   overflow: hidden;
   overflow-y: auto;
-
 }
 .bottomTxarBtn {
   position: relative;

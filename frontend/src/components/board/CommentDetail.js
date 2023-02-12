@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import RestApi from "../api/RestApi";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import classes from './CommentDetail.module.css';
+import classes from "./CommentDetail.module.css";
 
 // 댓글 좋아요 여부 출력만을 위해 사용
 const CommentDetail = (props) => {
@@ -11,6 +11,7 @@ const CommentDetail = (props) => {
   const comment = props.comment;
   const userSequence = props.userSequence;
   const [goodCount, setGoodCount] = useState(props.goodCount);
+  const [content, setContent] = useState(props.content);
 
   // 댓글 지우는 axios 요청
   // const handleDelete = async (comment) => {
@@ -24,38 +25,44 @@ const CommentDetail = (props) => {
   // }
 
   // 댓글 좋아요 여부 axios 요청
-  const [isCommentLike, setIsCommentLike] = useState(false)
-  const [isToggle, setIsToggle] = useState(false)
+  const [isCommentLike, setIsCommentLike] = useState(false);
+  const [isToggle, setIsToggle] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       await axios(
-        `${RestApi()}/board/comment/IsGood/${userSequence}/${comment.commentSequence}`
+        `${RestApi()}/board/comment/IsGood/${userSequence}/${
+          comment.commentSequence
+        }`
       ).then((res) => {
         setIsCommentLike(res.data);
-      })
+      });
     };
     fetchData();
-  })
+  });
 
   // 댓글 좋아요 요청
   const handleGood = async () => {
     try {
       await axios(
-        `${RestApi()}/board/comment/good/${userSequence}/${comment.commentSequence}`
+        `${RestApi()}/board/comment/good/${userSequence}/${
+          comment.commentSequence
+        }`
       );
       // alert("댓글을 추천하였습니다.");
       // Show a success message or refresh the comments list
     } catch (error) {
-      setIsCommentLike(!isCommentLike)
+      setIsCommentLike(!isCommentLike);
     }
-    setIsToggle(!isToggle)
-    setGoodCount(isCommentLike ? goodCount - 1 : goodCount + 1)
+    setIsToggle(!isToggle);
+    setGoodCount(isCommentLike ? goodCount - 1 : goodCount + 1);
   };
 
   // 댓글 지우기
   const handleDelete = async () => {
     try {
-      await axios.delete(`${RestApi()}/board/comment/${comment.commentSequence}`);
+      await axios.delete(
+        `${RestApi()}/board/comment/${comment.commentSequence}`
+      );
       alert("댓글이 삭제되었습니다.");
       // Show a success message or refresh the comments list
       // commentRead(articleSequence);
@@ -84,34 +91,30 @@ const CommentDetail = (props) => {
           </span>
         </p>
       </div>
-    
-      <ul className={classes.replyBtnWrap}>
 
+      <li>{content}</li>
+      <ul className={classes.replyBtnWrap}>
         <li className={classes.replyBtn}>
           <p>추천 수: {goodCount}</p>
-          <p>
-            {isCommentLike}
-          </p>
+          <p>{isCommentLike}</p>
         </li>
 
         <li className={classes.replyBtn}>
-          {isCommentLike ? 
-            <ThumbUpAltIcon onClick={handleGood}/> 
-            : 
-            <ThumbUpOffAltIcon onClick={handleGood}/>}
+          {isCommentLike ? (
+            <ThumbUpAltIcon onClick={handleGood} />
+          ) : (
+            <ThumbUpOffAltIcon onClick={handleGood} />
+          )}
         </li>
 
         {+sessionStorage.getItem("userSequence") ===
         +comment.user.userSequence ? (
           <li className={classes.replyBtn}>
-            <button
-              onClick={() => handleDelete(comment.commentSequence)}
-            >
+            <button onClick={() => handleDelete(comment.commentSequence)}>
               삭제
             </button>
           </li>
         ) : null}
-
       </ul>
     </li>
   );

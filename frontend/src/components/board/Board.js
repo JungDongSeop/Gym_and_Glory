@@ -55,29 +55,50 @@ const Board = () => {
       </Button>
 
       {/* 게시판 내용 */}
-      <ul className={classes.boardUl}>
-        {board
-          .slice(currentPage * 10 - 10, currentPage * 10)
-          .map((item, index) => (
-            <li
-              key={index}
-              className={index % 2 === 0 ? classes.odd : classes.even}
-              onClick={() => navigate(`/board/${type}/${item.articleSequence}`)}
-            >
-              {/* 제목 */}
-              <div>{item.title}</div>
-              {/* 작성자 */}
-              {/* <div>작성자 : <UserIdToNickname userId={item.userSequence} /></div> */}
-              <div>작성자 : {item.user.nickname}</div>
-              {/* 기타 정보 */}
-              <div>
-                ❤{item.goodCount}
-                👀{item.views}
-                🕒{item.modify_time.slice(0, 11)}
-              </div>
-            </li>
-          ))}
-      </ul>
+      <div className={classes.notice}>
+        <ul>
+          {board
+            .slice(currentPage * 10 - 10, currentPage * 10)
+            .map((item, index) => (
+              <li
+                key={index}
+                // className={index % 2 === 0 ? classes.odd : classes.even}
+                // className={classes.noticeList}
+                onClick={() =>
+                  navigate(`/board/${type}/${item.articleSequence}`)
+                }
+              >
+                {/* 제목 */}
+                <p className={classes.listTitle}>{item.title}</p>
+
+                {/* 작성자 */}
+                {/* <div>작성자 : <UserIdToNickname userId={item.userSequence} /></div> */}
+                {/* 기타 정보 */}
+                <div className={classes.boardOtherInfo}>
+                  <span className={classes.userName}>{item.user.nickname}</span>
+                  {/* <div>❤{item.goodCount}</div> */}
+                  {/* <div>👀{item.views}</div> */}
+                  {/* <div>🕒{item.modify_time.slice(0, 11)}</div> */}
+                  <ul>
+                    <li className={classes.heart2Cnt}>❤ {item.goodCount}</li>
+                    <li className={classes.dataCnt}>
+                      {new Date(item.modify_time).toLocaleDateString(
+                        "default",
+                        {
+                          year: "numeric",
+                          month: "numeric",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
+                        }
+                      )}
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </div>
 
       {/* 페이지네이션 */}
       <Pagination

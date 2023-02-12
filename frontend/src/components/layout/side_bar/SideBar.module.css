@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+
 aside {
   display: flex;
   flex-direction: column;
@@ -9,7 +11,15 @@ aside {
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(45, 46, 6, 0.75);;
+  background-color: rgba(45, 46, 6, 0.75);
+
+  font-family: 'Nanum Myeongjo', serif;
+
+  overflow-y:scroll; 
+}
+
+aside::-webkit-scrollbar{
+  display:none;
 }
 
 aside a {
@@ -40,4 +50,8 @@ main {
 
 main::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+.container{
+  margin-top: 20px;
 }

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleCamera } from "../../../redux/cameraSlice";
 import Webcam from "react-webcam";
+import classes from "./SideWebcam.module.scss";
 
 const SideWebcam = () => {
   // redux로 카메라 켤지 말지 받아오기 (on이 true면 켜기)
@@ -28,7 +29,7 @@ const SideWebcam = () => {
         )}
       </div>
       {/* <div style={{margin: '0 auto'}}> */}
-      <button style={{margin: '0 auto'}} onClick={() => dispatch(toggleCamera())}>Start Video</button>
+      <button className={classes.vbutton} onClick={() => dispatch(toggleCamera())}>Start Video</button>
       {/* </div> */}
     </div>
   );

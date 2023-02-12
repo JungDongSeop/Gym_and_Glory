@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RestApi from '../../api/RestApi';
-import classes from './Ranking.module.css';
+import classes from './Ranking.module.scss';
 
 const Ranking = () => {
   const [soloRanking, setSoloRanking] = useState([]);

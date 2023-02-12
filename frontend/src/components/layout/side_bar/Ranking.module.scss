@@ -1,0 +1,40 @@
+.container {
+  display: grid;
+  justify-content: center;
+  width: 80%; 
+  background-color: rgba(205, 213, 206, 0.197);
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  margin:20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px white inset;
+  padding-bottom: 10px;
+}
+
+.container div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > p{
+    color:rgb(133, 177, 98);
+    text-shadow: 0 0 2px rgb(0, 0, 0);
+    margin-bottom: 5px;
+  }
+
+  & > ul{
+    text-shadow: 0 0 2px rgb(104, 104, 104);
+    font-weight: normal;
+  }
+
+  & > ul > li{
+    margin-bottom: 3px;
+  }
+}
+
+.container ul {
+  list-style: none;
+  padding-left: 0;
+}

@@ -84,7 +84,7 @@ const CommentDetail = (props) => {
   // }, [articleSequence]);
 
   return isDelete ? null : (
-    <li>
+    <div>
       <div className={classes.reply}>
         <p className={classes.commonCharId}>
           {/* <img
@@ -93,13 +93,13 @@ const CommentDetail = (props) => {
           /> */}
           {comment.user ? comment.user.nickname : null}
           <span>
-            {new Date(comment.registerTime).toLocaleString("default", {
+            {/* {new Date(comment.registerTime).toLocaleDateString("ko-KR", {
               year: "numeric",
               month: "numeric",
               day: "numeric",
               hour: "numeric",
               minute: "numeric",
-            })}
+            })} */}
           </span>
         </p>
       </div>
@@ -128,7 +128,7 @@ const CommentDetail = (props) => {
           </li>
         ) : null}
       </ul>
-    </li>
+    </div>
   );
 };
 

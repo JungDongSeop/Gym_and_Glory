@@ -9,6 +9,8 @@ import classes from "./Login.module.scss";
 import RestApi from "../../api/RestApi";
 // import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import toast, { Toaster } from "react-hot-toast";
+// import { toast } from "react-toastify";
 
 // API_KEY
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
@@ -59,11 +61,17 @@ const Login = () => {
         if (res.ok) {
           // ...
           // console.log("로그인성공");
+
           return res.json();
         } else {
           return res.json().then((data) => {
             let errorMessage = "아이디 혹은 비밀번호가 일치하지 않습니다.";
-            alert(errorMessage);
+            // alert(errorMessage);
+            // toast(errorMessage, {
+            //   duration: 3000,
+            //   position: "top-right",
+            // });
+            toast.error(errorMessage);
             console.log(data);
           });
         }
@@ -112,6 +120,9 @@ const Login = () => {
 
   return (
     <div className={classes.whiteBox}>
+      <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
       {/* <h1 >{<<}</h1> */}
       <ArrowBackIosNewIcon
         className={classes.backbutton}

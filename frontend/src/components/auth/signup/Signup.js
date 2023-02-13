@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
 import classes from "./Signup.module.scss";
 import RestApi from "../../api/RestApi";
+import toast, { Toaster } from "react-hot-toast";
 
 // API_KEY
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
@@ -170,13 +171,17 @@ const Signup = () => {
       `${RestApi()}/check_email?email=${checkEmail}`
     );
     // console.log(response);
-    if (response.data === "중복X" && isValidEmail === true) {
-      alert("사용 가능한 이메일입니다.");
+
+    if (emailInputRef.current.value === "") {
+      toast.error("이메일을 입력해주세요");
+    } else if (response.data === "중복X" && isValidEmail === true) {
+      toast.success("사용 가능한 이메일입니다.");
       setIsCheckedEmail(true);
       emailInputRef.current.style.borderBottom = "2px solid #00bd10";
     } else {
       if (response.data === "중복O") {
-        alert("이미 사용중인 이메일입니다.");
+        // alert("이미 사용중인 이메일입니다.");
+        toast.error("이미 사용중인 이메일 입니다.");
       } else if (isValidEmail === false) {
         if (checkEmail.length === 0) {
           alert("이메일을 입력해주세요!");
@@ -200,7 +205,7 @@ const Signup = () => {
     );
     console.log(response);
     if (response.data === "중복X" && isValidNickname) {
-      alert("사용 가능한 닉네임입니다.");
+      // alert("사용 가능한 닉네임입니다.");
       setIsCheckedNickname(true);
       nicknameInputRef.current.style.borderBottom = "2px solid #00bd10";
     } else if (response.data === "중복X" && !isValidNickname) {
@@ -301,6 +306,9 @@ const Signup = () => {
   };
   return (
     <section className={classes.whiteBox}>
+      <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
       <img
         className={classes.logoSmall}
         src={Logo}
@@ -371,6 +379,7 @@ const Signup = () => {
               <button
                 className={classes.authsmallbutton}
                 onClick={checkNicknameHandler}
+                id="nickname"
               >
                 중복확인
               </button>
@@ -386,11 +395,11 @@ const Signup = () => {
                 // required
                 ref={nicknameInputRef}
                 autoComplete="off"
-                // onKeyDown={(e) => {
-                //   if (e.key === "Enter") {
-                //     checkNicknameHandler();
-                //   }
-                // }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    checkNicknameHandler();
+                  }
+                }}
               />
             </div>
           </div>

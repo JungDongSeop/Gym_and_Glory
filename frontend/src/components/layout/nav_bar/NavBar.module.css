@@ -61,10 +61,11 @@ nav img {
   transition: 0.3s;
   text-shadow: 0 1px 3px black;
   font-size: 18px;
+  margin-bottom: 6px;
 }
 
-.outIconDiv p {
-  /* margin-bottom: 15px; */
+.outIconDiv p{
+  margin-bottom: 17px;
 }
 .outIconDiv:hover {
   /* text-shadow: 0 0px 5px white; */

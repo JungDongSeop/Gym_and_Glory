@@ -24,12 +24,13 @@ hr {
   justify-content: right;
 }
 
-span{
-  font-family: 'Nanum Myeongjo', serif;
+.roomListText{
   font-weight: bold;
+  font-size: 27px;
 }
 
-.roomListDiv{
-  background-color: aqua;
-  width: 100px;
+.roomListText{
+  font-family: 'Nanum Myeongjo', serif;
+  text-shadow: 0 0px 2px rgb(104, 104, 104);
 }
+

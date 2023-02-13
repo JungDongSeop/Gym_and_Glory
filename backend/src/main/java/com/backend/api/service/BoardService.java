@@ -79,10 +79,9 @@ public class BoardService {
 
     public void modify( BoardPostReq boardPostReq) {
         BoardArticle cur = boardRepository.findOneByArticleSequence(boardPostReq.getArticleSequence());
-        if(boardPostReq.getTitle().length()>0)
-            cur.setTitle(boardPostReq.getTitle());
-        if(boardPostReq.getContents().length()>0)
-            cur.setContents(boardPostReq.getContents());
+        System.out.println(cur);
+        cur.setTitle(boardPostReq.getTitle());
+        cur.setContents(boardPostReq.getContents());
         cur.setRegisterTime(String.valueOf(LocalDateTime.now()));
         boardRepository.save(cur);
     }

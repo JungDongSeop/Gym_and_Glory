@@ -171,9 +171,10 @@ div {
 
 .qsText {
   float: left;
-  width: 876px;
+  /* width: 876px; */
   margin-top: 40px;
   margin-left: 27px;
+  margin-right: 27px;
   font-size: 16px;
   color: #333;
   line-height: 26px;

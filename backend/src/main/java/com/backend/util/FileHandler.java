@@ -3,6 +3,7 @@ package com.backend.util;
 import com.backend.api.service.UserService;
 import com.backend.db.entity.FileUser;
 import com.backend.db.entity.User;
+import com.backend.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -19,10 +20,12 @@ public class FileHandler {
 
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public FileHandler(UserService userService){
+    public FileHandler(UserService userService,UserRepository userRepository){
         this.userService = userService;
+        this.userRepository = userRepository;
     }
     public List<FileUser> parseFileInfo(Integer userID, List<MultipartFile> multipartFiles) throws Exception {
 
@@ -84,7 +87,7 @@ public class FileHandler {
                 System.out.println(userID);
 
                 // 생성 후 리스트에 추가
-                User user= userService.getOne(9);
+                User user= userService.getOne(userID);
 
                 FileUser fileUser = FileUser.builder()
                         .userSequence(userID)
@@ -93,6 +96,7 @@ public class FileHandler {
                         .fileSize((int)multipartFile.getSize())
                         .build();
                 user.setImagePath(path + "/" + new_file_name);
+                userRepository.save(user);
                 fileList.add(fileUser);
 
                 // 저장된 파일로 변경하여 이를 보여주기 위함

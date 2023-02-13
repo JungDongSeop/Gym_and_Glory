@@ -88,8 +88,8 @@ class RoomList extends Component {
         <div                
         style={{
           display:"grid",
-          gridTemplateColumns:"1fr 1fr 1fr 1fr",
-          gridColumnGap:10,
+          gridTemplateColumns:"1fr 1fr 1fr 1fr ",
+          gridColumnGap:20,
       }}>
         {/* <Grid container spacing={6}> */}
           {this.state.rooms.map((room, i) => {
@@ -100,8 +100,8 @@ class RoomList extends Component {
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
-                  paddingTop: 40,
-                  paddingLeft: 20,
+                  paddingTop: 20,
+                  // paddingLeft: 20,
                   paddingBottom: 20,
                   paddingRight: 20,
                   

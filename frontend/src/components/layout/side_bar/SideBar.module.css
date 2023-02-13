@@ -4,7 +4,6 @@ aside {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   margin-top: 70px;
   width: 300px;
   position: absolute;
@@ -53,12 +52,13 @@ main::-webkit-scrollbar {
 }
 
 .container{
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .userNickDiv{
   color:white;
   transition: 0.3s;
+  /* padding:0; */
 }
 .userNickDiv :hover{
   font-weight: bold;

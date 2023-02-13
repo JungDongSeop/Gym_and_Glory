@@ -10,9 +10,9 @@ function Button({ onClick, children, size }) {
       padding: '5px 10px'
     },
     sideBar: {
-      height: '50px',
-      width: '180px',
-      fontSize: '20px',
+      height: '40px',
+      width: '140px',
+      fontSize: '18px',
       // padding: '10px',
     },
     large: {

@@ -11,7 +11,7 @@ function Button({ onClick, children, size }) {
     },
     sideBar: {
       height: '40px',
-      width: '140px',
+      width: '150px',
       fontSize: '18px',
       // padding: '10px',
     },

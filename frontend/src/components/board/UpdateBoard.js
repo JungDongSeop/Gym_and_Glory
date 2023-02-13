@@ -48,11 +48,11 @@ const UpdateBoard = () => {
           articleSequence: articleSequence,
           // title: enteredNewTitle,
           // contents: enteredNewContent,
-          title: newTitle,
-          contents: newContent,
+          title: newTitleInputRef.current.value,
+          contents: newContentInputRef.current.value,
         })
         .then(() => {
-          navigate(`/board/${type}`);
+          navigate(`/board/${type}/${articleSequence}`);
         })
         .catch((error) => {
           console.log(error);

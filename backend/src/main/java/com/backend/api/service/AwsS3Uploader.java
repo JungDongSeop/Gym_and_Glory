@@ -23,7 +23,7 @@ public class AwsS3Uploader {
     private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
-    public String bucket;
+    public String bucket="pliot1017-bucket";
 
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)        // 파일 생성

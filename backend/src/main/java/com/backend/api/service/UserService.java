@@ -142,4 +142,8 @@ public class UserService {
         return false;
     }
 
+    public void setImagePath(Integer userSequence, String imagePath) {
+        User user = userRepository.findById(userSequence).get();
+        user.setImagePath(imagePath);
+    }
 }

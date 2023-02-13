@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+
+.modalDiv{
+  // background: url('../../../assets/logo.png'), url('../../../assets/logo.png');
+  background-size: 18vw 18vw;
+  background-repeat: no-repeat;
+  background-position: center;;
+  background-blend-mode: exclusion;
+}
+
+.modalTitleText{
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: 'Nanum Myeongjo', serif;
+}
+
+.modalformDiv1{
+  // background-color: red;
+  font-family: 'Nanum Myeongjo', serif;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  align-items: center;
+  text-align: right;
+  & > p{
+    font-family: 'Nanum Myeongjo', serif;
+
+  }
+  
+  & > input{
+    outline: none;
+    margin-left: 10px;
+    border-radius: 20px;
+    padding:5px;
+    box-shadow: 0 2px 5px black;
+    transition: 0.3s;
+  }
+
+  & > input:hover
+  {
+    outline: none;
+    // background:linear-gradient(to left, rgba(255, 0, 0, 0.51),rgba(0, 255, 110, 0.471)); 
+    // border-color:rgb(194, 194, 194);
+    box-shadow: 0 2px 5px black, 0 2px 5px rgb(80, 80, 80) inset;
+  }
+}
+.modalformDiv2{
+   outline: none;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+
+  & > p{
+    & > label{
+      font-family: 'Nanum Myeongjo', serif;
+    }
+
+    & > label  input[type=checkbox]{
+      margin-left: 8px;
+    }
+  }
+
+  & > div > p{
+    font-family: 'Nanum Myeongjo', serif;
+
+    // text-shadow: 0 0px 2px white;
+    font-weight: bold;
+  }
+
+  & > div > input{
+    outline: none;
+    margin-left: 10px;
+    border-radius: 20px;
+    padding:5px;
+    box-shadow: 0 2px 5px black;
+    transition: 0.3s;
+    height: 10px;
+    margin-bottom: 4px;
+  }
+
+  & > div > input:hover
+  {
+    outline: none;
+    // background:linear-gradient(to left, rgba(255, 0, 0, 0.51),rgba(0, 255, 110, 0.471)); 
+    // border-color:rgb(194, 194, 194);
+    box-shadow: 0 2px 5px black, 0 2px 5px rgb(80, 80, 80) inset;
+  }
+
+}
+
+.modalformbuttonDiv{
+  display: grid;
+  
+  & > button{
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 18px;
+    font-weight: bold;
+    padding:5px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 3px 5px rgb(71, 90, 84) ,
+    0 5px 5px rgb(78, 84, 75);
+    background : linear-gradient(to left, rgb(198, 255, 198),rgb(129, 136, 132));
+    transition: 0.2s;
+  }
+
+  & > button:hover{
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 18px;
+    font-weight: bold;
+    padding:5px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 3px 5px rgb(71, 90, 84);
+    transform: translateY(2px);
+  }
+}

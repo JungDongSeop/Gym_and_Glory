@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RestApi from "../../api/RestApi";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import classes from './CreateRoomModal.module.scss';
 
 const APPLICATION_SERVER_URL = `${RestApi()}/`;
 
@@ -102,16 +103,20 @@ const CreateRoom = () => {
       {/* 방 생성 모달 */}
       {/* <Button onClick={openModal}>방 생성</Button> */}
       <Modal buttonTitle='방 생성' width="500px" height="300px">
+      <div className={classes.modalDiv}>
         {/* Modal.js <main> {props.children} </main>에 내용이 입력된다. 리액트 함수형 모달 */}
+        <div  className={classes.modalTitleText}> 방 만들기 </div>
         <form onSubmit={handelSubmit}>
+
+          <div className={classes.modalformDiv1}>
           <p>
-            방 제목 :
+            방 제목 :          </p>
             <input type="text" required onChange={handleRoomTitleChange} />
-          </p>
           <p>
-            팀 명 :
+            팀 명 :          </p>
             <input type="text" required onChange={handleTeamTitleChange} />
-          </p>
+          </div>
+          <div className={classes.modalformDiv2}>
           <p>
             <label>
               비밀방
@@ -125,14 +130,13 @@ const CreateRoom = () => {
           {!isopened ? (
             <div style={{ display: "flex", alignItems: "center" }}>
               <p>
-                비밀번호 :
+                비밀번호 :               </p>
                 <input
                   type={visibility ? "text" : "password"}
                   required
                   onChange={handleRoomPasswordChange}
                   style={{ marginLeft: 4, marginRight: 4 }}
                 />
-              </p>
               {visibility ? (
                 <VisibilityOff
                   onClick={handleVisibility}
@@ -146,8 +150,13 @@ const CreateRoom = () => {
               )}
             </div>
           ) : null}
+          </div>
+
+          <div className={classes.modalformbuttonDiv}>
           <button type="submit">방 만들기</button>
+          </div>
         </form>
+        </div>
       </Modal>
     </div>
   );

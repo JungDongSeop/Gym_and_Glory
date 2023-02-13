@@ -5,6 +5,9 @@ import axios from "axios";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import classes from "./Ranking.module.scss";
 import RestApi from "../api/RestApi";
+import rank1 from "../../assets/ranking1.png";
+import rank2 from "../../assets/ranking2.png";
+import rank3 from "../../assets/ranking3.png";
 
 
 const Ranking = () => {
@@ -33,9 +36,26 @@ const Ranking = () => {
         <ul>
           {soloRanking && soloRanking.map((user, index) => (
             <li key={index}>
-              {user.nickName}
-              <br />
+              {index === 0 ? 
+                <img src={rank1} className={classes.rankImg} /> : null
+              }
+
+              {index === 1 ? 
+                <img src={rank2} className={classes.rankImg} /> : null
+              }
+
+              {index === 2 ? 
+                <img src={rank3} className={classes.rankImg} /> : null
+              }
+              <p className={classes.levelText}>
+        
               LV. {user.level}
+              </p>
+              <p className={classes.nickText}>
+                {user.nickName}
+              </p>
+              {/* <br /> */}
+
             </li>
           ))}
         </ul>
@@ -46,10 +66,30 @@ const Ranking = () => {
         <ul>
           {teamRanking && teamRanking.map((team, index) => (
             <li key={index}>
-              {team.teamName}
-              <br />
+
+              {index === 0 ? 
+                <img src={rank1} className={classes.rankImg} /> : null
+              }
+
+              {index === 1 ? 
+                <img src={rank2} className={classes.rankImg} /> : null
+              }
+
+              {index === 2 ? 
+                <img src={rank3} className={classes.rankImg} /> : null
+              }
+
+              <p className={classes.levelText}>
               {team.clearTime}
-              <div>{team.users}</div>
+              </p>
+
+              {/* <br /> */}
+
+              <p className={classes.nickText}>
+              {team.teamName}
+              </p>
+
+              <div className={classes.teamDiv}>{team.users}</div>
             </li>
           ))}
         </ul>

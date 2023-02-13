@@ -7,6 +7,7 @@ import classes from "./Board.module.css";
 import { Button } from "antd";
 import { Pagination } from "antd";
 import RestApi from "../api/RestApi";
+import moment from "moment";
 
 // 기본적으로 공지사항 게시판이 표시
 // 버튼을 누를 경우 다른 게시판 정보를 axios 요청
@@ -83,13 +84,10 @@ const Board = () => {
                   <ul>
                     <li className={classes.heart2Cnt}>❤ {item.goodCount}</li>
                     <li className={classes.dataCnt}>
-                      {new Date(item.modify_time).toLocaleDateString("ko-KR", {
-                        year: "numeric",
-                        month: "numeric",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                      })}
+                      {moment
+                        .utc(new Date(item.modify_time).toISOString())
+                        .add(18, "hours")
+                        .format("YYYY-MM-DD HH:mm")}
                     </li>
                   </ul>
                 </div>

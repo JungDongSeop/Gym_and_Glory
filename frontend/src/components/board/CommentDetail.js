@@ -86,7 +86,10 @@ const CommentDetail = (props) => {
   // }, [articleSequence]);
 
   const utcTime = new Date(comment.registerTime).toISOString();
-  const localTime = moment.utc(utcTime).local().format("YYYY-MM-DD HH:mm:ss");
+  const localTime = moment
+    .utc(utcTime)
+    .add(18, "hours")
+    .format("YYYY-MM-DD HH:mm:ss");
 
   return isDelete ? null : (
     <li>

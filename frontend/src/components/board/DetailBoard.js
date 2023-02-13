@@ -9,7 +9,7 @@ import RestApi from "../api/RestApi";
 import classes from "./Comment.module.css";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-
+import moment from "moment";
 // 게시판 상세페이지
 // 이후 notice, getTeam, report 등으로 분리할 예정
 
@@ -116,13 +116,10 @@ const DetailBoard = () => {
                 alt="작성 시간"
               />
               {data.registerTime
-                ? new Date(data.registerTime).toLocaleString("ko-KR", {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                  })
+                ? moment
+                    .utc(new Date(data.registerTime).toISOString())
+                    .add(18, "hours")
+                    .format("YYYY-MM-DD HH:mm:ss")
                 : null}
             </p>
           </div>

@@ -264,3 +264,13 @@
   transform: translateY(6px);
   color: white;
 }
+
+.leaveButton {
+  width: 100px;
+  height: 30px;
+  background-color: #121214;
+  color: white;
+  font-weight: bold;
+  box-shadow: inset 0px 1px 10px 0px rgb(185, 27, 27);
+  border-radius: 10px 4px;
+}

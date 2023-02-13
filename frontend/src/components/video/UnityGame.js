@@ -56,6 +56,9 @@ const UnityGame = forwardRef((props, ref) => {
       console.log("공격 신호 받아서 유니티로 보낸다");
       console.log(myNum, num);
       sendMessage("Player" + myNum + "(Clone)", "Attack", num);
+    } else if (signal === "sendReady") {
+      console.log(num, "레디 신호", myNum);
+      sendMessage("PhotonInit", "Ready", myNum);
     }
   }
 

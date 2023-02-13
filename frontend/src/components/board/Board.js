@@ -83,16 +83,13 @@ const Board = () => {
                   <ul>
                     <li className={classes.heart2Cnt}>❤ {item.goodCount}</li>
                     <li className={classes.dataCnt}>
-                      {new Date(item.modify_time).toLocaleDateString(
-                        "default",
-                        {
-                          year: "numeric",
-                          month: "numeric",
-                          day: "numeric",
-                          hour: "numeric",
-                          minute: "numeric",
-                        }
-                      )}
+                      {new Date(item.modify_time).toLocaleDateString("ko-KR", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                      })}
                     </li>
                   </ul>
                 </div>

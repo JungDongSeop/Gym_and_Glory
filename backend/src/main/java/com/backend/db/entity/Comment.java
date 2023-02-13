@@ -1,17 +1,21 @@
 package com.backend.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@EntityListeners(value = {AuditingEntityListener.class})
 @Table(name ="comment")
 public class Comment {
     @Id
@@ -33,6 +37,20 @@ public class Comment {
 
     @Column(name = "open_close")
     private Integer open;
-    private String registerTime;
+
+    @LastModifiedDate
+    @Column(name="register_time")
+    private LocalDateTime registerTime;
+
+    public static Comment createComment (User user, BoardArticle boardArticle, String contents, Integer goodCount, Integer open) {
+        Comment comment = new Comment();
+        comment.setUser(user);
+        comment.setBoardArticle(boardArticle);
+        comment.setContents(contents);
+        comment.setGoodCount(goodCount);
+        comment.setOpen(open);
+
+        return comment;
+    }
 
 }

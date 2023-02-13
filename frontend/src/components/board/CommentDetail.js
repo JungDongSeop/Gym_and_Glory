@@ -12,6 +12,7 @@ const CommentDetail = (props) => {
   const userSequence = props.userSequence;
   const [goodCount, setGoodCount] = useState(props.goodCount);
   const [content, setContent] = useState(props.content);
+  const [isDelete, setIsDelete] = useState(false);
 
   // 댓글 지우는 axios 요청
   // const handleDelete = async (comment) => {
@@ -66,12 +67,23 @@ const CommentDetail = (props) => {
       alert("댓글이 삭제되었습니다.");
       // Show a success message or refresh the comments list
       // commentRead(articleSequence);
+      setIsDelete(true);
     } catch (error) {
       console.error(error);
     }
   };
 
-  return (
+  // useEffect(() => {
+  //   const commentRead = async () => {
+  //     const result = await axios(
+  //       `${RestApi()}/board/comment/${articleSequence}`
+  //     );
+  //     setComments(result.data.reverse());
+  //   };
+  //   commentRead();
+  // }, [articleSequence]);
+
+  return isDelete ? null : (
     <li>
       <div className={classes.reply}>
         <p className={classes.commonCharId}>

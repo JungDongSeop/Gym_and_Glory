@@ -6,6 +6,7 @@ import axios from "axios";
 import CommentDetail from "./CommentDetail";
 import classes from "./Comment.module.css";
 import RestApi from "../api/RestApi";
+import { Button } from "antd";
 
 // import { useNavigate } from 'react-router-dom';
 
@@ -256,13 +257,25 @@ const Comment = () => {
           <textarea
             name="comment"
             cols="30"
-            rows="10"
+            rows="5"
             placeholder="댓글을 입력해주세요"
             ref={commentInputRef}
           ></textarea>
+          {/* <input
+            type="text"
+            name="comment"
+            placeholder="댓글을 입력해주세요"
+            ref={commentInputRef}
+          /> */}
           <div className={classes.bottomTxarBtn}>
             <div className={classes.txarRightBtn}>
-              <input type="submit" value="제출" />
+              <Button className={classes.createButton} type="primary">
+                <input
+                  className={classes.buttonInput}
+                  type="submit"
+                  value="제출"
+                />
+              </Button>
             </div>
           </div>
         </form>

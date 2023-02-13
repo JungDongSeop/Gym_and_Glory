@@ -69,8 +69,9 @@ const Board = () => {
                 }
               >
                 {/* 제목 */}
-                <p className={classes.listTitle}>{item.title}</p>
-
+                <div>
+                  <p className={classes.listTitle}>{item.title}</p>
+                </div>
                 {/* 작성자 */}
                 {/* <div>작성자 : <UserIdToNickname userId={item.userSequence} /></div> */}
                 {/* 기타 정보 */}

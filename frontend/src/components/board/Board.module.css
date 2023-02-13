@@ -69,9 +69,13 @@
 }
 
 .notice > ul > li {
-  position: relative;
-  float: left;
-  padding-left: 27px;
+  position: grid;
+  grid-template-columns: 3fr 1fr;
+  /* float: left; */
+  margin: 0;
+  /* padding-left: 27px; */
+  /* padding-right: 27px; */
+  
   /* height: 48px; */
   /* height: 70%; */
   /* border-bottom: 1px solid #e3e3e3; */
@@ -82,11 +86,24 @@
   height: 65px;
 }
 
+.notice > ul > li > div > p {
+  padding-left: 27px;
+  
+}
+
+.notice > ul > li > div > ul {
+  padding-right: 27px;
+}
+.notice > ul > li:hover {
+  background-color: lightgray;
+}
+
 .listTitle {
   font-size: 16px;
   color: #333;
   float: left;
   margin-top: 15px;
+  max-width: 200px;
 }
 
 .boardOtherInfo {
@@ -94,12 +111,18 @@
   font-family: "Tahoma";
   color: #aaaaaa;
   font-size: 12px;
-  margin-right: 0;
-  margin-top: 29px;
-  min-width: 324px;
+  margin-right: -50px;
+  margin-top: 25px;
+  min-width: 400px;
+  max-width: 400px;
   /* position: flex; */
   /* justify-content: space-between; */
+  /* align-items: center; */
+  justify-content: right;
+  justify-items: right;
 }
+
+
 
 /* .boardOtherInfo,
 .userName {
@@ -130,7 +153,7 @@
 }
 
 * {
-  margin: 0;
+  /* margin: 0; */
   padding: 0;
   list-style: none;
   border: 0;
@@ -157,4 +180,7 @@ li {
   font-size: 12px;
   font-family: "NanumBarunGothic", "Malgun Gothic", sans-serif;
   line-height: 1.4;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
 }

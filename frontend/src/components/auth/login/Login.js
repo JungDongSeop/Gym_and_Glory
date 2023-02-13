@@ -62,7 +62,7 @@ const Login = () => {
           return res.json();
         } else {
           return res.json().then((data) => {
-            let errorMessage = "로그인 실패";
+            let errorMessage = "아이디 혹은 비밀번호가 일치하지 않습니다.";
             alert(errorMessage);
             console.log(data);
           });
@@ -117,7 +117,7 @@ const Login = () => {
         className={classes.backbutton}
         onClick={() => navigate("/")}
         sx={{ fontSize: 50 }}
-      /> 
+      />
       <img
         className={classes.logoSmall}
         src={Logo}
@@ -131,20 +131,26 @@ const Login = () => {
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="email">
-          <input type="email" id="email" required ref={emailInputRef} placeholder=" "/>
-          <p className={classes.labelText}>아이디 입력</p>
+            <input
+              type="email"
+              id="email"
+              required
+              ref={emailInputRef}
+              placeholder=" "
+            />
+            <p className={classes.labelText}>아이디 입력</p>
           </label>
         </div>
         <div className={classes.control}>
           <label htmlFor="password">
-          <input
-            type="password"
-            id="password"
-            required
-            ref={passwordInputRef}
-            placeholder=" "
-          />
-          <p className={classes.labelText}>비밀번호 입력</p>
+            <input
+              type="password"
+              id="password"
+              required
+              ref={passwordInputRef}
+              placeholder=" "
+            />
+            <p className={classes.labelText}>비밀번호 입력</p>
           </label>
         </div>
         <div className={classes.loginBtnDiv}>

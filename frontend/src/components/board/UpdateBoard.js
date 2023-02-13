@@ -17,20 +17,23 @@ const UpdateBoard = () => {
   const [board, setBoard] = useState([]);
 
   // 수정내용
-  const enteredNewTitle = useRef("");
-  const enteredNewContent = useRef("");
+  const newTitleInputRef = useRef("");
+  const newContentInputRef = useRef("");
+
+  const [newTitle, setNewTitle] = useState(board.title);
+  const [newContent, setNewContent] = useState(board.content);
 
   // 게시글 read axios
   useEffect(() => {
     const fetchBoard = async () => {
       const result = await axios(`${RestApi()}/board/${articleSequence}`);
+      console.log(result.data);
       setBoard(result.data);
+      setNewTitle(result.data.title);
+      setNewContent(result.data.contents);
     };
     fetchBoard();
   }, [articleSequence]);
-
-  const [newTitle, setNewTitle] = useState(board.title);
-  const [newContent, setNewContent] = useState(board.content);
 
   // const handleChange = (event) => {
   //   setBoard({ ...board, [event.target.name]: event.target.value });
@@ -39,20 +42,22 @@ const UpdateBoard = () => {
   // 게시판 수정 axios
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios
-      .put(`${RestApi()}/board`, {
-        articleSequence: articleSequence,
-        // title: enteredNewTitle,
-        // contents: enteredNewContent,
-        title: newTitle,
-        contents: newContent,
-      })
-      .then(() => {
-        navigate(`/board/${type}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (newTitle !== board.title || newContent !== board.content) {
+      axios
+        .put(`${RestApi()}/board`, {
+          articleSequence: articleSequence,
+          // title: enteredNewTitle,
+          // contents: enteredNewContent,
+          title: newTitle,
+          contents: newContent,
+        })
+        .then(() => {
+          navigate(`/board/${type}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
   const typename = () => {
     if (type === "notice") {
@@ -92,8 +97,8 @@ const UpdateBoard = () => {
                       type="text"
                       placeholder="제목을 입력하세요"
                       defaultValue={board.title}
-                      onChange={(event) => setNewTitle(event.target.value)}
-                      ref={enteredNewTitle}
+                      // onChange={(event) => setNewTitle(event.target.value)}
+                      ref={newTitleInputRef}
                     />
                   </dd>
                 </dl>
@@ -102,8 +107,8 @@ const UpdateBoard = () => {
                 <textarea
                   placeholder="내용을 입력하세요"
                   defaultValue={board.contents}
-                  onChange={(event) => setNewContent(event.target.value)}
-                  ref={enteredNewContent}
+                  // onChange={(event) => setNewContent()}
+                  ref={newContentInputRef}
                 ></textarea>
               </div>
             </div>

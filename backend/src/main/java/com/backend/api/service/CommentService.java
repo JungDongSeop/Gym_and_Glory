@@ -36,19 +36,14 @@ public class CommentService {
         return commentRepository.findByBoardArticle(boardArticle);
     }
 
-    @PrePersist // 데이터 생성이 이루어질때 사전 작업
+    //@PrePersist // 데이터 생성이 이루어질때 사전 작업
     public void writeComment(CommentReq commentReq) {
         User user = userRepository.findByUserSequence(commentReq.getUserSequence());
         BoardArticle boardArticle = boardRepository.findOneByArticleSequence(commentReq.getArticleSequence());
 
-        Comment comment = Comment.builder()
-                .user(user)
-                .boardArticle(boardArticle)
-                .contents(commentReq.getContents())
-                .goodCount(0)
-                .open(0)
-                .registerTime(String.valueOf(LocalDateTime.now())).build();
-        commentRepository.save(comment);
+        Comment newComment = Comment.createComment(
+                user, boardArticle, commentReq.getContents(), 0, 0);
+        commentRepository.save(newComment);
     }
 
     public int deleteCommentAll(int noticeSequence) {

@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Transactional
-@RequestMapping("/api/board/comment")
+@RequestMapping("/api/board")
 @CrossOrigin("*")
 public class CommentController {
 
@@ -32,14 +32,15 @@ public class CommentController {
     }
 
     //댓글 쓰기
-    @PostMapping
-    public ResponseEntity write(@RequestBody CommentReq commentReq) {
+    @PostMapping(value="/comment")
+    public @ResponseBody ResponseEntity write(@RequestBody CommentReq commentReq) {
+        System.out.println("댓글쓰기 들어오기");
         commentService.writeComment(commentReq);
-        return new ResponseEntity("글쓰기 완료", HttpStatus.OK);
+        return new ResponseEntity<>("글쓰기 완료", HttpStatus.OK);
     }
 
     //댓글 삭제
-    @DeleteMapping("/{commentSequence}")
+    @DeleteMapping("/comment/{commentSequence}")
     public ResponseEntity delete(@PathVariable int commentSequence) {
         int flag = commentService.deleteComment(commentSequence);
         if (flag == 1)
@@ -49,14 +50,14 @@ public class CommentController {
     }
 
     //댓글 리스트 받아오기
-    @GetMapping("/{articleSequence}")
+    @GetMapping("/comment/{articleSequence}")
     public List<Comment> getList(@PathVariable int articleSequence) {
         List<Comment> commentList = commentService.getAllList(articleSequence);
         return commentList;
     }
 
     //댓글에 좋아요 누르기
-    @GetMapping("/good/{userSequence}/{commentSequence}")
+    @GetMapping("/comment/good/{userSequence}/{commentSequence}")
     public ResponseEntity<?> commentGood(@PathVariable Integer userSequence, @PathVariable Integer commentSequence) {
 
         CommentGood flag = goodService.findCommentGood(userSequence, commentSequence);
@@ -72,7 +73,7 @@ public class CommentController {
         return new ResponseEntity<>(comment.getGoodCount(),HttpStatus.OK);
     }
 
-    @GetMapping("/IsGood/{userSequence}/{commentSequence}")
+    @GetMapping("/comment/IsGood/{userSequence}/{commentSequence}")
     public ResponseEntity<?> IsCommentGood(@PathVariable Integer userSequence, @PathVariable Integer commentSequence) {
         CommentGood flag = goodService.findCommentGood(userSequence, commentSequence);
         System.out.println(flag);

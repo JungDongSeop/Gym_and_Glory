@@ -1,6 +1,9 @@
 package com.backend.db.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -11,6 +14,7 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(value = {AuditingEntityListener.class})
 @Table(name ="board")
 public class BoardArticle {
     @Id
@@ -26,9 +30,11 @@ public class BoardArticle {
 
     private String contents;
 
+    @CreatedDate
     @Column(name = "register_time")
     private String registerTime;
 
+    @LastModifiedDate
     @Column(name = "modify_time")
     private String modify_time;
 

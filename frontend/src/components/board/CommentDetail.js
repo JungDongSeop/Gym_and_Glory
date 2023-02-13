@@ -4,6 +4,8 @@ import RestApi from "../api/RestApi";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import classes from "./CommentDetail.module.css";
+import locale from "antd/es/date-picker/locale/en_US";
+import moment from "moment";
 
 // 댓글 좋아요 여부 출력만을 위해 사용
 const CommentDetail = (props) => {
@@ -83,7 +85,11 @@ const CommentDetail = (props) => {
   //   commentRead();
   // }, [articleSequence]);
 
-  const registerTime = new Date(comment.registerTime).toISOString();
+  const utcTime = new Date(comment.registerTime).toISOString();
+  const localTime = moment
+    .utc(utcTime)
+    .add(18, "hours")
+    .format("YYYY-MM-DD HH:mm:ss");
 
   return isDelete ? null : (
     <li>
@@ -95,13 +101,13 @@ const CommentDetail = (props) => {
           /> */}
           {comment.user ? comment.user.nickname : null}
           <span>
-            {new Date(comment.registerTime).toLocaleString("ko-KR", {
+            {/* {new Date(comment.registerTime).toLocaleString("ko-KR", {
               year: "numeric",
               month: "numeric",
               day: "numeric",
               hour: "numeric",
               minute: "numeric",
-            })}
+            })} */}
             {/* {new Intl.DateTimeFormat("ko-KR", {
               year: "numeric",
               month: "numeric",
@@ -110,7 +116,8 @@ const CommentDetail = (props) => {
               minute: "numeric",
               timeZone: "Asia/Seoul",
             }).format(new Date(comment.registerTime))} */}
-            {/* {new Date(comment.registerTime).toLocaleTimeString("ko-KR")} */}
+            {/* {new Date(comment.registerTime).toISOString()} */}
+            {localTime}
           </span>
         </p>
       </div>

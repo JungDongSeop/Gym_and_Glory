@@ -83,8 +83,10 @@ const CommentDetail = (props) => {
   //   commentRead();
   // }, [articleSequence]);
 
+  const registerTime = new Date(comment.registerTime).toISOString();
+
   return isDelete ? null : (
-    <div>
+    <li>
       <div className={classes.reply}>
         <p className={classes.commonCharId}>
           {/* <img
@@ -93,24 +95,36 @@ const CommentDetail = (props) => {
           /> */}
           {comment.user ? comment.user.nickname : null}
           <span>
-            {/* {new Date(comment.registerTime).toLocaleDateString("ko-KR", {
+            {new Date(comment.registerTime).toLocaleString("ko-KR", {
               year: "numeric",
               month: "numeric",
               day: "numeric",
               hour: "numeric",
               minute: "numeric",
-            })} */}
+            })}
+            {/* {new Intl.DateTimeFormat("ko-KR", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+              timeZone: "Asia/Seoul",
+            }).format(new Date(comment.registerTime))} */}
+            {/* {new Date(comment.registerTime).toLocaleTimeString("ko-KR")} */}
           </span>
         </p>
       </div>
 
-      <li>{content}</li>
+      <div className={classes.content}>{content}</div>
+      {/* <br className={classes.brtag} /> */}
       <ul className={classes.replyBtnWrap}>
-        <li className={classes.replyBtn}>
-          <p>추천 수: {goodCount}</p>
+        {/* <li className={classes.replyBtn}>
+          <p>{goodCount}</p>
           <p>{isCommentLike}</p>
+        </li> */}
+        <li className={classes.goodCount}>
+          <h3>❣ {goodCount}</h3>
         </li>
-
         <li className={classes.replyBtn}>
           {isCommentLike ? (
             <ThumbUpAltIcon onClick={handleGood} />
@@ -128,7 +142,7 @@ const CommentDetail = (props) => {
           </li>
         ) : null}
       </ul>
-    </div>
+    </li>
   );
 };
 

@@ -200,15 +200,15 @@ const Comment = () => {
 
         <ul className={classes.replyUl}>
           {comments.map((comment, index) => (
-            <li>
-              <CommentDetail
-                key={index}
-                comment={comment}
-                userSequence={userSequence}
-                goodCount={comment.goodCount}
-                content={comment.contents}
-              />
-            </li>
+            // <li>
+            <CommentDetail
+              key={index}
+              comment={comment}
+              userSequence={userSequence}
+              goodCount={comment.goodCount}
+              content={comment.contents}
+            />
+            // </li>
             // <li key={index}>
             //   <div className={classes.reply}>
             // <p className={classes.commonCharId}>

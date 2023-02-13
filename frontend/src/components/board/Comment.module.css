@@ -118,6 +118,25 @@
   display: block;
 }
 
+.conTitleBtn {
+  float: right;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.conTitleBtn button {
+  width: 56px;
+  text-align: center;
+  display: inline-block;
+  font-size: 13px;
+  color: #666;
+  padding: 13px 11px;
+  line-height: 1;
+  border: 1px solid #e6e6e6;
+  margin-right: 10px;
+}
+
 .qsTitle {
   box-sizing: border-box;
   float: left;

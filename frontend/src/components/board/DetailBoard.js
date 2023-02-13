@@ -90,7 +90,15 @@ const DetailBoard = () => {
       {/* 전체 감싸는 wrap */}
       <div className={classes.contentsWrap}>
         {/* 게시판 타입 */}
-        <h1 className={classes.conTitle}>{typeresult}</h1>
+        <h1 className={classes.conTitle}>
+          {typeresult}
+          <div
+            onClick={() => navigate(`/board/${type}/`)}
+            className={classes.conTitleBtn}
+          >
+            <button>목록</button>
+          </div>
+        </h1>
         {/* 게시물 제목 */}
         <p className={classes.qsTitle}>
           <span>{data.title}</span>
@@ -108,7 +116,7 @@ const DetailBoard = () => {
                 alt="작성 시간"
               />
               {data.registerTime
-                ? new Date(data.registerTime).toLocaleString("default", {
+                ? new Date(data.registerTime).toLocaleString("ko-KR", {
                     year: "numeric",
                     month: "numeric",
                     day: "numeric",

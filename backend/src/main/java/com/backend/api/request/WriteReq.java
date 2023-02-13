@@ -1,13 +1,10 @@
 package com.backend.api.request;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 public class WriteReq {
 

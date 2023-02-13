@@ -65,14 +65,7 @@ public class BoardService {
 
         User user = userRepository.findById(writeReq.getUserSequence()).get();
 
-        BoardArticle boardArticle = BoardArticle.builder()
-                .title(writeReq.getTitle())
-                .user(user)
-                .contents(writeReq.getContents())
-                .registerTime(String.valueOf(LocalDateTime.now()))
-                .modify_time(String.valueOf(LocalDateTime.now()))
-                .views(0).goodCount(0).div(writeReq.getDiv()).
-                build();
+        BoardArticle boardArticle = BoardArticle.createBoard(writeReq, user);
 
         return boardRepository.save(boardArticle);
     }
@@ -82,7 +75,6 @@ public class BoardService {
         System.out.println(cur);
         cur.setTitle(boardPostReq.getTitle());
         cur.setContents(boardPostReq.getContents());
-        cur.setRegisterTime(String.valueOf(LocalDateTime.now()));
         boardRepository.save(cur);
     }
 

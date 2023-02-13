@@ -18,6 +18,14 @@ const NickTag = styled.div`
   border-radius: 10px;
 `;
 
+const ReadyTag = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px;
+  font-size: bold;
+`;
+
 const Warning = styled.div`
   position: absolute;
   top: 25px;

@@ -19,11 +19,15 @@ public class FileUserService {
 
     private final FileUserRepository fileUserRepository;
     private final FileHandler fileHandler;
+    private final UserRepository userRepository;
 
     @Autowired
-    public FileUserService(FileUserRepository fileUserRepository,FileHandler fileHandler){
+    public FileUserService(FileUserRepository fileUserRepository,
+                           UserRepository userRepository,
+                           FileHandler fileHandler){
         this.fileUserRepository = fileUserRepository;
         this.fileHandler = fileHandler;
+        this.userRepository = userRepository;
     }
 
     public void addFile(Integer userSequence, List<MultipartFile> files) throws Exception{
@@ -35,8 +39,10 @@ public class FileUserService {
             List<FileUser> pictureBeans= new ArrayList<>();
             for(FileUser fileUsers : list){
                 pictureBeans.add(fileUserRepository.save(fileUsers));
+                User user= userRepository.findById(userSequence).get();
             }
         }
+
     }
 
     public List<FileUser> findFileUser(){

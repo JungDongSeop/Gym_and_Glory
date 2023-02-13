@@ -164,4 +164,12 @@ public class FriendService {
         return getFrdList;
 
     }
+
+    public Boolean crossCheck(Integer user1Id, Integer user2Id) {
+        Friend friend1 = friendRepository.findBySendFrdTrue(user1Id,user2Id);
+        Friend friend2 = friendRepository.findBySendFrdTrue(user2Id,user1Id);
+
+        if(friend1.isReceive()==true && friend2.isReceive()==true)return true;
+        return false;
+    }
 }

@@ -29,6 +29,9 @@ const UpdateBoard = () => {
     fetchBoard();
   }, [articleSequence]);
 
+  const [newTitle, setNewTitle] = useState(board.title);
+  const [newContent, setNewContent] = useState(board.content);
+
   // const handleChange = (event) => {
   //   setBoard({ ...board, [event.target.name]: event.target.value });
   // };
@@ -37,10 +40,12 @@ const UpdateBoard = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .put(`${RestApi()}/board/`, {
+      .put(`${RestApi()}/board`, {
         articleSequence: articleSequence,
-        title: enteredNewTitle,
-        contents: enteredNewContent,
+        // title: enteredNewTitle,
+        // contents: enteredNewContent,
+        title: newTitle,
+        contents: newContent,
       })
       .then(() => {
         navigate(`/board/${type}`);
@@ -87,7 +92,7 @@ const UpdateBoard = () => {
                       type="text"
                       placeholder="제목을 입력하세요"
                       defaultValue={board.title}
-                      // onChange={handleChange}
+                      onChange={(event) => setNewTitle(event.target.value)}
                       ref={enteredNewTitle}
                     />
                   </dd>
@@ -97,7 +102,7 @@ const UpdateBoard = () => {
                 <textarea
                   placeholder="내용을 입력하세요"
                   defaultValue={board.contents}
-                  // onChange={handleChange}
+                  onChange={(event) => setNewContent(event.target.value)}
                   ref={enteredNewContent}
                 ></textarea>
               </div>

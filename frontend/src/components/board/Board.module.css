@@ -56,6 +56,7 @@
 .notice {
   float: left;
   width: 100%;
+  height: 100%;
 }
 
 .notice > ul {
@@ -71,12 +72,14 @@
   position: relative;
   float: left;
   padding-left: 27px;
-  height: 48px;
+  /* height: 48px; */
+  /* height: 70%; */
   /* border-bottom: 1px solid #e3e3e3; */
   border-bottom: 1px solid black;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
+  height: 65px;
 }
 
 .listTitle {
@@ -143,9 +146,9 @@ li {
   display: block;
 } */
 
-div {
+/* div {
   display: block;
-}
+} */
 
 .userName {
   float: left;

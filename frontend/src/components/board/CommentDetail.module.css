@@ -34,6 +34,22 @@
   text-align: center;
   font-size: 12px;
   border: 1px solid #e3e3e3;
+  margin-right: 10px;
+}
+
+.content {
+  margin-bottom: 50px;
+}
+
+.goodCount {
+  float: left;
+  /* margin-top: 0px; */
+  margin-right: 10px;
+}
+
+.goodCount h3 {
+  margin: 0;
+
 }
 .replyBtn button {
   float: left;

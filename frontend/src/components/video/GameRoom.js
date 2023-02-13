@@ -570,6 +570,8 @@ class GameRoom extends Component {
     const metadataURL =
       "https://teachablemachine.withgoogle.com/models/M7lirMMFj/metadata.json";
 
+    const model = await tmPose.load(modelURL, metadataURL);
+    console.log(model);
     this.setState(
       {
         model: await tmPose.load(modelURL, metadataURL),
@@ -750,6 +752,7 @@ class GameRoom extends Component {
       return;
     }
     const mySession = this.state.session;
+    this.state.myRef.current.sendSignal("sendReady");
     this.setState({ readyStatus: !this.state.readyStatus }, () => {
       mySession.signal({
         data: `${this.state.readyStatus},${this.state.myUserNick}`,
@@ -815,15 +818,19 @@ class GameRoom extends Component {
       <Wrapper>
         <NavWrapper>
           <HeadWrapper>
-            {/* <TitleWrapper> */}
             <div className="titleBox">
               <p style={{ marginTop: 9 }}>{this.state.mySessionTitle}</p>
             </div>
             <div className="titleBox">
               <p style={{ marginTop: 9 }}>팀명 : {this.state.myTeamTitle}</p>
             </div>
-            {/* </TitleWrapper> */}
-            <button onClick={this.leaveSession}>나가기</button>
+            <div
+              style={{ width: 270, justifyContent: "right", display: "flex" }}
+            >
+              <button className="leaveButton" onClick={this.leaveSession}>
+                나가기
+              </button>
+            </div>
           </HeadWrapper>
         </NavWrapper>
         <BodyWrapper>

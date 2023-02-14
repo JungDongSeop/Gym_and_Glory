@@ -5,7 +5,7 @@
   user-select : none;
   --border: 0.8px;    /* the border width */
   --slant: 0.7em;   /* control the slanted corners */
-  --color: #073300; /* the color */
+  --color: #af0000; /* the color */
   
   font-size: 20px;
   font-family: 'Song Myung', serif;
@@ -48,11 +48,11 @@
   0 0 5px #fff,
   0 0 10px #fff,
   0 0 20px #fff,
-  0 0 40px rgb(68, 255, 0),
-  0 0 80px  rgb(68, 255, 0),
-  0 0 90px  rgb(68, 255, 0),
-  0 0 100px  rgb(68, 255, 0),
-  0 0 150px  rgb(68, 255, 0);
+  0 0 40px rgb(206, 0, 0),
+  0 0 80px  rgb(206, 0, 0),
+  0 0 90px  rgb(206, 0, 0),
+  0 0 100px  rgb(206, 0, 0),
+  0 0 150px  rgb(206, 0, 0);
 }
 .button:active {
   --s: #0005;

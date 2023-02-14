@@ -6,6 +6,7 @@ import axios from "axios";
 import NavigateButtons from "./NavigateButtons";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import RestApi from "../api/RestApi";
+import classes from "./ReportBoardCreate.module.scss"
 
 const ReportBoardCreate = () => {
   // url 이동을 위한 함수
@@ -71,13 +72,13 @@ const ReportBoardCreate = () => {
   };
 
   return (
-    <main>
+    <main className={classes.boardDiv}>
       {/* 게시판 종류 선택 버튼 */}
       <NavigateButtons type="report" />
-
       {/* 신고 내용 작성 */}
       <form onSubmit={handleSubmit}>
         {/* 신고 종류 선택 */}
+        <div className={classes.rbcDiv}>
         <label>
           신고 종류 :
           <select value={kind} onChange={handleKindChange}>
@@ -98,10 +99,10 @@ const ReportBoardCreate = () => {
             ref={enteredusername}
           />
           {Array.isArray(searchedDatas) ? (
-            <div>
+            <div className={classes.pickNickDiv} >
               {searchedDatas.map((d, index) => {
                 return (
-                  <div key={index} onClick={() => saveReportUserData(d)}>
+                  <div className={classes.pickNick} key={index} onClick={() => saveReportUserData(d)}>
                     {d.nickname}
                   </div>
                 );
@@ -122,6 +123,7 @@ const ReportBoardCreate = () => {
 
         {/* 제출 버튼 */}
         <button type="submit">Create Board</button>
+        </div>
       </form>
     </main>
   );

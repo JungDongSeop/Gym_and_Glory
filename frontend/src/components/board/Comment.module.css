@@ -131,14 +131,23 @@
 
 .conTitleBtn button {
   width: 56px;
+  height: 30px;
   text-align: center;
   display: inline-block;
   font-size: 13px;
   color: #666;
-  padding: 13px 11px;
+  /* padding: 13px 11px; */
   line-height: 1;
   border: 1px solid #e6e6e6;
   margin-right: 10px;
+  border-radius: 5px;
+}
+
+.conTitleBtn button:hover,
+.conTitleBtn button:focus
+{
+  color:white;
+  background-color: rgb(130, 130, 130);
 }
 
 .qsTitle {
@@ -412,6 +421,7 @@ li {
 .buttonInput {
   border: 0px;
   background: none;
+  color: white;
 }
 
 .createButton {

@@ -3,7 +3,7 @@
 /* Navigation Bar Styles */
 
 nav {
-  background-color: rgba(45, 46, 6, 0.75);
+  background-color: rgba(0, 1, 24, 0.75);
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -36,17 +36,17 @@ nav img {
 
 .navText {
   /* font-weight: bold; */
-  color: rgb(124, 164, 108);
+  color: rgb(128, 0, 0);
   transition: 0.3s;
   text-shadow: 0 1px 3px black;
 }
 
 .navText:hover {
-  text-shadow: 0 0px 3px rgb(35, 102, 49), 0 0px 5px rgb(222, 255, 211);
+  text-shadow: 0 0px 3px rgb(128, 0, 0), 0 0px 5px rgb(188, 46, 46);;
 }
 
 .navText:active {
-  color: green;
+  color: rgb(220, 1, 1);
 }
 
 .outIconDiv {

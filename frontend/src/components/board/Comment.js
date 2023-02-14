@@ -31,49 +31,11 @@ const Comment = () => {
     contents: "",
   });
 
-  // 댓글 read axios 요청
-  // const commentRead = (articleSequence) => {
-  //   axios
-  //     .get(`${RestApi()}/board/comment/${articleSequence}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setComments(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
   const commentRead = async (articleSequence) => {
     const result = await axios(`${RestApi()}/board/comment/${articleSequence}`);
-    // const isCommentLike = await axios(
-    //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
-    // );
     setComments(result.data.reverse());
     console.log(result.data, "댓글들");
   };
-
-  // const LIKE = (isCommentLike) => {
-  //   if (isCommentLike) {
-  //     return <div>굿굿</div>;
-  //   } else {
-  //     return <div>노놉</div>;
-  //   }
-  // };
-
-  // const isCommentLike = async (commentSequence) => {
-  //   // const response = await axios(
-  //   //   `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
-  //   // );
-  //   // return response.data
-  //   await axios(
-  //     `${RestApi()}/board/comment/IsGood/${userSequence}/${commentSequence}`
-  //   ).then((res) => {
-  //     console.log(res.data);
-  //   });
-
-  //   // setCommentLike(response.data);
-  //   // console.log(response.data);
-  // };
 
   useEffect(() => {
     const commentRead = async () => {
@@ -111,32 +73,6 @@ const Comment = () => {
     }
   };
 
-  // 댓글 좋아요 axios 요청
-  // const handleGood = async (commentSequence) => {
-  //   try {
-  //     await axios(
-  //       `${RestApi()}/board/comment/good/${userSequence}/${commentSequence}`
-  //     );
-  //     alert("댓글을 추천하였습니다.");
-  //     // Show a success message or refresh the comments list
-  //     commentRead(articleSequence);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // // 댓글 지우기
-  // const handleDelete = async (commentSequence) => {
-  //   try {
-  //     await axios.delete(`${RestApi()}/board/comment/${commentSequence}`);
-  //     alert("댓글이 삭제되었습니다.");
-  //     // Show a success message or refresh the comments list
-  //     commentRead(articleSequence);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   // 댓글 input 값 변경 시 작동
   const handleChange = (e) => {
     setNewComment({ ...newComment, [e.target.name]: e.target.value });
@@ -151,52 +87,6 @@ const Comment = () => {
             <span> {comments.length}</span>
           </h2>
         </div>
-        {/* <ul className={classes.replyUl}>
-          {comments.map((comment, index) => (
-            <li key={index}>
-              <div className={classes.reply}>
-                <p className={classes.commonCharId}>
-                  <img
-                    src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/world_icon/icon_11.png"
-                    alt="프로필 이미지"
-                  />
-                  {comment.user ? comment.user.nickname : null}
-                  <span>
-                    {new Date(comment.registerTime).toLocaleString("default", {
-                      year: "numeric",
-                      month: "numeric",
-                      day: "numeric",
-                      hour: "numeric",
-                      minute: "numeric",
-                    })}
-                  </span>
-                </p>
-                <ul className={classes.replyBtnWrap}>
-                  <li className={classes.replyBtn}>
-                    <p>추천 수: {comment.goodCount}</p>
-                    <p>
-                      {isCommentLike(comment.commentSequence, userSequence)}
-                    </p>
-                  </li>
-                  <li className={classes.replyBtn}>
-                    <CommentDetail commentSequence={comment.commentSequence} userSequence={userSequence} goodCount={comment.goodCount} />
-                  </li>
-                  {+sessionStorage.getItem("userSequence") ===
-                  +comment.user.userSequence ? (
-                    <li className={classes.replyBtn}>
-                      <button
-                        onClick={() => handleDelete(comment.commentSequence)}
-                      >
-                        삭제
-                      </button>
-                    </li>
-                  ) : null}
-                </ul>
-                <div className={classes.replyText}>{comment.contents}</div>
-              </div>
-            </li>
-          ))}
-        </ul> */}
 
         <ul className={classes.replyUl}>
           {comments.map((comment, index) => (
@@ -207,50 +97,8 @@ const Comment = () => {
               userSequence={userSequence}
               goodCount={comment.goodCount}
               content={comment.contents}
+              // commentsLength={comments.length}
             />
-            // </li>
-            // <li key={index}>
-            //   <div className={classes.reply}>
-            // <p className={classes.commonCharId}>
-            //   <img
-            //     src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/world_icon/icon_11.png"
-            //     alt="프로필 이미지"
-            //   />
-            //   {comment.user ? comment.user.nickname : null}
-            //   <span>
-            //     {new Date(comment.registerTime).toLocaleString("default", {
-            //       year: "numeric",
-            //       month: "numeric",
-            //       day: "numeric",
-            //       hour: "numeric",
-            //       minute: "numeric",
-            //     })}
-            //   </span>
-            // </p>
-            //     <ul className={classes.replyBtnWrap}>
-            // <li className={classes.replyBtn}>
-            //   <p>추천 수: {comment.goodCount}</p>
-            //   <p>
-            //     {isCommentLike(comment.commentSequence, userSequence)}
-            //   </p>
-            // </li>
-            //       <li className={classes.replyBtn}>
-            //         <CommentDetail commentSequence={comment.commentSequence} userSequence={userSequence} goodCount={comment.goodCount} />
-            //       </li>
-            // {+sessionStorage.getItem("userSequence") ===
-            // +comment.user.userSequence ? (
-            //   <li className={classes.replyBtn}>
-            //     <button
-            //       onClick={() => handleDelete(comment.commentSequence)}
-            //     >
-            //       삭제
-            //     </button>
-            //   </li>
-            // ) : null}
-            //     </ul>
-            //     <div className={classes.replyText}>{comment.contents}</div>
-            //   </div>
-            // </li>
           ))}
         </ul>
       </div>
@@ -263,12 +111,7 @@ const Comment = () => {
             placeholder="댓글을 입력해주세요"
             ref={commentInputRef}
           ></textarea>
-          {/* <input
-            type="text"
-            name="comment"
-            placeholder="댓글을 입력해주세요"
-            ref={commentInputRef}
-          /> */}
+
           <div className={classes.bottomTxarBtn}>
             <div className={classes.txarRightBtn}>
               <Button className={classes.createButton} type="primary">

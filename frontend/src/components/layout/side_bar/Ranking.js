@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RestApi from '../../api/RestApi';
 import classes from './Ranking.module.scss';
+import moment from "moment";
 
 const Ranking = () => {
   const [soloRanking, setSoloRanking] = useState([]);
@@ -38,7 +39,7 @@ const Ranking = () => {
         <p>팀 랭킹</p>
         <ul>
           {teamRanking.slice(0,4).map((team, index) => (
-            <li key={index}>{team.teamName} - {team.clearTime}</li>
+            <li key={index}>{team.teamName} -  {moment(team.clearTime, "HH:mm:ss").add(9, "hours").format("HH:mm:ss")}</li>
             ))}
         </ul>
       </div>

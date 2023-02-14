@@ -40,6 +40,7 @@ const ReportBoardCreate = lazy(() =>
   import("./components/board/ReportBoardCreate")
 );
 const GameRoom = lazy(() => import("./components/video/GameRoom"));
+const ChatRoom = lazy(() => import("./components/socket/ChatRoom"))
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -104,7 +105,9 @@ function App() {
           {authCtx.isLoggedIn && (
             <Route path="/board/:type" element={<Board />} />
           )}
-
+          {authCtx.isLoggedIn && (
+            <Route path="/chatroom" element={<ChatRoom />} />
+          )}
           {/* <Route path="/signup" element={<Signup />} />
           <Route path="/find-pwd" element={<FindPwd />} />
           <Route path="/update" element={<UpdateUser />} /> */}

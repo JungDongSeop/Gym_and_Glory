@@ -21,7 +21,11 @@
     "firebase": "^9.16.0",
     "history": "^5.3.0",
     "jquery": "^3.6.3",
+<<<<<<< HEAD
     "moment": "^2.29.4",
+=======
+    "net": "^1.0.2",
+>>>>>>> 58604a030d8f575be4a77678fe2241c88e485dba
     "node-sass": "^8.0.0",
     "openvidu-browser": "^2.25.0",
     "react": "^18.2.0",
@@ -39,6 +43,12 @@
     "react-unity-webgl": "^9.4.0",
     "react-webcam": "^7.0.1",
     "redux": "^4.2.0",
+<<<<<<< HEAD
+    "sockjs-client": "^1.6.1",
+=======
+    "stampjs": "^0.0.5",
+>>>>>>> 58604a030d8f575be4a77678fe2241c88e485dba
+    "stompjs": "^2.3.3",
     "styled-components": "^5.3.6",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.7.1",

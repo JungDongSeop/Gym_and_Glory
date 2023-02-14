@@ -18,7 +18,7 @@ const ChatRoom = () => {
   }, [userData]);
 
   const connect = () => {
-    let Sock = new SockJS("http://i8e107.p.ssafy.io/api");
+    let Sock = new SockJS("https://i8e107.p.ssafy.io/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };

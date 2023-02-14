@@ -10,6 +10,8 @@ import classes from "./Comment.module.css";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import moment from "moment";
+import toast, { Toaster } from "react-hot-toast";
+
 // 게시판 상세페이지
 // 이후 notice, getTeam, report 등으로 분리할 예정
 
@@ -59,11 +61,12 @@ const DetailBoard = () => {
   // 게시글 좋아요를 위한 axios
   const goodClick = async () => {
     await axios(`${RestApi()}/board/good/${userSequence}/${articleSequence}`);
-    if (like === true) {
-      alert("취소하였습니다.");
-    } else {
-      alert("추천하였습니다");
-    }
+    // if (like === true) {
+    //   // alert("취소하였습니다.");
+    //   toast.("취소하였습니다.");
+    // } else {
+    //   alert("추천하였습니다");
+    // }
     readBoard();
   };
 
@@ -87,6 +90,23 @@ const DetailBoard = () => {
 
   return (
     <main>
+      <Toaster
+        toastOptions={{
+          success: {
+            style: {
+              // background: "green",
+              // color: "white",
+            },
+          },
+          error: {
+            style: {
+              // background: "red",
+            },
+          },
+        }}
+        position="top-center"
+        reverseOrder={false}
+      />
       {/* 전체 감싸는 wrap */}
       <div className={classes.contentsWrap}>
         {/* 게시판 타입 */}

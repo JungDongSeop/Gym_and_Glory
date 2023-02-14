@@ -5,6 +5,8 @@ import Logo from "../../../assets/logo.png";
 import classes from "./FindPwd.module.scss";
 import axios from "axios";
 import RestApi from "../../api/RestApi";
+import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
 // const API_KEY = process.env.REACT_APP_API_KEY;
@@ -69,16 +71,25 @@ const FindPwd = () => {
             .then((res) => {
               setIsLoading(false);
               console.log(res.json());
-              alert(
-                "확인 이메일을 발송하였습니다 확인후 비밀번호를 재설정해주세요"
-              );
+              // alert(
+              //   "확인 이메일을 발송하였습니다 확인후 비밀번호를 재설정해주세요"
+              // );
+              Swal.fire({
+                title: "Success!",
+                text: "확인 이메일을 발송하였습니다 확인 후 비밀번호를 재설정해주세요",
+                icon: "success",
+                confirmButtonText: "확인",
+              });
               navigate("/login");
             })
             .catch((err) => {
               console.log(err);
             });
         } else {
-          alert(
+          // alert(
+          //   "가입하지 않은 회원이거나 아이디 혹은 전화번호가 잘못되었습니다."
+          // );
+          toast.error(
             "가입하지 않은 회원이거나 아이디 혹은 전화번호가 잘못되었습니다."
           );
         }
@@ -90,6 +101,23 @@ const FindPwd = () => {
 
   return (
     <div className={classes.whiteBox}>
+      <Toaster
+        toastOptions={{
+          success: {
+            style: {
+              background: "green",
+              color: "white",
+            },
+          },
+          error: {
+            style: {
+              background: "red",
+            },
+          },
+        }}
+        position="top-center"
+        reverseOrder={false}
+      />
       <img className={classes.logoSmall} src={Logo} alt="logo-small" />
       <p> 다시 참전하세요!</p>
       <form onSubmit={submitHandler}>

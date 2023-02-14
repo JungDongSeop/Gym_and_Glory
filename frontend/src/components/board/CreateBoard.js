@@ -8,6 +8,7 @@ import { useParams, useNavigate } from "react-router";
 import RestApi from "../api/RestApi";
 
 import classes from "./CreateBoard.module.css";
+import { toast } from "react-hot-toast";
 
 // import CkEditor from "./CkEditor";
 
@@ -46,7 +47,7 @@ const CreateBoard = () => {
       });
       setTitle("");
       setContents("");
-      alert("Board created successfully!");
+      // alert("Board created successfully!");
       navigate(`/board/${type}`);
     } catch (error) {
       console.log(error);

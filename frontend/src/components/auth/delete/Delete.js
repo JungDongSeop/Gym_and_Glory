@@ -7,6 +7,8 @@ import RestApi from "../../api/RestApi";
 
 import Logo from "../../../assets/logo.png";
 import classes from "./Delete.module.scss";
+import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
 
@@ -37,7 +39,8 @@ const Delete = () => {
           return res.json().then((data) => {
             let errorMessage = "회원탈퇴에 실패했습니다.";
             console.log(data);
-            alert(errorMessage);
+            // alert(errorMessage);
+            toast.error(errorMessage);
           });
         }
       })
@@ -59,23 +62,36 @@ const Delete = () => {
 
   return (
     <main>
+      <Toaster
+        toastOptions={{
+          success: {
+            style: {
+              background: "green",
+              color: "white",
+            },
+          },
+          error: {
+            style: {
+              background: "red",
+            },
+          },
+        }}
+        position="top-center"
+        reverseOrder={false}
+      />
       <div className={classes.myDiv}>
-      <img src={Logo} alt={Logo}/>
-      <div className={classes.formDiv}>
-      <h1> 비록 떠나시더라도 운동을 잊지는 마세요! </h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-        <label>
-          Password: 
-        </label>
-          <input type="password" name="password" placeholder=" " 
-          />
-        {/* <br /> */}
-        <button type="submit">Save</button>
+        <img src={Logo} alt={Logo} />
+        <div className={classes.formDiv}>
+          <h1> 비록 떠나시더라도 운동을 잊지는 마세요! </h1>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>Password:</label>
+              <input type="password" name="password" placeholder=" " />
+              {/* <br /> */}
+              <button type="submit">Save</button>
+            </div>
+          </form>
         </div>
-      </form>
-      
-      </div>
       </div>
     </main>
   );

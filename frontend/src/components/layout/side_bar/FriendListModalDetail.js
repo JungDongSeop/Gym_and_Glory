@@ -4,6 +4,8 @@ import AuthContext from "../../../store/auth-context";
 import axios from "axios";
 import RestApi from "../../api/RestApi";
 import classes from './FriendListModalDetail.module.css'
+import { CallMissedSharp } from "@mui/icons-material";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 // import DefaultProfile from '../../../assets/defaultProfile.png'
 
 
@@ -43,17 +45,18 @@ const FriendListModalDetail = (props) => {
         <div className={classes.detailWrap}>
           <div>
             {/* <img src={friendInfo.profile_image_path} alt={DefaultProfile} /> */}
-            Lv.{friendInfo.level ? friendInfo.level : "00"}
-            {friendInfo.nickname}
+            {/* <span className={classes.userLevel}>Lv.{friendInfo.level ? friendInfo.level : "00"}</span> */}
+            <span className={classes.userLevel}>Lv.{parseInt(friendInfo.exp/10000+1)}</span>
+            <span className={classes.userNick}>{friendInfo.nickname}</span>
           </div>
 
-          <button
+          <button className={classes.friendDelBtn}
             onClick={() => {
               handleDelete();
               setIsShow(false);
             }}
           >
-            친구 삭제
+          삭제
           </button>
         </div>
       ) : null}

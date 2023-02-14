@@ -8,7 +8,7 @@ import RestApi from "../api/RestApi";
 import rank1 from "../../assets/ranking1.png";
 import rank2 from "../../assets/ranking2.png";
 import rank3 from "../../assets/ranking3.png";
-
+import moment from "moment";
 
 const Ranking = () => {
 
@@ -80,8 +80,9 @@ const Ranking = () => {
               }
 
               <p className={classes.levelText}>
-              {team.clearTime}
+                {moment(team.clearTime, "HH:mm:ss").add(9, "hours").format("HH:mm:ss")}
               </p>
+
 
               {/* <br /> */}
 

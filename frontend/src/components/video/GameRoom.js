@@ -19,6 +19,7 @@ import {
 } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
 import RestApi from "../api/RestApi";
+import toast, { Toaster } from "react-hot-toast";
 
 const APPLICATION_SERVER_URL = `${RestApi()}/`;
 const OPENVIDU_URL = "https://i8e107.p.ssafy.io:8443";
@@ -54,10 +55,6 @@ const HeadWrapper = styled.div`
 const BodyWrapper = styled.div`
   width: 100%;
   height: 100%;
-`;
-
-const TitleWrapper = styled.div`
-  display: flex;
 `;
 
 const FooterWrapper = styled.div`
@@ -144,14 +141,14 @@ class GameRoom extends Component {
     const { location } = this.props;
     const { roomId, roomTitle, teamTitle, isHost } = location.state;
     const info = { roomId, roomTitle, teamTitle, isHost };
+    if (location.state === null) {
+      const { navigate } = this.props;
+      console.log("로비로 이동");
+      navigate("/lobby");
+    }
     history.pushState(info, "", location.href);
     window.addEventListener("popstate", this.handleEvent);
     setTimeout(() => {
-      if (location.state === null) {
-        const { navigate } = this.props;
-        console.log("로비로 이동");
-        navigate("/lobby");
-      }
       const { roomId, roomTitle, teamTitle, isHost } = location.state;
       this.setState({
         mySessionId: roomId,
@@ -565,10 +562,14 @@ class GameRoom extends Component {
     //   "https://teachablemachine.withgoogle.com/models/UQcyvhIye/metadata.json";
 
     // 동섭이 학습데이터 바탕으로 제작한 모델
-    const modelURL =
-      "https://teachablemachine.withgoogle.com/models/M7lirMMFj/model.json";
-    const metadataURL =
-      "https://teachablemachine.withgoogle.com/models/M7lirMMFj/metadata.json";
+    // const modelURL =
+    //   "https://teachablemachine.withgoogle.com/models/M7lirMMFj/model.json";
+    // const metadataURL =
+    //   "https://teachablemachine.withgoogle.com/models/M7lirMMFj/metadata.json";
+
+    const URL = "https://teachablemachine.withgoogle.com/models/IUow9UHH-/";
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
 
     const model = await tmPose.load(modelURL, metadataURL);
     console.log(model);
@@ -599,20 +600,20 @@ class GameRoom extends Component {
 
   async handleSelectedExercise(exercise) {
     if (this.state.enterDelay) {
-      alert("게임에 접속 중입니다. 잠시만 기다려 주세요");
+      toast.error("게임에 접속 중입니다");
       return;
     }
     if (this.state.loadingStatus === true) {
       return;
     }
     if (this.state.middleState) {
-      alert("라운드 진행 중에는 선택한 운동을 바꿀 수 없습니다!");
+      toast.error("라운드 진행 중에는 선택한 운동을 바꿀 수 없습니다!");
       return;
     }
     if (!this.state.ishost && this.state.readyStatus) {
       if (!this.state.gameStatus) {
-        alert(
-          "준비 완료일때는 선택한 운동을 바꿀 수 없습니다.\n준비 완료를 해제하고 다시 시도해주세요."
+        toast.error(
+          "준비 완료일때는\n선택한 운동을 바꿀 수 없습니다.\n준비 완료를 해제하고 다시 시도해주세요."
         );
         return;
       }
@@ -744,11 +745,11 @@ class GameRoom extends Component {
 
   sendReady() {
     if (!this.state.selectedExercise) {
-      alert("어떤 운동을 할지 선택해주세요!");
+      toast.error("어떤 운동을 할 지 선택해주세요!");
       return;
     }
     if (this.state.loadingStatus) {
-      alert("운동 모델을 받아오는 도중에는 준비 완료를 할 수 없습니다.");
+      toast.error("운동 모델을 받아오는 도중에는 준비 완료를 할 수 없습니다.");
       return;
     }
     const mySession = this.state.session;
@@ -767,11 +768,11 @@ class GameRoom extends Component {
 
   sendGameStart() {
     if (!this.state.selectedExercise) {
-      alert("어떤 운동을 할 지 선택해주세요!");
+      toast.error("어떤 운동을 할 지 선택해주세요!");
       return;
     }
     if (this.state.loadingStatus) {
-      alert("운동 모델을 받아오는 도중에는 게임을 시작할 수 없습니다.");
+      toast.error("운동 모델을 받아오는 도중에는 게임을 시작할 수 업습니다.");
       return;
     }
     axios
@@ -816,6 +817,7 @@ class GameRoom extends Component {
 
     return (
       <Wrapper>
+        <Toaster />
         <NavWrapper>
           <HeadWrapper>
             <div className="titleBox">

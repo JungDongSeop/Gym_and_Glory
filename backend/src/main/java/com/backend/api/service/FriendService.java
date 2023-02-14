@@ -42,19 +42,33 @@ public class FriendService {
 
     // 서로 수락한 친구 삭제
     public List<FrdRes> delFriendList(FrdReq frdReq) {
-
         Friend frd = friendRepository.findBySendFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
-        System.out.println("유저 닉네임"+ frd.getFrdUser().getNickname());
-
-        if(frd == null) { // 보냈을 때 상대방이 수락한 경우가 없다면 받아서 수락한 유저이다.
+        if (frd != null) {
+            // do something with friendId
+            Long frdId = frd.getId();
+            System.out.println(frdId);
+        } else {
 
             frd = friendRepository.findByRecvFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
+            Long frdId = frd.getId();
+            System.out.println(frdId);
         }
 
-        Integer userSequence = frd.getUser().getUserSequence(); // 현재 로그인된 유저 아이디를 가져온다.
-        System.out.println("시퀀스는 현재 로그인된 유저 아디는??"+userSequence);
+//        Friend frd = friendRepository.findBySendFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
+//
+//        if(frd == null) {
+//            frd = friendRepository.findByRecvFrdTrue(frdReq.getRecvFrd(), frdReq.getSendFrd());
+//        }
+//
+        Integer userSequence = frdReq.getSendFrd(); // 현재 로그인된 유저 아이디를 가져온다.
+        //System.out.println("유저 닉네임"+ frd.getFrdUser().getNickname());
+//
         friendRepository.delete(frd);
-
+//
+//        System.out.println(frd.getId());
+//        System.out.println("시퀀스는 현재 로그인된 유저 아디는??"+userSequence);
+//
+//
         List<Tuple> frdResTuples = friendRepository.findFrindList(userSequence);
         List<FrdRes> frdResList = frdResTuples.stream()
                 .map(t -> new FrdRes(

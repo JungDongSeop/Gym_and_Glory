@@ -107,11 +107,11 @@ const FriendListModalAdd = () => {
                 {/* 유저 정보 출력 */}
                 <div>
                   <img src={d.profile_img_path} alt="" />
-                  Lv.{d.level}
-                  {d.nickname}
+                  <span className={classes.friendUser}>Lv.{parseInt(d.exp/10000+1)}</span>
+                  <span className={classes.friendUser}>{d.nickname}</span>
                 </div>
                 {/* 친구 요청 버튼 */}
-                <button onClick={() => handleSendFriendRequest(d.userSequence)}>
+                <button className={classes.friendSendBtn} onClick={() => handleSendFriendRequest(d.userSequence)}>
                   요청
                 </button>
               </div>
@@ -128,11 +128,11 @@ const FriendListModalAdd = () => {
         {Array.isArray(getFriendRequests) && getFriendRequests.map((data, index) => {
             return (
               <div key={index} className={classes.friendRequest}>
-                {data.sendNickName}
+                <span className={classes.friendUser}>{data.sendNickName}</span>
                 {/* 수락 버튼 */}
-                <button onClick={() => handleAcceptFriendRequest(data.userId, data.frdUserId)}>V</button>
+                <button className={classes.friendOkBtn} onClick={() => handleAcceptFriendRequest(data.userId, data.frdUserId)}>수락</button>
                 {/* 거절 버튼 */}
-                <button onClick={() => handleCancelFriendRequest(data.userId, data.frdUserId)}>X</button>
+                <button className={classes.friendDelBtn} onClick={() => handleCancelFriendRequest(data.userId, data.frdUserId)}>거절</button>
               </div>
             );
           })

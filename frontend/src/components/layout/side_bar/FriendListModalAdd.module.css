@@ -47,9 +47,107 @@
   background-color: rgb(110, 202, 239);
 }
 
-.container .friendRequest {
+/* .container .friendRequest {
   margin: 0;
   width: 100%;
   list-style-type: none;
   background-color: aqua;
+} */
+
+.friendSendBtn {
+  border-radius: 5px;
+  font-size: 22px;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+  background-color: #55acee;
+  box-shadow: 0px 5px 0px 0px #3C93D5;
+  font-family: 'Song Myung', serif;
+  margin-right: 1rem;
+}
+
+.friendSendBtn:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
+.friendSendBtn:hover {
+  /* background-color: #FF6656; */
+  background-color: blue;
+}
+
+.friendUser {
+  padding-left: 10px;
+  font-family: 'Song Myung', serif;
+  font-size: 2rem;
+}
+
+.friendOkBtn {
+  border-radius: 5px;
+  font-size: 22px;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+  background-color: #2ecc71;
+  box-shadow: 0px 5px 0px 0px #15B358;
+  font-family: 'Song Myung', serif;
+  align-self: baseline;
+  float: right;
+}
+
+.friendOkBtn:active { 
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
+.friendOkBtn:hover {
+  /* background-color: #FF6656; */
+  background-color: green;
+}
+
+.friendDelBtn {
+  border-radius: 5px;
+  font-size: 22px;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+  background-color: #e74c3c;
+  box-shadow: 0px 5px 0px 0px #CE3323;
+  font-family: 'Song Myung', serif;
+  align-self: baseline;
+  float: right;
+}
+
+.friendDelBtn:active { 
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
+.friendDelBtn:hover {
+  /* background-color: #FF6656; */
+  background-color: red;
+}
+
+
+.friendRequest {
+  /* margin: 0;
+  width: 100%;
+  list-style-type: none;
+  background-color: aqua;
+  border-bottom: 1px solid black;
+  height: 80px;
+  display: flex;
+  align-items: center; */
+  width:100%;
+	height:50px;
+	background:#FFF;
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px #777;
 }

@@ -74,7 +74,7 @@ const CreateBoard = () => {
   };
 
   return (
-    <main>
+    <main className={classes.boardDiv}>
       {/* 게시판 종류 선택 버튼 */}
       <NavigateButtons type={type} />
       {/* {() => {

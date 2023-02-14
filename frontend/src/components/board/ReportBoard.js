@@ -62,7 +62,7 @@ const ReportBoard = () => {
   const reportKinds = [true, "욕설", "게임 불참", "성희롱"];
 
   return (
-    <main>
+    <main className={classes.boardDiv}>
       {/* 게시판 별로 이동 가능한 버튼 */}
       <NavigateButtons type="report" />
 

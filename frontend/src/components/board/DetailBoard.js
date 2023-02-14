@@ -86,7 +86,7 @@ const DetailBoard = () => {
   }, [type]);
 
   return (
-    <main>
+    <main className={classes.boardDiv}>
       {/* 전체 감싸는 wrap */}
       <div className={classes.contentsWrap}>
         {/* 게시판 타입 */}

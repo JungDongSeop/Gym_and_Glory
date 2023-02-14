@@ -20,7 +20,7 @@ public interface TeamLogRepository extends JpaRepository<TeamLog,Integer> {
     @Query(value = "select a.team_name, sec_to_time(a.clear_time), group_concat(c.nickname separator ', ') as users " +
             "from teamlog a " +
             "join teamlog_item b on a.team_sequence = b.team_sequence " +
-            "join user c on b.user_sequence = c.user_sequence " +
+            "left outer join user c on b.user_sequence = c.user_sequence " +
             "group by a.team_sequence " +
             "order by a.clear_time " +
             "limit 10 ", nativeQuery = true)

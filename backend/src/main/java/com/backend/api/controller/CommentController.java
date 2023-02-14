@@ -59,7 +59,7 @@ public class CommentController {
     //댓글에 좋아요 누르기
     @GetMapping("/comment/good/{userSequence}/{commentSequence}")
     public ResponseEntity<?> commentGood(@PathVariable Integer userSequence, @PathVariable Integer commentSequence) {
-
+ 
         CommentGood flag = goodService.findCommentGood(userSequence, commentSequence);
 
         if (flag == null) {

@@ -6,6 +6,8 @@ import AuthContext from "../../../store/auth-context";
 import WithNavBarAndSideBar from "../../layout/WithNavBarAndSideBar";
 import RestApi from "../../api/RestApi";
 import classes from "./Update.module.scss";
+import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 // 이후 와이어프레임에 맞춰 수정
 
@@ -40,7 +42,8 @@ const Update = () => {
     if (!re.test(enteredNewPassword)) {
       setIsValidPassword(false);
       // alert("비밀번호 유효성 검사에 어긋남");
-      alert("영어 + 숫자 + 특수문자 8자리 이상 사용해주세요");
+      // alert("영어 + 숫자 + 특수문자 8자리 이상 사용해주세요");
+      toast.error("영어 + 숫자 + 특수문자 8자리 이상 사용해주세요");
       newPasswordInputRef.current.value = "";
     } else {
       setIsValidPassword(true);
@@ -66,7 +69,12 @@ const Update = () => {
           });
         }
       });
-      alert("비밀번호 변경이 완료되었습니다. 다시 로그인 해주세요");
+      Swal.fire({
+        title: "Success!",
+        text: "비밀번호 변경이 완료되었습니다. 다시 로그인 해주세요",
+        icon: "success",
+        confirmButtonText: "확인",
+      });
       authCtx.logout();
       navigate("/login");
     }
@@ -125,13 +133,15 @@ const Update = () => {
 
     // 유효하지 않은 닉네임이면 바로 다시입력하세요 반환
     if (!nickVal) {
-      alert("사용할 수 없는 닉네임입니다.");
+      // alert("사용할 수 없는 닉네임입니다.");
+      toast.error("사용할 수 없는 닉네임입니다.");
       setIsValidNewNickname(false);
       newNicknameInputRef.current.value = "";
     }
     // 유효하지만 중복된 닉네임이면
     else if (nickVal && response.data === "중복O") {
-      alert("이미 사용중인 닉네임 입니다.");
+      // alert("이미 사용중인 닉네임 입니다.");
+      toast.error("이미 사용중인 닉네임 입니다.");
     } else {
       fetch(`${RestApi()}/user/modify/nickname`, {
         method: "PUT",
@@ -142,17 +152,17 @@ const Update = () => {
         headers: {
           "Content-Type": "application/json",
         },
-      })
-        .then((res) => {
-          console.log(res);
-          sessionStorage.setItem("nickname", enteredNewNickname);
-          window.location.reload();
+      }).then((res) => {
+        console.log(res);
+        sessionStorage.setItem("nickname", enteredNewNickname);
+        window.location.reload();
 
-          alert("닉네임 변경이 완료되었습니다.");
-        })
-        .catch((err) => {
-          alert("axios 오류");
-        });
+        // alert("닉네임 변경이 완료되었습니다.");
+        toast.success("닉네임 변경이 완료되었습니다.");
+      });
+      // .catch((err) => {
+      //   alert("axios 오류");
+      // });
     }
   };
 
@@ -167,7 +177,8 @@ const Update = () => {
     const re = /^01(?:0|1|[6-9])(?:\d{4})\d{4}$/;
     if (!re.test(enteredNewTelNumber.current.value)) {
       setIsValidNewPhone(false);
-      alert("전화번호 형식이 맞지 않습니다.");
+      // alert("전화번호 형식이 맞지 않습니다.");
+      toast.error("전화번호 형식이 맞지 않습니다.");
     } else {
       setIsValidNewPhone(true);
 
@@ -184,50 +195,73 @@ const Update = () => {
         console.log(res);
         sessionStorage.setItem("telNumber", enteredNewTelNumber);
         window.location.reload();
-        alert("전화번호 변경이 완료되었습니다.");
+        // alert("전화번호 변경이 완료되었습니다.");
+        toast.success("전화번호 변경이 완료되었습니다.");
       });
     }
   };
 
   return (
     <main>
+      <Toaster
+        toastOptions={{
+          success: {
+            style: {
+              background: "green",
+              color: "white",
+            },
+          },
+          error: {
+            style: {
+              background: "red",
+            },
+          },
+        }}
+        position="top-center"
+        reverseOrder={false}
+      />
       <div className={classes.myDiv}>
-      <div className={classes.formDiv}>
-        <h1> 회원정보 수정 </h1>
-      <form onSubmit={passwordCheck}>
-        <div>
-          <label htmlFor="new-password">새 비밀번호</label>
-          <input type="password" id="new-password" ref={newPasswordInputRef}  placeholder=" " />
-          <input type="submit" value="비밀번호 변경" />
+        <div className={classes.formDiv}>
+          <h1> 회원정보 수정 </h1>
+          <form onSubmit={passwordCheck}>
+            <div>
+              <label htmlFor="new-password">새 비밀번호</label>
+              <input
+                type="password"
+                id="new-password"
+                ref={newPasswordInputRef}
+                placeholder=" "
+              />
+              <input type="submit" value="비밀번호 변경" />
+            </div>
+          </form>
+          <form onSubmit={nicknameCheck}>
+            <div>
+              <label htmlFor="new-nickname">새 닉네임</label>
+              <input
+                type="text"
+                id="new-nickname"
+                defaultValue={sessionStorage.getItem("nickname")}
+                ref={newNicknameInputRef}
+                placeholder=" "
+              />
+              <input type="submit" value="닉네임 변경" />
+            </div>
+          </form>
+          <form onSubmit={telNumberChangeHandler}>
+            <div>
+              <label htmlFor="new-tel-number">새 전화번호</label>
+              <input
+                type="text"
+                id="new-tel-number"
+                defaultValue={sessionStorage.getItem("telNumber")}
+                ref={newTelNumberInputRef}
+                placeholder=" "
+              />
+              <input type="submit" value="전화번호 변경" />
+            </div>
+          </form>
         </div>
-      </form>
-      <form onSubmit={nicknameCheck}>
-        <div>
-          <label htmlFor="new-nickname">새 닉네임</label>
-          <input
-            type="text"
-            id="new-nickname"
-            defaultValue={sessionStorage.getItem("nickname")}
-            ref={newNicknameInputRef}
-            placeholder=" " 
-          />
-          <input type="submit" value="닉네임 변경" />
-        </div>
-      </form>
-      <form onSubmit={telNumberChangeHandler}>
-        <div>
-          <label htmlFor="new-tel-number">새 전화번호</label>
-          <input
-            type="text"
-            id="new-tel-number"
-            defaultValue={sessionStorage.getItem("telNumber")}
-            ref={newTelNumberInputRef}
-            placeholder=" " 
-          />
-          <input type="submit" value="전화번호 변경" />
-        </div>
-      </form>
-      </div>
       </div>
     </main>
   );

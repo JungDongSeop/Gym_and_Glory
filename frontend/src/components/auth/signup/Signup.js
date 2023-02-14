@@ -5,7 +5,7 @@ import Logo from "../../../assets/logo.png";
 import classes from "./Signup.module.scss";
 import RestApi from "../../api/RestApi";
 import toast, { Toaster } from "react-hot-toast";
-
+import Swal from "sweetalert2";
 // API_KEY
 const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
 // const commonhttp = RestApi();
@@ -51,8 +51,10 @@ const Signup = () => {
     if (
       nicknameValue.search(/\s/) !== -1 ||
       specialCheck.test(nicknameValue) ||
-      nicknameValue.length < 3 ||
-      nicknameValue.length > 15
+      // nicknameValue.length < 3 ||
+      // nicknameValue.length > 15
+      nickLength < 3 ||
+      nickLength > 15
     ) {
       setIsValidNickname(false);
       // nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
@@ -216,12 +218,14 @@ const Signup = () => {
     } else if (response.data === "중복X" && !isValidNickname) {
       // console.log(isValidNickname, "2번째");
       console.log(response.data);
-      alert("사용할 수 없는 닉네임 입니다.");
+      // alert("사용할 수 없는 닉네임 입니다.");
+      toast.error("사용할 수 없는 닉네임 입니다.");
       setIsCheckedNickname(false);
       nicknameInputRef.current.value = "";
       nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
     } else if (response.data === "중복O") {
-      alert("이미 사용중인 닉네임입니다.");
+      // alert("이미 사용중인 닉네임입니다.");
+      toast.error("이미 사용중인 닉네임입니다.");
       setIsCheckedNickname(false);
       nicknameInputRef.current.value = "";
       nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
@@ -230,11 +234,14 @@ const Signup = () => {
 
   const submitHandler = (event) => {
     if (!isCheckedEmail) {
-      alert("이메일 중복검사를 해주세요");
+      // alert("이메일 중복검사를 해주세요");
+      toast.error("이메일 중복검사를 해주세요");
     } else if (!isCheckedNickname) {
-      alert("닉네임 중복검사를 해주세요");
+      // alert("닉네임 중복검사를 해주세요");
+      toast.error("닉네임 중복검사를 해주세요");
     } else if (!isValidPhone) {
-      alert("전화번호를 다시 확인해주세요");
+      // alert("전화번호를 다시 확인해주세요");
+      toast.error("전화번호를 다시 확인해주세요");
     } else {
       event.preventDefault();
 
@@ -296,16 +303,23 @@ const Signup = () => {
                 },
               }
             );
-            alert("성공적으로 회원가입이 완료되었습니다.");
+            // alert("성공적으로 회원가입이 완료되었습니다.");
+            // toast.success("성공적으로 회원가입이 완료되었습니다");
+            Swal.fire({
+              title: "Success!",
+              text: "성공적으로 회원가입이 완료되었습니다!",
+              icon: "success",
+              confirmButtonText: "확인",
+            });
             navigate("/login");
           } catch (err) {
             console.log(err);
           }
-        })
-
-        .catch((err) => {
-          alert(err.message);
         });
+
+      // .catch((err) => {
+      //   alert(err.message);
+      // });
       // console.log(enteredPhone);
       // console.log(isCheckedNickname);
       // console.log(isCheckedEmail);
@@ -318,13 +332,13 @@ const Signup = () => {
           toastOptions={{
             success: {
               style: {
-                background: "green",
-                color: "white",
+                // background: "green",
+                // color: "white",
               },
             },
             error: {
               style: {
-                background: "red",
+                // background: "red",
               },
             },
           }}
@@ -486,7 +500,7 @@ const Signup = () => {
               {!isLoading && (
                 <button className={classes.toggle}>회원가입</button>
               )}
-              {isLoading && toast.loading("Waiting...")}
+              {isLoading && <p>회원가입중....</p>}
             </div>
           )}
       </form>

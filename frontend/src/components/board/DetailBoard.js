@@ -89,7 +89,7 @@ const DetailBoard = () => {
   }, [type]);
 
   return (
-    <main>
+    <main className={classes.boardDiv}>
       <Toaster
         toastOptions={{
           success: {
@@ -151,7 +151,7 @@ const DetailBoard = () => {
               <button href="#a" onClick={goodClick}>
                 <ThumbUpAltIcon
                   sx={{
-                    fontSize: "70px",
+                    fontSize: "30px",
                     background: "white",
                   }}
                 />
@@ -159,7 +159,7 @@ const DetailBoard = () => {
             ) : (
               <button href="#a" onClick={goodClick}>
                 <ThumbUpOffAltIcon
-                  sx={{ fontSize: "70px", background: "white" }}
+                  sx={{ fontSize: "30px", background: "white" }}
                 />
               </button>
             )}

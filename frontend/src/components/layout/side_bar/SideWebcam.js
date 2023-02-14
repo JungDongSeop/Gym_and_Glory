@@ -18,7 +18,7 @@ const SideWebcam = () => {
   };
 
   return (
-    <div style={{width: '280px', height: '260px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+    <div style={{ marginTop:'-20px', width: '280px', height: '260px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
       <div className="camView" style={{margin: 'auto', width:'280px' ,height: '210px', backgroundColor: 'gray'}}>
         {on && (
           <Webcam

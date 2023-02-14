@@ -114,12 +114,16 @@
 .conTitle {
   font-size: 34px;
   color: #333;
-  margin-top: 60px;
+  margin-top: 10px;
   width: 100%;
   float: left;
   margin-bottom: 30px;
   height: 40px;
   display: block;
+}
+
+.conTitle div button:hover {
+  cursor: pointer;
 }
 
 .conTitleBtn {
@@ -416,6 +420,10 @@ li {
   font-size: 16px;
   line-height: 36px;
   text-align: center;
+}
+
+.qsBtn ul li img:hover {
+  cursor: pointer;
 }
 
 .buttonInput {

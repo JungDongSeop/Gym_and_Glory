@@ -33,6 +33,7 @@ const CreateBoard = lazy(() => import("./components/board/CreateBoard"));
 const DetailBoard = lazy(() => import("./components/board/DetailBoard"));
 const UpdateBoard = lazy(() => import("./components/board/UpdateBoard"));
 const ReportBoard = lazy(() => import("./components/board/ReportBoard"));
+const ChatRoom = lazy(() => import("./components/socket/chatroom"));
 const ReportBoardDetail = lazy(() =>
   import("./components/board/ReportBoardDetail")
 );
@@ -102,6 +103,9 @@ function App() {
           )}
           {authCtx.isLoggedIn && (
             <Route path="/board/:type" element={<Board />} />
+          )}
+          {authCtx.isLoggedIn && (
+            <Route path="/chatroom" element={<ChatRoom />} />
           )}
           {/* <Route path="/signup" element={<Signup />} />
           <Route path="/find-pwd" element={<FindPwd />} />

@@ -10,8 +10,6 @@ import defaultProfile from "../../assets/defaultProfile.png";
 import classes from "./MyPage.module.css";
 import RestApi from "../api/RestApi";
 
-import TmpMessage from './TmpMessage';
-
 const MyPage = () => {
   // 유저 정보 가져오기
   // const user = useSelector((state) => state.user);
@@ -71,7 +69,6 @@ const MyPage = () => {
 
   return (
     <main>
-      <TmpMessage />
       {user ? (
         <div className={classes.container}>
           <div className={classes.profileWrap}>

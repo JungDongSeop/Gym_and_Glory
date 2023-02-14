@@ -10,7 +10,7 @@ aside {
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(45, 46, 6, 0.75);
+  background-color: rgba(0, 1, 24, 0.75);
 
   font-family: 'Nanum Myeongjo', serif;
 
@@ -62,7 +62,7 @@ main::-webkit-scrollbar {
 }
 .userNickDiv :hover{
   font-weight: bold;
-  background: -webkit-linear-gradient(bottom left,rgb(69, 166, 108), rgb(48, 150, 179));
+  background: -webkit-linear-gradient(bottom left,rgb(166, 69, 69), rgb(221, 102, 102));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.554)

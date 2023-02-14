@@ -31,7 +31,7 @@ const Navbar = () => {
           <Link
             to="/lobby"
             className={classes.navText}
-            style={{ color: location.pathname === "/lobby" ? "rgb(84, 154, 54)" : "white" }}
+            style={{ color: location.pathname === "/lobby" ? "rgb(220, 1, 1)" : "white" }}
           >
             로비
    
@@ -40,7 +40,7 @@ const Navbar = () => {
         <Link
           to="/ranking"
           className={classes.navText}
-          style={{ color: location.pathname === "/ranking" ? "rgb(84, 154, 54)" : "white" }}
+          style={{ color: location.pathname === "/ranking" ? "rgb(220, 1, 1)" : "white" }}
         >
            랭킹
         </Link>
@@ -48,7 +48,7 @@ const Navbar = () => {
           to="/board/notice"
           className={classes.navText}
           style={{
-            color: location.pathname.includes("/board") ? "rgb(84, 154, 54)" : "white",
+            color: location.pathname.includes("/board") ? "rgb(220, 1, 1)" : "white",
           }}
         >
            게시판

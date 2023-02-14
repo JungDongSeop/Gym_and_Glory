@@ -41,7 +41,7 @@ const Board = () => {
   };
 
   return (
-    <main>
+    <main className={classes.boardDiv}>
       <NavigateButtons type={type} />
 
       <br />

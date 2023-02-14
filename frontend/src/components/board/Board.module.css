@@ -1,10 +1,13 @@
+.boardDiv{
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
 .createButton {
   right: 0;
   margin-bottom: 5px;
   float: right;
   background-color: #455d9d;
 }
-
 /* .boardUl {
   border-collapse: collapse;
   float: left;
@@ -29,6 +32,7 @@
 
 .blue {
   background-color: #455d9d;
+  color:white;
 }
 
 .white {

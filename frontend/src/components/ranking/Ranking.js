@@ -90,6 +90,7 @@ const Ranking = () => {
               {team.teamName}
               </p>
 
+              {/* <div className={classes.teamDiv}>{team.users}</div> */}
             </li>
           ))}
         </ul>

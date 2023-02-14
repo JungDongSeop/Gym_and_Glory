@@ -61,15 +61,19 @@ const CommentDetail = (props) => {
   };
 
   // 댓글 지우기
+
+  // const commentLength = props.commentsLength;
   const handleDelete = async () => {
     try {
       await axios.delete(
         `${RestApi()}/board/comment/${comment.commentSequence}`
       );
       alert("댓글이 삭제되었습니다.");
+      // commentLength -= 1;
       // Show a success message or refresh the comments list
       // commentRead(articleSequence);
       setIsDelete(true);
+      // window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -80,7 +84,14 @@ const CommentDetail = (props) => {
       const result = await axios(`${RestApi()}/board/comment/`);
       // setComments(result.data.reverse());
     };
+    // const handleDelete = async () => {
+    //   const deleteResult = await axios.delete(
+    //     `${RestApi()}/board/comment/${comment.commentSequence}`
+    //   );
+    //   setIsDelete(true);
+    // };
     commentRead();
+    // handleDelete();
   }, []);
 
   const utcTime = new Date(comment.registerTime).toISOString();

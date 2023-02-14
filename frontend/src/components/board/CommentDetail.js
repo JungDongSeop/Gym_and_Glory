@@ -75,15 +75,13 @@ const CommentDetail = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   const commentRead = async () => {
-  //     const result = await axios(
-  //       `${RestApi()}/board/comment/${articleSequence}`
-  //     );
-  //     setComments(result.data.reverse());
-  //   };
-  //   commentRead();
-  // }, [articleSequence]);
+  useEffect(() => {
+    const commentRead = async () => {
+      const result = await axios(`${RestApi()}/board/comment/`);
+      // setComments(result.data.reverse());
+    };
+    commentRead();
+  }, []);
 
   const utcTime = new Date(comment.registerTime).toISOString();
   const localTime = moment

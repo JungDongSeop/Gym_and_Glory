@@ -101,7 +101,7 @@ const Comment = () => {
           })
           .then((response) => {
             setComments([...comments, response.data]);
-            setNewComment({ title: "", text: "" });
+            // setNewComment({ title: "", text: "" });
             commentRead(articleSequence);
             commentInputRef.current.value = "";
           })
@@ -112,30 +112,30 @@ const Comment = () => {
   };
 
   // 댓글 좋아요 axios 요청
-  const handleGood = async (commentSequence) => {
-    try {
-      await axios(
-        `${RestApi()}/board/comment/good/${userSequence}/${commentSequence}`
-      );
-      alert("댓글을 추천하였습니다.");
-      // Show a success message or refresh the comments list
-      commentRead(articleSequence);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleGood = async (commentSequence) => {
+  //   try {
+  //     await axios(
+  //       `${RestApi()}/board/comment/good/${userSequence}/${commentSequence}`
+  //     );
+  //     alert("댓글을 추천하였습니다.");
+  //     // Show a success message or refresh the comments list
+  //     commentRead(articleSequence);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  // 댓글 지우기
-  const handleDelete = async (commentSequence) => {
-    try {
-      await axios.delete(`${RestApi()}/board/comment/${commentSequence}`);
-      alert("댓글이 삭제되었습니다.");
-      // Show a success message or refresh the comments list
-      commentRead(articleSequence);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // // 댓글 지우기
+  // const handleDelete = async (commentSequence) => {
+  //   try {
+  //     await axios.delete(`${RestApi()}/board/comment/${commentSequence}`);
+  //     alert("댓글이 삭제되었습니다.");
+  //     // Show a success message or refresh the comments list
+  //     commentRead(articleSequence);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   // 댓글 input 값 변경 시 작동
   const handleChange = (e) => {

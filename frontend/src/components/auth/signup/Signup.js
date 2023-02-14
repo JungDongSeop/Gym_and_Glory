@@ -37,7 +37,8 @@ const Signup = () => {
     setIsCheckedNickname(false);
     let nickLength = 0;
     let specialCheck = /[`~!@#$%^&*|\\;:?]/gi;
-    let nicknameValue = document.getElementById("nickname").value;
+    // let nicknameValue = document.getElementById("nickname").value;
+    let nicknameValue = nicknameInputRef.current.value;
 
     for (let i = 0; i < nicknameValue.length; i++) {
       const nick = nicknameValue.charAt(i);
@@ -50,10 +51,8 @@ const Signup = () => {
     if (
       nicknameValue.search(/\s/) !== -1 ||
       specialCheck.test(nicknameValue) ||
-      // nicknameValue.length < 2 ||
-      // nicknameValue.length > 10
-      nickLength < 2 ||
-      nickLength > 20
+      nicknameValue.length < 3 ||
+      nicknameValue.length > 15
     ) {
       setIsValidNickname(false);
       // nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
@@ -184,9 +183,13 @@ const Signup = () => {
         toast.error("이미 사용중인 이메일 입니다.");
       } else if (isValidEmail === false) {
         if (checkEmail.length === 0) {
-          alert("이메일을 입력해주세요!");
+          // alert("이메일을 입력해주세요!");
+          toast.error("이메일을 입력해주세요");
         } else {
-          alert("이메일 형식이 올바르지 않습니다. 다시 확인후 입력해주세요.");
+          // alert("이메일 형식이 올바르지 않습니다. 다시 확인후 입력해주세요.");
+          toast.error(
+            "이메일 형식이 올바르지 않습니다. \n 다시 확인후 입력해주세요."
+          );
         }
       }
       setIsCheckedEmail(false);
@@ -204,11 +207,15 @@ const Signup = () => {
       `${RestApi()}/check_nickname?nickname=${nickname}`
     );
     console.log(response);
+
     if (response.data === "중복X" && isValidNickname) {
       // alert("사용 가능한 닉네임입니다.");
+      toast.success("사용 가능한 닉네임 입니다.");
       setIsCheckedNickname(true);
       nicknameInputRef.current.style.borderBottom = "2px solid #00bd10";
     } else if (response.data === "중복X" && !isValidNickname) {
+      // console.log(isValidNickname, "2번째");
+      console.log(response.data);
       alert("사용할 수 없는 닉네임 입니다.");
       setIsCheckedNickname(false);
       nicknameInputRef.current.value = "";
@@ -307,7 +314,23 @@ const Signup = () => {
   return (
     <section className={classes.whiteBox}>
       <div>
-        <Toaster position="top-right" reverseOrder={false} />
+        <Toaster
+          toastOptions={{
+            success: {
+              style: {
+                background: "green",
+                color: "white",
+              },
+            },
+            error: {
+              style: {
+                background: "red",
+              },
+            },
+          }}
+          position="top-center"
+          reverseOrder={false}
+        />
       </div>
       <img
         className={classes.logoSmall}
@@ -320,12 +343,6 @@ const Signup = () => {
         {/* 아이디 입력 */}
         <div className={classes.control}>
           <label htmlFor="email">아이디(email)</label>
-          <button
-            className={classes.authsmallbutton}
-            onClick={checkEmailHandler}
-          >
-            중복확인
-          </button>
 
           <input
             onChange={() => {
@@ -340,6 +357,12 @@ const Signup = () => {
             ref={emailInputRef}
             autoComplete="off"
           />
+          <button
+            className={classes.authsmallbutton}
+            onClick={checkEmailHandler}
+          >
+            중복확인
+          </button>
         </div>
         {/* 1차 비밀번호 입력 */}
         {isCheckedEmail && (
@@ -376,13 +399,7 @@ const Signup = () => {
           <div>
             <div className={classes.control}>
               <label htmlFor="nickname">닉네임(Nickname)</label>
-              <button
-                className={classes.authsmallbutton}
-                onClick={checkNicknameHandler}
-                id="nickname"
-              >
-                중복확인
-              </button>
+
               <input
                 onChange={() => {
                   setIsCheckedNickname(false);
@@ -391,16 +408,23 @@ const Signup = () => {
                     "2px solid #8f1010";
                 }}
                 type="text"
-                id="nickname"
                 // required
                 ref={nicknameInputRef}
                 autoComplete="off"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    checkNicknameHandler();
-                  }
-                }}
+                id="nickname"
+                // onKeyDown={(e) => {
+                //   if (e.key === "Enter") {
+                //     checkNicknameHandler();
+                //   }
+                // }}
               />
+              <button
+                className={classes.authsmallbutton}
+                onClick={checkNicknameHandler}
+                id="nickname"
+              >
+                중복확인
+              </button>
             </div>
           </div>
         )}
@@ -462,7 +486,7 @@ const Signup = () => {
               {!isLoading && (
                 <button className={classes.toggle}>회원가입</button>
               )}
-              {isLoading && <p>잠시만 기다려 주세요...</p>}
+              {isLoading && toast.loading("Waiting...")}
             </div>
           )}
       </form>

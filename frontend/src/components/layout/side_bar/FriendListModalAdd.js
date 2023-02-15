@@ -88,15 +88,6 @@ const FriendListModalAdd = () => {
             onChange={handleReportUserNicknameChange}
             ref={enteredusername}
           />
-        {/* <Box sx={{ display: 'flex', alignItems: 'self-end', fontSize: 10000, position: 'relative' }}> */}
-          {/* <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5, fontSize: 70 }} />
-          <TextField fullWidth id="input-with-sx" margin="normal" label="닉네임 검색" variant="standard" sx={{fontSize: '300px'}} 
-            style={{}} 
-            type="text"
-
-            onChange={handleReportUserNicknameChange}
-            ref={enteredusername}/> */}
-        {/* </Box> */}
       </div>
       {/* 검색해서 나온 친구 목록 출력 */}
       {Array.isArray(searchedDatas) ? (

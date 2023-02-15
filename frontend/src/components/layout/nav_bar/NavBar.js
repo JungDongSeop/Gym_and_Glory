@@ -1,6 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import RestApi from "../../api/RestApi";
+import defaultProfile from "../../../assets/defaultProfile.png";
 import Logo from "../../../assets/logo.png";
 import AuthContext from "../../../store/auth-context";
 import classes from "./NavBar.module.css";
@@ -19,6 +22,20 @@ const Navbar = () => {
     authCtx.logout();
     navigate("/");
   };
+
+  // 유저 정보 axios 요청
+  const [user, setUser] = useState();
+  useEffect(() => {
+    axios
+      .get(`${RestApi()}/user/detail/${authCtx.userSequence}`)
+      .then((res) => {
+        console.log('user', res.data)
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [authCtx]);
 
   return (
     <nav>
@@ -65,7 +82,7 @@ const Navbar = () => {
           </div>
           </Link>
           <Link to="/mypage">
-            <img className="logo" src={Logo} alt="마이페이지로" />
+            <img className={classes.profile} src={user ? user.imagePath : defaultProfile} alt="마이페이지로" />
           </Link>
         </div>
       )}

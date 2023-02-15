@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 // import DialogActions from '@mui/material/DialogActions';
 import Button from './LobbyButton';
 
-const Modal = ({ buttonTitle, children, width, height }) => {
+const Modal = ({ buttonTitle, children, width, height, backgroundColor }) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -31,7 +31,7 @@ const Modal = ({ buttonTitle, children, width, height }) => {
             margin: 'auto',
             maxHeight: 'none',
             maxWidth: 'none',
-            backgroundColor: 'rgba(200, 200, 200, 0.9)',
+            backgroundColor: backgroundColor || 'rgba(200, 200, 200, 0.9)',
             overflow: 'hidden',
             
           }

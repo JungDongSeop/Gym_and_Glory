@@ -107,6 +107,7 @@ function App() {
           {authCtx.isLoggedIn && (
             <Route path="/chatroom" element={<ChatRoom />} />
           )}
+          <Route path="*" element={<Main />} />
           {/* <Route path="/signup" element={<Signup />} />
           <Route path="/find-pwd" element={<FindPwd />} />
           <Route path="/update" element={<UpdateUser />} /> */}

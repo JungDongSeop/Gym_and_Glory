@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Dialog from '@mui/material/Dialog';
+import React, { useState } from "react";
+import Dialog from "@mui/material/Dialog";
 // import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
+import DialogContent from "@mui/material/DialogContent";
 // import DialogActions from '@mui/material/DialogActions';
-import Button from './LobbyButton';
+import Button from "./LobbyButton";
 
 const Modal = ({ buttonTitle, children, width, height, backgroundColor }) => {
   const [open, setOpen] = useState(false);
@@ -28,18 +28,15 @@ const Modal = ({ buttonTitle, children, width, height, backgroundColor }) => {
           style: {
             width: width,
             height: height,
-            margin: 'auto',
-            maxHeight: 'none',
-            maxWidth: 'none',
-            backgroundColor: backgroundColor || 'rgba(200, 200, 200, 0.9)',
-            overflow: 'hidden',
-            
-          }
+            margin: "auto",
+            maxHeight: "none",
+            maxWidth: "none",
+            backgroundColor: backgroundColor || "rgba(200, 200, 200, 0.9)",
+            overflow: "hidden",
+          },
         }}
       >
-        <DialogContent>
-          {children}
-        </DialogContent>
+        <DialogContent>{children}</DialogContent>
       </Dialog>
     </div>
   );

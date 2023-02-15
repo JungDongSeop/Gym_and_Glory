@@ -11,6 +11,8 @@ import { Pagination } from "antd";
 import RestApi from "../api/RestApi";
 import classes from "./ReportBoard.module.css";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 
 // 신고게시판
 // 관리자 : 유저들의 신고 내역 조회 가능. 이후 확인 및 확정하기 버튼 누르기
@@ -60,8 +62,26 @@ const ReportBoard = () => {
     setCurrentPage(page);
   };
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = (reportSequence) => {
+    setIsPickedReport(reportSequence);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   // 신고 종류 구분
   const reportKinds = [true, "욕설", "게임 불참", "성희롱"];
+
+  const [isPickedReport, setIsPickedReport] = useState(0);
+
+  const adminCheck = () => {
+    axios.get(`${RestApi()}/report/confirm/${isPickedReport}`);
+    // setIsPickedReport();
+  };
 
   return (
     <main className={classes.boardDiv}>
@@ -78,6 +98,27 @@ const ReportBoard = () => {
       >
         글 작성
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            width: "300px",
+            height: "300px",
+            margin: "auto",
+            maxHeight: "none",
+            maxWidth: "none",
+            backgroundColor: "rgba(200, 200, 200, 0.9)",
+            overflow: "hidden",
+          },
+        }}
+      >
+        <DialogContent>
+          <p>{isPickedReport}를 지우시겠습니까?</p>
+          <button onClick={adminCheck}>확인</button>
+          {/* <button>확인</button> */}
+        </DialogContent>
+      </Dialog>
 
       {/* 신고게시판 내용 */}
       {authCtx.role === "ROLE_ADMIN" ? (
@@ -91,9 +132,7 @@ const ReportBoard = () => {
                 <li
                   key={item.reportSequence}
                   // className={index % 2 === 0 ? classes.odd : classes.even}
-                  onClick={() =>
-                    navigate(`/board/report/${item.reportSequence}`)
-                  }
+                  onClick={() => handleClickOpen(item.reportSequence)}
                 >
                   <div className={classes.reportUserInfo}>
                     <div className={classes.report}>

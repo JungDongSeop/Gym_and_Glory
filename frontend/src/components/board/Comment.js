@@ -59,21 +59,32 @@ const Comment = () => {
     }
     {
       enteredcomment.length > 0 &&
-        axios
-          .post(`${RestApi()}/board/comment`, {
+        // axios
+        //   .post(`${RestApi()}/board/comment`, {
+        //     userSequence: userSequence,
+        //     articleSequence: articleSequence,
+        //     contents: enteredcomment,
+        //   })
+        //   .then((response) => {
+        //     setComments([...comments, response.data]);
+        //     // setNewComment({ title: "", text: "" });
+        //     commentRead(articleSequence);
+        //     commentInputRef.current.value = "";
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+        fetch(`${RestApi()}/board/comment`, {
+          method: "POST",
+          body: JSON.stringify({
             userSequence: userSequence,
             articleSequence: articleSequence,
             contents: enteredcomment,
-          })
-          .then((response) => {
-            setComments([...comments, response.data]);
-            // setNewComment({ title: "", text: "" });
-            commentRead(articleSequence);
-            commentInputRef.current.value = "";
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
     }
   };
 

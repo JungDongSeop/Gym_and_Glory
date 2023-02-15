@@ -73,7 +73,7 @@ const CommentDetail = (props) => {
       // Show a success message or refresh the comments list
       // commentRead(articleSequence);
       setIsDelete(true);
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

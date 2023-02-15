@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import { useSelector } from 'react-redux';
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../../store/auth-context";
 import ExerciseGrass from "./ExerciseGrass";
@@ -14,6 +15,7 @@ const MyPage = () => {
   // 유저 정보 가져오기
   // const user = useSelector((state) => state.user);
   const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // 유저 정보 axios 요청
   const [user, setUser] = useState();
@@ -47,6 +49,7 @@ const MyPage = () => {
   const handleFileSelect = (e) => {
     console.log('e.target.files[0]', e.target.files[0])
     setProfileImage(e.target.files[0]);
+    handleFileUpload();
   };
   // 사진 db에 저장
   const handleFileUpload = async () => {
@@ -64,6 +67,7 @@ const MyPage = () => {
       console.log('에러 폼 데이터', typeof(formData))
       console.error(error);
     }
+    navigate(`/mypage`)
   };
   
 
@@ -72,16 +76,22 @@ const MyPage = () => {
       {user ? (
         <div className={classes.container}>
           <div className={classes.profileWrap}>
+
             {/* 유저 프로필 사진 */}
-            <img
-              className={classes.profile}
-              src={user.imagePath || defaultProfile}
-              alt="프로필"
-              // onMouseEnter={() => {setIsChangeProfile(true)}}
-              // onMouseLeave={() => {setIsChangeProfile(false)}}
-            />
-<input type="file" onChange={handleFileSelect} />
-<button onClick={handleFileUpload}>Upload</button>
+            <form>
+              <img
+                className={classes.profile}
+                src={user.imagePath || defaultProfile}
+                alt="프로필"
+              />
+              <div className={classes.filebox}>
+                <label htmlFor="ex-file">프로필 변경</label>
+                <input type="file" id="ex-file" onChange={handleFileSelect} />
+                {/* <button onClick={handleFileUpload}>Upload</button> */}
+              </div>
+            </form>
+
+
 
             {/* <h2>유저 pk : {authCtx.userSequence}</h2> */}
             <p>

@@ -39,27 +39,24 @@ const FriendListModalDetail = (props) => {
   // 삭제 버튼 누르면 그냥 null로 만들어서 없애기 (왜 axios 요청을 해도, FriendListModal 컴포넌트에서 friends가 바뀌는데도 표시되는 게 갱신 안되는지 모르겠다.)
   const [isShow, setIsShow] = useState(true);
 
-  return (
-    <div style={{width: '100%'}}>
-      {isShow ? (
-        <div className={classes.detailWrap}>
-          <div>
-            {/* <img src={friendInfo.profile_image_path} alt={DefaultProfile} /> */}
-            {/* <span className={classes.userLevel}>Lv.{friendInfo.level ? friendInfo.level : "00"}</span> */}
-            <span className={classes.userLevel}>Lv.{parseInt(friendInfo.exp/10000+1)}</span>
-            <span className={classes.userNick}>{friendInfo.nickname}</span>
-          </div>
+  return !isShow ? null : (
 
-          <button className={classes.friendDelBtn}
-            onClick={() => {
-              handleDelete();
-              setIsShow(false);
-            }}
-          >
-          삭제
-          </button>
-        </div>
-      ) : null}
+    <div className={classes.detailWrap}>
+      <div>
+        {/* <img src={friendInfo.profile_image_path} alt={DefaultProfile} /> */}
+        {/* <span className={classes.userLevel}>Lv.{friendInfo.level ? friendInfo.level : "00"}</span> */}
+        <span className={classes.userLevel}>Lv.{parseInt(friendInfo.exp/10000+1)}</span>
+        <span className={classes.userNick}>{friendInfo.nickname}</span>
+      </div>
+
+      <button className={classes.friendDelBtn}
+        onClick={() => {
+          handleDelete();
+          setIsShow(false);
+        }}
+      >
+      삭제
+      </button>
     </div>
   );
 };

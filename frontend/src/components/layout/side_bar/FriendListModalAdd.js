@@ -93,6 +93,7 @@ const FriendListModalAdd = () => {
           </button>
       </div>
 
+      <div className={classes.friendSection}>
       {/* 검색해서 나온 친구 목록 출력 */}
       {Array.isArray(searchedDatas) ? (
         <div className={classes.popUp}>
@@ -114,7 +115,7 @@ const FriendListModalAdd = () => {
           })}
         </div>
       ) : null}
-
+      </div>
       <hr />
 
       {/* 유저가 받은 친구 요청 */}

@@ -110,7 +110,7 @@ const ReportBoardCreate = () => {
             </div>
           ) : null}
           <br />
-          고른 닉네임 : {pickedData ? <span>{pickedData.nickname}</span> : null}
+          고른 닉네임 : {pickedData ? <span className={classes.realPickNick}>{pickedData.nickname}</span> : null}
         </label>
 
         <br />

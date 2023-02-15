@@ -3,9 +3,6 @@
   grid-template-columns: 120px 120px 120px 120px;
   margin: auto;
   width: 100%;
-
-
-  background-color: blue;
   position: relative;
   justify-content: center;
 }

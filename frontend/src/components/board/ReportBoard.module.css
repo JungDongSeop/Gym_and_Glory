@@ -34,6 +34,11 @@
   background-color: lightgray;
 }
 
+.report {
+  display: flex;
+  align-items: center;
+}
+
 .reporter {
   display: flex;
   font-size: 16px;
@@ -45,6 +50,11 @@
 
 }
 
+.arrow {
+  display: flex;
+  align-items: center;
+  float: left;
+}
 .accused {
   display: flex;
   font-size: 16px;
@@ -61,13 +71,13 @@
   font-size: 16px;
   color: #333;
   align-items: center;
-  /* width: 50%; */
+  width: 20%;
 }
 
 .reportUserInfo {
   width: 40%;
   display: flex;
-  /* justify-content: center; */
+  justify-content: start;
   float: left;
   color: #aaaaaa;
   font-size: 12px;
@@ -75,4 +85,8 @@
 
 .reportContent {
   width: 50%;
+}
+
+.reportContent {
+  /* padding-left: 20px; */
 }

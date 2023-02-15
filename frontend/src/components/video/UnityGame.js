@@ -59,6 +59,9 @@ const UnityGame = forwardRef((props, ref) => {
     } else if (signal === "sendReady") {
       console.log(num, "레디 신호", myNum);
       sendMessage("PhotonInit", "Ready", myNum);
+    } else if (signal === "Heal") {
+      console.log("힐");
+      sendMessage("Player" + myNum + "(Clone)", "Heal");
     }
   }
 

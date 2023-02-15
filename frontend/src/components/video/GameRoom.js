@@ -109,6 +109,8 @@ class GameRoom extends Component {
       nicknames: [sessionStorage.getItem("nickname")],
       exerciseNum: undefined,
       enterDelay: true,
+      healLeft: 0,
+      healRight: 0,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -120,9 +122,11 @@ class GameRoom extends Component {
     this.loop = this.loop.bind(this);
     this.start = this.start.bind(this);
     this.init = this.init.bind(this);
-    this.predict = this.predict.bind(this);
+    this.squatPredict = this.squatPredict.bind(this);
+    this.burpeePredict = this.burpeePredict.bind(this);
+    this.pushupPredict = this.pushupPredict.bind(this);
+    this.jumpingjackPredict = this.jumpingjackPredict.bind(this);
     this.chattoggle = this.chattoggle.bind(this);
-    this.changemodel = this.changemodel.bind(this);
     this.handleAudioStatus = this.handleAudioStatus.bind(this);
     this.handleVideoStatus = this.handleVideoStatus.bind(this);
     this.handleSelectedExercise = this.handleSelectedExercise.bind(this);
@@ -132,6 +136,7 @@ class GameRoom extends Component {
     this.handleMiddleState = this.handleMiddleState.bind(this);
     this.handleEvent = this.handleEvent.bind(this);
     this.handleEnterDelay = this.handleEnterDelay.bind(this);
+    this.sendHeal = this.sendHeal.bind(this);
   }
 
   componentDidMount() {
@@ -158,7 +163,6 @@ class GameRoom extends Component {
         ishost: isHost,
       });
 
-      this.setmodel();
       this.joinSession();
     }, 500);
     setTimeout(() => {
@@ -300,9 +304,6 @@ class GameRoom extends Component {
           this.setState({
             subscribers: subscribers,
           });
-        });
-        mySession.on("signal:start", (event) => {
-          this.start();
         });
         mySession.on("signal:chat", (event) => {
           let chatdata = event.data.split(",");
@@ -500,11 +501,15 @@ class GameRoom extends Component {
     // teachable machine 작동 시작
     console.log(this.state.model);
 
-    // this.setState({
-    //   count: 0,
-    //   status: "stand",
-    // });
-    this.init();
+    this.setState(
+      {
+        count: 0,
+        status: "stand",
+      },
+      () => {
+        this.init();
+      }
+    );
   }
 
   chattoggle() {
@@ -553,51 +558,6 @@ class GameRoom extends Component {
       });
   }
 
-  async setmodel() {
-    // const URL = "https://teachablemachine.withgoogle.com/models/UQcyvhIye/";
-    // 내가 학습시킨 간단한 스쿼트 모델
-    // const modelURL =
-    //   "https://teachablemachine.withgoogle.com/models/UQcyvhIye/model.json";
-    // const metadataURL =
-    //   "https://teachablemachine.withgoogle.com/models/UQcyvhIye/metadata.json";
-
-    // 동섭이 학습데이터 바탕으로 제작한 모델
-    // const modelURL =
-    //   "https://teachablemachine.withgoogle.com/models/M7lirMMFj/model.json";
-    // const metadataURL =
-    //   "https://teachablemachine.withgoogle.com/models/M7lirMMFj/metadata.json";
-
-    const URL = "https://teachablemachine.withgoogle.com/models/IUow9UHH-/";
-    const modelURL = URL + "model.json";
-    const metadataURL = URL + "metadata.json";
-
-    const model = await tmPose.load(modelURL, metadataURL);
-    console.log(model);
-    this.setState(
-      {
-        model: await tmPose.load(modelURL, metadataURL),
-      },
-      () => {
-        this.start();
-      }
-    );
-
-    // const a = await tmPose.load(metadataURL, modelURL);
-    // console.log(a);
-  }
-
-  async changemodel() {
-    const modelURL =
-      "https://teachablemachine.withgoogle.com/models/UQcyvhIye/model.json";
-    const metadataURL =
-      "https://teachablemachine.withgoogle.com/models/UQcyvhIye/metadata.json";
-
-    this.setState({
-      model: await tmPose.load(modelURL, metadataURL),
-    });
-    console.log("바꼇다");
-  }
-
   async handleSelectedExercise(exercise) {
     if (this.state.enterDelay) {
       toast.error("게임에 접속 중입니다");
@@ -623,69 +583,210 @@ class GameRoom extends Component {
     } else {
       this.setState({ selectedExercise: exercise, loadingStatus: true });
       if (exercise === "squat") {
-        const modelURL =
-          "https://teachablemachine.withgoogle.com/models/UQcyvhIye/model.json";
-        const metadataURL =
-          "https://teachablemachine.withgoogle.com/models/UQcyvhIye/metadata.json";
-        this.setState({
-          model: await tmPose.load(modelURL, metadataURL),
-          loadingStatus: false,
-          exerciseNum: 1,
-        });
-      } else if (exercise === "lunge") {
-        setTimeout(
-          () => this.setState({ loadingStatus: false, exerciseNum: 2 }),
-          3000
+        const URL = "https://teachablemachine.withgoogle.com/models/IUow9UHH-/";
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+        this.setState(
+          {
+            model: await tmPose.load(modelURL, metadataURL),
+            loadingStatus: false,
+            exerciseNum: 1,
+          },
+          () => this.start()
+        );
+      } else if (exercise === "burpee") {
+        const URL = "https://teachablemachine.withgoogle.com/models/8Nyxek_Pd/";
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+        this.setState(
+          {
+            model: await tmPose.load(modelURL, metadataURL),
+            loadingStatus: false,
+            exerciseNum: 2,
+          },
+          () => this.start()
         );
       } else if (exercise === "pushup") {
-        setTimeout(
-          () => this.setState({ loadingStatus: false, exerciseNum: 3 }),
-          3000
+        const URL = "https://teachablemachine.withgoogle.com/models/zEAN1WbX7/";
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+        this.setState(
+          {
+            model: await tmPose.load(modelURL, metadataURL),
+            loadingStatus: false,
+            exerciseNum: 3,
+          },
+          () => this.start()
         );
       } else {
-        setTimeout(
-          () => this.setState({ loadingStatus: false, exerciseNum: 4 }),
-          3000
+        // 점핑잭 모델    -> 수정될 수도 있음
+        const URL = "https://teachablemachine.withgoogle.com/models/1BsYfE1Eo/";
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+        this.setState(
+          {
+            model: await tmPose.load(modelURL, metadataURL),
+            loadingStatus: false,
+            exerciseNum: 4,
+          },
+          () => this.start()
         );
       }
     }
   }
 
   async init() {
-    // this.setState({ webcam: new tmPose.Webcam(size, size, flip) });
     await this.state.webcam.setup();
-    console.log(this.state.webcam);
     this.state.webcam.play();
     window.requestAnimationFrame(this.loop);
   }
 
   async loop() {
     this.state.webcam.update();
-    await this.predict();
+    if (this.state.exerciseNum === 1) {
+      await this.squatPredict();
+    } else if (this.state.exerciseNum === 2) {
+      await this.burpeePredict();
+    } else if (this.state.exerciseNum === 3) {
+      await this.pushupPredict();
+    } else if (this.state.exerciseNum === 4) {
+      await this.jumpingjackPredict();
+    }
     window.requestAnimationFrame(this.loop);
   }
 
-  // prediction[0] is squat, prediction[1] is stand
-  async predict() {
+  // prediction
+  // 0 : stand, 1: squat, 2: heal_right, 3: heal_left, 4: heal_stand
+  async squatPredict() {
     const { pose, posenetOutput } = await this.state.model.estimatePose(
       this.state.webcam.canvas
     );
 
     const prediction = await this.state.model.predict(posenetOutput);
-    if (prediction[0].probability.toFixed(2) >= 0.9) {
-      this.setState({ status: "stand" });
+    console.log(prediction);
+    if (prediction[0].probability.toFixed(2) >= 0.95) {
       if (this.state.status === "squat") {
         this.setState({ count: 1 });
-        this.setState({ status: "stand" });
       }
-    } else if (prediction[1].probability.toFixed(2) >= 0.9) {
+      this.setState({ status: "stand" });
+    } else if (prediction[1].probability.toFixed(2) >= 0.95) {
       this.setState({ status: "squat" });
+    } else if (prediction[2].probability.toFixed(2) >= 0.95) {
+      this.setState({ healRight: 1 });
+    } else if (prediction[3].probability.toFixed(2) >= 0.95) {
+      this.setState({ healLeft: 1 });
     }
 
     if (this.state.count === 1) {
       await this.sendKey();
       this.setState({ count: 0 });
     }
+
+    if (this.state.healLeft === 1 && this.state.healRight === 1) {
+      await this.sendHeal();
+      this.setState({ healLeft: 0, healRight: 0 });
+    }
+  }
+
+  // 0: stand, 1: pushup, 2: heal_left, 3: heal_right
+  async burpeePredict() {
+    const { pose, posenetOutput } = await this.state.model.estimatePose(
+      this.state.webcam.canvas
+    );
+
+    const prediction = await this.state.model.predict(posenetOutput);
+    console.log(prediction);
+    if (prediction[0].probability.toFixed(2) >= 0.95) {
+      if (this.state.status === "burpee") {
+        this.setState({ count: 1 });
+      }
+      this.setState({ status: "stand" });
+    } else if (prediction[1].probability.toFixed(2) >= 0.95) {
+      this.setState({ status: "burpee" });
+    } else if (prediction[2].probability.toFixed(2) >= 0.95) {
+      this.setState({ healLeft: 1 });
+    } else if (prediction[3].probability.toFixed(2) >= 0.95) {
+      this.setState({ healRight: 1 });
+    }
+
+    if (this.state.count === 1) {
+      await this.sendKey();
+      this.setState({ count: 0 });
+    }
+
+    if (this.state.healLeft === 1 && this.state.healRight === 1) {
+      await this.sendHeal();
+      this.setState({ healLeft: 0, healRight: 0 });
+    }
+  }
+
+  // 0: pushup, 1: pushdown, 3: heal_left, 4: heal_right
+  async pushupPredict() {
+    const { pose, posenetOutput } = await this.state.model.estimatePose(
+      this.state.webcam.canvas
+    );
+
+    const prediction = await this.state.model.predict(posenetOutput);
+    console.log(prediction);
+    if (prediction[0].probability.toFixed(2) >= 0.95) {
+      if (this.state.status === "pushdown") {
+        this.setState({ count: 1 });
+      }
+      this.setState({ status: "pushup" });
+    } else if (prediction[1].probability.toFixed(2) >= 0.95) {
+      this.setState({ status: "pushdown" });
+    } else if (prediction[3].probability.toFixed(2) >= 0.95) {
+      this.setState({ healLeft: 1 });
+    } else if (prediction[4].probability.toFixed(2) >= 0.95) {
+      this.setState({ healRight: 1 });
+    }
+
+    if (this.state.count === 1) {
+      await this.sendKey();
+      this.setState({ count: 0 });
+    }
+
+    if (this.state.healLeft === 1 && this.state.healRight === 1) {
+      await this.sendHeal();
+      this.setState({ healLeft: 0, healRight: 0 });
+    }
+  }
+
+  // 0: jumpingjack_0, 1: jumpingjack_1, 2: jumpingjack_2, 4: heal_left, 5: heal_right
+  async jumpingjackPredict() {
+    const { pose, posenetOutput } = await this.state.model.estimatePose(
+      this.state.webcam.canvas
+    );
+
+    const prediction = await this.state.model.predict(posenetOutput);
+    console.log(prediction);
+    if (prediction[0].probability.toFixed(2) >= 0.95) {
+      if (this.state.status === "jumpingjack") {
+        this.setState({ count: 1 });
+      }
+      this.setState({ status: "stand" });
+    } else if (prediction[2].probability.toFixed(2) >= 0.95) {
+      this.setState({ status: "jumpingjack" });
+    } else if (prediction[4].probability.toFixed(2) >= 0.95) {
+      this.setState({ healLeft: 1 });
+    } else if (prediction[5].probability.toFixed(2) >= 0.95) {
+      this.setState({ healRight: 1 });
+    }
+
+    if (this.state.count === 1) {
+      await this.sendKey();
+      this.setState({ count: 0 });
+    }
+
+    if (this.state.healLeft === 1 && this.state.healRight === 1) {
+      await this.sendHeal();
+      this.setState({ healLeft: 0, healRight: 0 });
+    }
+  }
+
+  async sendHeal() {
+    console.log("힐 신호 보내기");
+    this.state.myRef.current.sendSignal("Heal");
   }
 
   async sendKey() {
@@ -800,20 +901,14 @@ class GameRoom extends Component {
       type: "middleState",
     });
     console.log("전부에게 중간 타임이라고 신호 보냄");
-    // this.setState({ middleState: !this.state.middleState }, () => {
-    //   console.log(this.state.middleState);
-    // });
   }
 
   handleEnterDelay() {
-    this.setState({ enterDelay: false }, () => {
-      console.log(this.state.enterDelay);
-    });
+    this.setState({ enterDelay: false });
   }
 
   render() {
     const chats = this.state.chats;
-    // const myRef = useRef({})
 
     return (
       <Wrapper>
@@ -893,17 +988,17 @@ class GameRoom extends Component {
                     </p>
                   </div>
                   <div
-                    onClick={() => this.handleSelectedExercise("lunge")}
+                    onClick={() => this.handleSelectedExercise("burpee")}
                     className={
-                      this.state.selectedExercise === "lunge"
+                      this.state.selectedExercise === "burpee"
                         ? "button-active"
                         : "exercise-button"
                     }
                   >
                     <p className="exercise-text">
-                      런지
+                      버피
                       {this.state.loadingStatus &&
-                      this.state.selectedExercise === "lunge" ? (
+                      this.state.selectedExercise === "burpee" ? (
                         <CircularProgress size={15} color="grey" />
                       ) : null}
                     </p>

@@ -25,9 +25,6 @@ dependencies {
 	implementation group: 'com.auth0', name: 'java-jwt', version: '4.2.1'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
-	//webSocket
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	implementation 'com.corundumstudio.socketio:netty-socketio:1.7.17'
 
 	//swagger 추가
 	implementation 'io.springfox:springfox-swagger2:2.9.2'

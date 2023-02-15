@@ -34,7 +34,6 @@ public class CommentController {
     //댓글 쓰기
     @PostMapping(value="/comment")
     public @ResponseBody ResponseEntity write(@RequestBody CommentReq commentReq) {
-        System.out.println("댓글쓰기 들어오기");
         commentService.writeComment(commentReq);
         return new ResponseEntity<>("글쓰기 완료", HttpStatus.OK);
     }
@@ -76,7 +75,6 @@ public class CommentController {
     @GetMapping("/comment/IsGood/{userSequence}/{commentSequence}")
     public ResponseEntity<?> IsCommentGood(@PathVariable Integer userSequence, @PathVariable Integer commentSequence) {
         CommentGood flag = goodService.findCommentGood(userSequence, commentSequence);
-        System.out.println(flag);
         if(flag==null){
             return new ResponseEntity<>(false,HttpStatus.OK);
         }

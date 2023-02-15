@@ -54,7 +54,6 @@ public class BoardController {
     @Transactional
     @PutMapping
     public ResponseEntity<?> modify(@RequestBody BoardPostReq boardPostReq){
-        System.out.println(boardPostReq.getContents());
         boardService.modify(boardPostReq);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -63,7 +62,6 @@ public class BoardController {
     @Transactional
     @DeleteMapping("/{articleSeqeunce}")
     public ResponseEntity<?> delete(@PathVariable Integer articleSeqeunce){
-        System.out.println("시작");
         boardService.delete(articleSeqeunce);
 
         return new ResponseEntity("삭제 완료",HttpStatus.OK);
@@ -72,7 +70,6 @@ public class BoardController {
     //글 종류 구분해서 글 목록 받아오기
     @GetMapping("/list/{div}")
     public List<BoardArticle> getList(@PathVariable Integer div){
-        System.out.println("들어온다");
         List<BoardArticle> boardList = boardService.getAllList(div);
         return boardList;
     }
@@ -84,7 +81,6 @@ public class BoardController {
         BoardArticle article = boardService.getOne(articleSequence);
 
         boolean flag = goodService.findBoardGood(user,article);
-        System.out.println(flag);
         if(flag==true){
             //null이면 등록하고
             goodService.addGoodBoard(userSequence,articleSequence);
@@ -103,7 +99,6 @@ public class BoardController {
         User user = userService.getOne(userSequence);
         BoardArticle article = boardService.getOne(articleSequence);
         boolean flag = goodService.findBoardGood(user,article);
-        System.out.println(flag);
         flag= !flag;
         return new ResponseEntity<>(flag,HttpStatus.OK);
     }

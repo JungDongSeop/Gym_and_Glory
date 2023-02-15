@@ -31,8 +31,6 @@
 //    public ResponseEntity<?> createBoard(@RequestParam("files")  List<MultipartFile> files,
 //                                         @PathVariable Integer userSequence) throws Exception {
 //        //기존에 있던 사진 DB에서 날리기
-//        System.out.println("======================================들어오긴 하냐?");
-//        System.out.println(files.size());
 //        fileUserService.deletePic(userSequence);
 //
 //        fileUserService.addFile(userSequence, files);
@@ -46,7 +44,6 @@
 //        FileUser fileUser = fileUserService.findFileUser(userSequence).orElseThrow(RuntimeException::new);
 //        String imgPath = fileUser.getStoredFileName();
 //        log.info(imgPath);
-//        System.out.println(imgPath);
 //        return "<img src=" + imgPath + ">";
 //    }
 //}

@@ -84,7 +84,6 @@ public class FileHandler {
                 // 각 이름은 겹치면 안되므로 나노 초까지 동원하여 지정
                 String new_file_name = System.nanoTime() + originalFileExtension;
 
-                System.out.println(userID);
 
                 // 생성 후 리스트에 추가
                 User user= userService.getOne(userID);

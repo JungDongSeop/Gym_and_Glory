@@ -29,18 +29,14 @@ public class UserBadgeService {
     }
 
     public List<Badge> getList(Integer userSequence) {
-        System.out.println("리스트 들어옴");
         User user = userRepository.findById(userSequence).get();
         List<UserBadge> list= userBadgeRepository.findAllByUser(user);
         List<Badge> result= new ArrayList<>();
 
-        System.out.println("현재result" + result.size());
         for(UserBadge b : list){
-            System.out.println(b.getBadge());
             result.add(b.getBadge());
         }
 
-        System.out.println("현재result" + result.size());
 
         return result;
     }

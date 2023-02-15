@@ -30,7 +30,6 @@ public class UserBadgeController {
 
         List<Badge> list = userBadgeService.getList(userSequence);
         Badge badge = list.get(0);
-        System.out.println(badge.getDescription());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

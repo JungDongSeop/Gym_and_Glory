@@ -25,7 +25,6 @@ public class GameController {
 
         try {
             Room room = gameService.modifyRoomStatus(roomSessionReq.getSessionKey());
-            System.out.println(room.getRoomStatus());
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(),
                     HttpStatus.BAD_REQUEST);

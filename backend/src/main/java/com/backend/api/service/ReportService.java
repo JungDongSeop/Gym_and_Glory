@@ -58,7 +58,8 @@ public class ReportService {
     }
 
     public void confirmReport(Integer reportSequence) {
-        Report report = reportRepository.findByReportSequence(reportSequence);
+        System.out.println(reportSequence.getClass().getName());
+        Report report = reportRepository.findById(reportSequence).get();
         report.setConfirmation(1);
         reportRepository.save(report);
     }

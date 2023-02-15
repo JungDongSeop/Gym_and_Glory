@@ -54,7 +54,6 @@ public class UserController {
     @PostMapping("reset_pwd")
     public ResponseEntity<?> reset_pwd(@RequestBody CheckEmailAndNumber checkEmailAndNumber){
         Boolean flag = userService.doubleCheck(checkEmailAndNumber);
-        System.out.printf("현재 플래그 값 "+ flag);
 
         if(flag)
             return new ResponseEntity<>(true,HttpStatus.OK);
@@ -64,8 +63,6 @@ public class UserController {
 
     @PostMapping("/login")
     public User login(@RequestBody SignUpReq signUpReq,@RequestHeader("Authorization") String authorization) throws UnknownHostException, MessagingException {
-        System.out.println("들어오냐 로그인에 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-        System.out.println(authorization);
 
         FirebaseToken decodedToken;
         //인증

@@ -46,10 +46,25 @@ const MyPage = () => {
   const [profileImage, setProfileImage] = useState(null);
   // const fileInput = useRef(null);
   // 사진 선택
-  const handleFileSelect = (e) => {
+  const handleFileSelect = async(e) => {
     console.log('e.target.files[0]', e.target.files[0])
     setProfileImage(e.target.files[0]);
-    handleFileUpload();
+    // handleFileUpload();
+    const formData = new FormData();
+    formData.append('files', e.target.files[0]);
+    try {
+      await axios.post(`${RestApi()}/file/user/${authCtx.userSequence}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(() => {
+        window.location.reload()
+      });
+    } catch (error) {
+      console.log('에러 폼 데이터', typeof(formData))
+      console.error(error);
+    }
   };
   // 사진 db에 저장
   const handleFileUpload = async () => {
@@ -62,12 +77,14 @@ const MyPage = () => {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
+      })
+      .then(() => {
+        navigate(`/mypage`)
       });
     } catch (error) {
       console.log('에러 폼 데이터', typeof(formData))
       console.error(error);
     }
-    navigate(`/mypage`)
   };
   
 
@@ -79,11 +96,19 @@ const MyPage = () => {
 
             {/* 유저 프로필 사진 */}
             <form>
+              {profileImage ? (
               <img
                 className={classes.profile}
                 src={user.imagePath || defaultProfile}
                 alt="프로필"
               />
+              ) : (              
+              <img
+                className={classes.profile}
+                src={user.imagePath || defaultProfile}
+                alt="프로필"
+              />
+              )}
               <div className={classes.filebox}>
                 <label htmlFor="ex-file">프로필 변경</label>
                 <input type="file" id="ex-file" onChange={handleFileSelect} />
@@ -110,7 +135,7 @@ const MyPage = () => {
             <div className={classes.graphButtonWrap}>
               <div>
                 <button className={`${classes.graphButton} ${exerciseType === 1 ? classes.checked : ''}`} onClick={() => setExerciseData(1)}>스쿼트</button>
-                <button className={`${classes.graphButton} ${exerciseType === 2 ? classes.checked : ''}`} onClick={() => setExerciseData(2)}>런지</button>
+                <button className={`${classes.graphButton} ${exerciseType === 2 ? classes.checked : ''}`} onClick={() => setExerciseData(2)}>버피</button>
                 <button className={`${classes.graphButton} ${exerciseType === 3 ? classes.checked : ''}`} onClick={() => setExerciseData(3)}>푸쉬업</button>
                 <button className={`${classes.graphButton} ${exerciseType === 4 ? classes.checked : ''}`} onClick={() => setExerciseData(4)}>점핑잭</button>
               </div>

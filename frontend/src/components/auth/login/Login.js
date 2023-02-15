@@ -102,7 +102,8 @@ const Login = () => {
             // response.data.level,
             response.data.imagePath,
             response.data.gender,
-            response.data.role
+            response.data.role,
+            response.data.exp
           );
           navigate("/");
           // console.log(authCtx);

@@ -32,7 +32,6 @@ public class FileController {
     public ResponseEntity<Object> upload(@RequestParam("files") MultipartFile[] multipartFileList,
                                          @PathVariable Integer userSequence) throws Exception {
         List<String> imagePathList = new ArrayList<>();
-        System.out.println("======================================들어오긴 하냐?");
 
         for(MultipartFile multipartFile: multipartFileList) {
             String originalName = multipartFile.getOriginalFilename(); // 파일 이름

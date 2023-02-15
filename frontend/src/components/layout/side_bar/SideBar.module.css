@@ -18,6 +18,16 @@ aside {
   overflow-y:scroll; 
 }
 
+.exp {
+  z-index: 10;
+  margin-left: -200px;
+  display: flex;
+}
+
+.exp p {
+  font-weight: 900;
+}
+
 aside::-webkit-scrollbar{
   display:none;
 }
@@ -45,7 +55,7 @@ main {
   background-clip: padding-box;
   margin-left: 300px;
   padding: 50px;
-  overflow-y: scroll; 
+  overflow-y: scroll;
 }
 
 main::-webkit-scrollbar {
@@ -60,6 +70,7 @@ main::-webkit-scrollbar {
   color:white;
   transition: 0.3s;
   /* padding:0; */
+  margin-bottom: 5%;
 }
 .userNickDiv :hover{
   font-weight: bold;

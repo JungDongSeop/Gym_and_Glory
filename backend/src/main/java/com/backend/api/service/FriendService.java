@@ -46,12 +46,10 @@ public class FriendService {
         if (frd != null) {
             // do something with friendId
             Long frdId = frd.getId();
-            System.out.println(frdId);
         } else {
 
             frd = friendRepository.findByRecvFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
             Long frdId = frd.getId();
-            System.out.println(frdId);
         }
 
 //        Friend frd = friendRepository.findBySendFrdTrue(frdReq.getSendFrd(), frdReq.getRecvFrd());
@@ -61,12 +59,9 @@ public class FriendService {
 //        }
 //
         Integer userSequence = frdReq.getSendFrd(); // 현재 로그인된 유저 아이디를 가져온다.
-        //System.out.println("유저 닉네임"+ frd.getFrdUser().getNickname());
 //
         friendRepository.delete(frd);
 //
-//        System.out.println(frd.getId());
-//        System.out.println("시퀀스는 현재 로그인된 유저 아디는??"+userSequence);
 //
 //
         List<Tuple> frdResTuples = friendRepository.findFrindList(userSequence);

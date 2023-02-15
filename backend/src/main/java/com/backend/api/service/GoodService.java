@@ -38,9 +38,7 @@ public class GoodService {
 
     public void addGoodBoard(Integer userSequence, Integer articleSequence) {
         User user = userRepository.findById(userSequence).get();
-        System.out.println("user"+user.getNickname());
         BoardArticle boardArticle = boardRepository.findOneByArticleSequence(articleSequence);
-        System.out.println("여기들어오나?");
         BoardGood boardGood = BoardGood.builder().user(user).article(boardArticle).build();
         boardGoodRepository.save(boardGood);
     }
@@ -50,8 +48,6 @@ public class GoodService {
         BoardArticle boardArticle = boardRepository.findById(articleSequence).get();
         BoardGood boardGood = boardGoodRepository.findByUserAndArticle(user,boardArticle);
         boardArticle.setGoodCount(boardArticle.getGoodCount()-1);
-        System.out.println("현재 좋아요 누른 사람의 시퀀스"+boardGood.getUser().getUserSequence());
-        System.out.println("현재 글 번호"+ boardGood.getBoardGoodSequence());
         boardGoodRepository.delete(boardGood);
     }
 
@@ -60,10 +56,8 @@ public class GoodService {
     }
 
     public void addGoodComment(Integer userSequence, Integer commentSequence) {
-        System.out.println("들어옴");
         CommentGood commentGood = CommentGood.builder().userSequence(userSequence).commentSequence(commentSequence).build();
         commentGoodRepository.save(commentGood);
-        System.out.println("좋아요 추가");
 
         Comment comment = commentRepository.findByCommentSequence(commentSequence);
         comment.setGoodCount(comment.getGoodCount()+1);

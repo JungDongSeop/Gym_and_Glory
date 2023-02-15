@@ -31,7 +31,6 @@ public class FileUserService {
     }
 
     public void addFile(Integer userSequence, List<MultipartFile> files) throws Exception{
-        System.out.println("여기서 파일 크기"+ files.size());
         List<FileUser> list = fileHandler.parseFileInfo(userSequence,files);
         if(list.isEmpty()){
             return;
@@ -55,11 +54,8 @@ public class FileUserService {
 
     @Transactional
     public void deletePic(Integer userSequence) {
-        System.out.println("파일 유저 삭제에 들어왔어 ");
         FileUser fileUser = fileUserRepository.findById(userSequence).orElse(null);
-        System.out.println("여 오나?");
         if(fileUser!=null){
-            System.out.println("널 값이야");
             fileUserRepository.deleteByUserSequence(userSequence);
         }
     }

@@ -34,7 +34,6 @@ public class BoardService {
 
     @Transactional
     public List<BoardArticle> getAllList(Integer div) {
-        System.out.println("들어온다");
         List<BoardArticle> test = boardRepository.findByDiv(div);
         return test;
     }
@@ -47,15 +46,10 @@ public class BoardService {
 
 
     public void delete(Integer articleSeqeunce) {
-        System.out.println("2단계");
         BoardArticle boardArticle = boardRepository.findById(articleSeqeunce).get();
-        System.out.println("3단계");
-        System.out.println(boardArticle.getArticleSequence());
 
         commentRepository.deleteByBoardArticle(boardArticle);
-        System.out.println("4단계 삭제완료");
         boardRepository.deleteById(articleSeqeunce);
-        System.out.println("5단계 삭제완료");
 
 //        return boardRepository.deleteByArticleSequence(articleSeqeunce);
     }
@@ -72,7 +66,6 @@ public class BoardService {
 
     public void modify( BoardPostReq boardPostReq) {
         BoardArticle cur = boardRepository.findOneByArticleSequence(boardPostReq.getArticleSequence());
-        System.out.println(cur);
         cur.setTitle(boardPostReq.getTitle());
         cur.setContents(boardPostReq.getContents());
         boardRepository.save(cur);

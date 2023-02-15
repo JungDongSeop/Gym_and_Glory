@@ -38,7 +38,7 @@ const BadgeImages = () => {
     };
     fetchData();
   }, []);
-  const items = [newbie1, newbie2, newbie3, newbie4, mountain1, mountain2, mountain3, mountain4, galaxy1, galaxy2, galaxy3, galaxy4, startBadge]
+  const items = [newbie1, newbie2, newbie3, newbie4, mountain1, mountain2, mountain3, mountain4, galaxy1, galaxy2, galaxy3, galaxy4]
 
   // 뱃지 유저 목록 가져오기
   const [userBadges, setUserBadges] = useState([]);

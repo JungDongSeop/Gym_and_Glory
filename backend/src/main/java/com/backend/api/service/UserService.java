@@ -63,9 +63,7 @@ public class UserService {
     }
 
     public Boolean checkDuplicateEmail(String email){
-        System.out.println(userRepository.findAllByEmail(email).size());
         if(userRepository.findAllByEmail(email).size() > 0) {
-            System.out.println("dkdkdk");
             return false;
         }
         return true;
@@ -82,7 +80,6 @@ public class UserService {
 
     @Transactional
     public void deleteUser(int userSequence) {
-        System.out.println(userSequence);
         userRepository.deleteByUserSequence(userSequence);
     }
 
@@ -92,7 +89,6 @@ public class UserService {
     }
 
     public User getOne(Integer userSequence) {
-        System.out.println(userSequence + "dddd");
         return userRepository.findById(userSequence).orElse(null);
     }
 
@@ -110,9 +106,7 @@ public class UserService {
         userRepository.save(cur);
     }
     public void changeTel(Integer userSequence, String telNumber) {
-        System.out.println("유저 시퀀스"+ userSequence);
         User cur = userRepository.findByUserSequence(userSequence);
-        System.out.println("현재 유저의 닉네임"+ cur.getNickname());
         cur.setTelNumber(telNumber);
         userRepository.save(cur);
     }
@@ -135,7 +129,6 @@ public class UserService {
 
     public Boolean doubleCheck(CheckEmailAndNumber checkEmailAndNumber) {
         User user1 = userRepository.findOneByTelNumberAndEmail(checkEmailAndNumber.getTelNumber(),checkEmailAndNumber.getEmail());
-        System.out.print("----------------------------------------------------------------------------------------"+ user1);
         if(user1 != null)
             return true;
 

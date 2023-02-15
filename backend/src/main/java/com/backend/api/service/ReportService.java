@@ -65,10 +65,8 @@ public class ReportService {
 
     public List<Report> getDivReport(String email) {
         User user = userRepository.findOneByEmail(email);
-        System.out.println(user.getNickname());
         List<Report> list= new ArrayList<>();
         String cur = user.getRole();
-        System.out.println(cur);
         if(user.getRole().equals("ROLE_ADMIN")){
             list = reportRepository.findAll();
         } else {

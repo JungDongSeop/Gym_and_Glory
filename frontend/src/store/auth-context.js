@@ -10,6 +10,7 @@ const AuthContext = React.createContext({
   imagePath: "",
   gender: "",
   role: "",
+  exp: "",
   isLoggedIn: false,
   login: (token) => {},
   logout: () => {},
@@ -24,7 +25,7 @@ export const AuthContextProvider = (props) => {
   const initialTelNumber = sessionStorage.getItem("telNumber");
   // const initialLevel = sessionStorage.getItem("level");
   const initialImagePath = sessionStorage.getItem("imagePath");
-  // const initialExp = sessionStorage.getItem("exp");
+  const initialExp = sessionStorage.getItem("exp");
   // const initialMannerPoint = sessionStorage.getItem("mannerPoint");
   const initialRole = sessionStorage.getItem("role");
   // const initialTotalPlayTime = sessionStorage.getItem("totalPlayTime");
@@ -37,6 +38,7 @@ export const AuthContextProvider = (props) => {
   const [telNumber, setTelNumber] = useState(initialTelNumber);
   const [imagePath, setImagePath] = useState(initialImagePath);
   const [role, setRole] = useState(initialRole);
+  const [exp, setExp] = useState(initialExp);
 
   // 로그인 여부 (토큰 여부)
   const userIsLoggedIn = !!token;
@@ -49,7 +51,8 @@ export const AuthContextProvider = (props) => {
     telNumber,
     imagePath,
     gender,
-    role
+    role,
+    exp
   ) => {
     // 로그인 할 때는 토큰을 인자로 받아 저장
     setToken(token);
@@ -59,6 +62,7 @@ export const AuthContextProvider = (props) => {
     setTelNumber(telNumber);
     setImagePath(imagePath);
     setRole(role);
+    setExp(exp)
 
     if (gender === 1) {
       gender = "남자";
@@ -75,6 +79,7 @@ export const AuthContextProvider = (props) => {
     sessionStorage.setItem("telNumber", telNumber);
     sessionStorage.setItem("imagePath", imagePath);
     sessionStorage.setItem("role", role);
+    sessionStorage.setItem("exp", exp);
   };
 
   const logoutHandler = () => {
@@ -86,6 +91,7 @@ export const AuthContextProvider = (props) => {
     setTelNumber("");
     setImagePath("");
     setRole("");
+    setExp("")
 
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("email");
@@ -95,6 +101,7 @@ export const AuthContextProvider = (props) => {
     sessionStorage.removeItem("telNumber");
     sessionStorage.removeItem("imagePath");
     sessionStorage.removeItem("role");
+    sessionStorage.removeItem("exp");
   };
 
   const contextValue = {
@@ -107,6 +114,7 @@ export const AuthContextProvider = (props) => {
     imagePath: imagePath,
     isLoggedIn: userIsLoggedIn,
     role: role,
+    exp: exp,
 
     login: loginHandler,
     logout: logoutHandler,

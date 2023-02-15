@@ -32,7 +32,6 @@ public class FriendController {
     // 서로 수락한 친구 삭제
     @PostMapping(value="/friend")
     public @ResponseBody ResponseEntity delFriend(@RequestBody FrdReq frdReq) {
-        System.out.println("들어오냐?");
         List<FrdRes> getFriendList = friendService.delFriendList(frdReq);
 
         return new ResponseEntity<>(getFriendList, HttpStatus.OK);

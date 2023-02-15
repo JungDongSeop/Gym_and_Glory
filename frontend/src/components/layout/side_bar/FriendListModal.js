@@ -80,7 +80,7 @@ const FriendList = () => {
                 ))}
               </ul>
             </div>
-          ) : (
+          ) : ( 
             <FriendListModalAdd />
           )}
         </div>

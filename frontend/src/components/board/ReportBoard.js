@@ -81,6 +81,7 @@ const ReportBoard = () => {
   const adminCheck = () => {
     axios.get(`${RestApi()}/report/confirm/${isPickedReport}`);
     handleClose();
+    window.location.reload();
 
     // setIsPickedReport();
   };
@@ -88,6 +89,7 @@ const ReportBoard = () => {
   const reportDelete = async () => {
     await axios.delete(`${RestApi()}/report/${isPickedReport}`);
     handleClose();
+    window.location.reload();
   };
 
   return (
@@ -224,11 +226,35 @@ const ReportBoard = () => {
                   // 관리자가 확인했으면
                   <li
                     key={item.reportSequence}
-                    className={`${classes.confirm} ${
-                      index % 2 === 0 ? classes.odd : classes.even
-                    }`}
+                    // className={index % 2 === 0 ? classes.odd : classes.even}
+                    onClick={() =>
+                      navigate(`/board/report/${item.reportSequence}`)
+                    }
                   >
-                    신고 내용이 확인되었습니다.
+                    <div className={classes.reportUserInfo}>
+                      <div className={classes.report}>
+                        <div className={classes.reporter}>
+                          <p>{item.sendUser.nickname}</p>
+                        </div>
+                        <div className={classes.arrow}>
+                          <ArrowRightAltIcon />
+                        </div>
+
+                        <div className={classes.accused}>
+                          <p>{item.getUser ? item.getUser.nickname : null}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={classes.reportKind}>
+                      <p>{reportKinds[item.kind]}</p>
+                    </div>
+
+                    <div className={classes.reportContent}>
+                      <p>{item.contents}</p>
+                    </div>
+                    <div>
+                      <p>확인 완료</p>
+                    </div>
                   </li>
                 )
 

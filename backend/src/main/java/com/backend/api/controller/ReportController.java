@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -39,7 +40,14 @@ public class ReportController {
     @GetMapping("/user/{email}")
     public ResponseEntity<?> getReport(@PathVariable String email){
         List<Report> list = reportService.getDivReport(email);
-        return new ResponseEntity<>(list,HttpStatus.OK);
+        List<Report> result= new ArrayList<>();
+
+        for(int i =0; i<list.size();i++){
+            if(list.get(i).getConfirmation()==0) {
+                result.add(list.get(i));
+            }
+        }   
+        return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
 
@@ -61,6 +69,7 @@ public class ReportController {
     @Transactional
     @DeleteMapping("/{reportSequence}")
     public ResponseEntity<?> deleteReport(@PathVariable Integer reportSequence){
+        System.out.println("삭제 들어옴" );
         reportService.deleteOne(reportSequence);
 
         return new ResponseEntity<>(HttpStatus.OK);

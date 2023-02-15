@@ -49,7 +49,7 @@ const MyPage = () => {
   const handleFileSelect = (e) => {
     console.log('e.target.files[0]', e.target.files[0])
     setProfileImage(e.target.files[0]);
-    handleFileUpload();
+    // handleFileUpload();
   };
   // 사진 db에 저장
   const handleFileUpload = async () => {
@@ -87,7 +87,7 @@ const MyPage = () => {
               <div className={classes.filebox}>
                 <label htmlFor="ex-file">프로필 변경</label>
                 <input type="file" id="ex-file" onChange={handleFileSelect} />
-                {/* <button onClick={handleFileUpload}>Upload</button> */}
+                <button onClick={handleFileUpload}>Upload</button>
               </div>
             </form>
 

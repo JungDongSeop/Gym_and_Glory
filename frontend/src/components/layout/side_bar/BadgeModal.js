@@ -6,7 +6,7 @@ const BadgeModal = () => {
 
   return (
     <div style={{margin: 'auto'}}>
-      <Modal buttonTitle='뱃지 목록' width='500px' height='500px'>
+      <Modal buttonTitle='뱃지 목록' width='600px'>
         <BadgeImages/>
       </Modal>
     </div>

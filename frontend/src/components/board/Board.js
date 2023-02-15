@@ -31,6 +31,7 @@ const Board = () => {
       setBoard(result.data.reverse());
     };
     fetchData();
+    setCurrentPage(1);
   }, [type]);
 
   // 페이지네이션을 위한 변수

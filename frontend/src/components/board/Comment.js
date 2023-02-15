@@ -84,7 +84,24 @@ const Comment = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        });
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              return res.json().then((data) => {
+                console.log(data);
+              });
+            }
+          })
+          .then((response) => {
+            setComments([...comments, response.data]);
+            commentRead(articleSequence);
+            commentInputRef.current.value = "";
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     }
   };
 

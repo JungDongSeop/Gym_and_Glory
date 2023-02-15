@@ -113,3 +113,7 @@
 .reportContent {
   /* padding-left: 20px; */
 }
+
+.reportDelete {
+  z-index: 10;
+}

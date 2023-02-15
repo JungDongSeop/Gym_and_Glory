@@ -82,6 +82,9 @@ const ReportBoard = () => {
     axios.get(`${RestApi()}/report/confirm/${isPickedReport}`);
     // setIsPickedReport();
   };
+  const reportDelete = async () => {
+    await axios.delete(`${RestApi()}/report/${isPickedReport}`);
+  };
 
   return (
     <main className={classes.boardDiv}>
@@ -114,8 +117,12 @@ const ReportBoard = () => {
         }}
       >
         <DialogContent>
-          <p>{isPickedReport}를 지우시겠습니까?</p>
+          <p>게시물을 확인을 체크하시겠습니까?</p>
           <button onClick={adminCheck}>확인</button>
+
+          <button onClick={reportDelete} className={classes.reportDelete}>
+            삭제
+          </button>
           {/* <button>확인</button> */}
         </DialogContent>
       </Dialog>

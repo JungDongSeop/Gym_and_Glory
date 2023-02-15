@@ -119,7 +119,7 @@ const FriendListModalAdd = () => {
 
       {/* 유저가 받은 친구 요청 */}
       <div>
-        <p>받은 친구 요청</p>
+        <p className={classes.recvTitle}>받은 친구 요청</p>
         {Array.isArray(getFriendRequests) && getFriendRequests.map((data, index) => {
             return (
               <div key={index} className={classes.friendRequest}>

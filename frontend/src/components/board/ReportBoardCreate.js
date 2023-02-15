@@ -76,6 +76,7 @@ const ReportBoardCreate = () => {
       {/* 게시판 종류 선택 버튼 */}
       <NavigateButtons type="report" />
       {/* 신고 내용 작성 */}
+      <div className={classes.myDiv}>
       <form onSubmit={handleSubmit}>
         {/* 신고 종류 선택 */}
         <div className={classes.rbcDiv}>
@@ -88,7 +89,7 @@ const ReportBoardCreate = () => {
           </select>
         </label>
 
-        <br />
+        {/* <br /> */}
 
         {/* 유저 닉네임 검색 */}
         <label>
@@ -113,18 +114,19 @@ const ReportBoardCreate = () => {
           고른 닉네임 : {pickedData ? <span className={classes.realPickNick}>{pickedData.nickname}</span> : null}
         </label>
 
-        <br />
+        {/* <br /> */}
 
         {/* 신고 내용 입력 */}
         <label>
-          내용을 입력하세요:
+          신고할 내용 :
           <input type="text" value={contents} onChange={handleChange} />
         </label>
 
         {/* 제출 버튼 */}
-        <button type="submit">Create Board</button>
+        <button type="submit" className={classes.submitBtn}>Create Board</button>
         </div>
       </form>
+      </div>
     </main>
   );
 };

@@ -21,7 +21,7 @@ const SideBar = (props) => {
 
   // 경험치
   const expBarStyle = {
-    width: `${(Number(authCtx.exp) +9000 ) / 100}%`,
+    width: `${(Number(authCtx.exp)) / 100}%`,
     height: '20px',
     backgroundColor: 'yellow',
   };
@@ -46,7 +46,7 @@ const SideBar = (props) => {
         <div style={expBarContainerStyle}>
           <div style={expBarStyle}></div>
           <div className={classes.exp}>
-            <p style={{margin: 0}}>{Number(authCtx.exp)+1000} / 10000</p>
+            <p style={{margin: 0}}>{Number(authCtx.exp)} / 10000</p>
           </div>
         </div>      
 

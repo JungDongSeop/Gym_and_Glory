@@ -106,9 +106,9 @@ const Comment = () => {
   };
 
   // 댓글 input 값 변경 시 작동
-  const handleChange = (e) => {
-    setNewComment({ ...newComment, [e.target.name]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setNewComment({ ...newComment, [e.target.name]: e.target.value });
+  // };
 
   return (
     <div>

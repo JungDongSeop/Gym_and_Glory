@@ -80,10 +80,14 @@ const ReportBoard = () => {
 
   const adminCheck = () => {
     axios.get(`${RestApi()}/report/confirm/${isPickedReport}`);
+    handleClose();
+
     // setIsPickedReport();
   };
+
   const reportDelete = async () => {
     await axios.delete(`${RestApi()}/report/${isPickedReport}`);
+    handleClose();
   };
 
   return (
@@ -116,15 +120,25 @@ const ReportBoard = () => {
           },
         }}
       >
-        <DialogContent>
-          <p>게시물을 확인을 체크하시겠습니까?</p>
-          <button onClick={adminCheck}>확인</button>
-
-          <button onClick={reportDelete} className={classes.reportDelete}>
-            삭제
-          </button>
-          {/* <button>확인</button> */}
-        </DialogContent>
+        {authCtx.role === "ROLE_ADMIN" ? (
+          <DialogContent>
+            <div>
+              <p>게시물을 확인을 체크하시겠습니까?</p>
+              <button onClick={adminCheck}>확인</button>
+            </div>
+            <button onClick={reportDelete} className={classes.reportDelete}>
+              삭제
+            </button>
+            {/* <button>확인</button> */}
+          </DialogContent>
+        ) : (
+          <DialogContent>
+            <button onClick={reportDelete} className={classes.reportDelete}>
+              삭제
+            </button>
+            {/* <button>확인</button> */}
+          </DialogContent>
+        )}
       </Dialog>
 
       {/* 신고게시판 내용 */}
@@ -174,39 +188,50 @@ const ReportBoard = () => {
           <h2>유저들의 신고페이지</h2>
           <ul>
             {board.slice(currentPage * 10 - 10, currentPage * 10).map(
-              (item, index) => (
+              (item, index) =>
                 // 관리자가 확인 안했으면
-                // !item.confirmation ? (
-                <li
-                  key={item.reportSequence}
-                  // className={index % 2 === 0 ? classes.odd : classes.even}
-                  onClick={() =>
-                    navigate(`/board/report/${item.reportSequence}`)
-                  }
-                >
-                  <div className={classes.reportUserInfo}>
-                    <div className={classes.report}>
-                      <div className={classes.reporter}>
-                        <p>{item.sendUser.nickname}</p>
-                      </div>
-                      <div className={classes.arrow}>
-                        <ArrowRightAltIcon />
-                      </div>
+                !item.confirmation ? (
+                  <li
+                    key={item.reportSequence}
+                    // className={index % 2 === 0 ? classes.odd : classes.even}
+                    onClick={() =>
+                      navigate(`/board/report/${item.reportSequence}`)
+                    }
+                  >
+                    <div className={classes.reportUserInfo}>
+                      <div className={classes.report}>
+                        <div className={classes.reporter}>
+                          <p>{item.sendUser.nickname}</p>
+                        </div>
+                        <div className={classes.arrow}>
+                          <ArrowRightAltIcon />
+                        </div>
 
-                      <div className={classes.accused}>
-                        <p>{item.getUser ? item.getUser.nickname : null}</p>
+                        <div className={classes.accused}>
+                          <p>{item.getUser ? item.getUser.nickname : null}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className={classes.reportKind}>
-                    <p>{reportKinds[item.kind]}</p>
-                  </div>
+                    <div className={classes.reportKind}>
+                      <p>{reportKinds[item.kind]}</p>
+                    </div>
 
-                  <div className={classes.reportContent}>
-                    <p>{item.contents}</p>
-                  </div>
-                </li>
-              )
+                    <div className={classes.reportContent}>
+                      <p>{item.contents}</p>
+                    </div>
+                  </li>
+                ) : (
+                  // 관리자가 확인했으면
+                  <li
+                    key={item.reportSequence}
+                    className={`${classes.confirm} ${
+                      index % 2 === 0 ? classes.odd : classes.even
+                    }`}
+                  >
+                    신고 내용이 확인되었습니다.
+                  </li>
+                )
+
               // ) : (
               //   // 관리자가 확인했으면
               //   <li

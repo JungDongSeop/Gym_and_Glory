@@ -9,13 +9,15 @@ const StreamComponent = styled.div`
 `;
 
 const NickTag = styled.div`
-  background-color: white;
+  background-color: #080923;
   position: absolute;
-  top: 0;
-  left: 0;
-  padding: 4px;
+  top: -10px;
+  left: 5px;
+  padding: 8px;
   margin-left: 5px;
   border-radius: 10px;
+  color: white;
+  box-shadow: inset 0px 2px 9px 0px rgb(91 91 175);
 `;
 
 const Warning = styled.div`

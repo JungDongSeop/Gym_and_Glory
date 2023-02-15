@@ -51,12 +51,15 @@
 }
 
 .none-container {
-  width: 100%;
+  width: 97%;
   aspect-ratio: 9/7;
   background-color: grey;
   margin-top: 4%;
   margin-bottom: 4%;
   text-align: center;
+  border: 5px solid;
+  border-image: linear-gradient(to right, #60628cbe, #041442aa, #60628cbe);
+  border-image-slice: 1;
 }
 
 #icon-margin {

@@ -117,7 +117,7 @@ const UnityGame = forwardRef((props, ref) => {
     setTimeout(() => {
       sendMessage("Player1(Clone)", "nextStage");
       props.handleMiddleState();
-    }, 10000);
+    }, 20000);
   });
 
   useEffect(() => {

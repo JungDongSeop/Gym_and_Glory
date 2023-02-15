@@ -3,6 +3,16 @@ import OpenViduVideoComponent from "./OvVideo";
 import styled from "styled-components";
 import "./UserVideoComponent.css";
 import AlarmImage from "../../assets/alarm.png";
+import axios from "axios";
+import RestApi from "../api/RestApi";
+import toast, { Toaster } from "react-hot-toast";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Button,
+  DialogTitle,
+} from "@mui/material";
 
 const StreamComponent = styled.div`
   position: relative;
@@ -50,10 +60,18 @@ class UserVideoComponent extends Component {
       isActive: false,
       ishost: this.props.isHost,
       imgActive: true,
+      dialogOpen: false,
+      reportKind: "1",
+      reportContent: "",
     };
 
     this.handleIsActive = this.handleIsActive.bind(this);
     this.handleForceDisconnect = this.handleForceDisconnect.bind(this);
+    this.handleDialogOpen = this.handleDialogOpen.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
+    this.handleKindChange = this.handleKindChange.bind(this);
+    this.handleReportContent = this.handleReportContent.bind(this);
+    this.sendReport = this.sendReport.bind(this);
   }
 
   getNicknameTag() {
@@ -72,12 +90,55 @@ class UserVideoComponent extends Component {
     }
     const connection = this.props.streamManager.stream.connection;
     const currentSession = this.props.currentSession;
-    // currentSession.forceDisconnect(stream);
-    // console.log("밑에꺼 실행되나");
     currentSession.signal({
       to: [connection],
       type: "get-out",
     });
+  }
+
+  handleDialogOpen() {
+    this.setState({ dialogOpen: true });
+  }
+
+  handleDialogClose() {
+    this.setState({ dialogOpen: false });
+  }
+
+  handleKindChange(event) {
+    this.setState({ reportKind: event.target.value }, () =>
+      console.log(this.state.reportKind)
+    );
+  }
+
+  handleReportContent(event) {
+    this.setState({ reportContent: event.target.value }, () => {
+      console.log(this.state.reportContent);
+    });
+  }
+
+  sendReport() {
+    const mysequence = sessionStorage.getItem("userSequence");
+    const getNick = JSON.parse(
+      this.props.streamManager.stream.connection.data
+    ).clientData;
+
+    axios.get(`${RestApi()}/user/getInfo/${getNick}`).then((res) => {
+      // console.log(res.data.userSequence);
+      axios
+        .post(`${RestApi()}/report`, {
+          sendSequence: mysequence,
+          getSequence: res.data.userSequence,
+          contents: this.state.reportContent,
+          kind: this.state.reportKind,
+        })
+        .then(() => {
+          toast.success("신고가 정상적으로 접수되었습니다.");
+        })
+        .catch(() => {
+          toast.error("신고를 접수하지 못했습니다");
+        });
+    });
+    this.handleDialogClose();
   }
 
   render() {
@@ -88,6 +149,7 @@ class UserVideoComponent extends Component {
 
     return (
       <div className="video">
+        <Toaster />
         {this.props.streamManager !== undefined ? (
           <StreamComponent>
             <OpenViduVideoComponent streamManager={this.props.streamManager} />
@@ -100,10 +162,46 @@ class UserVideoComponent extends Component {
             />
             <Warning className={this.state.isActive ? "active" : "notActive"}>
               <ul>
-                <li>신고하기</li>
+                <li onClick={this.handleDialogOpen}>신고하기</li>
                 <li onClick={this.handleForceDisconnect}>강퇴</li>
               </ul>
             </Warning>
+            <Dialog
+              open={this.state.dialogOpen}
+              onClose={this.handleDialogClose}
+              maxWidth="xs"
+              fullWidth="true"
+            >
+              <DialogTitle>신고하기</DialogTitle>
+              <DialogContent style={{ paddingBottom: 0 }}>
+                <label>
+                  신고 종류 :
+                  <select
+                    value={this.state.reportKind}
+                    onChange={this.handleKindChange}
+                    style={{ marginLeft: 5 }}
+                  >
+                    <option value="1">욕설</option>
+                    <option value="2">게임 불참</option>
+                    <option value="3">성희롱</option>
+                  </select>
+                </label>
+                <p>신고할 유저 : {this.getNicknameTag()}</p>
+                <p>
+                  신고 내용 :
+                  <input
+                    type="text"
+                    value={this.state.reportContent}
+                    onChange={this.handleReportContent}
+                    placeholder="신고 내용을 입력하세요"
+                    style={{ marginLeft: 5 }}
+                  />
+                </p>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.sendReport}>제출</Button>
+              </DialogActions>
+            </Dialog>
           </StreamComponent>
         ) : null}
       </div>

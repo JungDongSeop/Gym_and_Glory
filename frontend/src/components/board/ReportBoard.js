@@ -5,10 +5,11 @@ import AuthContext from "../../store/auth-context";
 import NavigateButtons from "./NavigateButtons";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import axios from "axios";
-import classes from "./Board.module.css";
+// import classes from "./Board.module.css";
 import { Button } from "antd";
 import { Pagination } from "antd";
 import RestApi from "../api/RestApi";
+import classes from "./ReportBoard.module.css";
 
 // 신고게시판
 // 관리자 : 유저들의 신고 내역 조회 가능. 이후 확인 및 확정하기 버튼 누르기
@@ -80,22 +81,38 @@ const ReportBoard = () => {
       {/* 신고게시판 내용 */}
       {authCtx.role === "ROLE_ADMIN" ? (
         // 관리자의 신고페이지
-        <div>
+        <div className={classes.notice}>
           <h2>관리자의 신고페이지.</h2>
-          <ul className={classes.boardUl}>
+          <ul>
             {board
               .slice(currentPage * 10 - 10, currentPage * 10)
               .map((item, index) => (
                 <li
                   key={item.reportSequence}
-                  className={index % 2 === 0 ? classes.odd : classes.even}
+                  // className={index % 2 === 0 ? classes.odd : classes.even}
                   onClick={() =>
                     navigate(`/board/report/${item.reportSequence}`)
                   }
                 >
-                  from : {item.sendUser.nickname}, to :{" "}
-                  {item.getUser ? item.getUser.nickname : null}, 종류 :{" "}
-                  {reportKinds[item.kind]}, 내용 : {item.contents}
+                  <div className={classes.reportUserInfo}>
+                    <div>
+                      <div className={classes.reporter}>
+                        <p>{item.sendUser.nickname} -> </p>
+                      </div>
+
+                      <div className={classes.accused}>
+                        <p>{item.getUser ? item.getUser.nickname : null}</p>
+                      </div>
+                    </div>
+
+                    <div className={classes.reportKind}>
+                      <p>{reportKinds[item.kind]}</p>
+                    </div>
+                  </div>
+
+                  <div className={classes.reportContent}>
+                    <p>{item.contents}</p>
+                  </div>
                 </li>
               ))}
           </ul>
@@ -113,7 +130,7 @@ const ReportBoard = () => {
                 // 관리자가 확인 안했으면
                 !item.confirmation ? (
                   <li
-                    key={item.reportSequence}
+                    key={index}
                     className={index % 2 === 0 ? classes.odd : classes.even}
                     onClick={() =>
                       navigate(`/board/report/${item.reportSequence}`)

@@ -144,6 +144,7 @@
 .boardOtherInfo ul li {
   float: left;
   line-height: 1.2;
+  margin-right: 40px;
   margin-left: 15px;
 }
 

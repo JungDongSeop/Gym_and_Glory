@@ -7,6 +7,7 @@ import CommentDetail from "./CommentDetail";
 import classes from "./Comment.module.css";
 import RestApi from "../api/RestApi";
 import { Button } from "antd";
+import toast, { Toaster } from "react-hot-toast";
 
 // import { useNavigate } from 'react-router-dom';
 
@@ -53,6 +54,9 @@ const Comment = () => {
     // e.preventDefault();
     // alert("댓글이 작성되었습니다.");
     const enteredcomment = commentInputRef.current.value;
+    if (enteredcomment.length === 0) {
+      toast.error("댓글을 입력해주세요");
+    }
     {
       enteredcomment.length > 0 &&
         axios
@@ -80,6 +84,9 @@ const Comment = () => {
 
   return (
     <div>
+      {/* <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div> */}
       <div className={classes.replyWrap}>
         <div className={classes.replyTitle}>
           <h2>

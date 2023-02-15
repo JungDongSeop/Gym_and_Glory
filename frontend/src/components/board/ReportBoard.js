@@ -98,7 +98,7 @@ const ReportBoard = () => {
                   <div className={classes.reportUserInfo}>
                     <div className={classes.report}>
                       <div className={classes.reporter}>
-                        <p>{item.sendUser.nickname}</p>
+                        <p>{item.sendUser ? item.sendUser.nickname : null}</p>
                       </div>
                       <div className={classes.arrow}>
                         <ArrowRightAltIcon />

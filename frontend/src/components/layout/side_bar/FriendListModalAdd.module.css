@@ -1,18 +1,19 @@
 .container {
+  margin-top: 1rem;
   box-sizing: border-box;
   display: 'flex';
   align-content: 'flex-start'
 }
 
-.searchBar {
+/* .searchBar {
   width: 100%;
-  height: 64px;
-  margin-bottom: 0;
+  height: 50px;
+  margin-top: 0.15rem;
   border: 0;
   border-bottom: 3px solid black;
   background-color: rgba(255, 255, 255, 0);
   font-size: 50px;
-}
+} */
 
 .popUp {
   /* 그냥 px로 박아버림. 고칠 수 있을까..? */
@@ -148,4 +149,40 @@
   -moz-box-shadow: 0 10px 6px -6px #777;
   box-shadow: 0 10px 6px -6px #777;
   border-radius: 5px;
+}
+
+.searchbarArea {
+  display: inline-block;
+  position: relative;
+}
+
+.searchbarArea:hover .searchBar {
+  width: 90%;
+  height: 50px;
+  border: 0;
+  border-bottom: 3px solid black;
+  background-color: white;
+  font-size: 50px;
+  /* padding: 0 36px 0 8px; */
+}
+
+.searchBar {
+  width: 0px;
+  height: 50px;
+  border: 0;
+  transition: all 0.3s;
+}
+
+.searchBarBtn {
+  width: 60px;
+  height: 53px;
+  background-color: #333;
+  color: #fff;
+  border: 0;
+  position: absolute;
+  /* top: 0;
+  right: 0; */
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
 }

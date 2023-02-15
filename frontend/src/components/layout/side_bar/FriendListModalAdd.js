@@ -78,17 +78,21 @@ const FriendListModalAdd = () => {
     });
   };
 
+  
   return (
     <div className={classes.container}>
-      <div style={{display: 'flex', alignContent: 'flex-start'}}>
-        <SearchIcon  sx={{ fontSize: 80 }}/>
+      <div className={classes.searchbarArea}>
           <input
             type="text"
             className={classes.searchBar}
             onChange={handleReportUserNicknameChange}
             ref={enteredusername}
           />
+          <button className={classes.searchBarBtn}>
+            <SearchIcon  sx={{ fontSize: 50 }}/>
+          </button>
       </div>
+
       {/* 검색해서 나온 친구 목록 출력 */}
       {Array.isArray(searchedDatas) ? (
         <div className={classes.popUp}>

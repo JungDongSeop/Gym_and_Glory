@@ -27,7 +27,7 @@
 .popUpDetail {
   width: 100%;
   border-bottom: 1px solid black;
-  height: 80px;
+  height: 50px;
   display: flex;
 
   align-items: center;
@@ -47,16 +47,15 @@
   background-color: rgb(110, 202, 239);
 }
 
-/* .container .friendRequest {
+.container .friendRequest {
   margin: 0;
   width: 100%;
   list-style-type: none;
-  background-color: aqua;
-} */
+}
 
 .friendSendBtn {
   border-radius: 5px;
-  font-size: 22px;
+  font-size: 15px;
   text-decoration: none;
   color: #fff;
   position: relative;
@@ -64,7 +63,7 @@
   background-color: #55acee;
   box-shadow: 0px 5px 0px 0px #3C93D5;
   font-family: 'Song Myung', serif;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
 .friendSendBtn:active {
@@ -86,15 +85,14 @@
 
 .friendOkBtn {
   border-radius: 5px;
-  font-size: 22px;
+  font-size: 20px;
   text-decoration: none;
   color: #fff;
-  position: relative;
-  display: inline-block;
   background-color: #2ecc71;
   box-shadow: 0px 5px 0px 0px #15B358;
   font-family: 'Song Myung', serif;
-  align-self: baseline;
+  height: 100%; 
+  border-style: none !important;
   float: right;
 }
 
@@ -111,16 +109,15 @@
 
 .friendDelBtn {
   border-radius: 5px;
-  font-size: 22px;
+  font-size: 20px;
   text-decoration: none;
   color: #fff;
-  position: relative;
-  display: inline-block;
   background-color: #e74c3c;
   box-shadow: 0px 5px 0px 0px #CE3323;
   font-family: 'Song Myung', serif;
-  align-self: baseline;
+  height: 100%;
   float: right;
+  border-style: none !important;
 }
 
 .friendDelBtn:active { 
@@ -150,4 +147,5 @@
   -webkit-box-shadow: 0 10px 6px -6px #777;
   -moz-box-shadow: 0 10px 6px -6px #777;
   box-shadow: 0 10px 6px -6px #777;
+  border-radius: 5px;
 }

@@ -47,7 +47,7 @@ const FriendListModalDetail = (props) => {
         {/* <span className={classes.userLevel}>Lv.{friendInfo.level ? friendInfo.level : "00"}</span> */}
         <span className={classes.userLevel}>Lv.{parseInt(friendInfo.exp/10000+1)}</span>
         <span className={classes.userNick}>{friendInfo.nickname}</span>
-      </div>
+      </div> 
 
       <button className={classes.friendDelBtn}
         onClick={() => {

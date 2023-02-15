@@ -57,6 +57,7 @@ const FriendList = () => {
         buttonTitle='친구 목록'
         width='700px'
         height='500px'
+        backgroundColor='rgba(45, 46, 6, 0.75);'
       >
         <div className={classes.container}>
 
@@ -91,7 +92,7 @@ const FriendList = () => {
         close={closeModal}
         width="700px"
         height="500px"
-      >
+      > 
         <div className={classes.container}>
 
           <button className={`${classes.modalButton} ${page === 1 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(1)}>목록</button>

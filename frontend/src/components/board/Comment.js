@@ -94,6 +94,9 @@ const Comment = () => {
               });
             }
           })
+          .catch((err) => {
+            console.log(err);
+          })
           .then((response) => {
             setComments([...comments, response.data]);
             commentRead(articleSequence);

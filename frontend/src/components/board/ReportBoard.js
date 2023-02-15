@@ -117,7 +117,7 @@ const ReportBoard = () => {
             margin: "auto",
             maxHeight: "none",
             maxWidth: "none",
-            backgroundColor: "rgba(200, 200, 200, 0.9)",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
             overflow: "hidden",
           },
         }}
@@ -196,9 +196,7 @@ const ReportBoard = () => {
                   <li
                     key={item.reportSequence}
                     // className={index % 2 === 0 ? classes.odd : classes.even}
-                    onClick={() =>
-                      navigate(`/board/report/${item.reportSequence}`)
-                    }
+                    onClick={() => handleClickOpen(item.reportSequence)}
                   >
                     <div className={classes.reportUserInfo}>
                       <div className={classes.report}>
@@ -227,9 +225,7 @@ const ReportBoard = () => {
                   <li
                     key={item.reportSequence}
                     // className={index % 2 === 0 ? classes.odd : classes.even}
-                    onClick={() =>
-                      navigate(`/board/report/${item.reportSequence}`)
-                    }
+                    onClick={() => handleClickOpen(item.reportSequence)}
                   >
                     <div className={classes.reportUserInfo}>
                       <div className={classes.report}>
@@ -252,8 +248,8 @@ const ReportBoard = () => {
                     <div className={classes.reportContent}>
                       <p>{item.contents}</p>
                     </div>
-                    <div>
-                      <p>확인 완료</p>
+                    <div className={classes.adminCheck}>
+                      <p>관리자 확인</p>
                     </div>
                   </li>
                 )

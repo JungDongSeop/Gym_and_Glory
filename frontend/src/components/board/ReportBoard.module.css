@@ -1,7 +1,7 @@
 /* Define the style for the scrollbar */
 .scrollbarCustom::-webkit-scrollbar {
   width: 80px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 /* Style the thumb */
@@ -22,7 +22,7 @@
 }
 
 .pagination {
-  color: white
+  color: white;
 }
 
 .notice {
@@ -47,7 +47,7 @@
   margin: 0;
   border-bottom: 1px solid black;
   width: 100%;
-  background-color: rgba(255,255,255, 0.85);
+  background-color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
   height: 55px;
   align-items: center;
@@ -70,7 +70,6 @@
   /* margin-top: 10px; */
   padding-left: 27px;
   /* width: 25%; */
-
 }
 
 .arrow {
@@ -86,7 +85,6 @@
   /* width: 25%; */
   /* float: left; */
   /* margin-top: 10px; */
-
 }
 .reportKind {
   display: flex;
@@ -107,13 +105,17 @@
 }
 
 .reportContent {
-  width: 50%;
+  width: 40%;
 }
 
 .reportContent {
   /* padding-left: 20px; */
 }
 
-/* .reportDelete {
-  z-index: 10;
-} */
+.adminCheck {
+  width: 10%;
+}
+.reportDelete {
+  /* z-index: 10; */
+  size: 100px;
+}

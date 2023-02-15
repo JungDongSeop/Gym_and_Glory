@@ -8,6 +8,7 @@ import Ranking from "./Ranking";
 import Button from "../../UI/LobbyButton";
 import classes from "./SideBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import { width } from "@mui/system";
 
 // 사이드바 만들기. 이후 수정
 // 사이드바는 로비, 게시판에 있을 경우 (유저프로필, 방 생성, 친구 목록, 랭킹) 이 표시되고,
@@ -18,14 +19,36 @@ const SideBar = (props) => {
   const isMyPage = props.isMyPage;
   const authCtx = useContext(AuthContext);
 
+  // 경험치
+  const expBarStyle = {
+    width: `${(Number(authCtx.exp) +9000 ) / 100}%`,
+    height: '20px',
+    backgroundColor: 'yellow',
+  };
+
+  const expBarContainerStyle = {
+    backgroundColor: 'white',
+    height: '20px',
+    width: '90%',
+    display: 'flex',
+    justifyContent: 'space-between',
+  };
+
   return (
     <aside>
       {/* 웹캠 */}
       <SideWebcam />
       {/* 유저 프로필 */}
       <div className={classes.userNickDiv}>
-      <Link to="/mypage">{authCtx.nickname}</Link>
+        <Link to="/mypage">{authCtx.nickname}</Link>
+        {/* 경험치 바 */}
       </div>
+        <div style={expBarContainerStyle}>
+          <div style={expBarStyle}></div>
+          <div className={classes.exp}>
+            <p style={{margin: 0}}>{Number(authCtx.exp)+1000} / 10000</p>
+          </div>
+        </div>      
 
       {isMyPage ? (
         <div className={classes.container}>

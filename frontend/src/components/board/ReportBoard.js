@@ -10,6 +10,7 @@ import { Button } from "antd";
 import { Pagination } from "antd";
 import RestApi from "../api/RestApi";
 import classes from "./ReportBoard.module.css";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 // 신고게시판
 // 관리자 : 유저들의 신고 내역 조회 가능. 이후 확인 및 확정하기 버튼 누르기
@@ -95,19 +96,21 @@ const ReportBoard = () => {
                   }
                 >
                   <div className={classes.reportUserInfo}>
-                    <div>
+                    <div className={classes.report}>
                       <div className={classes.reporter}>
-                        <p>{item.sendUser.nickname} -> </p>
+                        <p>{item.sendUser.nickname}</p>
+                      </div>
+                      <div className={classes.arrow}>
+                        <ArrowRightAltIcon />
                       </div>
 
                       <div className={classes.accused}>
                         <p>{item.getUser ? item.getUser.nickname : null}</p>
                       </div>
                     </div>
-
-                    <div className={classes.reportKind}>
-                      <p>{reportKinds[item.kind]}</p>
-                    </div>
+                  </div>
+                  <div className={classes.reportKind}>
+                    <p>{reportKinds[item.kind]}</p>
                   </div>
 
                   <div className={classes.reportContent}>
@@ -121,31 +124,42 @@ const ReportBoard = () => {
         // 유저들의 신고페이지
         // 확인되지 않았으면 내용 표시, 삭제 버튼 추가
         // 확인되었으면 '신고 내용이 반영되었습니다' 라는 문구로 표시
-        <div>
+        <div className={classes.notice}>
           <h2>유저들의 신고페이지</h2>
-          <ul className={classes.boardUl}>
+          <ul>
             {board
               .slice(currentPage * 10 - 10, currentPage * 10)
               .map((item, index) =>
                 // 관리자가 확인 안했으면
                 !item.confirmation ? (
                   <li
-                    key={index}
-                    className={index % 2 === 0 ? classes.odd : classes.even}
+                    key={item.reportSequence}
+                    // className={index % 2 === 0 ? classes.odd : classes.even}
                     onClick={() =>
                       navigate(`/board/report/${item.reportSequence}`)
                     }
                   >
-                    {/* from : <UserIdToNickname userId={item.sendSequence}/>, to : <UserIdToNickname userId={item.getSequence}/>, 종류 : {reportKinds[item.kind]}, 내용 : {item.contents} */}
-                    from :{" "}
-                    {item.sendUser
-                      ? item.sendUser.nickname
-                      : "존재하지 않는 회원입니다"}
-                    , to :{" "}
-                    {item.getUser
-                      ? item.getUser.nickname
-                      : "존재하지 않는 회원입니다"}
-                    , 종류 : {reportKinds[item.kind]}, 내용 : {item.contents}
+                    <div className={classes.reportUserInfo}>
+                      <div className={classes.report}>
+                        <div className={classes.reporter}>
+                          <p>{item.sendUser.nickname}</p>
+                        </div>
+                        <div className={classes.arrow}>
+                          <ArrowRightAltIcon />
+                        </div>
+
+                        <div className={classes.accused}>
+                          <p>{item.getUser ? item.getUser.nickname : null}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={classes.reportKind}>
+                      <p>{reportKinds[item.kind]}</p>
+                    </div>
+
+                    <div className={classes.reportContent}>
+                      <p>{item.contents}</p>
+                    </div>
                   </li>
                 ) : (
                   // 관리자가 확인했으면

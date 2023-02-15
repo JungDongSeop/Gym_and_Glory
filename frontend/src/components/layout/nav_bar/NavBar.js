@@ -29,7 +29,7 @@ const Navbar = () => {
     axios
       .get(`${RestApi()}/user/detail/${authCtx.userSequence}`)
       .then((res) => {
-        console.log('user', res.data)
+        console.log("user", res.data);
         setUser(res.data);
       })
       .catch((err) => {
@@ -48,27 +48,34 @@ const Navbar = () => {
           <Link
             to="/lobby"
             className={classes.navText}
-            style={{ color: location.pathname === "/lobby" ? "rgb(220, 1, 1)" : "white" }}
+            style={{
+              color:
+                location.pathname === "/lobby" ? "rgb(220, 1, 1)" : "white",
+            }}
           >
             로비
-   
           </Link>
         )}
         <Link
           to="/ranking"
           className={classes.navText}
-          style={{ color: location.pathname === "/ranking" ? "rgb(220, 1, 1)" : "white" }}
+          style={{
+            color:
+              location.pathname === "/ranking" ? "rgb(220, 1, 1)" : "white",
+          }}
         >
-           랭킹
+          랭킹
         </Link>
         <Link
           to="/board/notice"
           className={classes.navText}
           style={{
-            color: location.pathname.includes("/board") ? "rgb(220, 1, 1)" : "white",
+            color: location.pathname.includes("/board")
+              ? "rgb(220, 1, 1)"
+              : "white",
           }}
         >
-           게시판
+          게시판
         </Link>
       </div>
 
@@ -76,13 +83,19 @@ const Navbar = () => {
       {isLoggedIn && (
         <div>
           <Link to="/" onClick={logoutHandler}>
-          <div className={classes.outIconDiv}>
-            <p>로그아웃</p>
-            <LogoutIcon />
-          </div>
+            <div className={classes.outIconDiv}>
+              <p>로그아웃</p>
+              <LogoutIcon />
+            </div>
           </Link>
           <Link to="/mypage">
-            <img className={classes.profile} src={user ? user.imagePath : defaultProfile} alt="마이페이지로" />
+            <img
+              className={classes.profile}
+              src={
+                user ? (user.imagePath ? user.imagePath : defaultProfile) : null
+              }
+              alt="마이페이지로"
+            />
           </Link>
         </div>
       )}

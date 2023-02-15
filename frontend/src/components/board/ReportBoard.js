@@ -127,52 +127,52 @@ const ReportBoard = () => {
         <div className={classes.notice}>
           <h2>유저들의 신고페이지</h2>
           <ul>
-            {board
-              .slice(currentPage * 10 - 10, currentPage * 10)
-              .map((item, index) =>
+            {board.slice(currentPage * 10 - 10, currentPage * 10).map(
+              (item, index) => (
                 // 관리자가 확인 안했으면
-                !item.confirmation ? (
-                  <li
-                    key={item.reportSequence}
-                    // className={index % 2 === 0 ? classes.odd : classes.even}
-                    onClick={() =>
-                      navigate(`/board/report/${item.reportSequence}`)
-                    }
-                  >
-                    <div className={classes.reportUserInfo}>
-                      <div className={classes.report}>
-                        <div className={classes.reporter}>
-                          <p>{item.sendUser.nickname}</p>
-                        </div>
-                        <div className={classes.arrow}>
-                          <ArrowRightAltIcon />
-                        </div>
+                // !item.confirmation ? (
+                <li
+                  key={item.reportSequence}
+                  // className={index % 2 === 0 ? classes.odd : classes.even}
+                  onClick={() =>
+                    navigate(`/board/report/${item.reportSequence}`)
+                  }
+                >
+                  <div className={classes.reportUserInfo}>
+                    <div className={classes.report}>
+                      <div className={classes.reporter}>
+                        <p>{item.sendUser.nickname}</p>
+                      </div>
+                      <div className={classes.arrow}>
+                        <ArrowRightAltIcon />
+                      </div>
 
-                        <div className={classes.accused}>
-                          <p>{item.getUser ? item.getUser.nickname : null}</p>
-                        </div>
+                      <div className={classes.accused}>
+                        <p>{item.getUser ? item.getUser.nickname : null}</p>
                       </div>
                     </div>
-                    <div className={classes.reportKind}>
-                      <p>{reportKinds[item.kind]}</p>
-                    </div>
+                  </div>
+                  <div className={classes.reportKind}>
+                    <p>{reportKinds[item.kind]}</p>
+                  </div>
 
-                    <div className={classes.reportContent}>
-                      <p>{item.contents}</p>
-                    </div>
-                  </li>
-                ) : (
-                  // 관리자가 확인했으면
-                  <li
-                    key={item.reportSequence}
-                    className={`${classes.confirm} ${
-                      index % 2 === 0 ? classes.odd : classes.even
-                    }`}
-                  >
-                    신고 내용이 확인되었습니다.
-                  </li>
-                )
-              )}
+                  <div className={classes.reportContent}>
+                    <p>{item.contents}</p>
+                  </div>
+                </li>
+              )
+              // ) : (
+              //   // 관리자가 확인했으면
+              //   <li
+              //     key={item.reportSequence}
+              //     className={`${classes.confirm} ${
+              //       index % 2 === 0 ? classes.odd : classes.even
+              //     }`}
+              //   >
+              //     신고 내용이 확인되었습니다.
+              //   </li>
+              // )
+            )}
           </ul>
         </div>
       )}

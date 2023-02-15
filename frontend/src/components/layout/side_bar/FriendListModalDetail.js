@@ -15,7 +15,7 @@ const FriendListModalDetail = (props) => {
   const friendId = props.friendId;
   const [friendInfo, setFriendInfo] = useState({});
 
-  // 친구 데이터 axios 요청
+  // 친구 데이터 axios 요청 
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(`${RestApi()}/user/detail/${friendId}`);

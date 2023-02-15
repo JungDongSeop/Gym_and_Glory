@@ -7,6 +7,7 @@ import axios from "axios";
 import classes from './FriendListModal.module.css';
 import Modal from "../../UI/Modal";
 import RestApi from "../../../components/api/RestApi";
+import Button from "../../UI/Button";
 
 const FriendList = () => {
   // 페이지 (친구 목록창 or 친구 신청창 구분)
@@ -56,13 +57,13 @@ const FriendList = () => {
         buttonTitle='친구 목록'
         width='700px'
         height='500px'
-        backgroundColor='rgba(0, 1, 24, 0.75)'
+        backgroundColor='rgba(45, 46, 6, 0.75);'
       >
         <div className={classes.container}>
 
           {/* 창 선택 */}
-          <button className={`${classes.modalButton} ${page === 1 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(1)}>목록</button>
-          <button className={`${classes.modalButton} ${page === 2 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(2)}>신청</button>
+          <Button className={`${classes.modalButton} ${page === 1 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(1)}>목록</Button>
+          <Button className={`${classes.modalButton} ${page === 2 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(2)}>신청</Button>
 
           {/* 창 표시 */}
           {page === 1 ? (

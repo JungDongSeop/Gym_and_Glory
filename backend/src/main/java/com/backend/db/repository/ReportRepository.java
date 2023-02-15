@@ -3,6 +3,7 @@ package com.backend.db.repository;
 import com.backend.db.entity.Report;
 import com.backend.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,7 @@ public interface ReportRepository extends JpaRepository<Report,Integer> {
     Report findByReportSequence(Integer reportSequence);
 
     List<Report> findBySendUser(User user);
+
+    @Query("select r from Report r where r.confirmation=:i")
+    List<Report> findAllByConfirmation(Integer i);
 }

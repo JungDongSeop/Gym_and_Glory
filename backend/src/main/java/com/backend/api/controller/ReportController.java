@@ -40,14 +40,8 @@ public class ReportController {
     @GetMapping("/user/{email}")
     public ResponseEntity<?> getReport(@PathVariable String email){
         List<Report> list = reportService.getDivReport(email);
-        List<Report> result= new ArrayList<>();
 
-        for(int i =0; i<list.size();i++){
-            if(list.get(i).getConfirmation()==0) {
-                result.add(list.get(i));
-            }
-        }   
-        return new ResponseEntity<>(result,HttpStatus.OK);
+        return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
 

@@ -56,6 +56,7 @@ const FriendList = () => {
         buttonTitle='친구 목록'
         width='700px'
         height='500px'
+        backgroundColor='rgba(0, 1, 24, 0.75)'
       >
         <div className={classes.container}>
 

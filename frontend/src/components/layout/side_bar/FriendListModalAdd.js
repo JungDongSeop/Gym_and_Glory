@@ -26,6 +26,8 @@ const FriendListModalAdd = () => {
           setSearchedDatas(res.data);
         })
         .catch(() => {});
+    } else {
+      setSearchedDatas([])
     }
   };
 

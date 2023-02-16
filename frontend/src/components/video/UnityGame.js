@@ -53,14 +53,10 @@ const UnityGame = forwardRef((props, ref) => {
     } else if (signal === "GameStart") {
       sendMessage("PhotonInit", "GameStart");
     } else if (signal === "attack") {
-      console.log("공격 신호 받아서 유니티로 보낸다");
-      console.log(myNum, num);
       sendMessage("Player" + myNum + "(Clone)", "Attack", num);
     } else if (signal === "sendReady") {
-      console.log(num, "레디 신호", myNum);
       sendMessage("PhotonInit", "Ready", myNum);
     } else if (signal === "Heal") {
-      console.log("힐");
       sendMessage("Player" + myNum + "(Clone)", "Heal");
     }
   }
@@ -129,7 +125,6 @@ const UnityGame = forwardRef((props, ref) => {
 
   const handleClearTime = useCallback(
     (response) => {
-      console.log(typeof response, response);
       teamRecord.time = response;
     },
     [teamRecord]
@@ -152,8 +147,6 @@ const UnityGame = forwardRef((props, ref) => {
       }
       myRecord.exercise = myExercise;
       myRecord.damage = myDamage;
-      // console.log(myExercise);
-      // console.log(cleartime);
     },
     [myNum, myRecord]
   );
@@ -183,7 +176,7 @@ const UnityGame = forwardRef((props, ref) => {
       .then((res) => {
         sessionStorage.setItem(
           "exp",
-          sessionStorage.getItem("exp") + res.myRecord.damage
+          sessionStorage.getItem("exp") + myRecord.damage
         );
       });
   }, [myNum, myRecord, teamRecord]);

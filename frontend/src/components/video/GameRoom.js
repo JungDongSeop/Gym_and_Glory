@@ -148,7 +148,6 @@ class GameRoom extends Component {
     const info = { roomId, roomTitle, teamTitle, isHost };
     if (location.state === null) {
       const { navigate } = this.props;
-      console.log("로비로 이동");
       navigate("/lobby");
     }
     history.pushState(info, "", location.href);
@@ -318,7 +317,6 @@ class GameRoom extends Component {
                 },
               ],
             });
-            console.log("채팅 추가 됨?");
           }
         });
         mySession.on("signal:get-out", (event) => {
@@ -349,39 +347,26 @@ class GameRoom extends Component {
         });
         mySession.on("signal:Ready", (event) => {
           let readydata = event.data.split(",");
-          console.log(readydata[0], readydata[1]);
+
           if (this.state.ishost) {
             if (readydata[0] === "true") {
-              console.log("닉네임 추가");
               let pushnick = [...this.state.nicknames, readydata[1]];
-              this.setState(
-                {
-                  readyCount: this.state.readyCount + 1,
-                  nicknames: pushnick,
-                },
-                () => {
-                  console.log(this.state.readyCount, this.state.nicknames);
-                }
-              );
+              this.setState({
+                readyCount: this.state.readyCount + 1,
+                nicknames: pushnick,
+              });
             } else {
-              console.log("닉네임 제거");
               const filternicknames = this.state.nicknames.filter((nick) => {
-                console.log(nick);
                 if (nick === readydata[1]) {
                   console.log(nick);
                 } else {
                   return nick;
                 }
               });
-              this.setState(
-                {
-                  readyCount: this.state.readyCount - 1,
-                  nicknames: filternicknames,
-                },
-                () => {
-                  console.log(this.state.readyCount, this.state.nicknames);
-                }
-              );
+              this.setState({
+                readyCount: this.state.readyCount - 1,
+                nicknames: filternicknames,
+              });
             }
           }
         });
@@ -449,26 +434,17 @@ class GameRoom extends Component {
                 return nick;
               }
             });
-            this.setState(
-              {
-                readyCount: this.state.readyCount - 1,
-                nicknames: filternicknames,
-              },
-              () => {
-                console.log(this.state.readyCount, this.state.nicknames);
-              }
-            );
+            this.setState({
+              readyCount: this.state.readyCount - 1,
+              nicknames: filternicknames,
+            });
           }
         });
         mySession.on("signal:gameStart", (e) => {
-          this.setState({ gameStatus: true, middleState: true }, () =>
-            console.log(this.state.gameStatus)
-          );
+          this.setState({ gameStatus: true, middleState: true });
         });
         mySession.on("signal:middleState", (e) => {
-          this.setState({ middleState: !this.state.middleState }, () =>
-            console.log(this.state.middleState)
-          );
+          this.setState({ middleState: !this.state.middleState });
         });
         mySession.on("exception", (exception) => {});
 
@@ -499,7 +475,6 @@ class GameRoom extends Component {
 
   start() {
     // teachable machine 작동 시작
-    console.log(this.state.model);
 
     this.setState(
       {
@@ -663,7 +638,7 @@ class GameRoom extends Component {
     );
 
     const prediction = await this.state.model.predict(posenetOutput);
-    console.log(prediction);
+
     if (prediction[0].probability.toFixed(2) >= 0.99) {
       if (this.state.status === "squat") {
         this.setState({ count: 1 });
@@ -695,7 +670,7 @@ class GameRoom extends Component {
     );
 
     const prediction = await this.state.model.predict(posenetOutput);
-    console.log(prediction);
+
     if (prediction[0].probability.toFixed(2) >= 0.99) {
       if (this.state.status === "burpee") {
         this.setState({ count: 1 });
@@ -727,7 +702,7 @@ class GameRoom extends Component {
     );
 
     const prediction = await this.state.model.predict(posenetOutput);
-    console.log(prediction);
+
     if (prediction[0].probability.toFixed(2) >= 0.99) {
       if (this.state.status === "pushdown") {
         this.setState({ count: 1 });
@@ -759,7 +734,7 @@ class GameRoom extends Component {
     );
 
     const prediction = await this.state.model.predict(posenetOutput);
-    console.log(prediction);
+
     if (prediction[0].probability.toFixed(2) >= 0.99) {
       if (this.state.status === "jumpingjack") {
         this.setState({ count: 1 });
@@ -785,12 +760,10 @@ class GameRoom extends Component {
   }
 
   async sendHeal() {
-    console.log("힐 신호 보내기");
     this.state.myRef.current.sendSignal("Heal");
   }
 
   async sendKey() {
-    console.log("공격 신호 보낸다");
     this.state.myRef.current.sendSignal("attack", this.state.exerciseNum);
   }
 
@@ -817,7 +790,6 @@ class GameRoom extends Component {
           resolve(response.data.id);
         })
         .catch((error) => {
-          console.log(error.response.status);
           if (error.response.status === 409) {
             resolve(sessionId);
           }
@@ -826,7 +798,6 @@ class GameRoom extends Component {
   }
 
   async createToken(sessionId) {
-    console.log(sessionId);
     const response = await axios.post(
       `${OPENVIDU_URL}/openvidu/api/sessions/${sessionId}/connection`,
       {},
@@ -900,7 +871,6 @@ class GameRoom extends Component {
       to: [],
       type: "middleState",
     });
-    console.log("전부에게 중간 타임이라고 신호 보냄");
   }
 
   handleEnterDelay() {

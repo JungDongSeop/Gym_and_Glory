@@ -8,6 +8,7 @@ import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import RestApi from "../api/RestApi";
 import classes from "./ReportBoardCreate.module.scss";
 import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 const ReportBoardCreate = () => {
   // url 이동을 위한 함수
@@ -91,6 +92,11 @@ const ReportBoardCreate = () => {
             navigate(`/board/report`);
           }
         });
+      })
+      .catch((err) => {
+        if (err.response.status === 413) {
+          toast.error("이미지 용량이 매우 커서 등록할 수 없습니다.");
+        }
       });
   };
 
@@ -151,7 +157,8 @@ const ReportBoardCreate = () => {
             </label>
 
             {/* 수민이꺼 */}
-            <label className={classes.imgfileLabel} for="file">이미지 선택:
+            <label className={classes.imgfileLabel} for="file">
+              이미지 선택:
               <input type="file" onChange={handleImageChange} />
               {imageUrl && (
                 <img

@@ -50,9 +50,7 @@ const CreateBoard = () => {
       .catch((err) => {
         // console.log(err);
         if (err.response.status === 413) {
-          toast.error(
-            "이미지 용량이 매우 커서 프로필 사진으로 등록할 수 없습니다."
-          );
+          toast.error("이미지 용량이 매우 커서 등록할 수 없습니다.");
         }
       });
   };

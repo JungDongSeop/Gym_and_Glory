@@ -178,22 +178,17 @@ const DetailBoard = () => {
             <ul>
               <li>
                 <button
+                 className={classes.udButton}
                   onClick={() =>
                     navigate(`/board/${type}/update/${articleSequence}`)
                   }
                 >
-                  <img
-                    src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/view_btn01.png"
-                    alt="수정"
-                  />
+                  수정
                 </button>
               </li>
               <li>
-                <button onClick={deleteClick}>
-                  <img
-                    src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/view_btn02.png"
-                    alt="삭제"
-                  />
+                <button className={classes.udButton} onClick={deleteClick}>
+                  삭제
                 </button>
               </li>
             </ul>

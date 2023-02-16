@@ -25,7 +25,7 @@ const NickTag = styled.div`
   left: 5px;
   padding: 8px;
   margin-left: 5px;
-  border-radius: 10px;
+  border-radius: 10px 4px;
   color: white;
   box-shadow: inset 0px 2px 9px 0px rgb(91 91 175);
 `;

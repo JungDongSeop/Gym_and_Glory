@@ -198,7 +198,9 @@ const DetailBoard = () => {
           <div className={classes.qsBtn}>
             <ul>
               <li>
-                <button onClick={deleteClick}>삭제</button>
+                <button className={classes.udButton} onClick={deleteClick}>
+                  삭제
+                </button>
               </li>
             </ul>
           </div>

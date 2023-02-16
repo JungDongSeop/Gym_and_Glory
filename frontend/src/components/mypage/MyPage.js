@@ -8,6 +8,7 @@ import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import defaultProfile from "../../assets/defaultProfile.png";
 import classes from "./MyPage.module.css";
 import RestApi from "../api/RestApi";
+import toast, { Toaster } from "react-hot-toast";
 
 const MyPage = () => {
   // 유저 정보 가져오기
@@ -54,8 +55,10 @@ const MyPage = () => {
     } catch (error) {
       // console.log(error.response.status, "sdfdf");
       if (error.response.status === 413) {
-        console.log("413");
-        alert("사진 ㅈㄴ큼");
+        // console.log("413");
+        toast.error(
+          "이미지 용량이 매우 커서 프로필 사진으로 등록할 수 없습니다."
+        );
       } else {
         console.error(error);
       }
@@ -64,6 +67,7 @@ const MyPage = () => {
 
   return (
     <main>
+      <Toaster position="top-center" reverseOrder={false} />
       {user ? (
         <div className={classes.container}>
           <div className={classes.profileWrap}>
@@ -87,12 +91,15 @@ const MyPage = () => {
                 <input type="file" id="ex-file" onChange={handleFileSelect} />
               </div>
             </form>
-
             {/* 유저 레벨, 닉네임 */}
-            <p>
-              Lv.{authCtx.level ? authCtx.level : 1}
-              {authCtx.nickname}
-            </p>
+            <div className={classes.userInfo}>
+              <div>
+                <h3>Lv.{authCtx.level ? authCtx.level : 1}</h3>
+              </div>
+              <div className={classes.nicknameTag}>
+                <h2>{authCtx.nickname}</h2>
+              </div>
+            </div>
           </div>
 
           {/* 잔디 */}

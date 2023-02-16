@@ -56,6 +56,10 @@
   
 }
 
+.inputText[type="text"]::after {
+  content: attr(title);
+}
+
 .inputText:hover,
 .inputText:focus,
 .inputText:not(:placeholder-shown)

@@ -142,8 +142,10 @@ const FindPwd = () => {
           <input
             className={classes.inputText}
             type="text"
-            required
+            title="'-' 제외하고 입력해주세요"
             placeholder=" "
+            required
+            // placeholder=" "
             ref={phoneInputRef}
           />
           <p className={classes.labelText}>phone</p>

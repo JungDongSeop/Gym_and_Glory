@@ -5,12 +5,10 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.backend.api.request.BoardPostReq;
-import com.backend.api.request.WriteReq;
 import com.backend.api.service.BoardService;
 import com.backend.api.service.GoodService;
 import com.backend.api.service.UserService;
 import com.backend.db.entity.BoardArticle;
-import com.backend.db.entity.BoardGood;
 import com.backend.db.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +47,36 @@ public class BoardController {
 
     //글쓰기
     @PostMapping
-    public ResponseEntity write(@RequestBody WriteReq writeReq){
-        boardService.writeArticle(writeReq);
+    public ResponseEntity write(@RequestParam("userSequence") Integer userSequence,
+                                @RequestParam("title") String title,
+                                @RequestParam("contents") String contents,
+                                @RequestParam("div") Integer div,
+                                @RequestParam(value = "image", required = false) MultipartFile[] multipartFileList)throws IOException {
+
+        List<String> imagePathList = new ArrayList<>();
+
+        if (multipartFileList != null) {
+            for(MultipartFile multipartFile: multipartFileList) {
+                String originalName = multipartFile.getOriginalFilename(); // 파일 이름
+                long size = multipartFile.getSize(); // 파일 크기
+
+                ObjectMetadata objectMetaData = new ObjectMetadata();
+                objectMetaData.setContentType(multipartFile.getContentType());
+                objectMetaData.setContentLength(size);
+
+                // S3에 업로드
+                amazonS3Client.putObject(
+                        new PutObjectRequest(S3Bucket, originalName, multipartFile.getInputStream(), objectMetaData)
+                                .withCannedAcl(CannedAccessControlList.PublicRead)
+                );
+
+                String imagePath = amazonS3Client.getUrl(S3Bucket, originalName).toString(); // 접근가능한 URL 가져오기
+                imagePathList.add(imagePath);
+                boardService.writeArticle(userSequence,title,contents,div,imagePath);
+            }
+        }else{
+            boardService.writeArticle(userSequence,title,contents,div,null);
+        }
 
         return new ResponseEntity(HttpStatus.OK);
     }

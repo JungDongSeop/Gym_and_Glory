@@ -1,7 +1,6 @@
 package com.backend.api.service;
 
 import com.backend.api.request.BoardPostReq;
-import com.backend.api.request.WriteReq;
 import com.backend.db.entity.BoardArticle;
 import com.backend.db.entity.User;
 import com.backend.db.repository.BoardRepository;
@@ -10,8 +9,9 @@ import com.backend.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -55,11 +55,14 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardArticle writeArticle(WriteReq writeReq) {
+    public BoardArticle writeArticle(Integer userSequence, String title,
+                                     String contents, Integer div,
+                                     String imagePath) {
 
-        User user = userRepository.findById(writeReq.getUserSequence()).get();
+        User user = userRepository.findById(userSequence).get();
 
-        BoardArticle boardArticle = BoardArticle.createBoard(writeReq, user);
+        BoardArticle boardArticle = BoardArticle.createBoard(title,contents,div
+                ,imagePath, user);
 
         return boardRepository.save(boardArticle);
     }

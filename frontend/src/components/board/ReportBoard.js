@@ -112,8 +112,8 @@ const ReportBoard = () => {
         onClose={handleClose}
         PaperProps={{
           style: {
-            width: "300px",
-            height: "300px",
+            width: "400px",
+            height: "150px",
             margin: "auto",
             maxHeight: "none",
             maxWidth: "none",
@@ -124,20 +124,24 @@ const ReportBoard = () => {
       >
         {authCtx.role === "ROLE_ADMIN" ? (
           <DialogContent>
-            <div>
-              <p>게시물을 확인을 체크하시겠습니까?</p>
-              <button onClick={adminCheck}>확인</button>
+            <div className={classes.checkText}>
+              <h3>게시물을 확인하시겠습니까?</h3>
             </div>
-            <button onClick={reportDelete} className={classes.reportDelete}>
-              삭제
-            </button>
+            <div className={classes.checkButton}>
+              <button onClick={adminCheck} className={classes.checkConfirm}>
+                확인
+              </button>
+              <button onClick={reportDelete} className={classes.checkDelete}>
+                삭제
+              </button>
+            </div>
             {/* <button>확인</button> */}
           </DialogContent>
         ) : (
           <DialogContent>
-            <button onClick={reportDelete} className={classes.reportDelete}>
-              삭제
-            </button>
+            <div className={classes.checkButton}>
+              <button onClick={reportDelete}>삭제</button>
+            </div>
             {/* <button>확인</button> */}
           </DialogContent>
         )}

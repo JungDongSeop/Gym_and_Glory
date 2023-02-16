@@ -6,8 +6,8 @@ import axios from "axios";
 import CommentDetail from "./CommentDetail";
 import classes from "./Comment.module.css";
 import RestApi from "../api/RestApi";
-import { Button } from "antd";
-import toast, { Toaster } from "react-hot-toast";
+// import { Button } from "antd";
+import toast from "react-hot-toast";
 
 // import { useNavigate } from 'react-router-dom';
 
@@ -27,10 +27,10 @@ const Comment = () => {
   const [comments, setComments] = useState([]);
 
   // 댓글 쓰기 위한 state
-  const [newComment, setNewComment] = useState({
-    userSequence: userSequence,
-    contents: "",
-  });
+  // const [newComment, setNewComment] = useState({
+  //   userSequence: userSequence,
+  //   contents: "",
+  // });
 
   const commentRead = async (articleSequence) => {
     const result = await axios(`${RestApi()}/board/comment/${articleSequence}`);
@@ -56,24 +56,8 @@ const Comment = () => {
     const enteredcomment = commentInputRef.current.value;
     if (enteredcomment.length === 0) {
       toast.error("댓글을 입력해주세요");
-    }
-    {
+    } else {
       enteredcomment.length > 0 &&
-        // axios
-        //   .post(`${RestApi()}/board/comment`, {
-        //     userSequence: userSequence,
-        //     articleSequence: articleSequence,
-        //     contents: enteredcomment,
-        //   })
-        //   .then((response) => {
-        //     setComments([...comments, response.data]);
-        //     // setNewComment({ title: "", text: "" });
-        //     commentRead(articleSequence);
-        //     commentInputRef.current.value = "";
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
         fetch(`${RestApi()}/board/comment`, {
           method: "POST",
           body: JSON.stringify({
@@ -152,13 +136,18 @@ const Comment = () => {
 
           <div className={classes.bottomTxarBtn}>
             <div className={classes.txarRightBtn}>
-              <Button className={classes.createButton} type="primary">
+              {/* <Button className={classes.createButton} type="primary">
                 <input
                   className={classes.buttonInput}
                   type="submit"
                   value="제출"
                 />
-              </Button>
+              </Button> */}
+              <input
+                type="submit"
+                className={classes.buttonInput}
+                value="제출"
+              />
             </div>
           </div>
         </form>

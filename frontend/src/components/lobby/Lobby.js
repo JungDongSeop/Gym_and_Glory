@@ -5,7 +5,7 @@ import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import swal from "sweetalert";
+// import Swal from "sweetalert";
 // import RestApi from "../api/RestApi";
 
 const Wrapper = styled.div`
@@ -32,6 +32,14 @@ const Lobby = () => {
     } else if (location.state === "roomExploded") {
       alert("방장이 방을 폭파시켜 로비로 이동했습니다");
     } else if (location.state === "gameEnd") {
+      // Swal.fire({
+      //   title: "Success!",
+      //   text: "게임이 종료되어 로비로 이동합니다!",
+      //   icon: "success",
+      //   confirmButtonText: "확인",
+      // }).then(() => {
+      //   navigate("/lobby");
+      // });
       alert("게임이 종료되어 로비로 이동합니다.");
     }
     history.pushState(null, "", location.href);

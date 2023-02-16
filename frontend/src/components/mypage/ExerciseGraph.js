@@ -45,7 +45,8 @@ const ExerciseGraph = (props) => {
         // groupeData = axios 받은 데이터를 날짜별로 분류. 이후 acc 에 저장, acc를 return
         const groupedData = exerciseDatas.reduce((acc, exerciseData) => {
           // 운동 데이터 1개
-          const exerciseDay = new Date(exerciseData.date);
+          const date1 = new Date(exerciseData.date)
+          const exerciseDay = new Date(date1.getTime() + (9 * 60 * 60 * 1000));
 
           // 하루 단위
           if (xUnit === 1) {

@@ -6,6 +6,7 @@ import NavigateButtons from "./NavigateButtons";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router";
 import RestApi from "../api/RestApi";
+import toast, { Toaster } from "react-hot-toast";
 
 import classes from "./CreateBoard.module.css";
 
@@ -47,7 +48,12 @@ const CreateBoard = () => {
         navigate(`/board/${type}`);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
+        if (err.response.status === 413) {
+          toast.error(
+            "이미지 용량이 매우 커서 프로필 사진으로 등록할 수 없습니다."
+          );
+        }
       });
   };
 
@@ -83,6 +89,8 @@ const CreateBoard = () => {
 
   return (
     <main className={classes.boardDiv}>
+      <Toaster position="top-center" reverseOrder={false} />
+
       {/* 게시판 종류 선택 버튼 */}
       <NavigateButtons type={type} />
 
@@ -116,10 +124,7 @@ const CreateBoard = () => {
             <div className={classes.bottomDiv}>
               <div>
                 <div className={classes.addImage}>
-                  <input
-                    type="file"
-                    onChange={handleImageChange}
-                  />
+                  <input type="file" onChange={handleImageChange} />
                 </div>
                 <div>
                   {imageUrl && (

@@ -19,7 +19,7 @@
   border: 2px solid #ccc;
   font-size: 16px;
   border-radius: 6px;
-  width: 100%;
+  width: 100%;bt_wrap
   height: 20%;
 }
 
@@ -103,6 +103,10 @@ h1 {
   margin: 100px auto
   /* 중앙정렬 */
 }
+
+.addImage {
+
+}
 .bt_wrap {
   margin-top: 30px;
   text-align: right;
@@ -163,4 +167,9 @@ h1 {
   .board_write .title input[type="text"] {
     width: 900%;
   }
+}
+
+.bottomDiv {
+  display: flex;
+  justify-content: space-between;
 }

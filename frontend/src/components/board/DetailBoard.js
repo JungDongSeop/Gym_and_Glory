@@ -144,7 +144,10 @@ const DetailBoard = () => {
             </p>
           </div>
         </div>
-        <div className={classes.qsText}>{data.contents}</div>
+        <div className={classes.qsText}>
+          <img src={data.imagePath} style={{ width: "30%", height: "auto" }} />
+          <div>{data.contents}</div>
+        </div>
         <div className={classes.qsEmpathyWrap}>
           <div className={classes.empathyInfo}>
             {like ? (

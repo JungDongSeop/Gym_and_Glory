@@ -8,11 +8,9 @@ import RestApi from "../../api/RestApi";
 import classes from "./Update.module.scss";
 import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
-
-// 이후 와이어프레임에 맞춰 수정
-
+import FirebaseApi from "../../api/FirebaseApi";
 // API_KEY
-const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
+const API_KEY = `${FirebaseApi()}`;
 // 비밀번호 변경 api 주소
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
 

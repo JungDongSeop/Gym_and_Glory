@@ -177,7 +177,7 @@ const CreateBoard = () => {
                 </button>
                 <button
                   type="submit"
-                  // onClick={() => navigate(`/board/${type}`)}
+                  onClick={() => navigate(`/board/${type}`)}
                 >
                   취소
                 </button>

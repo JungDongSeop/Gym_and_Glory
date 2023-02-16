@@ -6,8 +6,9 @@ import classes from "./Signup.module.scss";
 import RestApi from "../../api/RestApi";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
+import FirebaseApi from "../../api/FirebaseApi";
 // API_KEY
-const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
+const API_KEY = `${FirebaseApi()}`;
 // const commonhttp = RestApi();
 // 회원가입 api 주소
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;

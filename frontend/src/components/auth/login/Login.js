@@ -11,9 +11,9 @@ import RestApi from "../../api/RestApi";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import toast, { Toaster } from "react-hot-toast";
 // import { toast } from "react-toastify";
-
+import FirebaseApi from "../../api/FirebaseApi";
 // API_KEY
-const API_KEY = `AIzaSyAxyqcEP1JpA7fbuUMKBEHeZ2TazbmlvF8`;
+const API_KEY = `${FirebaseApi()}`;
 // 회원가입 api 주소
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
 

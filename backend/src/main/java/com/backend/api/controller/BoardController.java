@@ -55,28 +55,62 @@ public class BoardController {
 
         List<String> imagePathList = new ArrayList<>();
 
-        if (multipartFileList != null) {
-            for(MultipartFile multipartFile: multipartFileList) {
-                String originalName = multipartFile.getOriginalFilename(); // 파일 이름
-                long size = multipartFile.getSize(); // 파일 크기
+        if(div==2 || div==3){
+            if (multipartFileList != null) {
+                for(MultipartFile multipartFile: multipartFileList) {
+                    String originalName = multipartFile.getOriginalFilename(); // 파일 이름
+                    long size = multipartFile.getSize(); // 파일 크기
 
-                ObjectMetadata objectMetaData = new ObjectMetadata();
-                objectMetaData.setContentType(multipartFile.getContentType());
-                objectMetaData.setContentLength(size);
+                    ObjectMetadata objectMetaData = new ObjectMetadata();
+                    objectMetaData.setContentType(multipartFile.getContentType());
+                    objectMetaData.setContentLength(size);
 
-                // S3에 업로드
-                amazonS3Client.putObject(
-                        new PutObjectRequest(S3Bucket, originalName, multipartFile.getInputStream(), objectMetaData)
-                                .withCannedAcl(CannedAccessControlList.PublicRead)
-                );
+                    // S3에 업로드
+                    amazonS3Client.putObject(
+                            new PutObjectRequest(S3Bucket, originalName, multipartFile.getInputStream(), objectMetaData)
+                                    .withCannedAcl(CannedAccessControlList.PublicRead)
+                    );
 
-                String imagePath = amazonS3Client.getUrl(S3Bucket, originalName).toString(); // 접근가능한 URL 가져오기
-                imagePathList.add(imagePath);
-                boardService.writeArticle(userSequence,title,contents,div,imagePath);
+                    String imagePath = amazonS3Client.getUrl(S3Bucket, originalName).toString(); // 접근가능한 URL 가져오기
+                    imagePathList.add(imagePath);
+                    boardService.writeArticle(userSequence,title,contents,div,imagePath);
+                }
+            }else{
+                boardService.writeArticle(userSequence,title,contents,div,null);
             }
-        }else{
-            boardService.writeArticle(userSequence,title,contents,div,null);
         }
+
+        if(div==1){
+            User user = userService.getOne(userSequence);
+            if(user.getRole().equals("ROLE_USER")){
+                return new ResponseEntity("공지사항은 관리자만 작성이 가능합니다",HttpStatus.BAD_REQUEST);
+            }
+
+
+            if (multipartFileList != null) {
+                for(MultipartFile multipartFile: multipartFileList) {
+                    String originalName = multipartFile.getOriginalFilename(); // 파일 이름
+                    long size = multipartFile.getSize(); // 파일 크기
+
+                    ObjectMetadata objectMetaData = new ObjectMetadata();
+                    objectMetaData.setContentType(multipartFile.getContentType());
+                    objectMetaData.setContentLength(size);
+
+                    // S3에 업로드
+                    amazonS3Client.putObject(
+                            new PutObjectRequest(S3Bucket, originalName, multipartFile.getInputStream(), objectMetaData)
+                                    .withCannedAcl(CannedAccessControlList.PublicRead)
+                    );
+
+                    String imagePath = amazonS3Client.getUrl(S3Bucket, originalName).toString(); // 접근가능한 URL 가져오기
+                    imagePathList.add(imagePath);
+                    boardService.writeArticle(userSequence,title,contents,div,imagePath);
+                }
+            }else{
+                boardService.writeArticle(userSequence,title,contents,div,null);
+            }
+        }
+
 
         return new ResponseEntity(HttpStatus.OK);
     }

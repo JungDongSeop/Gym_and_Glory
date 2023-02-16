@@ -153,13 +153,20 @@ Teachable Machine 은 크게 3가지 단계로 이루어집니다. 첫번째 ‘
 
 ## 9. 개발환경
 
-![image-2.png](./image-2.png)
-![image-3.png](./image-3.png)
+![image-2.png](./asset/image-2.png)
+![image-3.png](./asset/image-3.png)
 
 ## 10. 아키텍쳐 설계
 
-![image-4.png](./image-4.png)
+![image-4.png](./asset/image-4.png)
 
-# 개발 일정
-![image-5.png](./image-5.png)
+# 📅프로젝트 일정 및 산출물
+
+## 프로젝트 일정
+![image-5.png](./asset/image-5.png)
+
+## 프로젝트 진행
+![git Flow](./asset/gitFlow.gif)
+
+
 

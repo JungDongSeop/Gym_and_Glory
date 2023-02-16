@@ -198,6 +198,7 @@ const DetailBoard = () => {
           <div className={classes.qsBtn}>
             <ul>
               <li>
+                <p>관리자 권한 삭제버튼</p>
                 <button className={classes.udButton} onClick={deleteClick}>
                   삭제
                 </button>

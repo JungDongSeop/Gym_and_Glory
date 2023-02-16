@@ -3,7 +3,6 @@
 1. [**서비스 소개**](#1)
 2. [**기획 배경**](#2)
 3. [**기능 소개**](#3)
-4. [**시연 영상**](#4)
 5. [**기술 스택**](#5)
 6. [**프로젝트 일정 및 산출물**](#6)
 7. [**개발 멤버 및 회고**](#7)
@@ -67,12 +66,44 @@ Gym & Glory의 장점은 다음과 같습니다.
 <div id="3"></div>
 
 # 💫 기능소개 
-(취합대기중)
-
-# 📺 시연 영상
-
-** https://www.youtube.com/premium **
-
+![image-10.png](./asset/image-10.png)
+![image-11.png](./asset/image-11.png)
+![image-12.png](./asset/image-12.png)
+![image-13.png](./asset/image-13.png)
+![image-14.png](./asset/image-14.png)
+![image-15.png](./asset/image-15.png)
+![image-16.png](./asset/image-16.png)
+![image-17.png](./asset/image-17.png)
+![image-18.png](./asset/image-18.png)
+![image-19.png](./asset/image-19.png)
+![image-20.png](./asset/image-20.png)
+![image-21.png](./asset/image-21.png)
+![image-22.png](./asset/image-22.png)
+![image-23.png](./asset/image-23.png)
+![image-24.png](./asset/image-24.png)
+![image-25.png](./asset/image-25.png)
+![image-26.png](./asset/image-26.png)
+![image-27.png](./asset/image-27.png)
+![image-28.png](./asset/image-28.png)
+![image-29.png](./asset/image-29.png)
+![image-30.png](./asset/image-30.png)
+![image-31.png](./asset/image-31.png)
+![image-32.png](./asset/image-32.png)
+![image-33.png](./asset/image-33.png)
+![image-34.png](./asset/image-34.png)
+![image-35.png](./asset/image-35.png)
+![image-36.png](./asset/image-36.png)
+![image-37.png](./asset/image-37.png)
+![image-38.png](./asset/image-38.png)
+![image-39.png](./asset/image-39.png)
+![image-40.png](./asset/image-40.png)
+![image-41.png](./asset/image-41.png)
+![image-42.png](./asset/image-42.png)
+![image-43.png](./asset/image-43.png)
+![image-44.png](./asset/image-44.png)
+![image-45.png](./asset/image-45.png)
+![image-46.png](./asset/image-46.png)
+![image-47.png](./asset/image-47.png)
 
 # 🐳기술 스택
 
@@ -181,15 +212,15 @@ Git flow 사용을 위해 `sourcetree` 프로그램을 사용하였고 해당 �
 ## 프로젝트 산출물
 ### 1. Figma
 
-![image-1.png](./image-1.png)
+![image-6.png](./asset/image-6.png)
 
 ### 2. ERD
 
-![image-2.png](./image-2.png)
+![image-7.png](./asset/image-7.png)
 
 ### 3. API 문서
 
-![image-3.png](./image-3.png)
+![image-8.png](./asset/image-8.png)
 
 
 # 🌈개발 멤버 및 회고

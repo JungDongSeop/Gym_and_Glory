@@ -182,7 +182,7 @@ const ReportBoardCreate = () => {
             </label>
 
             {/* 수민이꺼 */}
-            <div>
+            <label className={classes.imgfileLabel} for="file">이미지 선택:
               <input type="file" onChange={handleImageChange} />
               {imageUrl && (
                 <img
@@ -190,7 +190,7 @@ const ReportBoardCreate = () => {
                   style={{ height: "100px", width: "auto" }}
                 />
               )}
-            </div>
+            </label>
 
             {/* 제출 버튼 */}
             <button type="submit" className={classes.submitBtn}>

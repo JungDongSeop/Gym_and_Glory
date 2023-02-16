@@ -95,13 +95,15 @@ const ReportBoardCreate = () => {
       })
       .catch((err) => {
         if (err.response.status === 413) {
-          toast.error("이미지 용량이 매우 커서 등록할 수 없습니다.");
+          toast.error("사진 용량이 매우 커서 등록할 수 없습니다.");
         }
       });
   };
 
   return (
     <main className={classes.boardDiv}>
+      <Toaster position="top-center" reverseOrder={false} />
+
       {/* 게시판 종류 선택 버튼 */}
       <NavigateButtons type="report" />
       {/* 신고 내용 작성 */}

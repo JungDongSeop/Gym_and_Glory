@@ -8,7 +8,7 @@ import { useParams, useNavigate } from "react-router";
 import RestApi from "../api/RestApi";
 
 import classes from "./CreateBoard.module.css";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 
 // import CkEditor from "./CkEditor";
 
@@ -27,31 +27,67 @@ const CreateBoard = () => {
 
   // 게시판 제출 버튼
   // 게시판에 쓴 글들을 저장할 변수
-  const [title, setTitle] = useState("");
-  const [contents, setContents] = useState("");
-  const changeHandler = (event) => {
-    event.preventDefault();
-    console.log(titleInputRef.current.value);
-    console.log(contentInputRef.current.value);
-  };
-  // 게시판 제출 함수
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const [title, setTitle] = useState("");
+  // const [contents, setContents] = useState("");
+  const [image, setImage] = useState(null);
 
-    try {
-      await axios.post(`${RestApi()}/board`, {
-        userSequence: userSequence,
-        title: titleInputRef.current.value,
-        contents: contentInputRef.current.value,
-        div: types[type],
-      });
-      setTitle("");
-      setContents("");
-      // alert("Board created successfully!");
-      navigate(`/board/${type}`);
-    } catch (error) {
-      console.log(error);
+  // const changeHandler = (event) => {
+  //   event.preventDefault();
+  //   console.log(titleInputRef.current.value);
+  //   console.log(contentInputRef.current.value);
+  // };
+
+  // 게시판 제출 함수
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("userSequence", userSequence);
+    formData.append("title", titleInputRef.current.value);
+    formData.append("contents", contentInputRef.current.value);
+    formData.append("div", types[type]);
+    if (image) {
+      formData.append("image", image);
     }
+
+    axios
+      .post(`${RestApi()}/board`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        navigate(`/board/${type}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // try {
+    //   await axios.post(`${RestApi()}/board`, {
+    //     userSequence: userSequence,
+    //     title: titleInputRef.current.value,
+    //     contents: contentInputRef.current.value,
+    //     div: types[type],
+    //   });
+    //   setTitle("");
+    //   setContents("");
+    //   // alert("Board created successfully!");
+    //   navigate(`/board/${type}`);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
+  const [imageUrl, setImageUrl] = useState(null);
+
+  const handleImageChange = (event) => {
+    const selectedImage = event.target.files[0];
+    setImage(event.target.files[0]);
+
+    const imageUrl = URL.createObjectURL(selectedImage);
+    setImageUrl(imageUrl);
   };
 
   const typename = () => {
@@ -115,14 +151,37 @@ const CreateBoard = () => {
                 ></textarea>
               </div>
             </div>
+            <div className={classes.bottomDiv}>
+              <div>
+                <div className={classes.addImage}>
+                  {/* <label htmlFor="boardImg"></label> */}
+                  <input
+                    type="file"
+                    onChange={handleImageChange}
+                    // ref={boardImageRef}
+                  />
+                </div>
+                <div>
+                  {imageUrl && (
+                    <img
+                      src={imageUrl}
+                      style={{ width: "300px", height: "auto" }}
+                    />
+                  )}
+                </div>
+              </div>
 
-            <div className={classes.bt_wrap}>
-              <button type="submit" className={classes.on}>
-                등록
-              </button>
-              <button type="submit" onClick={() => navigate(`/board/${type}`)}>
-                취소
-              </button>
+              <div className={classes.bt_wrap}>
+                <button type="submit" className={classes.on}>
+                  등록
+                </button>
+                <button
+                  type="submit"
+                  // onClick={() => navigate(`/board/${type}`)}
+                >
+                  취소
+                </button>
+              </div>
             </div>
           </div>
         </div>

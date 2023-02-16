@@ -42,6 +42,7 @@ const UpdateBoard = () => {
   // 게시판 수정 axios
   const handleSubmit = (event) => {
     event.preventDefault();
+
     if (newTitle !== board.title || newContent !== board.content) {
       axios
         .put(`${RestApi()}/board`, {

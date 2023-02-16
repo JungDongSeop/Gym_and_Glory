@@ -13,6 +13,7 @@ import classes from "./ReportBoard.module.css";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
+import { height } from "@mui/system";
 
 // 신고게시판
 // 관리자 : 유저들의 신고 내역 조회 가능. 이후 확인 및 확정하기 버튼 누르기
@@ -64,8 +65,10 @@ const ReportBoard = () => {
 
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = (reportSequence) => {
+  const handleClickOpen = (reportSequence, imagePath) => {
     setIsPickedReport(reportSequence);
+    setImagePath(imagePath);
+
     setOpen(true);
   };
 
@@ -77,6 +80,7 @@ const ReportBoard = () => {
   const reportKinds = [true, "욕설", "게임 불참", "성희롱"];
 
   const [isPickedReport, setIsPickedReport] = useState(0);
+  const [imagePath, setImagePath] = useState("");
 
   const adminCheck = () => {
     axios.get(`${RestApi()}/report/confirm/${isPickedReport}`);
@@ -118,8 +122,8 @@ const ReportBoard = () => {
         onClose={handleClose}
         PaperProps={{
           style: {
-            width: "400px",
-            height: "150px",
+            width: "1000px",
+            height: "1000px",
             margin: "auto",
             maxHeight: "none",
             maxWidth: "none",
@@ -129,13 +133,21 @@ const ReportBoard = () => {
         }}
       >
         {authCtx.role === "ROLE_ADMIN" ? (
+          // 수민이껀
           <DialogContent>
             <div className={classes.checkText}>
               <h3>게시물을 확인하시겠습니까?</h3>
             </div>
+            <div>
+              <img
+                src={imagePath}
+                alt=""
+                style={{ width: "auto", height: "500px" }}
+              />
+            </div>
             <div className={classes.checkButton}>
               <button onClick={adminCheck} className={classes.checkConfirm}>
-                확인
+                접수완료
               </button>
               <button onClick={reportDelete} className={classes.checkDelete}>
                 삭제
@@ -167,7 +179,9 @@ const ReportBoard = () => {
                 <li
                   key={item.reportSequence}
                   // className={index % 2 === 0 ? classes.odd : classes.even}
-                  onClick={() => handleClickOpen(item.reportSequence)}
+                  onClick={() =>
+                    handleClickOpen(item.reportSequence, item.imagePath)
+                  }
                 >
                   <div className={classes.reportUserInfo}>
                     <div className={classes.report}>

@@ -10,7 +10,6 @@ import classes from "./MyPage.module.css";
 import RestApi from "../api/RestApi";
 
 const MyPage = () => {
-
   // 유저 정보 가져오기
   const authCtx = useContext(AuthContext);
 
@@ -37,21 +36,29 @@ const MyPage = () => {
   // 프로필 사진 업로드 기능
   const [profileImage, setProfileImage] = useState(null);
   // 사진 선택 후 저장, 이후 새로고침
-  const handleFileSelect = async(e) => {
+  const handleFileSelect = async (e) => {
     setProfileImage(e.target.files[0]);
     const formData = new FormData();
-    formData.append('files', e.target.files[0]);
+    formData.append("files", e.target.files[0]);
+    console.log(formData);
     try {
-      await axios.post(`${RestApi()}/file/user/${authCtx.userSequence}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then(() => {
-        window.location.reload()
-      });
+      await axios
+        .post(`${RestApi()}/file/user/${authCtx.userSequence}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(() => {
+          window.location.reload();
+        });
     } catch (error) {
-      console.error(error);
+      // console.log(error.response.status, "sdfdf");
+      if (error.response.status === 413) {
+        console.log("413");
+        alert("사진 ㅈㄴ큼");
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -60,21 +67,20 @@ const MyPage = () => {
       {user ? (
         <div className={classes.container}>
           <div className={classes.profileWrap}>
-
             {/* 유저 프로필 사진 */}
             <form>
               {profileImage ? (
-              <img
-                className={classes.profile}
-                src={user.imagePath || defaultProfile}
-                alt="프로필"
-              />
-              ) : (              
-              <img
-                className={classes.profile}
-                src={user.imagePath || defaultProfile}
-                alt="프로필"
-              />
+                <img
+                  className={classes.profile}
+                  src={user.imagePath || defaultProfile}
+                  alt="프로필"
+                />
+              ) : (
+                <img
+                  className={classes.profile}
+                  src={user.imagePath || defaultProfile}
+                  alt="프로필"
+                />
               )}
               <div className={classes.filebox}>
                 <label htmlFor="ex-file">프로필 변경</label>
@@ -100,16 +106,75 @@ const MyPage = () => {
             <div className={classes.graphButtonWrap}>
               {/* 운동 종류 */}
               <div>
-                <button className={`${classes.graphButton} ${exerciseType === 1 ? classes.checked : ''}`} onClick={() => setExerciseData(1)}>스쿼트</button>
-                <button className={`${classes.graphButton} ${exerciseType === 2 ? classes.checked : ''}`} onClick={() => setExerciseData(2)}>버피</button>
-                <button className={`${classes.graphButton} ${exerciseType === 3 ? classes.checked : ''}`} onClick={() => setExerciseData(3)}>푸쉬업</button>
-                <button className={`${classes.graphButton} ${exerciseType === 4 ? classes.checked : ''}`} onClick={() => setExerciseData(4)}>점핑잭</button>
+                <button
+                  className={`${classes.graphButton} ${
+                    exerciseType === 1 ? classes.checked : ""
+                  }`}
+                  onClick={() => setExerciseData(1)}
+                >
+                  스쿼트
+                </button>
+                <button
+                  className={`${classes.graphButton} ${
+                    exerciseType === 2 ? classes.checked : ""
+                  }`}
+                  onClick={() => setExerciseData(2)}
+                >
+                  버피
+                </button>
+                <button
+                  className={`${classes.graphButton} ${
+                    exerciseType === 3 ? classes.checked : ""
+                  }`}
+                  onClick={() => setExerciseData(3)}
+                >
+                  푸쉬업
+                </button>
+                <button
+                  className={`${classes.graphButton} ${
+                    exerciseType === 4 ? classes.checked : ""
+                  }`}
+                  onClick={() => setExerciseData(4)}
+                >
+                  점핑잭
+                </button>
               </div>
               {/* 총 기간 */}
               <div>
-                <button className={`${classes.graphButton} ${xAxisMin === 7 ? classes.checked : ''}`} onClick={() => {if (xUnit !== 1){setXUnit(1)}; setXAxisMin(7)}}>1주일</button>
-                <button className={`${classes.graphButton} ${xAxisMin === 30 ? classes.checked : ''}`} onClick={() => {if (xUnit === 30){setXUnit(7)}; setXAxisMin(30)}}>1달</button>
-                <button className={`${classes.graphButton} ${xAxisMin === 364 ? classes.checked : ''}`} onClick={() => setXAxisMin(364)}>1년</button>
+                <button
+                  className={`${classes.graphButton} ${
+                    xAxisMin === 7 ? classes.checked : ""
+                  }`}
+                  onClick={() => {
+                    if (xUnit !== 1) {
+                      setXUnit(1);
+                    }
+                    setXAxisMin(7);
+                  }}
+                >
+                  1주일
+                </button>
+                <button
+                  className={`${classes.graphButton} ${
+                    xAxisMin === 30 ? classes.checked : ""
+                  }`}
+                  onClick={() => {
+                    if (xUnit === 30) {
+                      setXUnit(7);
+                    }
+                    setXAxisMin(30);
+                  }}
+                >
+                  1달
+                </button>
+                <button
+                  className={`${classes.graphButton} ${
+                    xAxisMin === 364 ? classes.checked : ""
+                  }`}
+                  onClick={() => setXAxisMin(364)}
+                >
+                  1년
+                </button>
               </div>
             </div>
             {/* 운동 그래프 */}
@@ -120,9 +185,38 @@ const MyPage = () => {
             />
             {/* 단위 기간 */}
             <div className={classes.graphXAxisWrap}>
-              <button className={`${classes.graphButton} ${xUnit === 1 ? classes.checked : ''}`} onClick={() => setXUnit(1)}>일별</button>
-              <button className={`${classes.graphButton} ${xUnit === 7 ? classes.checked : ''}`} onClick={() => {if (xAxisMin === 7) {setXAxisMin(30)}; setXUnit(7)}}>주별</button>
-              <button className={`${classes.graphButton} ${xUnit === 30 ? classes.checked : ''}`} onClick={() => {setXAxisMin(364); setXUnit(30);}}>월별</button>
+              <button
+                className={`${classes.graphButton} ${
+                  xUnit === 1 ? classes.checked : ""
+                }`}
+                onClick={() => setXUnit(1)}
+              >
+                일별
+              </button>
+              <button
+                className={`${classes.graphButton} ${
+                  xUnit === 7 ? classes.checked : ""
+                }`}
+                onClick={() => {
+                  if (xAxisMin === 7) {
+                    setXAxisMin(30);
+                  }
+                  setXUnit(7);
+                }}
+              >
+                주별
+              </button>
+              <button
+                className={`${classes.graphButton} ${
+                  xUnit === 30 ? classes.checked : ""
+                }`}
+                onClick={() => {
+                  setXAxisMin(364);
+                  setXUnit(30);
+                }}
+              >
+                월별
+              </button>
             </div>
           </div>
         </div>

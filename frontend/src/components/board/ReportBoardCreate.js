@@ -52,32 +52,73 @@ const ReportBoardCreate = () => {
     console.log(data);
   };
 
+  const [imageUrl, setImageUrl] = useState("");
+
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const selectedImage = event.target.files[0];
+    setImage(event.target.files[0]);
+
+    const imageUrl = URL.createObjectURL(selectedImage);
+    setImageUrl(imageUrl);
+  };
+
+  // const [image, setImage] = useState(null);
   // 게시판 create axios 요청
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add logic to create board here
-    try {
-      await axios.post(`${RestApi()}/report`, {
-        sendSequence: userSequence,
-        getSequence: pickedData.userSequence,
-        contents: contents,
-        kind: kind,
+
+    const formData = new FormData();
+    formData.append("contents", contents);
+    formData.append("kind", kind);
+    formData.append("sendSequence", userSequence);
+    formData.append("getSequence", pickedData.userSequence);
+    if (image) {
+      formData.append("image", image);
+    }
+
+    axios
+      .post(`${RestApi()}/report`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        Swal.fire({
+          title: "신고가 정상적으로 접수되었습니다.",
+          icon: "success",
+          confirmButtonText: "확인",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate(`/board/report`);
+          }
+        });
       });
 
-      // alert("신고가 접수되었습니다.!");
-      Swal.fire({
-        title: "신고가 정상적으로 접수되었습니다.",
-        icon: "success",
-        confirmButtonText: "확인",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate(`/board/report`);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    setContents("");
+    // Add logic to create board here
+    // try {
+    //   await axios.post(`${RestApi()}/report`, {
+    //     sendSequence: userSequence,
+    //     getSequence: pickedData.userSequence,
+    //     contents: contents,
+    //     kind: kind,
+    //   });
+
+    //   // alert("신고가 접수되었습니다.!");
+    //   Swal.fire({
+    //     title: "신고가 정상적으로 접수되었습니다.",
+    //     icon: "success",
+    //     confirmButtonText: "확인",
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       navigate(`/board/report`);
+    //     }
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    // setContents("");
   };
 
   return (
@@ -139,6 +180,17 @@ const ReportBoardCreate = () => {
               신고할 내용 :
               <input type="text" value={contents} onChange={handleChange} />
             </label>
+
+            {/* 수민이꺼 */}
+            <div>
+              <input type="file" onChange={handleImageChange} />
+              {imageUrl && (
+                <img
+                  src={imageUrl}
+                  style={{ height: "100px", width: "auto" }}
+                />
+              )}
+            </div>
 
             {/* 제출 버튼 */}
             <button type="submit" className={classes.submitBtn}>

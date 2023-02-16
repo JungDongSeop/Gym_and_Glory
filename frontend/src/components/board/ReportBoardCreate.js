@@ -18,7 +18,6 @@ const ReportBoardCreate = () => {
   const { userSequence } = useContext(AuthContext);
 
   // 닉네임으로 유저 검색
-  // const [reportUserNickname, setReportUserSequence] = useState('');
   const [searchedDatas, setSearchedDatas] = useState([]);
   const [pickedData, setPickedData] = useState({});
 
@@ -49,7 +48,6 @@ const ReportBoardCreate = () => {
   // 닉네임 저장
   const saveReportUserData = (data) => {
     setPickedData(data);
-    console.log(data);
   };
 
   const [imageUrl, setImageUrl] = useState("");
@@ -64,7 +62,6 @@ const ReportBoardCreate = () => {
     setImageUrl(imageUrl);
   };
 
-  // const [image, setImage] = useState(null);
   // 게시판 create axios 요청
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -95,30 +92,6 @@ const ReportBoardCreate = () => {
           }
         });
       });
-
-    // Add logic to create board here
-    // try {
-    //   await axios.post(`${RestApi()}/report`, {
-    //     sendSequence: userSequence,
-    //     getSequence: pickedData.userSequence,
-    //     contents: contents,
-    //     kind: kind,
-    //   });
-
-    //   // alert("신고가 접수되었습니다.!");
-    //   Swal.fire({
-    //     title: "신고가 정상적으로 접수되었습니다.",
-    //     icon: "success",
-    //     confirmButtonText: "확인",
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       navigate(`/board/report`);
-    //     }
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // setContents("");
   };
 
   return (
@@ -138,8 +111,6 @@ const ReportBoardCreate = () => {
                 <option value="3">성희롱</option>
               </select>
             </label>
-
-            {/* <br /> */}
 
             {/* 유저 닉네임 검색 */}
             <label>
@@ -173,8 +144,6 @@ const ReportBoardCreate = () => {
               ) : null}
             </label>
 
-            {/* <br /> */}
-
             {/* 신고 내용 입력 */}
             <label>
               신고할 내용 :
@@ -188,6 +157,7 @@ const ReportBoardCreate = () => {
                 <img
                   src={imageUrl}
                   style={{ height: "100px", width: "auto" }}
+                  alt="사진"
                 />
               )}
             </label>

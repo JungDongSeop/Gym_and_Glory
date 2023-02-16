@@ -10,7 +10,7 @@ import classes from "./Comment.module.css";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import moment from "moment";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 // 게시판 상세페이지
 // 이후 notice, getTeam, report 등으로 분리할 예정
@@ -36,8 +36,6 @@ const DetailBoard = () => {
     const isLikePeople = await axios(
       `${RestApi()}/board/IsGood/${userSequence}/${articleSequence}`
     );
-    console.log(isLikePeople.data);
-    console.log(result.data);
     setLike(isLikePeople.data);
     setData(result.data);
   };
@@ -47,26 +45,15 @@ const DetailBoard = () => {
       const isLikePeople = await axios(
         `${RestApi()}/board/IsGood/${userSequence}/${articleSequence}`
       );
-      console.log(result.data);
-      console.log(isLikePeople.data);
-
       setLike(isLikePeople.data);
       setData(result.data);
     };
     readBoard();
-  }, [articleSequence]);
-
-  // 초기 좋아요 한 사람인지 유무 확인
+  }, [articleSequence, userSequence]);
 
   // 게시글 좋아요를 위한 axios
   const goodClick = async () => {
     await axios(`${RestApi()}/board/good/${userSequence}/${articleSequence}`);
-    // if (like === true) {
-    //   // alert("취소하였습니다.");
-    //   toast.("취소하였습니다.");
-    // } else {
-    //   alert("추천하였습니다");
-    // }
     readBoard();
   };
 
@@ -75,8 +62,6 @@ const DetailBoard = () => {
     await axios.delete(`${RestApi()}/board/${articleSequence}`);
     navigate("/board/notice");
   };
-
-  // let typeresult = "";
 
   useEffect(() => {
     if (type === "notice") {
@@ -94,13 +79,10 @@ const DetailBoard = () => {
         toastOptions={{
           success: {
             style: {
-              // background: "green",
-              // color: "white",
             },
           },
           error: {
             style: {
-              // background: "red",
             },
           },
         }}
@@ -145,7 +127,7 @@ const DetailBoard = () => {
           </div>
         </div>
         <div className={classes.qsText}>
-          <img src={data.imagePath} style={{ width: "30%", height: "auto" }} />
+          <img src={data.imagePath} style={{ width: "30%", height: "auto" }} alt="사진"/>
           <div>{data.contents}</div>
         </div>
         <div className={classes.qsEmpathyWrap}>
@@ -168,7 +150,6 @@ const DetailBoard = () => {
             )}
 
             <div>
-              {/* <span>{like ? "좋아요누름" : "안누름"}</span> */}
               <span>{data.goodCount}명</span>
             </div>
           </div>

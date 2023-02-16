@@ -32,7 +32,6 @@ const FriendListModalAdd = () => {
   // 친구 요청 보내기
   const handleSendFriendRequest = async (getterSequence) => {
     alert("친구 요청을 보냈습니다.");
-    // await axios.get(`${RestApi()}/friend/send`, {
     await axios.post(`${RestApi()}/friend/send`, {
       sendFrd: userSequence,
       recvFrd: getterSequence

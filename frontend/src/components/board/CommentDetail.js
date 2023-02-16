@@ -4,8 +4,9 @@ import RestApi from "../api/RestApi";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import classes from "./CommentDetail.module.css";
-import locale from "antd/es/date-picker/locale/en_US";
+// import locale from "antd/es/date-picker/locale/en_US";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 // 댓글 좋아요 여부 출력만을 위해 사용
 const CommentDetail = (props) => {
@@ -13,7 +14,8 @@ const CommentDetail = (props) => {
   const comment = props.comment;
   const userSequence = props.userSequence;
   const [goodCount, setGoodCount] = useState(props.goodCount);
-  const [content, setContent] = useState(props.content);
+  // const [content, setContent] = useState(props.content);
+  const content = props.content;
   const [isDelete, setIsDelete] = useState(false);
 
   // 댓글 지우는 axios 요청
@@ -68,31 +70,40 @@ const CommentDetail = (props) => {
       await axios.delete(
         `${RestApi()}/board/comment/${comment.commentSequence}`
       );
-      alert("댓글이 삭제되었습니다.");
+      // alert("댓글이 삭제되었습니다.");
+      Swal.fire({
+        title: "삭제",
+        text: "댓글이 삭제되었습니다.",
+        icon: "success",
+        confirmButtonText: "확인",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setIsDelete(true);
+          window.location.reload();
+        }
+      });
       // commentLength -= 1;
       // Show a success message or refresh the comments list
       // commentRead(articleSequence);
-      setIsDelete(true);
-      window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {
-    const commentRead = async () => {
-      const result = await axios(`${RestApi()}/board/comment/`);
-      // setComments(result.data.reverse());
-    };
-    // const handleDelete = async () => {
-    //   const deleteResult = await axios.delete(
-    //     `${RestApi()}/board/comment/${comment.commentSequence}`
-    //   );
-    //   setIsDelete(true);
-    // };
-    commentRead();
-    // handleDelete();
-  }, []);
+  // useEffect(() => {
+  //   const commentRead = async () => {
+  //     const result = await axios(`${RestApi()}/board/comment/`);
+  //     setComments(result.data.reverse());
+  //   };
+  // const handleDelete = async () => {
+  //   const deleteResult = await axios.delete(
+  //     `${RestApi()}/board/comment/${comment.commentSequence}`
+  //   );
+  //   setIsDelete(true);
+  // };
+  //   commentRead();
+  //   // handleDelete();
+  // }, []);
 
   const utcTime = new Date(comment.registerTime).toISOString();
   const localTime = moment

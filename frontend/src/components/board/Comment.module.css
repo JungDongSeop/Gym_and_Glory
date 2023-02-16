@@ -427,14 +427,23 @@ li {
 }
 
 .buttonInput {
-  border: 0px;
-  background: none;
+  border: 1px solid #455d9d;
+  background: #455d9d;
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
   color: white;
 }
 
-.createButton {
+/* .createButton {
   right: 0;
   margin-bottom: 5px;
   float: right;
   background-color: #455d9d;
+  width: 50px;
+  border-radius: 5px;
 }
+
+.createButton:hover{
+  cursor: pointer;
+} */

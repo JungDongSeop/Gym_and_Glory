@@ -73,9 +73,9 @@
 }
 
 .notice > ul > li {
-  position: grid;
+  /* position: grid; */
   grid-template-columns: 3fr 1fr;
-  /* float: left; */
+  float: left;
   margin: 0;
   /* padding-left: 27px; */
   /* padding-right: 27px; */
@@ -107,9 +107,14 @@
   color: #333;
   float: left;
   margin-top: 15px;
-  max-width: 200px;
+  /* max-width: 200px; */
 }
+@media (max-width: 1000px) {
 
+  .boardOtherInfo {
+    display: none;
+  }
+}
 .boardOtherInfo {
   float: right;
   font-family: "Tahoma";

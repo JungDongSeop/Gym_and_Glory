@@ -38,4 +38,6 @@ public class Report {
 
     private Integer confirmation;
 
+    @Column(name = "image_path")
+    private String imagePath;
 }

@@ -6,7 +6,8 @@ import axios from "axios";
 import NavigateButtons from "./NavigateButtons";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import RestApi from "../api/RestApi";
-import classes from "./ReportBoardCreate.module.scss"
+import classes from "./ReportBoardCreate.module.scss";
+import Swal from "sweetalert2";
 
 const ReportBoardCreate = () => {
   // url 이동을 위한 함수
@@ -63,8 +64,16 @@ const ReportBoardCreate = () => {
         kind: kind,
       });
 
-      alert("신고가 접수되었습니다.!");
-      navigate(`/board/report`);
+      // alert("신고가 접수되었습니다.!");
+      Swal.fire({
+        title: "신고가 정상적으로 접수되었습니다.",
+        icon: "success",
+        confirmButtonText: "확인",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate(`/board/report`);
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -77,55 +86,66 @@ const ReportBoardCreate = () => {
       <NavigateButtons type="report" />
       {/* 신고 내용 작성 */}
       <div className={classes.myDiv}>
-      <form onSubmit={handleSubmit}>
-        {/* 신고 종류 선택 */}
-        <div className={classes.rbcDiv}>
-        <label>
-          신고 종류 :
-          <select value={kind} onChange={handleKindChange}>
-            <option value="1">욕설</option>
-            <option value="2">게임 불참</option>
-            <option value="3">성희롱</option>
-          </select>
-        </label>
+        <form onSubmit={handleSubmit}>
+          {/* 신고 종류 선택 */}
+          <div className={classes.rbcDiv}>
+            <label>
+              신고 종류 :
+              <select value={kind} onChange={handleKindChange}>
+                <option value="1">욕설</option>
+                <option value="2">게임 불참</option>
+                <option value="3">성희롱</option>
+              </select>
+            </label>
 
-        {/* <br /> */}
+            {/* <br /> */}
 
-        {/* 유저 닉네임 검색 */}
-        <label>
-          유저 닉네임 :
-          <input
-            type="text"
-            onChange={handleReportUserNicknameChange}
-            ref={enteredusername}
-          />
-          {Array.isArray(searchedDatas) ? (
-            <div className={classes.pickNickDiv} >
-              {searchedDatas.map((d, index) => {
-                return (
-                  <div className={classes.pickNick} key={index} onClick={() => saveReportUserData(d)}>
-                    {d.nickname}
-                  </div>
-                );
-              })}
-            </div>
-          ) : null}
-          <br />
-          고른 닉네임 : {pickedData ? <span className={classes.realPickNick}>{pickedData.nickname}</span> : null}
-        </label>
+            {/* 유저 닉네임 검색 */}
+            <label>
+              유저 닉네임 :
+              <input
+                type="text"
+                onChange={handleReportUserNicknameChange}
+                ref={enteredusername}
+              />
+              {Array.isArray(searchedDatas) ? (
+                <div className={classes.pickNickDiv}>
+                  {searchedDatas.map((d, index) => {
+                    return (
+                      <div
+                        className={classes.pickNick}
+                        key={index}
+                        onClick={() => saveReportUserData(d)}
+                      >
+                        {d.nickname}
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null}
+              <br />
+              고른 닉네임 :{" "}
+              {pickedData ? (
+                <span className={classes.realPickNick}>
+                  {pickedData.nickname}
+                </span>
+              ) : null}
+            </label>
 
-        {/* <br /> */}
+            {/* <br /> */}
 
-        {/* 신고 내용 입력 */}
-        <label>
-          신고할 내용 :
-          <input type="text" value={contents} onChange={handleChange} />
-        </label>
+            {/* 신고 내용 입력 */}
+            <label>
+              신고할 내용 :
+              <input type="text" value={contents} onChange={handleChange} />
+            </label>
 
-        {/* 제출 버튼 */}
-        <button type="submit" className={classes.submitBtn}>Create Board</button>
-        </div>
-      </form>
+            {/* 제출 버튼 */}
+            <button type="submit" className={classes.submitBtn}>
+              Create Board
+            </button>
+          </div>
+        </form>
       </div>
     </main>
   );

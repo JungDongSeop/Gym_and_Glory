@@ -6,7 +6,7 @@ import classes from './FriendListModalAdd.module.css'
 import RestApi from "../../api/RestApi";
 import SearchIcon from '@mui/icons-material/Search';
 
-
+// 친구 추가 페이지
 const FriendListModalAdd = () => {
   // redux로 user 정보 가져오기
   const { userSequence, nickname } = useContext(AuthContext);
@@ -51,9 +51,8 @@ const FriendListModalAdd = () => {
         console.log('받은 신청 유저 없음')
       })
     }
-
     fetchData();
-  }, [userSequence])
+  }, [userSequence, nickname])
 
   // 친구 요청 수락, 이후 새로운 친구 목록 출력
   const handleAcceptFriendRequest = async (sender, getter) => {
@@ -78,7 +77,6 @@ const FriendListModalAdd = () => {
     });
   };
 
-  
   return (
     <div className={classes.container}>
       <div className={classes.searchbarArea}>

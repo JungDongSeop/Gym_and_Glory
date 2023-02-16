@@ -13,5 +13,6 @@ public class WriteReq {
     private String title;
     private String contents;
     private Integer div;
+    private String imagePath;
 
 }

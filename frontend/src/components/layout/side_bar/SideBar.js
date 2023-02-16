@@ -8,9 +8,7 @@ import Ranking from "./Ranking";
 import Button from "../../UI/LobbyButton";
 import classes from "./SideBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { width } from "@mui/system";
 
-// 사이드바 만들기. 이후 수정
 // 사이드바는 로비, 게시판에 있을 경우 (유저프로필, 방 생성, 친구 목록, 랭킹) 이 표시되고,
 //            마이페이지에 있을 경우 (유저 프로필 + 경험치 바, 뱃지 목록, 친구 목록, 회원정보 수정, 회원 탈퇴)가 표시된다.
 const SideBar = (props) => {
@@ -19,13 +17,12 @@ const SideBar = (props) => {
   const isMyPage = props.isMyPage;
   const authCtx = useContext(AuthContext);
 
-  // 경험치
+  // 경험치바 만들기
   const expBarStyle = {
     width: `${(Number(authCtx.exp)) / 100}%`,
     height: '20px',
     backgroundColor: 'yellow',
   };
-
   const expBarContainerStyle = {
     backgroundColor: 'white',
     height: '20px',
@@ -40,13 +37,13 @@ const SideBar = (props) => {
       <SideWebcam />
       {/* 유저 프로필 */}
       <div className={classes.userNickDiv}>
-        <Link to="/mypage">{authCtx.nickname}</Link>
+        <Link to="/mypage">LV. {parseInt(authCtx.exp / 10000)+1} {authCtx.nickname}</Link>
         {/* 경험치 바 */}
       </div>
         <div style={expBarContainerStyle}>
           <div style={expBarStyle}></div>
           <div className={classes.exp}>
-            <p style={{margin: 0}}>{Number(authCtx.exp)} / 10000</p>
+            <p style={{margin: 0, marginRight: '5px'}}>{Number(authCtx.exp)} / 10000</p>
           </div>
         </div>      
 
@@ -72,7 +69,6 @@ const SideBar = (props) => {
           {/* 친구 목록 모달 */}
           <FriendListModal />
 
-        
           {/* 실시간 랭킹 */}
           <Ranking />
         </div>

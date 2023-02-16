@@ -33,7 +33,6 @@ const CreateBoard = lazy(() => import("./components/board/CreateBoard"));
 const DetailBoard = lazy(() => import("./components/board/DetailBoard"));
 const UpdateBoard = lazy(() => import("./components/board/UpdateBoard"));
 const ReportBoard = lazy(() => import("./components/board/ReportBoard"));
-const ChatRoom = lazy(() => import("./components/socket/chatroom"));
 const ReportBoardDetail = lazy(() =>
   import("./components/board/ReportBoardDetail")
 );
@@ -104,20 +103,7 @@ function App() {
           {authCtx.isLoggedIn && (
             <Route path="/board/:type" element={<Board />} />
           )}
-          {authCtx.isLoggedIn && (
-            <Route path="/chatroom" element={<ChatRoom />} />
-          )}
           <Route path="*" element={<Main />} />
-          {/* <Route path="/signup" element={<Signup />} />
-          <Route path="/find-pwd" element={<FindPwd />} />
-          <Route path="/update" element={<UpdateUser />} /> */}
-          {/* <Route path="/delete" element={<DeleteUser />} />
-          <Route path="/lobby" element={<Lobby />} />
-          <Route path="/ranking" element={<Ranking />} />
-          <Route path="/mypage/:username" element={<MyPage />} />
-          <Route path="/board/:type" element={<Board />} />
-          <Route path="/board/:type/create" element={<CreateBoard />} />
-          <Route path="/board/:type/:articleSequence" element={<DetailBoard />} /> */}
         </Routes>
       </Suspense>
     </div>

@@ -1,7 +1,6 @@
 .container {
   height: 300px;
   max-width: 1080px;
-  /* margin: 10px; */
   overflow-x: auto;
   display: flex;
   flex-wrap: wrap;

@@ -47,7 +47,11 @@ public class BoardArticle {
 
     private Integer div;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
     public static BoardArticle createBoard(WriteReq writeReq, User user) {
+
         BoardArticle board = new BoardArticle();
         board.setTitle(writeReq.getTitle());
         board.setUser(user);
@@ -55,6 +59,7 @@ public class BoardArticle {
         board.setViews(0);
         board.setGoodCount(0);
         board.setDiv(writeReq.getDiv());
+        board.setImagePath(writeReq.getImagePath());
 
         return board;
     }

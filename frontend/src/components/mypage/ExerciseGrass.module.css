@@ -21,7 +21,6 @@
   border-radius: 3px;
   font-size: 100px;
   box-sizing: border-box;
-  /* border: 2px solid black */
   font-size: 15px;
   margin-right: 30px;
 }
@@ -36,7 +35,6 @@
   align-items: center ;
   border-radius: 3px;
   box-sizing: border-box;
-  /* border: 2px solid black */
 }
 .cellNotHover {
   width: 15px;
@@ -48,7 +46,6 @@
   align-items: center ;
   border-radius: 3px;
   box-sizing: border-box;
-  /* border: 2px solid black */
 }
 .cell:hover {
   border: 2px solid black;
@@ -67,7 +64,6 @@
 .xAxisMonth {
   width: 15px;
   height: 40px;
-  /* margin-left: 49px; */
   display: flex;
   align-items: flex-end;
   white-space: nowrap;

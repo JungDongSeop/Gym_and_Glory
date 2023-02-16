@@ -35,8 +35,6 @@ const Main = () => {
 
   return (
     <div>
-      {/* 로그인하지 않은 유저에게 표시되는 화면 */}
-
       {/* 캐러셀 넣기 */}
       <Carousel className={classes.carousel} ref={carouselRef}>
         {/* 로그인 캐러셀 */}

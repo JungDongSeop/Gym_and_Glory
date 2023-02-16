@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-// import { useContext } from "react";
-// import AuthContext from "../../store/auth-context";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import classes from "./Ranking.module.scss";
 import RestApi from "../api/RestApi";
@@ -37,15 +35,15 @@ const Ranking = () => {
           {soloRanking && soloRanking.map((user, index) => (
             <li key={index}>
               {index === 0 ? 
-                <img src={rank1} className={classes.rankImg} /> : null
+                <img src={rank1} className={classes.rankImg} alt="랭킹"/> : null
               }
 
               {index === 1 ? 
-                <img src={rank2} className={classes.rankImg} /> : null
+                <img src={rank2} className={classes.rankImg} alt="랭킹"/> : null
               }
 
               {index === 2 ? 
-                <img src={rank3} className={classes.rankImg} /> : null
+                <img src={rank3} className={classes.rankImg} alt="랭킹"/> : null
               }
               <p className={classes.levelText}>
         
@@ -54,8 +52,6 @@ const Ranking = () => {
               <p className={classes.nickText}>
                 {user.nickName}
               </p>
-              {/* <br /> */}
-
             </li>
           ))}
         </ul>
@@ -68,29 +64,24 @@ const Ranking = () => {
             <li key={index}>
 
               {index === 0 ? 
-                <img src={rank1} className={classes.rankImg} /> : null
+                <img src={rank1} className={classes.rankImg} alt="랭킹"/> : null
               }
 
               {index === 1 ? 
-                <img src={rank2} className={classes.rankImg} /> : null
+                <img src={rank2} className={classes.rankImg} alt="랭킹"/> : null
               }
 
               {index === 2 ? 
-                <img src={rank3} className={classes.rankImg} /> : null
+                <img src={rank3} className={classes.rankImg} alt="랭킹"/> : null
               }
 
               <p className={classes.levelText}>
                 {moment(team.clearTime, "HH:mm:ss").add(9, "hours").format("HH:mm:ss")}
               </p>
 
-
-              {/* <br /> */}
-
               <p className={classes.nickText}>
               {team.teamName}
               </p>
-
-              {/* <div className={classes.teamDiv}>{team.users}</div> */}
             </li>
           ))}
         </ul>

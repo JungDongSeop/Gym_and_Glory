@@ -3,22 +3,6 @@ import AuthContext from "./store/auth-context";
 import { Routes, Route } from "react-router-dom";
 import Main from "./components/main/Main";
 import "./App.css";
-// import Login from "./components/auth/login/Login";
-// import Signup from "./components/auth/signup/Signup";
-// import FindPwd from "./components/auth/find_pwd/FindPwd";
-// import UpdateUser from "./components/auth/update/Update";
-// import DeleteUser from "./components/auth/delete/Delete";
-// import Lobby from "./components/lobby/Lobby";
-// import MyPage from "./components/mypage/MyPage";
-// import Board from "./components/board/Board";
-// import Ranking from "./components/ranking/Ranking";
-// import CreateBoard from "./components/board/CreateBoard";
-// import DetailBoard from "./components/board/DetailBoard";
-// import UpdateBoard from "./components/board/UpdateBoard";
-// import ReportBoard from "./components/board/ReportBoard";
-// import ReportBoardDetail from "./components/board/ReportBoardDetail";
-// import ReportBoardCreate from "./components/board/ReportBoardCreate";
-// import GameRoom from "./components/video/GameRoom";
 
 const Login = lazy(() => import("./components/auth/login/Login"));
 const Signup = lazy(() => import("./components/auth/signup/Signup"));
@@ -42,7 +26,6 @@ const ReportBoardCreate = lazy(() =>
 const GameRoom = lazy(() => import("./components/video/GameRoom"));
 function App() {
   const authCtx = useContext(AuthContext);
-  console.log(authCtx);
 
   return (
     <div>

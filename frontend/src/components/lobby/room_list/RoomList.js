@@ -48,7 +48,7 @@ class RoomList extends Component {
                 roomStatus,
               };
             });
-            console.log(info);
+            // console.log(info);
             this.setState({ rooms: info });
           });
       }, 1000),
@@ -62,7 +62,7 @@ class RoomList extends Component {
           // "Access-Control-Allow-Methods": "GET,POST",
         },
       })
-      .then((res) => console.log(res));
+      // .then((res) => console.log(res));
   }
 
   // componentDidUpdate() {

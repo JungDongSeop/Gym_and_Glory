@@ -116,7 +116,10 @@ const ReportBoard = () => {
             <div className={classes.checkText}>
               <h3>게시물을 확인하시겠습니까?</h3>
             </div>
-            <div>
+            <div className={classes.checkPtag}>
+              <p>스크린샷</p>
+            </div>
+            <div className={classes.checkImg}>
               <img
                 src={imagePath}
                 alt=""
@@ -190,13 +193,12 @@ const ReportBoard = () => {
         <div className={classes.notice}>
           <h2>유저들의 신고페이지</h2>
           <ul>
-            {board.slice(currentPage * 10 - 10, currentPage * 10).map(
-              (item, index) =>
+            {board
+              .slice(currentPage * 10 - 10, currentPage * 10)
+              .map((item, index) =>
                 // 관리자가 확인 안했으면
                 !item.confirmation ? (
-                  <li
-                    key={item.reportSequence}
-                  >
+                  <li key={item.reportSequence}>
                     <div className={classes.reportUserInfo}>
                       <div className={classes.report}>
                         <div className={classes.reporter}>
@@ -230,9 +232,7 @@ const ReportBoard = () => {
                   </li>
                 ) : (
                   // 관리자가 확인했으면
-                  <li
-                    key={item.reportSequence}
-                  >
+                  <li key={item.reportSequence}>
                     <div className={classes.reportUserInfo}>
                       <div className={classes.report}>
                         <div className={classes.reporter}>
@@ -259,7 +259,7 @@ const ReportBoard = () => {
                     </div>
                   </li>
                 )
-            )}
+              )}
           </ul>
         </div>
       )}

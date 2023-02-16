@@ -123,12 +123,21 @@
 .checkButton {
   display: flex;
   width: 100%;
-  height: 30%;
+  height: 50px;
   align-items: center;
   justify-content: space-around;
-
 }
 
+.checkImg {
+  display: flex;
+  justify-content: center;
+}
+
+.checkPtag {
+  display: flex;
+  justify-content: center;
+  font-weight: 900;
+}
 .checkConfirm {
   border: 1px solid black;
   width: 20%;
@@ -137,8 +146,6 @@
   background-color: rgb(11, 172, 11);
   color: white;
 }
-
-
 
 .checkDelete {
   border: 1px solid black;
@@ -150,7 +157,7 @@
 }
 
 .adminNotCheckDelete {
-  border: 1px solid rgb(245,99,99);
+  border: 1px solid rgb(245, 99, 99);
   background-color: rgb(245, 99, 99);
   font-weight: 900;
   width: 40px;
@@ -173,7 +180,7 @@
 }
 
 .checkConfirm:hover {
-  background-color: green
+  background-color: green;
 }
 
 .checkDelete:hover {

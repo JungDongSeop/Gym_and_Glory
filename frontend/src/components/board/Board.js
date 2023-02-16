@@ -48,13 +48,17 @@ const Board = () => {
       <br />
 
       {/* 글 작성 버튼 */}
-      <Button
-        className={classes.createButton}
-        type="primary"
-        onClick={() => navigate(`/board/${type}/create`)}
-      >
-        글 작성
-      </Button>
+
+      {sessionStorage.getItem("role") === "ROLE_ADMIN" ||
+      (sessionStorage.getItem("role") === "ROLE_USER" && type !== "notice") ? (
+        <Button
+          className={classes.createButton}
+          type="primary"
+          onClick={() => navigate(`/board/${type}/create`)}
+        >
+          글 작성
+        </Button>
+      ) : null}
 
       {/* 게시판 내용 */}
       <div className={classes.notice}>

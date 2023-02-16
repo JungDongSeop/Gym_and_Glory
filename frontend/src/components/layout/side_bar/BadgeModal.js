@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import Modal from '../../UI/Modal';
 import BadgeImages from '../../../assets/badges/BadgeImages'
 

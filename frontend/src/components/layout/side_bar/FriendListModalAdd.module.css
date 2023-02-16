@@ -19,7 +19,6 @@
 } */
 
 .popUp {
-  /* 그냥 px로 박아버림. 고칠 수 있을까..? */
   width: 620px;
   max-height: 60%;
   position: absolute;

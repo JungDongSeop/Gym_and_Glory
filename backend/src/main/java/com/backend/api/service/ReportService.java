@@ -75,4 +75,10 @@ public class ReportService {
         }
         return list;
     }
+
+    public void setImagePath(Integer reportSequence, String imagePath) {
+        Report report = reportRepository.findById(reportSequence).get();
+        report.setImagePath(imagePath);
+        reportRepository.save(report);
+    }
 }

@@ -109,8 +109,12 @@
 }
 
 .adminCheck {
-  width: 10%;
+  width: 20%;
+  display: flex;
+  /* justify-content: end; */
+  margin-right: 10px;
 }
+
 .reportDelete {
   /* z-index: 10; */
   size: 100px;
@@ -143,6 +147,23 @@
   border-radius: 5px;
   color: white;
   background-color: rgb(240, 83, 83);
+}
+
+.adminNotCheckDelete {
+  border: 1px solid rgb(245,99,99);
+  background-color: rgb(245, 99, 99);
+  font-weight: 900;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  z-index: 1000;
+  /* position: absolute; */
+}
+
+.adminNotCheckDelete:hover {
+  cursor: pointer;
+  border: 1px solid red;
+  background-color: red;
 }
 
 .checkConfirm:hover,

@@ -1,29 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
 .container {
   /* background-color: blue; */
   margin: 20px
 }
 
-.modalButton {
-  width: 80px;
-  height: 50px;
-  font-size: 25px;
+.modalButton, .nonchecked {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 15px;
+  font-weight: bold;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+  7px 7px 20px 0px rgba(0,0,0,.1),
+  4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+  background: rgb(255,0,0);
+  background: linear-gradient(0deg, rgba(255,0,0,1) 0%, rgba(255,0,0,1) 100%);
 }
 
 /* .nonchecked {
-  margin: 0;
-  border: 1px solid red;
-}
+
+}  */
 .nonchecked:hover {
-  background-color: rgb(225, 225, 225);
+  background: rgb(255,205,210);
+  background: linear-gradient(0deg, rgba(255,205,210,1) 0%, rgba(229,57,53,1) 100%);
 }
+
+.nonchecked:active {
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+  -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+  inset -4px -4px 6px 0 rgba(255,255,255,.2),
+  inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+  background: rgb(183, 28, 28);
+}
+
 .checked {
-  margin: 0;
-  background-color: orange;
-  color: white;
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+  -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+  inset -4px -4px 6px 0 rgba(255,255,255,.2),
+  inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+  background: rgb(183, 28, 28);
 }
 .checked:hover {
-  background-color: rgb(239, 155, 0);
-} */
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+  -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+  inset -4px -4px 6px 0 rgba(255,255,255,.2),
+  inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+  background: rgb(183, 28, 28);
+}
+.checked:active {
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+  -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+  inset -4px -4px 6px 0 rgba(255,255,255,.2),
+  inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+  background: rgb(183, 28, 28);
+}
 
 .friendsWrap {
   margin: 0;
@@ -50,4 +89,3 @@
   border-radius: 5px;
   list-style: none;
 }
- 

@@ -41,8 +41,8 @@ const FriendList = () => {
         <div className={classes.container}>
 
           {/* 창 선택 */}
-          <Button className={`${classes.modalButton} ${page === 1 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(1)}>목록</Button>
-          <Button className={`${classes.modalButton} ${page === 2 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(2)}>신청</Button>
+          <button className={`${classes.modalButton} ${page === 1 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(1)}>목록</button>
+          <button className={`${classes.modalButton} ${page === 2 ? classes.checked : classes.nonchecked}`} onClick={() => setPage(2)}>신청</button>
 
           {/* 창 표시 */}
           {page === 1 ? (

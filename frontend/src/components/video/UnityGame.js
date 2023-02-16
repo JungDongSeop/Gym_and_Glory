@@ -175,9 +175,17 @@ const UnityGame = forwardRef((props, ref) => {
           console.log("팀 로그 보내기");
         });
     }
-    axios.post(APPLICATION_SERVER_URL + "game/userlog", myRecord).then(() => {
-      console.log("개인 기록 보내기");
-    });
+    axios
+      .post(APPLICATION_SERVER_URL + "game/userlog", myRecord)
+      .then(() => {
+        console.log("개인 기록 보내기");
+      })
+      .then((res) => {
+        sessionStorage.setItem(
+          "exp",
+          sessionStorage.getItem("exp") + res.myRecord.damage
+        );
+      });
   }, [myNum, myRecord, teamRecord]);
 
   useEffect(() => {

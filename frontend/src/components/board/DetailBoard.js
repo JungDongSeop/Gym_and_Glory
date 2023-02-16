@@ -187,9 +187,22 @@ const DetailBoard = () => {
                 </button>
               </li>
               <li>
+<<<<<<< HEAD
+                <button onClick={deleteClick}>삭제</button>
+              </li>
+            </ul>
+          </div>
+        )}
+        {sessionStorage.getItem("role") === "ROLE_ADMIN" && (
+          <div className={classes.qsBtn}>
+            <ul>
+              <li>
+                <button onClick={deleteClick}>삭제</button>
+=======
                 <button className={classes.udButton} onClick={deleteClick}>
                   삭제
                 </button>
+>>>>>>> master
               </li>
             </ul>
           </div>
@@ -197,43 +210,6 @@ const DetailBoard = () => {
         <Comment />
       </div>
     </main>
-    // <main>
-    //   {/* <h3>게시판 상세페이지 입니다.</h3> */}
-    //   <div className={classes.divset}>
-    //     <div className={classes.boardDetail}>
-    //       {/* 게시판  */}
-    //       <div className={classes.articleTitle}>
-    //         <div>
-    //           <h1>{data.title}</h1>
-    //         </div>
-    //         <div>
-    //           <h5>[작성자]</h5>
-    //           <p>{data.user ? data.user.nickname : null}</p>
-    //         </div>
-    //       </div>
-    //       <p>내용 : </p>
-    //       <p>{data.contents}</p>
-    //       {/* <p>작성자 : </p> */}
-    //       {/* <p><UserIdToNickname userId={data.userSequence}/></p> */}
-    //       <br />
-    //       {/* 게시글 수정 구현 */}
-    //       <button
-    //         onClick={() => navigate(`/board/${type}/update/${articleSequence}`)}
-    //       >
-    //         게시글 수정
-    //       </button>
-    //       {/* 게시글 좋아요 구현 */}
-    //       추천 : {data.goodCount}
-    //       <button onClick={() => goodClick()}>좋아요</button>
-    //       {/* 게시글 삭제 구현 */}
-    //       <button onClick={() => deleteClick()}>삭제</button>
-    //       {/* 댓글 */}
-    //     </div>
-    //     <div className={classes.commentDiv}>
-    //       <Comment />
-    //     </div>
-    //   </div>
-    // </main>
   );
 };
 

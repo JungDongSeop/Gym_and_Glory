@@ -165,7 +165,8 @@ const CommentDetail = (props) => {
         </li>
 
         {+sessionStorage.getItem("userSequence") ===
-        +comment.user.userSequence ? (
+          +comment.user.userSequence ||
+        sessionStorage.getItem("role") === "ROLE_ADMIN" ? (
           <li className={classes.replyBtn}>
             <button onClick={() => handleDelete(comment.commentSequence)}>
               삭제

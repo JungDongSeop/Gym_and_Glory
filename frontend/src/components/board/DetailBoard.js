@@ -78,12 +78,10 @@ const DetailBoard = () => {
       <Toaster
         toastOptions={{
           success: {
-            style: {
-            },
+            style: {},
           },
           error: {
-            style: {
-            },
+            style: {},
           },
         }}
         position="top-center"
@@ -127,7 +125,11 @@ const DetailBoard = () => {
           </div>
         </div>
         <div className={classes.qsText}>
-          <img src={data.imagePath} style={{ width: "30%", height: "auto" }} alt="사진"/>
+          <img
+            src={data.imagePath}
+            style={{ width: "30%", height: "auto" }}
+            alt="사진"
+          />
           <div>{data.contents}</div>
         </div>
         <div className={classes.qsEmpathyWrap}>
@@ -179,9 +181,9 @@ const DetailBoard = () => {
           <div className={classes.qsBtn}>
             <ul>
               <li>
-                <p>관리자 권한 삭제버튼</p>
+                {/* <p>관리자 권한 삭제버튼</p> */}
                 <button className={classes.udButton} onClick={deleteClick}>
-                  삭제
+                  관리자 삭제
                 </button>
               </li>
             </ul>

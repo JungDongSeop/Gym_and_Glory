@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-// import { useSelector } from 'react-redux';
 import AuthContext from "../../store/auth-context";
 import axios from "axios";
 import { Chart, registerables } from "chart.js/auto";
@@ -9,8 +8,7 @@ import RestApi from "../api/RestApi";
 Chart.register(...registerables);
 
 const ExerciseGraph = (props) => {
-  // redux로 user 정보 가져오기
-  // const userSequence = useSelector((state) => state.user.pk);
+  // user 정보 가져오기
   const { userSequence } = useContext(AuthContext);
 
   // 상속받는 변수들
@@ -35,9 +33,6 @@ const ExerciseGraph = (props) => {
 
         // 1주일 관련한 함수 (date가 포함된 주의 첫 번째 날 출력)
         function getWeek(date) {
-          // 이건 안쓰지만, 혹시나 해서 (fewDaysAgo 로부터 몇 번째 주인지 판단하는 함수)
-          // const firstDayOfWeek = getFirstDayOfWeek(fewDaysAgo);
-          // const week = Math.ceil(((date - firstDayOfWeek) / 86400000 + firstDayOfWeek.getDay() + 1) / 7);
           const targetDate = getFirstDayOfWeek(date)
           return `${targetDate.toDateString().slice(4, 10)}`;
         }
@@ -117,7 +112,6 @@ const ExerciseGraph = (props) => {
     window.myChart = new Chart(ctx, {
       type: "line",
       data: {
-        // labels: exerciseData.map(d => d.date.toDateString()),
         labels: exerciseData.map((d) => d["date"]),
         datasets: [
           {
@@ -145,7 +139,6 @@ const ExerciseGraph = (props) => {
           x: {
             ticks: {
               maxRotation: 0,
-              // For a category axis, the val is the index so the lookup via getLabelForValue is needed
                 callback: function(val, index) {
                 // x축 값이 너무 많으면 2 혹은 4개씩 건너뛰기
                 if (xAxisMin / xUnit < 30) {
@@ -164,10 +157,6 @@ const ExerciseGraph = (props) => {
           },
           y: {
             min: 0,
-            ticks: {
-              // precision: 0
-              // stepSize: Math.max(5, ),
-            }
           },
         },
         animations: {

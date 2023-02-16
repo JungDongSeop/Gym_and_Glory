@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Modal from "../../UI/Modal";
-import Button from "../../UI/LobbyButton";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RestApi from "../../api/RestApi";
@@ -12,15 +11,6 @@ const APPLICATION_SERVER_URL = `${RestApi()}/`;
 const CreateRoom = () => {
   // 네비게이션을 위한 함수
   const navigate = useNavigate();
-
-  // // 모달을 열고 닫는 함수
-  // const [modalOpen, setModalOpen] = useState(false);
-  // const openModal = () => {
-  //   setModalOpen(true);
-  // };
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  // };
 
   const [roomId, setRoomId] = useState("");
   const [roomTitle, setRoomTitle] = useState("");

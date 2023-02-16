@@ -4,8 +4,8 @@ import AuthContext from "../../../store/auth-context";
 import axios from "axios";
 import RestApi from "../../api/RestApi";
 import classes from './FriendListModalDetail.module.css'
-import { CallMissedSharp } from "@mui/icons-material";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+// import { CallMissedSharp } from "@mui/icons-material";
+// import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 // import DefaultProfile from '../../../assets/defaultProfile.png'
 
 
@@ -36,7 +36,7 @@ const FriendListModalDetail = (props) => {
     });
   };
 
-  // 삭제 버튼 누르면 그냥 null로 만들어서 없애기 (왜 axios 요청을 해도, FriendListModal 컴포넌트에서 friends가 바뀌는데도 표시되는 게 갱신 안되는지 모르겠다.)
+  // 삭제 버튼 누르면 그냥 null로 만들어서 없애기
   const [isShow, setIsShow] = useState(true);
 
   return !isShow ? null : (

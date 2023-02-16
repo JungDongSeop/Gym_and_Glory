@@ -1,5 +1,4 @@
 import React from 'react';
-//import classes from './Button.module.css';
 import classes from './LobbyButton.module.scss';
 
 // 크기 조절이 가능한 버튼
@@ -13,7 +12,6 @@ function Button({ onClick, children, size }) {
       height: '40px',
       width: '150px',
       fontSize: '18px',
-      // padding: '10px',
     },
     large: {
       fontSize: '20px',

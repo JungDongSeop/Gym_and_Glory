@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { useSelector } from 'react-redux';
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../../store/auth-context";
 import ExerciseGrass from "./ExerciseGrass";
@@ -12,10 +10,9 @@ import classes from "./MyPage.module.css";
 import RestApi from "../api/RestApi";
 
 const MyPage = () => {
+
   // 유저 정보 가져오기
-  // const user = useSelector((state) => state.user);
   const authCtx = useContext(AuthContext);
-  const navigate = useNavigate();
 
   // 유저 정보 axios 요청
   const [user, setUser] = useState();
@@ -23,16 +20,12 @@ const MyPage = () => {
     axios
       .get(`${RestApi()}/user/detail/${authCtx.userSequence}`)
       .then((res) => {
-        console.log('user', res.data)
         setUser(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [authCtx]);
-
-  // 이미지 위에 마우스 올리면 프로필 편집
-  // const [isChangeProfile, setIsChangeProfile] = useState(false);
 
   // 통계에서 운동 종류 구별
   const [exerciseType, setExerciseData] = useState(1);
@@ -41,15 +34,11 @@ const MyPage = () => {
   // 통계에서 x축 단위 구별
   const [xUnit, setXUnit] = useState(1);
 
-  // ======================================================================
   // 프로필 사진 업로드 기능
   const [profileImage, setProfileImage] = useState(null);
-  // const fileInput = useRef(null);
-  // 사진 선택
+  // 사진 선택 후 저장, 이후 새로고침
   const handleFileSelect = async(e) => {
-    console.log('e.target.files[0]', e.target.files[0])
     setProfileImage(e.target.files[0]);
-    // handleFileUpload();
     const formData = new FormData();
     formData.append('files', e.target.files[0]);
     try {
@@ -62,31 +51,9 @@ const MyPage = () => {
         window.location.reload()
       });
     } catch (error) {
-      console.log('에러 폼 데이터', typeof(formData))
       console.error(error);
     }
   };
-  // 사진 db에 저장
-  const handleFileUpload = async () => {
-    const formData = new FormData();
-    formData.append('files', profileImage);
-    console.log('formData update', typeof(formData));
-    console.log('formData', formData);
-    try {
-      await axios.post(`${RestApi()}/file/user/${authCtx.userSequence}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then(() => {
-        navigate(`/mypage`)
-      });
-    } catch (error) {
-      console.log('에러 폼 데이터', typeof(formData))
-      console.error(error);
-    }
-  };
-  
 
   return (
     <main>
@@ -112,27 +79,26 @@ const MyPage = () => {
               <div className={classes.filebox}>
                 <label htmlFor="ex-file">프로필 변경</label>
                 <input type="file" id="ex-file" onChange={handleFileSelect} />
-                {/* <button onClick={handleFileUpload}>Upload</button> */}
               </div>
             </form>
 
-
-
-            {/* <h2>유저 pk : {authCtx.userSequence}</h2> */}
+            {/* 유저 레벨, 닉네임 */}
             <p>
               Lv.{authCtx.level ? authCtx.level : 1}
               {authCtx.nickname}
             </p>
           </div>
+
           {/* 잔디 */}
           <div className={classes.grassWrap}>
             <ExerciseGrass />
           </div>
           <br />
+
           {/* 운동 통계 */}
           <div className={classes.graphWrap}>
-            {/* 운동 종류 */}
             <div className={classes.graphButtonWrap}>
+              {/* 운동 종류 */}
               <div>
                 <button className={`${classes.graphButton} ${exerciseType === 1 ? classes.checked : ''}`} onClick={() => setExerciseData(1)}>스쿼트</button>
                 <button className={`${classes.graphButton} ${exerciseType === 2 ? classes.checked : ''}`} onClick={() => setExerciseData(2)}>버피</button>

@@ -19,13 +19,15 @@ const SideWebcam = () => {
 
   return (
     <div style={{ marginTop:'-20px', width: '280px', height: '260px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-      <div className="camView" style={{margin: 'auto', width:'280px' ,height: '210px', backgroundColor: 'gray'}}>
-        {on && (
+      <div className="camView" style={{margin: 'auto', width:'280px' ,height: '210px', backgroundColor: 'gray', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        {on ? (
           <Webcam
             audio={false}
             ref={videoElement}
             videoConstraints={videoConstraints}
           />
+        ) : (
+          <button onClick={() => dispatch(toggleCamera())} style={{ margin: 'auto'}}>웹캠 확인</button>
         )}
       </div>
       {/* <div style={{margin: '0 auto'}}> */}

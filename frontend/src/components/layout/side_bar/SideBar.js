@@ -43,7 +43,7 @@ const SideBar = (props) => {
         <div style={expBarContainerStyle}>
           <div style={expBarStyle}></div>
           <div className={classes.exp}>
-            <p style={{margin: 0}}>{Number(authCtx.exp)} / 10000</p>
+            <p style={{margin: 0, marginRight: '5px'}}>{Number(authCtx.exp)} / 10000</p>
           </div>
         </div>      
 

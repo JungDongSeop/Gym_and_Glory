@@ -128,7 +128,7 @@ const DetailBoard = () => {
           {data.imagePath !== null && (
             <img
               src={data.imagePath}
-              style={{ width: "30%", height: "auto" }}
+              style={{ width: "300px", height: "auto" }}
               alt="사진"
             />
           )}

@@ -13,7 +13,6 @@ import classes from "./ReportBoard.module.css";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { height } from "@mui/system";
 
 // 신고게시판
 // 관리자 : 유저들의 신고 내역 조회 가능. 이후 확인 및 확정하기 버튼 누르기
@@ -37,24 +36,6 @@ const ReportBoard = () => {
     };
     getReport();
   }, [email]);
-
-  // 게시글 전체 조회 axios (관리자, 유저)
-  // useEffect(() => {
-  //   if (isAdmin) {
-  //     const fetchBoard = async () => {
-  //       const result = await axios(`${RestApi()}/report`);
-  //       setBoard(result.data);
-  //     };
-  //     fetchBoard();
-  //   } else {
-  //     const fetchBoard = async () => {
-  //       const result = await axios(`${RestApi()}/report/user/${userSequence}`);
-  //       setBoard(result.data);
-  //       console.log("dfsfsdf", result.data);
-  //     };
-  //     fetchBoard();
-  //   }
-  // }, [userSequence, isAdmin]);
 
   // 페이지네이션을 위한 변수
   const [currentPage, setCurrentPage] = useState(1);
@@ -86,8 +67,6 @@ const ReportBoard = () => {
     axios.get(`${RestApi()}/report/confirm/${isPickedReport}`);
     handleClose();
     window.location.reload();
-
-    // setIsPickedReport();
   };
 
   const reportDelete = async () => {
@@ -133,7 +112,6 @@ const ReportBoard = () => {
         }}
       >
         {authCtx.role === "ROLE_ADMIN" ? (
-          // 수민이껀
           <DialogContent>
             <div className={classes.checkText}>
               <h3>게시물을 확인하시겠습니까?</h3>
@@ -153,7 +131,6 @@ const ReportBoard = () => {
                 삭제
               </button>
             </div>
-            {/* <button>확인</button> */}
           </DialogContent>
         ) : (
           <DialogContent>
@@ -162,7 +139,6 @@ const ReportBoard = () => {
                 삭제
               </button>
             </div>
-            {/* <button>확인</button> */}
           </DialogContent>
         )}
       </Dialog>
@@ -178,7 +154,6 @@ const ReportBoard = () => {
               .map((item, index) => (
                 <li
                   key={item.reportSequence}
-                  // className={index % 2 === 0 ? classes.odd : classes.even}
                   onClick={() =>
                     handleClickOpen(item.reportSequence, item.imagePath)
                   }
@@ -221,8 +196,6 @@ const ReportBoard = () => {
                 !item.confirmation ? (
                   <li
                     key={item.reportSequence}
-                    // className={index % 2 === 0 ? classes.odd : classes.even}
-                    // onClick={() => handleClickOpen(item.reportSequence)}
                   >
                     <div className={classes.reportUserInfo}>
                       <div className={classes.report}>
@@ -259,8 +232,6 @@ const ReportBoard = () => {
                   // 관리자가 확인했으면
                   <li
                     key={item.reportSequence}
-                    // className={index % 2 === 0 ? classes.odd : classes.even}
-                    // onClick={() => handleClickOpen(item.reportSequence)}
                   >
                     <div className={classes.reportUserInfo}>
                       <div className={classes.report}>
@@ -288,18 +259,6 @@ const ReportBoard = () => {
                     </div>
                   </li>
                 )
-
-              // ) : (
-              //   // 관리자가 확인했으면
-              //   <li
-              //     key={item.reportSequence}
-              //     className={`${classes.confirm} ${
-              //       index % 2 === 0 ? classes.odd : classes.even
-              //     }`}
-              //   >
-              //     신고 내용이 확인되었습니다.
-              //   </li>
-              // )
             )}
           </ul>
         </div>

@@ -27,17 +27,12 @@ const UpdateBoard = () => {
   useEffect(() => {
     const fetchBoard = async () => {
       const result = await axios(`${RestApi()}/board/${articleSequence}`);
-      console.log(result.data);
       setBoard(result.data);
       setNewTitle(result.data.title);
       setNewContent(result.data.contents);
     };
     fetchBoard();
   }, [articleSequence]);
-
-  // const handleChange = (event) => {
-  //   setBoard({ ...board, [event.target.name]: event.target.value });
-  // };
 
   // 게시판 수정 axios
   const handleSubmit = (event) => {
@@ -47,8 +42,6 @@ const UpdateBoard = () => {
       axios
         .put(`${RestApi()}/board`, {
           articleSequence: articleSequence,
-          // title: enteredNewTitle,
-          // contents: enteredNewContent,
           title: newTitleInputRef.current.value,
           contents: newContentInputRef.current.value,
         })
@@ -98,7 +91,6 @@ const UpdateBoard = () => {
                       type="text"
                       placeholder="제목을 입력하세요"
                       defaultValue={board.title}
-                      // onChange={(event) => setNewTitle(event.target.value)}
                       ref={newTitleInputRef}
                     />
                   </dd>
@@ -108,7 +100,6 @@ const UpdateBoard = () => {
                 <textarea
                   placeholder="내용을 입력하세요"
                   defaultValue={board.contents}
-                  // onChange={(event) => setNewContent()}
                   ref={newContentInputRef}
                 ></textarea>
               </div>
@@ -128,19 +119,6 @@ const UpdateBoard = () => {
           </div>
         </div>
       </form>
-      {/* <form onSubmit={handleSubmit}>
-        <label>
-          제목:
-          <input type="text" name="title" defaultValue={board.title} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          내용:
-          <input type="text" name="contents" defaultValue={board.contents} onChange={handleChange} />
-        </label>
-        <br />
-        <button type="submit">Update Board</button>
-      </form> */}
     </main>
   );
 };

@@ -14,7 +14,6 @@ const Ranking = () => {
       await axios(`${RestApi()}/ranking`).then(res => {
         setSoloRanking(res.data.userRankResList);
         setTeamRanking(res.data.teamLogResList);
-        console.log(res.data)
       });
     };
     fetchData();

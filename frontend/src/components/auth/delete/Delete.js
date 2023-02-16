@@ -33,20 +33,16 @@ const Delete = () => {
       },
     })
       .then((res) => {
-        console.log(res + "dsfsdf");
         if (res.ok) {
           return res.json();
         } else {
           return res.json().then((data) => {
             let errorMessage = "회원탈퇴에 실패했습니다.";
-            console.log(data);
-            // alert(errorMessage);
             toast.error(errorMessage);
           });
         }
       })
-      .then(async (data) => {
-        console.log(data);
+      .then(async () => {
         try {
           await axios.delete(`${RestApi()}/user/${authCtx.userSequence}`);
           authCtx.logout();
@@ -57,7 +53,6 @@ const Delete = () => {
       .catch((err) => {
         alert(err.message);
       });
-    // alert("이용해주셔서 감사합니다.");
     Swal.fire({
       title: "회원탈퇴 완료",
       icon: "success",
@@ -88,6 +83,7 @@ const Delete = () => {
         position="top-center"
         reverseOrder={false}
       />
+      
       <div className={classes.myDiv}>
         <img src={Logo} alt={Logo} />
         <div className={classes.formDiv}>
@@ -96,7 +92,6 @@ const Delete = () => {
             <div>
               <label>Password:</label>
               <input type="password" name="password" placeholder=" " />
-              {/* <br /> */}
               <button type="submit">Save</button>
             </div>
           </form>

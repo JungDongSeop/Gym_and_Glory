@@ -8,9 +8,6 @@ import { useParams, useNavigate } from "react-router";
 import RestApi from "../api/RestApi";
 
 import classes from "./CreateBoard.module.css";
-// import { toast } from "react-hot-toast";
-
-// import CkEditor from "./CkEditor";
 
 const CreateBoard = () => {
   // url 이동을 위한 함수
@@ -25,17 +22,7 @@ const CreateBoard = () => {
   // user 정보 가져오기
   const { userSequence } = useContext(AuthContext);
 
-  // 게시판 제출 버튼
-  // 게시판에 쓴 글들을 저장할 변수
-  // const [title, setTitle] = useState("");
-  // const [contents, setContents] = useState("");
   const [image, setImage] = useState(null);
-
-  // const changeHandler = (event) => {
-  //   event.preventDefault();
-  //   console.log(titleInputRef.current.value);
-  //   console.log(contentInputRef.current.value);
-  // };
 
   // 게시판 제출 함수
   const handleSubmit = (event) => {
@@ -57,27 +44,11 @@ const CreateBoard = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         navigate(`/board/${type}`);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    // try {
-    //   await axios.post(`${RestApi()}/board`, {
-    //     userSequence: userSequence,
-    //     title: titleInputRef.current.value,
-    //     contents: contentInputRef.current.value,
-    //     div: types[type],
-    //   });
-    //   setTitle("");
-    //   setContents("");
-    //   // alert("Board created successfully!");
-    //   navigate(`/board/${type}`);
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   const [imageUrl, setImageUrl] = useState(null);
@@ -114,16 +85,7 @@ const CreateBoard = () => {
     <main className={classes.boardDiv}>
       {/* 게시판 종류 선택 버튼 */}
       <NavigateButtons type={type} />
-      {/* {() => {
-        const typename = ""
-        if (type == "notice") {
-          typename = "공지사항"
-        } else if (type == "free") {
-          return "자유게시판"
-        }
-        return typename
-        <p></p>
-      }} */}
+
       {/* 게시판 제출 */}
       <form onSubmit={handleSubmit}>
         <div className={classes.board_wrap}>
@@ -154,11 +116,9 @@ const CreateBoard = () => {
             <div className={classes.bottomDiv}>
               <div>
                 <div className={classes.addImage}>
-                  {/* <label htmlFor="boardImg"></label> */}
                   <input
                     type="file"
                     onChange={handleImageChange}
-                    // ref={boardImageRef}
                   />
                 </div>
                 <div>
@@ -166,6 +126,7 @@ const CreateBoard = () => {
                     <img
                       src={imageUrl}
                       style={{ width: "300px", height: "auto" }}
+                      alt="사진"
                     />
                   )}
                 </div>

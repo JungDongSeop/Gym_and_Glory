@@ -33,9 +33,6 @@ const SideWebcam = () => {
           <button className={classes.vbutton} onClick={() => dispatch(toggleCamera())}>웹캠 켜기</button>
         )}
       </div>
-      {/* <div style={{margin: '0 auto'}}> */}
-      {/* <button className={classes.vbutton} onClick={() => dispatch(toggleCamera())}>웹캠 끄기</button> */}
-      {/* </div> */}
     </div>
   );
 };

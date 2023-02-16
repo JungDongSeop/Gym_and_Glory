@@ -27,7 +27,6 @@ const Board = () => {
     const types = { notice: 1, free: 2, party: 3 };
     const fetchData = async () => {
       const result = await axios(`${RestApi()}/board/list/${types[type]}`);
-      console.log(result.data);
       setBoard(result.data.reverse());
     };
     fetchData();
@@ -68,8 +67,6 @@ const Board = () => {
             .map((item, index) => (
               <li
                 key={index}
-                // className={index % 2 === 0 ? classes.odd : classes.even}
-                // className={classes.noticeList}
                 onClick={() =>
                   navigate(`/board/${type}/${item.articleSequence}`)
                 }
@@ -78,14 +75,9 @@ const Board = () => {
                 <div>
                   <p className={classes.listTitle}>{item.title}</p>
                 </div>
-                {/* 작성자 */}
-                {/* <div>작성자 : <UserIdToNickname userId={item.userSequence} /></div> */}
                 {/* 기타 정보 */}
                 <div className={classes.boardOtherInfo}>
                   <span className={classes.userName}>{item.user.nickname}</span>
-                  {/* <div>❤{item.goodCount}</div> */}
-                  {/* <div>👀{item.views}</div> */}
-                  {/* <div>🕒{item.modify_time.slice(0, 11)}</div> */}
                   <ul>
                     <li className={classes.heart2Cnt}>❤ {item.goodCount}</li>
                     <li className={classes.dataCnt}>

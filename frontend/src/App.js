@@ -46,7 +46,7 @@ function App() {
 
   return (
     <div>
-      <Suspense fallback={<div>로딩 중... 이후 이곳에 컴포넌트 추가 가능</div>}>
+      <Suspense fallback={<div></div>}>
         <Routes>
           <Route path="/" element={<Main />} />
           {/* 내비게이션 가드 설정 */}

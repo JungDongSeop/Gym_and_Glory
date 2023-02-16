@@ -10,7 +10,6 @@ import galaxy1 from './galaxy1.png';
 import galaxy2 from './galaxy2.png';
 import galaxy3 from './galaxy3.png';
 import galaxy4 from './galaxy4.png';
-import startBadge from './startBadge.png';
 
 import classes from './BadgeImages.module.css';
 
@@ -25,14 +24,11 @@ const BadgeImages = () => {
   const { userSequence } = useContext(AuthContext);
   
   // 뱃지 전체 목록 가져오기
-  // const badgeList = [0, 2, 4];
   const [badgeAllList, setBadgeAllList] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       await axios(`${RestApi()}/badge/list`)
       .then((res) => {
-        console.log('뱃지', res.data)
-        console.log(res.data[0])
         setBadgeAllList(res.data);
       });
     };
@@ -46,7 +42,6 @@ const BadgeImages = () => {
     const fetchData = async () => {
       await axios(`${RestApi()}/badge/list/${userSequence}`)
       .then((res) => {
-        console.log('뱃지 유저', res.data)
         setUserBadges(res.data)
       })
     }
@@ -63,9 +58,7 @@ const BadgeImages = () => {
         return(
         <div key={index} className={classes.badge}>
           <img
-          // 이렇게 한 이유. js는 객체를 비교할 때 값이 아니라 메모리의 위치를 비교하므로, 값이 같아도 false 반환
-          // 그래서 객체를 json 형태로 바꿔야, 객체의 값을 비교할 수 있다.
-          // 사실 백엔드에서 뱃지 pk로만 된 리스트를 주는 게 더 효율적일 듯
+          // js는 객체를 비교할 때 값이 아니라 메모리의 위치를 비교하므로, 값이 같아도 false 반환
             className={JSON.stringify(userBadges).includes(JSON.stringify(badgeAllList[index])) ? null : classes.notHave} 
             src={item} 
             alt="badge" 

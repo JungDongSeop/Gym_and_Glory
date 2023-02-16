@@ -9,7 +9,6 @@ import Swal from "sweetalert2";
 import FirebaseApi from "../../api/FirebaseApi";
 // API_KEY
 const API_KEY = `${FirebaseApi()}`;
-// const commonhttp = RestApi();
 // 회원가입 api 주소
 const URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
 
@@ -18,14 +17,6 @@ const Signup = () => {
 
   // 성별 디폴트 남자
   const [genderValue, setGenderValue] = useState("1");
-
-  // 오류 메세지 저장
-  // const [emailError, setEmailError] = useState("");
-  // const [passwordError, setPasswordError] = useState("");
-  // const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  // const [nickNameError, setNickNameError] = useState("");
-  // const [phoneError, setPhoneError] = useState("");
-
   // 이메일 중복 검사
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   // 닉네임 중복 검사
@@ -38,7 +29,6 @@ const Signup = () => {
     setIsCheckedNickname(false);
     let nickLength = 0;
     let specialCheck = /[`~!@#$%^&*|\\;:?]/gi;
-    // let nicknameValue = document.getElementById("nickname").value;
     let nicknameValue = nicknameInputRef.current.value;
 
     for (let i = 0; i < nicknameValue.length; i++) {
@@ -52,16 +42,12 @@ const Signup = () => {
     if (
       nicknameValue.search(/\s/) !== -1 ||
       specialCheck.test(nicknameValue) ||
-      // nicknameValue.length < 3 ||
-      // nicknameValue.length > 15
       nickLength < 3 ||
       nickLength > 15
     ) {
       setIsValidNickname(false);
-      // nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
     } else {
       setIsValidNickname(true);
-      // nicknameInputRef.current.style.borderBottom = "2px solid #00bd10";
     }
   };
   // 이메일 유효성 검사
@@ -85,29 +71,16 @@ const Signup = () => {
   const passwordChangeHandler = (event) => {
     event.preventDefault();
     const password = passwordInputRef.current.value;
-    // let isVal = false;
 
     const re = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{7,25}$/;
 
     if (!re.test(password)) {
-      // isVal = false;
-      // setPasswordError(
-      //   "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      // );
       setIsValidPassword(false);
       passwordInputRef.current.style.borderBottom = "2px solid #8f1010";
     } else {
-      // isVal = true;
-      // setPasswordError("");
       setIsValidPassword(true);
       passwordInputRef.current.style.borderBottom = "2px solid #00bd10";
     }
-
-    // console.log(passwordInputRef.current.value);
-    // console.log(event.target.value);
-
-    // console.log(isValidPassword);
-    // console.log(isVal);
   };
 
   // 비밀번호확인 일치 검사
@@ -120,17 +93,11 @@ const Signup = () => {
 
     if (firstPassword !== secondPassword) {
       setIsValidConfirmPassword(false);
-      // setConfirmPasswordError("비밀번호가 다릅니다!");
       passwordCheckInputRef.current.style.borderBottom = "2px solid #8f1010";
     } else {
       setIsValidConfirmPassword(true);
       passwordCheckInputRef.current.style.borderBottom = "2px solid #00bd10";
-
-      // setConfirmPasswordError("");
     }
-
-    // console.log(firstPassword);
-    // console.log(isValidConfirmPassword);
   };
 
   // 전화번호 유효성검사
@@ -138,7 +105,6 @@ const Signup = () => {
 
   const phoneCheckHandler = (event) => {
     const re = /^01(?:0|1|[6-9])(?:\d{4})\d{4}$/;
-    console.log(re.test(phoneInputRef.current.value));
     if (re.test(phoneInputRef.current.value)) {
       setIsValidPhone(true);
       phoneInputRef.current.style.borderBottom = "2px solid #00bd10";
@@ -161,18 +127,15 @@ const Signup = () => {
   // 성별 선택
   const genderChangeHandler = (e) => {
     setGenderValue(e.target.value);
-    console.log(genderValue);
   };
 
   // 이메일 중복 검사
   const checkEmailHandler = async (e) => {
     e.preventDefault();
-    // console.log(RestApi());
     const checkEmail = emailInputRef.current.value;
     const response = await axios.get(
       `${RestApi()}/check_email?email=${checkEmail}`
     );
-    // console.log(response);
 
     if (emailInputRef.current.value === "") {
       toast.error("이메일을 입력해주세요");
@@ -182,14 +145,11 @@ const Signup = () => {
       emailInputRef.current.style.borderBottom = "2px solid #00bd10";
     } else {
       if (response.data === "중복O") {
-        // alert("이미 사용중인 이메일입니다.");
         toast.error("이미 사용중인 이메일 입니다.");
       } else if (isValidEmail === false) {
         if (checkEmail.length === 0) {
-          // alert("이메일을 입력해주세요!");
           toast.error("이메일을 입력해주세요");
         } else {
-          // alert("이메일 형식이 올바르지 않습니다. 다시 확인후 입력해주세요.");
           toast.error(
             "이메일 형식이 올바르지 않습니다. \n 다시 확인후 입력해주세요."
           );
@@ -205,27 +165,20 @@ const Signup = () => {
   const checkNicknameHandler = async (event) => {
     event.preventDefault();
     const nickname = nicknameInputRef.current.value;
-    // console.log(nickname.type);
     const response = await axios.get(
       `${RestApi()}/check_nickname?nickname=${nickname}`
     );
-    console.log(response);
 
     if (response.data === "중복X" && isValidNickname) {
-      // alert("사용 가능한 닉네임입니다.");
       toast.success("사용 가능한 닉네임 입니다.");
       setIsCheckedNickname(true);
       nicknameInputRef.current.style.borderBottom = "2px solid #00bd10";
     } else if (response.data === "중복X" && !isValidNickname) {
-      // console.log(isValidNickname, "2번째");
-      console.log(response.data);
-      // alert("사용할 수 없는 닉네임 입니다.");
       toast.error("사용할 수 없는 닉네임 입니다.");
       setIsCheckedNickname(false);
       nicknameInputRef.current.value = "";
       nicknameInputRef.current.style.borderBottom = "2px solid #8f1010";
     } else if (response.data === "중복O") {
-      // alert("이미 사용중인 닉네임입니다.");
       toast.error("이미 사용중인 닉네임입니다.");
       setIsCheckedNickname(false);
       nicknameInputRef.current.value = "";
@@ -235,13 +188,10 @@ const Signup = () => {
 
   const submitHandler = (event) => {
     if (!isCheckedEmail) {
-      // alert("이메일 중복검사를 해주세요");
       toast.error("이메일 중복검사를 해주세요");
     } else if (!isCheckedNickname) {
-      // alert("닉네임 중복검사를 해주세요");
       toast.error("닉네임 중복검사를 해주세요");
     } else if (!isValidPhone) {
-      // alert("전화번호를 다시 확인해주세요");
       toast.error("전화번호를 다시 확인해주세요");
     } else {
       event.preventDefault();
@@ -249,11 +199,8 @@ const Signup = () => {
       // useRef 이용하여 입력 데이터 가져오기
       const enteredEmail = emailInputRef.current.value;
       const enteredPassword = passwordInputRef.current.value;
-      // const enteredPasswordCheck = passwordCheckInputRef.current.value;
       const enteredNickname = nicknameInputRef.current.value;
       const enteredPhone = phoneInputRef.current.value;
-
-      // 유효성 검증 추가 할 수 있음
 
       // 회원가입 api요청 보내기
       setIsLoading(true);
@@ -275,9 +222,6 @@ const Signup = () => {
           // 로딩상태 제거
           setIsLoading(false);
           if (res.ok) {
-            // ...
-            // console.log("회원가입 성공");
-            // console.log(res)
             return res.json();
           } else {
             return res.json().then((data) => {
@@ -288,7 +232,6 @@ const Signup = () => {
           }
         })
         .then(async (data) => {
-          // console.log(data, "hjjkkj");
           try {
             await axios.post(
               `${RestApi()}/signup`,
@@ -304,8 +247,6 @@ const Signup = () => {
                 },
               }
             );
-            // alert("성공적으로 회원가입이 완료되었습니다.");
-            // toast.success("성공적으로 회원가입이 완료되었습니다");
             Swal.fire({
               title: "Success!",
               text: "성공적으로 회원가입이 완료되었습니다!",
@@ -320,13 +261,6 @@ const Signup = () => {
             console.log(err);
           }
         });
-
-      // .catch((err) => {
-      //   alert(err.message);
-      // });
-      // console.log(enteredPhone);
-      // console.log(isCheckedNickname);
-      // console.log(isCheckedEmail);
     }
   };
   return (
@@ -336,13 +270,10 @@ const Signup = () => {
           toastOptions={{
             success: {
               style: {
-                // background: "green",
-                // color: "white",
               },
             },
             error: {
               style: {
-                // background: "red",
               },
             },
           }}
@@ -370,7 +301,6 @@ const Signup = () => {
             }}
             type="email"
             id="email"
-            // required
             placeholder="example@example.com"
             ref={emailInputRef}
             autoComplete="off"
@@ -390,7 +320,6 @@ const Signup = () => {
               onChange={passwordChangeHandler}
               type="password"
               id="password"
-              // required
               placeholder="영어+숫자+특수문자 8자리 이상"
               ref={passwordInputRef}
               autoComplete="off"
@@ -405,7 +334,6 @@ const Signup = () => {
               onChange={passwordConfirmCheckHandler}
               type="password"
               id="passwordcheck"
-              // required
               ref={passwordCheckInputRef}
               autoComplete="off"
             />
@@ -426,15 +354,9 @@ const Signup = () => {
                     "2px solid #8f1010";
                 }}
                 type="text"
-                // required
                 ref={nicknameInputRef}
                 autoComplete="off"
                 id="nickname"
-                // onKeyDown={(e) => {
-                //   if (e.key === "Enter") {
-                //     checkNicknameHandler();
-                //   }
-                // }}
               />
               <button
                 className={classes.authsmallbutton}
@@ -455,7 +377,6 @@ const Signup = () => {
                 onChange={phoneCheckHandler}
                 type="tel"
                 id="phone"
-                // required
                 ref={phoneInputRef}
                 autoComplete="off"
                 placeholder="- 빼고 입력해주세요"

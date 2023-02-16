@@ -7,10 +7,8 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
 import classes from "./Login.module.scss";
 import RestApi from "../../api/RestApi";
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import toast, { Toaster } from "react-hot-toast";
-// import { toast } from "react-toastify";
 import FirebaseApi from "../../api/FirebaseApi";
 // API_KEY
 const API_KEY = `${FirebaseApi()}`;
@@ -33,13 +31,10 @@ const Login = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(`${RestApi()}api/login`);
 
     //입력 데이터 값 가져오기
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-
-    // 유효성 검사 (추가작업)
 
     // 로그인 api요청 보내기
     setIsLoading(true);
@@ -59,9 +54,6 @@ const Login = () => {
         // 로그인 응답 로딩 false
         setIsLoading(false);
         if (res.ok) {
-          // ...
-          // console.log("로그인성공");
-
           return res.json();
         } else {
           return res.json().then((data) => {
@@ -72,13 +64,11 @@ const Login = () => {
             //   position: "top-right",
             // });
             toast.error(errorMessage);
-            console.log(data);
           });
         }
       })
       // 요청이 성공적으로 응답하면 (firebase에 정상적으로 로그인)
       .then(async (data) => {
-        // console.log("데이터", data.idToken);
         try {
           const response = await axios.post(
             `${RestApi()}/login`,
@@ -91,28 +81,21 @@ const Login = () => {
               },
             }
           );
-          // console.log("리스폰스 객체", response);
-          // console.log(response.data.email);
           authCtx.login(
             data.idToken,
             response.data.userSequence,
             response.data.email,
             response.data.nickname,
             response.data.telNumber,
-            // response.data.level,
             response.data.imagePath,
             response.data.gender,
             response.data.role,
             response.data.exp
           );
           navigate("/");
-          // console.log(authCtx);
         } catch (err) {
           console.log(err);
         }
-
-        // authCtx.login(data.idToken, data.email, data.displayName);
-        // navigate("/");
       })
       .catch((err) => {
         alert(err.message);
@@ -124,7 +107,7 @@ const Login = () => {
       <div>
         <Toaster position="top-right" reverseOrder={false} />
       </div>
-      {/* <h1 >{<<}</h1> */}
+
       <ArrowBackIosNewIcon
         className={classes.backbutton}
         onClick={() => navigate("/")}
@@ -139,6 +122,7 @@ const Login = () => {
         }}
       />
       <br />
+
       {/* 로그인 폼 */}
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
@@ -167,7 +151,6 @@ const Login = () => {
         </div>
         <div className={classes.loginBtnDiv}>
           {!isLoading && (
-            // <Button onClick={() => navigate("/lobby")}>로그인</Button>
             <Button>로그인</Button>
           )}
           {isLoading && <p>로그인중...</p>}

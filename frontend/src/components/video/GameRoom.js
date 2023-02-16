@@ -664,16 +664,16 @@ class GameRoom extends Component {
 
     const prediction = await this.state.model.predict(posenetOutput);
     console.log(prediction);
-    if (prediction[0].probability.toFixed(2) >= 0.95) {
+    if (prediction[0].probability.toFixed(2) >= 0.99) {
       if (this.state.status === "squat") {
         this.setState({ count: 1 });
       }
       this.setState({ status: "stand" });
-    } else if (prediction[1].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[1].probability.toFixed(2) >= 0.99) {
       this.setState({ status: "squat" });
-    } else if (prediction[2].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[2].probability.toFixed(2) >= 0.99) {
       this.setState({ healRight: 1 });
-    } else if (prediction[3].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[3].probability.toFixed(2) >= 0.99) {
       this.setState({ healLeft: 1 });
     }
 
@@ -696,16 +696,16 @@ class GameRoom extends Component {
 
     const prediction = await this.state.model.predict(posenetOutput);
     console.log(prediction);
-    if (prediction[0].probability.toFixed(2) >= 0.95) {
+    if (prediction[0].probability.toFixed(2) >= 0.99) {
       if (this.state.status === "burpee") {
         this.setState({ count: 1 });
       }
       this.setState({ status: "stand" });
-    } else if (prediction[1].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[1].probability.toFixed(2) >= 0.99) {
       this.setState({ status: "burpee" });
-    } else if (prediction[2].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[2].probability.toFixed(2) >= 0.99) {
       this.setState({ healLeft: 1 });
-    } else if (prediction[3].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[3].probability.toFixed(2) >= 0.99) {
       this.setState({ healRight: 1 });
     }
 
@@ -728,16 +728,16 @@ class GameRoom extends Component {
 
     const prediction = await this.state.model.predict(posenetOutput);
     console.log(prediction);
-    if (prediction[0].probability.toFixed(2) >= 0.95) {
+    if (prediction[0].probability.toFixed(2) >= 0.99) {
       if (this.state.status === "pushdown") {
         this.setState({ count: 1 });
       }
       this.setState({ status: "pushup" });
-    } else if (prediction[1].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[1].probability.toFixed(2) >= 0.99) {
       this.setState({ status: "pushdown" });
-    } else if (prediction[3].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[3].probability.toFixed(2) >= 0.99) {
       this.setState({ healLeft: 1 });
-    } else if (prediction[4].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[4].probability.toFixed(2) >= 0.99) {
       this.setState({ healRight: 1 });
     }
 
@@ -760,16 +760,16 @@ class GameRoom extends Component {
 
     const prediction = await this.state.model.predict(posenetOutput);
     console.log(prediction);
-    if (prediction[0].probability.toFixed(2) >= 0.95) {
+    if (prediction[0].probability.toFixed(2) >= 0.99) {
       if (this.state.status === "jumpingjack") {
         this.setState({ count: 1 });
       }
       this.setState({ status: "stand" });
-    } else if (prediction[2].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[2].probability.toFixed(2) >= 0.99) {
       this.setState({ status: "jumpingjack" });
-    } else if (prediction[4].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[4].probability.toFixed(2) >= 0.99) {
       this.setState({ healLeft: 1 });
-    } else if (prediction[5].probability.toFixed(2) >= 0.95) {
+    } else if (prediction[5].probability.toFixed(2) >= 0.99) {
       this.setState({ healRight: 1 });
     }
 

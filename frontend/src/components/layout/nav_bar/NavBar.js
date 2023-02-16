@@ -29,7 +29,6 @@ const Navbar = () => {
     axios
       .get(`${RestApi()}/user/detail/${authCtx.userSequence}`)
       .then((res) => {
-        console.log("user", res.data);
         setUser(res.data);
       })
       .catch((err) => {

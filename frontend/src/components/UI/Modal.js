@@ -26,18 +26,15 @@ const Modal = ({ buttonTitle, children, width, height, backgroundColor }) => {
           style: {
             width: width,
             height: height,
-            margin: 'auto',
-            maxHeight: 'none',
-            maxWidth: 'none',
-            backgroundColor: backgroundColor || 'rgba(200, 200, 200, 0.9)',
-            overflow: 'hidden',
-            
-          }
+            margin: "auto",
+            maxHeight: "none",
+            maxWidth: "none",
+            backgroundColor: backgroundColor || "rgba(200, 200, 200, 0.9)",
+            overflow: "hidden",
+          },
         }}
       >
-        <DialogContent>
-          {children}
-        </DialogContent>
+        <DialogContent>{children}</DialogContent>
       </Dialog>
     </div>
   );

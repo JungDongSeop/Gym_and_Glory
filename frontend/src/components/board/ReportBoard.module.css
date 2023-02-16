@@ -1,3 +1,15 @@
+/* Define the style for the scrollbar */
+.scrollbarCustom::-webkit-scrollbar {
+  width: 80px;
+  background-color: #f5f5f5;
+}
+
+/* Style the thumb */
+.scrollbarCustom::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #000000;
+}
+
 .boardDiv {
   background-color: rgba(255, 255, 255, 0.8);
 }
@@ -10,7 +22,7 @@
 }
 
 .pagination {
-  color: white
+  color: white;
 }
 
 .notice {
@@ -35,9 +47,9 @@
   margin: 0;
   border-bottom: 1px solid black;
   width: 100%;
-  background-color: rgba(255,255,255, 0.85);
+  background-color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
-  height: 40px;
+  height: 55px;
   align-items: center;
 }
 
@@ -58,7 +70,6 @@
   /* margin-top: 10px; */
   padding-left: 27px;
   /* width: 25%; */
-
 }
 
 .arrow {
@@ -74,7 +85,6 @@
   /* width: 25%; */
   /* float: left; */
   /* margin-top: 10px; */
-
 }
 .reportKind {
   display: flex;
@@ -88,16 +98,66 @@
 .reportUserInfo {
   width: 40%;
   display: flex;
-  justify-content: start;
+  /* justify-content: start; */
   float: left;
   color: #aaaaaa;
   font-size: 12px;
 }
 
 .reportContent {
-  width: 50%;
+  width: 40%;
 }
 
-.reportContent {
-  /* padding-left: 20px; */
+.adminCheck {
+  width: 10%;
+}
+.reportDelete {
+  /* z-index: 10; */
+  size: 100px;
+}
+
+.checkButton {
+  display: flex;
+  width: 100%;
+  height: 30%;
+  align-items: center;
+  justify-content: space-around;
+
+}
+
+.checkConfirm {
+  border: 1px solid black;
+  width: 20%;
+  height: 90%;
+  border-radius: 5px;
+  background-color: rgb(11, 172, 11);
+  color: white;
+}
+
+
+
+.checkDelete {
+  border: 1px solid black;
+  width: 20%;
+  height: 90%;
+  border-radius: 5px;
+  color: white;
+  background-color: rgb(240, 83, 83);
+}
+
+.checkConfirm:hover,
+.checkDelete:hover {
+  cursor: pointer;
+  /* background-color: rgb(168, 165, 165); */
+}
+
+.checkConfirm:hover {
+  background-color: green
+}
+
+.checkDelete:hover {
+  background-color: red;
+}
+.checkText {
+  text-align: center;
 }

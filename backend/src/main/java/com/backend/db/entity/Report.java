@@ -19,7 +19,7 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_sequence")
-    private Long reportSequence;
+    private Integer reportSequence;
 
     @ManyToOne
     @JoinColumn(name = "send_sequence")

@@ -58,7 +58,8 @@ public class ReportService {
     }
 
     public void confirmReport(Integer reportSequence) {
-        Report report = reportRepository.findByReportSequence(reportSequence);
+        System.out.println(reportSequence.getClass().getName());
+        Report report = reportRepository.findById(reportSequence).get();
         report.setConfirmation(1);
         reportRepository.save(report);
     }
@@ -68,7 +69,7 @@ public class ReportService {
         List<Report> list= new ArrayList<>();
         String cur = user.getRole();
         if(user.getRole().equals("ROLE_ADMIN")){
-            list = reportRepository.findAll();
+            list = reportRepository.findAllByConfirmation(0);
         } else {
             list = reportRepository.findBySendUser(user);
         }

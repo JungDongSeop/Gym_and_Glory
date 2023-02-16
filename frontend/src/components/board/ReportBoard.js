@@ -11,6 +11,8 @@ import { Pagination } from "antd";
 import RestApi from "../api/RestApi";
 import classes from "./ReportBoard.module.css";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 
 // 신고게시판
 // 관리자 : 유저들의 신고 내역 조회 가능. 이후 확인 및 확정하기 버튼 누르기
@@ -60,8 +62,35 @@ const ReportBoard = () => {
     setCurrentPage(page);
   };
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = (reportSequence) => {
+    setIsPickedReport(reportSequence);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   // 신고 종류 구분
   const reportKinds = [true, "욕설", "게임 불참", "성희롱"];
+
+  const [isPickedReport, setIsPickedReport] = useState(0);
+
+  const adminCheck = () => {
+    axios.get(`${RestApi()}/report/confirm/${isPickedReport}`);
+    handleClose();
+    window.location.reload();
+
+    // setIsPickedReport();
+  };
+
+  const reportDelete = async () => {
+    await axios.delete(`${RestApi()}/report/${isPickedReport}`);
+    handleClose();
+    window.location.reload();
+  };
 
   return (
     <main className={classes.boardDiv}>
@@ -78,6 +107,45 @@ const ReportBoard = () => {
       >
         글 작성
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            width: "400px",
+            height: "150px",
+            margin: "auto",
+            maxHeight: "none",
+            maxWidth: "none",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            overflow: "hidden",
+          },
+        }}
+      >
+        {authCtx.role === "ROLE_ADMIN" ? (
+          <DialogContent>
+            <div className={classes.checkText}>
+              <h3>게시물을 확인하시겠습니까?</h3>
+            </div>
+            <div className={classes.checkButton}>
+              <button onClick={adminCheck} className={classes.checkConfirm}>
+                확인
+              </button>
+              <button onClick={reportDelete} className={classes.checkDelete}>
+                삭제
+              </button>
+            </div>
+            {/* <button>확인</button> */}
+          </DialogContent>
+        ) : (
+          <DialogContent>
+            <div className={classes.checkButton}>
+              <button onClick={reportDelete}>삭제</button>
+            </div>
+            {/* <button>확인</button> */}
+          </DialogContent>
+        )}
+      </Dialog>
 
       {/* 신고게시판 내용 */}
       {authCtx.role === "ROLE_ADMIN" ? (
@@ -91,9 +159,7 @@ const ReportBoard = () => {
                 <li
                   key={item.reportSequence}
                   // className={index % 2 === 0 ? classes.odd : classes.even}
-                  onClick={() =>
-                    navigate(`/board/report/${item.reportSequence}`)
-                  }
+                  onClick={() => handleClickOpen(item.reportSequence)}
                 >
                   <div className={classes.reportUserInfo}>
                     <div className={classes.report}>
@@ -128,39 +194,70 @@ const ReportBoard = () => {
           <h2>유저들의 신고페이지</h2>
           <ul>
             {board.slice(currentPage * 10 - 10, currentPage * 10).map(
-              (item, index) => (
+              (item, index) =>
                 // 관리자가 확인 안했으면
-                // !item.confirmation ? (
-                <li
-                  key={item.reportSequence}
-                  // className={index % 2 === 0 ? classes.odd : classes.even}
-                  onClick={() =>
-                    navigate(`/board/report/${item.reportSequence}`)
-                  }
-                >
-                  <div className={classes.reportUserInfo}>
-                    <div className={classes.report}>
-                      <div className={classes.reporter}>
-                        <p>{item.sendUser.nickname}</p>
-                      </div>
-                      <div className={classes.arrow}>
-                        <ArrowRightAltIcon />
-                      </div>
+                !item.confirmation ? (
+                  <li
+                    key={item.reportSequence}
+                    // className={index % 2 === 0 ? classes.odd : classes.even}
+                    onClick={() => handleClickOpen(item.reportSequence)}
+                  >
+                    <div className={classes.reportUserInfo}>
+                      <div className={classes.report}>
+                        <div className={classes.reporter}>
+                          <p>{item.sendUser.nickname}</p>
+                        </div>
+                        <div className={classes.arrow}>
+                          <ArrowRightAltIcon />
+                        </div>
 
-                      <div className={classes.accused}>
-                        <p>{item.getUser ? item.getUser.nickname : null}</p>
+                        <div className={classes.accused}>
+                          <p>{item.getUser ? item.getUser.nickname : null}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className={classes.reportKind}>
-                    <p>{reportKinds[item.kind]}</p>
-                  </div>
+                    <div className={classes.reportKind}>
+                      <p>{reportKinds[item.kind]}</p>
+                    </div>
 
-                  <div className={classes.reportContent}>
-                    <p>{item.contents}</p>
-                  </div>
-                </li>
-              )
+                    <div className={classes.reportContent}>
+                      <p>{item.contents}</p>
+                    </div>
+                  </li>
+                ) : (
+                  // 관리자가 확인했으면
+                  <li
+                    key={item.reportSequence}
+                    // className={index % 2 === 0 ? classes.odd : classes.even}
+                    onClick={() => handleClickOpen(item.reportSequence)}
+                  >
+                    <div className={classes.reportUserInfo}>
+                      <div className={classes.report}>
+                        <div className={classes.reporter}>
+                          <p>{item.sendUser.nickname}</p>
+                        </div>
+                        <div className={classes.arrow}>
+                          <ArrowRightAltIcon />
+                        </div>
+
+                        <div className={classes.accused}>
+                          <p>{item.getUser ? item.getUser.nickname : null}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={classes.reportKind}>
+                      <p>{reportKinds[item.kind]}</p>
+                    </div>
+
+                    <div className={classes.reportContent}>
+                      <p>{item.contents}</p>
+                    </div>
+                    <div className={classes.adminCheck}>
+                      <p>관리자 확인</p>
+                    </div>
+                  </li>
+                )
+
               // ) : (
               //   // 관리자가 확인했으면
               //   <li

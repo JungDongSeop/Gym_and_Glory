@@ -92,6 +92,12 @@ const ReportBoard = () => {
     window.location.reload();
   };
 
+  const userReportDelete = async (reportSequence) => {
+    await axios.delete(`${RestApi()}/report/${reportSequence}`);
+    console.log("Dfdf");
+    window.location.reload();
+  };
+
   return (
     <main className={classes.boardDiv}>
       {/* 게시판 별로 이동 가능한 버튼 */}
@@ -140,7 +146,9 @@ const ReportBoard = () => {
         ) : (
           <DialogContent>
             <div className={classes.checkButton}>
-              <button onClick={reportDelete}>삭제</button>
+              <button onClick={reportDelete} className={classes.checkDelete}>
+                삭제
+              </button>
             </div>
             {/* <button>확인</button> */}
           </DialogContent>
@@ -200,36 +208,7 @@ const ReportBoard = () => {
                   <li
                     key={item.reportSequence}
                     // className={index % 2 === 0 ? classes.odd : classes.even}
-                    onClick={() => handleClickOpen(item.reportSequence)}
-                  >
-                    <div className={classes.reportUserInfo}>
-                      <div className={classes.report}>
-                        <div className={classes.reporter}>
-                          <p>{item.sendUser.nickname}</p>
-                        </div>
-                        <div className={classes.arrow}>
-                          <ArrowRightAltIcon />
-                        </div>
-
-                        <div className={classes.accused}>
-                          <p>{item.getUser ? item.getUser.nickname : null}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className={classes.reportKind}>
-                      <p>{reportKinds[item.kind]}</p>
-                    </div>
-
-                    <div className={classes.reportContent}>
-                      <p>{item.contents}</p>
-                    </div>
-                  </li>
-                ) : (
-                  // 관리자가 확인했으면
-                  <li
-                    key={item.reportSequence}
-                    // className={index % 2 === 0 ? classes.odd : classes.even}
-                    onClick={() => handleClickOpen(item.reportSequence)}
+                    // onClick={() => handleClickOpen(item.reportSequence)}
                   >
                     <div className={classes.reportUserInfo}>
                       <div className={classes.report}>
@@ -253,7 +232,45 @@ const ReportBoard = () => {
                       <p>{item.contents}</p>
                     </div>
                     <div className={classes.adminCheck}>
-                      <p>관리자 확인</p>
+                      <p>신고 확인중</p>
+                    </div>
+                    <button
+                      className={classes.adminNotCheckDelete}
+                      onClick={() => userReportDelete(item.reportSequence)}
+                    >
+                      X
+                    </button>
+                  </li>
+                ) : (
+                  // 관리자가 확인했으면
+                  <li
+                    key={item.reportSequence}
+                    // className={index % 2 === 0 ? classes.odd : classes.even}
+                    // onClick={() => handleClickOpen(item.reportSequence)}
+                  >
+                    <div className={classes.reportUserInfo}>
+                      <div className={classes.report}>
+                        <div className={classes.reporter}>
+                          <p>{item.sendUser.nickname}</p>
+                        </div>
+                        <div className={classes.arrow}>
+                          <ArrowRightAltIcon />
+                        </div>
+
+                        <div className={classes.accused}>
+                          <p>{item.getUser ? item.getUser.nickname : null}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={classes.reportKind}>
+                      <p>{reportKinds[item.kind]}</p>
+                    </div>
+
+                    <div className={classes.reportContent}>
+                      <p>{item.contents}</p>
+                    </div>
+                    <div className={classes.adminCheck}>
+                      <p>접수완료</p>
                     </div>
                   </li>
                 )

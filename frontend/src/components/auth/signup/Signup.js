@@ -310,8 +310,11 @@ const Signup = () => {
               text: "성공적으로 회원가입이 완료되었습니다!",
               icon: "success",
               confirmButtonText: "확인",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                navigate("/login");
+              }
             });
-            navigate("/login");
           } catch (err) {
             console.log(err);
           }

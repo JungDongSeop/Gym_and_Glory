@@ -18,20 +18,23 @@ const SideWebcam = () => {
   };
 
   return (
-    <div style={{ marginTop:'-20px', width: '280px', height: '260px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-      <div className="camView" style={{margin: 'auto', width:'280px' ,height: '210px', backgroundColor: 'gray', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{ marginTop:'-5px', width: '280px', height: '230px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+      <div className="camView" style={{marginTop:'-40px',  width:'280px' ,height: '180px', backgroundColor: 'gray', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         {on ? (
+          <div className={classes.webonDiv}>
           <Webcam
             audio={false}
             ref={videoElement}
             videoConstraints={videoConstraints}
           />
+          <button className={classes.vbutton} onClick={() => dispatch(toggleCamera())}>웹캠 끄기</button>
+          </div>
         ) : (
-          <button onClick={() => dispatch(toggleCamera())} style={{ margin: 'auto'}}>웹캠 확인</button>
+          <button className={classes.vbutton} onClick={() => dispatch(toggleCamera())}>웹캠 켜기</button>
         )}
       </div>
       {/* <div style={{margin: '0 auto'}}> */}
-      <button className={classes.vbutton} onClick={() => dispatch(toggleCamera())}>Start Video</button>
+      {/* <button className={classes.vbutton} onClick={() => dispatch(toggleCamera())}>웹캠 끄기</button> */}
       {/* </div> */}
     </div>
   );

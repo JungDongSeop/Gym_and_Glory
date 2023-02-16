@@ -9,6 +9,10 @@ import story_img1 from "../../assets/story_img1.PNG";
 import story_img2 from "../../assets/story_img2.PNG";
 import story_img3 from "../../assets/story_img3.PNG";
 import story_img4 from "../../assets/story_img4.PNG";
+import guide_img1 from "../../assets/guide_img1.PNG";
+import guide_img2 from "../../assets/guide_img2.PNG";
+import guide_img3 from "../../assets/guide_img3.png";
+import guide_img4 from "../../assets/guide_img4.PNG";
 import story_textbg from "../../assets/story_textbg.jpg";
 import Button from "../../components/UI/Button";
 
@@ -201,8 +205,115 @@ const Main = () => {
         <div>
           <span className={classes.carouselBox}>
             <img className={classes.smallLogo} src={Logo} alt={Logo}></img>
-            <h2>가이드</h2>
-            <p>이래 저래 하세요</p>
+
+            <div ref={storyDivRev} className={classes.storyDiv} id="storyDiv">
+              <h2>가이드</h2>
+
+            <div
+              ref={(el) => (storyContentRef.current[0] = el)}
+              className={classes.storySection}
+            >
+
+                      <div className="fadeComp1">
+                        <img src={guide_img1} alt={guide_img1}></img>
+                      </div>
+                    
+                      <div className="fadeComp2">
+                          <div
+                          className={classes.StorytextDiv}
+                          style={{ backgroundImage: `url(${story_textbg})` }}
+                          id="story1"
+                        >
+                          <p>
+                            로비에서 방을 만들어 입장하세요.
+                          </p>
+                        </div>
+                      </div>
+
+      
+            </div>
+
+            <div
+              ref={(el) => (storyContentRef.current[0] = el)}
+              className={classes.storySection}
+            >
+
+
+                      <div className="fadeComp1">
+                        <img src={guide_img2} alt={guide_img2} id="storyImg2"></img>
+                      </div>
+
+                      <div className="fadeComp2">
+                          <div
+                          className={classes.StorytextDiv}
+                          style={{ backgroundImage: `url(${story_textbg})` }}
+                          id="story2"
+                        >
+                          <p>
+                          원하시는 운동을 선택하고 하단의 READY 버튼을 누르세요. 방장이 GAME START 버튼을 누르면 시작합니다.
+                         </p>
+                        </div>
+                      </div>
+            </div>
+
+            <div
+              ref={(el) => (storyContentRef.current[0] = el)}
+              className={classes.storySection}
+            >
+                      <div className="fadeComp1">
+                        <img src={guide_img3} alt={guide_img3} id="storyImg3"></img>
+                      </div>
+
+                      <div className="fadeComp2">
+                          <div
+                          className={classes.StorytextDiv}
+                          style={{ backgroundImage: `url(${story_textbg})` }}
+                          id="story3"
+                        >
+                          <p>
+                          웹캠에 전신이 보이도록 정면에서 선 후, 선택한 운동을 하면 공격이 가능합니다.
+                          회복을 하고 싶다면 스탠딩 사이드 크런치(양 손을 양쪽 귀 뒤에 대고 다리를 한 쪽씩 드는 자세)를 해보세요.
+                          </p>
+                        </div>
+                      </div>
+            </div>
+
+            <div
+              ref={(el) => (storyContentRef.current[0] = el)}
+              className={classes.storySection}
+            >
+  
+                      <div className="fadeComp1">
+                        <img src={guide_img4} alt={guide_img4} id="storyImg4"></img>
+                      </div>
+
+
+                      <div className="fadeComp2">
+                          <div
+                          className={classes.StorytextDiv}
+                          style={{ backgroundImage: `url(${story_textbg})` }}
+                        >
+                          <p>
+                          누적 대미지만큼 경험치를 얻어 레벨업을 할 수 있습니다.
+                          팀의 클리어 타임은 단체 랭킹에 올라갑니다.
+                          친구와 협력하고 경쟁하며 높은 순위를 노려보세요.                        
+
+                          </p>
+                        </div>
+                      </div>
+
+      
+            </div>
+            
+            <div style={{
+              display:'inline-block',
+              height:'200px'
+            }}></div>
+
+            </div>
+
+
+
             <br />
             <span
               className={classes.leftword}

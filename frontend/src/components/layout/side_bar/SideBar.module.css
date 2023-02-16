@@ -70,8 +70,15 @@ main::-webkit-scrollbar {
   color:white;
   transition: 0.3s;
   /* padding:0; */
+  margin:0;
   margin-bottom: 5%;
 }
+
+.userNickDiv p{
+  font-size: 20px;
+  margin: 0;
+}
+
 .userNickDiv :hover{
   font-weight: bold;
   background: -webkit-linear-gradient(bottom left,rgb(166, 69, 69), rgb(221, 102, 102));

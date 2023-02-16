@@ -25,15 +25,16 @@ public class ReportService {
     }
 
 
-    public void addReport(ReportReq reportReq) {
-        User sendUser =userRepository.findByUserSequence(reportReq.getSendSequence());
-        User getUser =userRepository.findByUserSequence(reportReq.getGetSequence());
+    public void addReport(Integer sendSequence,Integer getSequence,Integer kind,String contents, String imagePath) {
+        User sendUser =userRepository.findByUserSequence(sendSequence);
+        User getUser =userRepository.findByUserSequence(getSequence);
         Report report = Report.builder()
                 .sendUser(sendUser)
                 .getUser(getUser)
-                .kind(reportReq.getKind())
+                .kind(kind)
                 .confirmation(0)
-                .contents(reportReq.getContents())
+                .contents(contents)
+                .imagePath(imagePath)
                 .registerTime(String.valueOf(LocalDateTime.now())).build();
         reportRepository.save(report);
     }

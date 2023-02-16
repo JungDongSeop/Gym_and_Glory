@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,12 +41,40 @@ public class ReportController {
     }
 
     //신고 접수
+
     @PostMapping
-    public ResponseEntity<?> registerReport(@RequestBody ReportReq reportReq){
+    public ResponseEntity write(@RequestParam("sendSequence") Integer sendSequence,
+                                @RequestParam("getSequence") Integer getSequence,
+                                @RequestParam("contents") String contents,
+                                @RequestParam("kind") Integer kind,
+                                @RequestParam(value = "image", required = false) MultipartFile[] multipartFileList)throws IOException {
 
-        reportService.addReport(reportReq);
+        List<String> imagePathList = new ArrayList<>();
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (multipartFileList != null) {
+            for(MultipartFile multipartFile: multipartFileList) {
+                String originalName = multipartFile.getOriginalFilename(); // 파일 이름
+                long size = multipartFile.getSize(); // 파일 크기
+
+                ObjectMetadata objectMetaData = new ObjectMetadata();
+                objectMetaData.setContentType(multipartFile.getContentType());
+                objectMetaData.setContentLength(size);
+
+                // S3에 업로드
+                amazonS3Client.putObject(
+                        new PutObjectRequest(S3Bucket, originalName, multipartFile.getInputStream(), objectMetaData)
+                                .withCannedAcl(CannedAccessControlList.PublicRead)
+                );
+
+                String imagePath = amazonS3Client.getUrl(S3Bucket, originalName).toString(); // 접근가능한 URL 가져오기
+                imagePathList.add(imagePath);
+                reportService.addReport(sendSequence,getSequence,kind,contents,imagePath);
+            }
+        }else{
+            reportService.addReport(sendSequence,getSequence,kind,contents,null);
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //신고 권한에 따라서 다른 리스트를 뿌려줌

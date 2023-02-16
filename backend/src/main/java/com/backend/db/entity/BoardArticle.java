@@ -1,13 +1,12 @@
 package com.backend.db.entity;
 
-import com.backend.api.request.WriteReq;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 
@@ -50,16 +49,21 @@ public class BoardArticle {
     @Column(name = "image_path")
     private String imagePath;
 
-    public static BoardArticle createBoard(WriteReq writeReq, User user) {
+    public static BoardArticle createBoard(String title,
+                                           String contents,
+                                           Integer div,
+                                           String imagePath,
+                                           User user
+                                           ) {
 
         BoardArticle board = new BoardArticle();
-        board.setTitle(writeReq.getTitle());
+        board.setTitle(title);
         board.setUser(user);
-        board.setContents(writeReq.getContents());
+        board.setContents(contents);
         board.setViews(0);
         board.setGoodCount(0);
-        board.setDiv(writeReq.getDiv());
-        board.setImagePath(writeReq.getImagePath());
+        board.setDiv(div);
+        board.setImagePath(imagePath);
 
         return board;
     }

@@ -34,6 +34,7 @@ ul {
 
 .active {
   visibility: visible;
+  z-index: 10;
 }
 
 .notActive {

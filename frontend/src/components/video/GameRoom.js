@@ -17,7 +17,7 @@ import {
   VideocamOutlined,
   PersonOff,
 } from "@mui/icons-material";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, LinearProgress } from "@mui/material";
 import RestApi from "../api/RestApi";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -1036,6 +1036,13 @@ class GameRoom extends Component {
                     </p>
                   </div>
                 </div>
+                {this.state.enterDelay ? (
+                  <div className="loading-container">
+                    게임을 불러오고 있습니다.
+                    <LinearProgress color="inherit" className="loadingbar" />
+                  </div>
+                ) : null}
+
                 <UnityGame
                   ref={this.state.myRef}
                   sessionId={this.state.mySessionId}

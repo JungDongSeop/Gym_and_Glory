@@ -178,6 +178,7 @@ const DetailBoard = () => {
             <ul>
               <li>
                 <button
+                 className={classes.udButton}
                   onClick={() =>
                     navigate(`/board/${type}/update/${articleSequence}`)
                   }
@@ -186,6 +187,7 @@ const DetailBoard = () => {
                 </button>
               </li>
               <li>
+<<<<<<< HEAD
                 <button onClick={deleteClick}>삭제</button>
               </li>
             </ul>
@@ -196,6 +198,11 @@ const DetailBoard = () => {
             <ul>
               <li>
                 <button onClick={deleteClick}>삭제</button>
+=======
+                <button className={classes.udButton} onClick={deleteClick}>
+                  삭제
+                </button>
+>>>>>>> master
               </li>
             </ul>
           </div>

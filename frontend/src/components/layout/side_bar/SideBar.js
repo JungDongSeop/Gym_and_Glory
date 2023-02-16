@@ -37,7 +37,7 @@ const SideBar = (props) => {
       <SideWebcam />
       {/* 유저 프로필 */}
       <div className={classes.userNickDiv}>
-        <Link to="/mypage">LV. {parseInt(authCtx.exp / 10000)+1} {authCtx.nickname}</Link>
+        <Link to="/mypage"><p>LV. {parseInt(authCtx.exp / 10000)+1} {authCtx.nickname}</p></Link>
         {/* 경험치 바 */}
       </div>
         <div style={expBarContainerStyle}>

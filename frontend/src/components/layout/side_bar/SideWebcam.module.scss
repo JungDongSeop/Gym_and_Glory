@@ -1,4 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Song+Myung&display=swap');
+.webonDiv{
+  width: 100%;
+  background-color: black;
+  margin: 0;
+}
+
+.webonDiv > .vbutton{
+  margin: 0 auto;
+  outline: none;
+  padding:5px;
+  border-radius: 0px;
+  border:0px solid rgb(0, 61, 47);
+  transition: 0.2s;
+  // font-weight: bold;
+  font-family: 'Song Myung', serif;
+  color: rgb(217, 219, 218);
+  background:linear-gradient(to bottom left,rgb(134, 57, 57) , rgb(64, 2, 2));
+  width: 100%;
+  // z-index: 1;
+  // margin-bottom: -20px;
+
+}
 
 .vbutton{
   position: inherit;
@@ -11,12 +33,14 @@
   // font-weight: bold;
   font-family: 'Song Myung', serif;
   color: rgb(217, 219, 218);
-  background:linear-gradient(to bottom left,rgb(134, 57, 57) , rgb(64, 2, 2));
+  background:linear-gradient(to bottom left,rgb(0, 0, 0) , rgb(79, 79, 79));
   
-  margin-top: -24px;
+  // margin-top: -20px;
   width: 100%;
+  padding-top: 30px;
+  height: 125%;
   z-index: 1;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
 }
 
 .vbutton:hover{

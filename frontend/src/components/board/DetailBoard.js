@@ -125,11 +125,13 @@ const DetailBoard = () => {
           </div>
         </div>
         <div className={classes.qsText}>
-          <img
-            src={data.imagePath}
-            style={{ width: "30%", height: "auto" }}
-            alt="사진"
-          />
+          {data.imagePath !== null && (
+            <img
+              src={data.imagePath}
+              style={{ width: "30%", height: "auto" }}
+              alt="사진"
+            />
+          )}
           <div>{data.contents}</div>
         </div>
         <div className={classes.qsEmpathyWrap}>

@@ -41,7 +41,8 @@ const ExerciseGrass = () => {
       let grass = Array.from({length: 53}, () => Array(7).fill(0))
       // 운동한 날짜는 1로 지정
       for (const d of tmp) { 
-        const date = new Date(d)
+        const date1 = new Date(d)
+        const date = new Date(date1.getTime() + (9 * 60 * 60 * 1000));
         grass[getWeek(date)-1][date.getDay()] = 1;
       }
       // 1년의 범위 밖을 나타내는 상자는 표시하지 않기 위해, -1로 지정

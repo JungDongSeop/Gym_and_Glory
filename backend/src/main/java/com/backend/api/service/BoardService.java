@@ -76,4 +76,11 @@ public class BoardService {
         cur.setGoodCount(cur.getGoodCount()+1);
         boardRepository.save(cur);
     }
+
+    public void setImagePath(Integer articleSequence, String imagePath) {
+        BoardArticle boardArticle= boardRepository.findOneByArticleSequence(articleSequence);
+        boardArticle.setImagePath(imagePath);
+        boardRepository.save(boardArticle);
+    }
+
 }

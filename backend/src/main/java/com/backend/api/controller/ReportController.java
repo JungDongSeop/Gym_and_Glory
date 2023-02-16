@@ -1,7 +1,12 @@
 package com.backend.api.controller;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.backend.api.request.ReportReq;
 import com.backend.api.service.ReportService;
+import com.backend.db.entity.BoardArticle;
 import com.backend.db.entity.Report;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +25,12 @@ import java.util.List;
 @RequestMapping("/api/report")
 @CrossOrigin("*")
 public class ReportController {
+
+    private String S3Bucket = "pliot1017-bucket"; // Bucket 이름
+
+    @Autowired
+    AmazonS3Client amazonS3Client;
+
 
     private ReportService reportService;
 
@@ -67,6 +79,38 @@ public class ReportController {
         reportService.deleteOne(reportSequence);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/file/{reportSequence}")
+    public ResponseEntity<Object> upload(@RequestParam("files") MultipartFile[] multipartFileList,
+                                         @PathVariable Integer reportSequence) throws Exception {
+        List<String> imagePathList = new ArrayList<>();
+
+        for(MultipartFile multipartFile: multipartFileList) {
+            String originalName = multipartFile.getOriginalFilename(); // 파일 이름
+            long size = multipartFile.getSize(); // 파일 크기
+
+            ObjectMetadata objectMetaData = new ObjectMetadata();
+            objectMetaData.setContentType(multipartFile.getContentType());
+            objectMetaData.setContentLength(size);
+
+            // S3에 업로드
+            amazonS3Client.putObject(
+                    new PutObjectRequest(S3Bucket, originalName, multipartFile.getInputStream(), objectMetaData)
+                            .withCannedAcl(CannedAccessControlList.PublicRead)
+            );
+
+            String imagePath = amazonS3Client.getUrl(S3Bucket, originalName).toString(); // 접근가능한 URL 가져오기
+            imagePathList.add(imagePath);
+        }
+        reportService.setImagePath(reportSequence,imagePathList.get(0));
+        return new ResponseEntity<Object>(imagePathList, HttpStatus.OK);
+    }
+
+    @GetMapping("/file/{reportSequence}")
+    public String getBoard(@PathVariable Integer reportSequence) {
+        Report report = reportService.getOne(reportSequence);
+        return "<img src=" +report.getImagePath() +">";
     }
 
 }

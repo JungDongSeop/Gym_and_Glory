@@ -72,10 +72,14 @@ const CommentDetail = (props) => {
       );
       // alert("댓글이 삭제되었습니다.");
       Swal.fire({
-        title: "삭제",
-        text: "댓글이 삭제되었습니다.",
-        icon: "success",
-        confirmButtonText: "확인",
+        title: "댓글을 삭제하시겠습니까?",
+        // text: "댓글이 삭제되었습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "삭제",
+        cancelButtonText: "취소",
       }).then((result) => {
         if (result.isConfirmed) {
           setIsDelete(true);

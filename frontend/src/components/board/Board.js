@@ -72,9 +72,7 @@ const Board = () => {
                 }
               >
                 {/* 제목 */}
-                <div>
-                  <p className={classes.listTitle}>{item.title}</p>
-                </div>
+                <p className={classes.listTitle}>{item.title}</p>
                 {/* 기타 정보 */}
                 <div className={classes.boardOtherInfo}>
                   <span className={classes.userName}>{item.user.nickname}</span>

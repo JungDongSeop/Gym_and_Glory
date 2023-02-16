@@ -55,7 +55,7 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardArticle writeArticle(Integer userSequence, String title,
+    public BoardArticle  writeArticle(Integer userSequence, String title,
                                      String contents, Integer div,
                                      String imagePath) {
 

@@ -78,7 +78,7 @@ public class GameService {
             throw new EntityNotFoundException("유저가 없어요 ㅠㅠ");
         }
 
-        user.setExp(damage);
+        user.setExp(user.getExp()+damage);
         userRepository.save(user); // 유저 경험치 저장
 
         int i = 0;

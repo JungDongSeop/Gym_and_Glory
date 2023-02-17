@@ -19,7 +19,7 @@ const SideBar = (props) => {
 
   // 경험치바 만들기
   const expBarStyle = {
-    width: `${Number(authCtx.exp) / 100}%`,
+    width: `${(Number(authCtx.exp) % 10000) / 100}%`,
     height: "20px",
     backgroundColor: "yellow",
   };

@@ -46,18 +46,32 @@ const Board = () => {
 
       <br />
 
-      {/* 글 작성 버튼 */}
+      <div>
 
-      {sessionStorage.getItem("role") === "ROLE_ADMIN" ||
-      (sessionStorage.getItem("role") === "ROLE_USER" && type !== "notice") ? (
-        <Button
+        {/* 페이지네이션 */}
+
+        {/* 글 작성 버튼 */}
+
+        {sessionStorage.getItem("role") === "ROLE_ADMIN" ||
+        (sessionStorage.getItem("role") === "ROLE_USER" && type !== "notice") ? (
+          <Button
           className={classes.createButton}
           type="primary"
           onClick={() => navigate(`/board/${type}/create`)}
-        >
-          글 작성
-        </Button>
-      ) : null}
+          >
+            글 작성
+          </Button>
+        ) : (          
+          <Button
+            className={classes.createButton}
+            style={{ visibility: "hidden" }}
+            type="primary"
+            onClick={() => navigate(`/board/${type}/create`)}
+          >
+            글 작성
+          </Button>
+        )}
+      </div>
 
       {/* 게시판 내용 */}
       <div className={classes.notice}>
@@ -91,13 +105,13 @@ const Board = () => {
         </ul>
       </div>
 
-      {/* 페이지네이션 */}
-      <Pagination
-        className={classes.pagination}
-        current={currentPage}
-        onChange={onChangePage}
-        total={Object.keys(board).length}
-      />
+        <Pagination
+          className={classes.pagination}
+          current={currentPage}
+          onChange={onChangePage}
+          total={Object.keys(board).length}
+          style={{ width: 'calc(100% - 100px)'}}
+          />
     </main>
   );
 };

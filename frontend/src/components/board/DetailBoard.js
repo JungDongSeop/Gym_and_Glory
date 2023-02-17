@@ -66,8 +66,8 @@ const DetailBoard = () => {
   useEffect(() => {
     if (type === "notice") {
       setTyperesult("공지사항");
-    } else if (type === "getTeam") {
-      setTyperesult("팀원모집");
+    } else if (type === "party") {
+      setTyperesult("파티원 모집");
     } else if (type === "free") {
       setTyperesult("자유게시판");
     }

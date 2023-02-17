@@ -165,7 +165,7 @@ const ReportBoardCreate = () => {
               {imageUrl && (
                 <img
                   src={imageUrl}
-                  style={{ height: "100px", width: "auto" }}
+                  style={{ height: "100px", width: "auto", maxWidth: "400px" }}
                   alt="사진"
                 />
               )}

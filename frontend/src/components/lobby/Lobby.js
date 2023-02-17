@@ -28,19 +28,35 @@ const Lobby = () => {
 
   useEffect(() => {
     if (location.state === "getOut") {
-      alert("방장에 의해 강퇴당하셨습니다.");
+      Swal.fire({
+        title: "warning!",
+        text: "방장에 의해 강퇴당하셨습니다.",
+        icon: "warning",
+        confirmButtonText: "확인",
+      }).then(() => {
+        navigate("/lobby");
+      });
+      // alert("방장에 의해 강퇴당하셨습니다.");
     } else if (location.state === "roomExploded") {
-      alert("방장이 방을 폭파시켜 로비로 이동했습니다");
+      Swal.fire({
+        title: "warning!",
+        text: "방장이 방을 폭파시켜 로비로 이동했습니다!",
+        icon: "warning",
+        confirmButtonText: "확인",
+      }).then(() => {
+        navigate("/lobby");
+      });
+      // alert("방장이 방을 폭파시켜 로비로 이동했습니다");
     } else if (location.state === "gameEnd") {
-      // Swal.fire({
-      //   title: "Success!",
-      //   text: "게임이 종료되어 로비로 이동합니다!",
-      //   icon: "success",
-      //   confirmButtonText: "확인",
-      // }).then(() => {
-      //   navigate("/lobby");
-      // });
-      alert("게임이 종료되어 로비로 이동합니다.");
+      Swal.fire({
+        title: "Success!",
+        text: "게임이 종료되어 로비로 이동합니다!",
+        icon: "success",
+        confirmButtonText: "확인",
+      }).then(() => {
+        navigate("/lobby");
+      });
+      // alert("게임이 종료되어 로비로 이동합니다.");
     }
     history.pushState(null, "", location.href);
     window.addEventListener("popstate", handleEvent);

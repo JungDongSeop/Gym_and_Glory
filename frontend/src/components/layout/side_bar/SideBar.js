@@ -1,5 +1,5 @@
 import BadgeModal from "./BadgeModal";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../store/auth-context";
 import SideWebcam from "./SideWebcam";
 import CreateRoomModal from "./CreateRoomModal";
@@ -8,15 +8,31 @@ import Ranking from "./Ranking";
 import Button from "../../UI/LobbyButton";
 import classes from "./SideBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import RestApi from "../../api/RestApi";
 
 // 사이드바는 로비, 게시판에 있을 경우 (유저프로필, 방 생성, 친구 목록, 랭킹) 이 표시되고,
 //            마이페이지에 있을 경우 (유저 프로필 + 경험치 바, 뱃지 목록, 친구 목록, 회원정보 수정, 회원 탈퇴)가 표시된다.
+
 const SideBar = (props) => {
   const navigate = useNavigate();
 
   const isMyPage = props.isMyPage;
   const authCtx = useContext(AuthContext);
+  const [userexp, setUserexp] = useState(0);
 
+  useEffect(() => {
+    const getUserInfo = async () => {
+      axios
+        .get(`${RestApi()}/user/detail/${authCtx.userSequence}`)
+        .then((res) => {
+          // console.log(res.data);
+          setUserexp(res.data.exp);
+        });
+    };
+    getUserInfo();
+    sessionStorage.setItem("exp", userexp);
+  });
   // 경험치바 만들기
   const expBarStyle = {
     width: `${(Number(authCtx.exp) % 10000) / 100}%`,

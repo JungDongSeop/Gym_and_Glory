@@ -3,9 +3,9 @@ import classes from "./Lobby.module.scss";
 import RoomList from "./room_list/RoomList";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import styled from "styled-components";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import Swal from "sweetalert";
+// import Swal from "sweetalert";
 // import RestApi from "../api/RestApi";
 
 const Wrapper = styled.div`
@@ -21,43 +21,18 @@ const SearchWrapper = styled.div`
 
 const Lobby = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  
+
   const handleEvent = () => {
     history.pushState(null, "", location.href);
   };
 
   useEffect(() => {
     if (location.state === "getOut") {
-      Swal.fire({
-        title: "warning!",
-        text: "방장에 의해 강퇴당하셨습니다.",
-        icon: "warning",
-        confirmButtonText: "확인",
-      }).then(() => {
-        navigate("/lobby");
-      });
-      // alert("방장에 의해 강퇴당하셨습니다.");
+      alert("방장에 의해 강퇴당하셨습니다.");
     } else if (location.state === "roomExploded") {
-      Swal.fire({
-        title: "warning!",
-        text: "방장이 방을 폭파시켜 로비로 이동했습니다!",
-        icon: "warning",
-        confirmButtonText: "확인",
-      }).then(() => {
-        navigate("/lobby");
-      });
-      // alert("방장이 방을 폭파시켜 로비로 이동했습니다");
+      alert("방장이 방을 폭파시켜 로비로 이동했습니다");
     } else if (location.state === "gameEnd") {
-      Swal.fire({
-        title: "Success!",
-        text: "게임이 종료되어 로비로 이동합니다!",
-        icon: "success",
-        confirmButtonText: "확인",
-      }).then(() => {
-        navigate("/lobby");
-      });
-      // alert("게임이 종료되어 로비로 이동합니다.");
+      alert("게임이 종료되어 로비로 이동합니다.");
     }
     history.pushState(null, "", location.href);
     window.addEventListener("popstate", handleEvent);

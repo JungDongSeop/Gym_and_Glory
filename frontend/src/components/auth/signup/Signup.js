@@ -269,12 +269,10 @@ const Signup = () => {
         <Toaster
           toastOptions={{
             success: {
-              style: {
-              },
+              style: {},
             },
             error: {
-              style: {
-              },
+              style: {},
             },
           }}
           position="top-center"
@@ -355,6 +353,7 @@ const Signup = () => {
                 }}
                 type="text"
                 ref={nicknameInputRef}
+                placeholder="특수문자 제외 2글자 이상 8글자 미만"
                 autoComplete="off"
                 id="nickname"
               />
@@ -379,7 +378,7 @@ const Signup = () => {
                 id="phone"
                 ref={phoneInputRef}
                 autoComplete="off"
-                placeholder="- 빼고 입력해주세요"
+                placeholder="하이픈(-) 제외하고 입력해주세요"
               />
             </div>
           </div>

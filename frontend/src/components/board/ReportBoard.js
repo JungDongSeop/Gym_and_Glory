@@ -150,7 +150,7 @@ const ReportBoard = () => {
       {authCtx.role === "ROLE_ADMIN" ? (
         // 관리자의 신고페이지
         <div className={classes.notice}>
-          <h2>관리자의 신고페이지.</h2>
+          <h2>관리자 신고페이지.</h2>
           <ul>
             {board
               .slice(currentPage * 10 - 10, currentPage * 10)
@@ -191,7 +191,7 @@ const ReportBoard = () => {
         // 확인되지 않았으면 내용 표시, 삭제 버튼 추가
         // 확인되었으면 '신고 내용이 반영되었습니다' 라는 문구로 표시
         <div className={classes.notice}>
-          <h2>유저들의 신고페이지</h2>
+          <h2>신고페이지</h2>
           <ul>
             {board
               .slice(currentPage * 10 - 10, currentPage * 10)

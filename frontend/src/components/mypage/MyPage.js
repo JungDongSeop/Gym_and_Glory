@@ -94,7 +94,7 @@ const MyPage = () => {
             {/* 유저 레벨, 닉네임 */}
             <div className={classes.userInfo}>
               <div>
-                <h3>Lv.{authCtx.level ? authCtx.level : 1}</h3>
+                <h3>Lv.{authCtx.exp ? parseInt(authCtx.exp / 10000) + 1 : 1}</h3>
               </div>
               <div className={classes.nicknameTag}>
                 <h2>{authCtx.nickname}</h2>

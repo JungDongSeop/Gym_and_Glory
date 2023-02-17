@@ -35,7 +35,7 @@ const SideBar = (props) => {
   });
   // 경험치바 만들기
   const expBarStyle = {
-    width: `${(Number(authCtx.exp) % 10000) / 100}%`,
+    width: `${(Number(sessionStorage.getItem("exp")) % 10000) / 100}%`,
     height: "20px",
     backgroundColor: "yellow",
   };
@@ -55,7 +55,8 @@ const SideBar = (props) => {
       <div className={classes.userNickDiv}>
         <Link to="/mypage">
           <p>
-            LV. {parseInt(authCtx.exp / 10000) + 1} {authCtx.nickname}
+            LV. {parseInt(sessionStorage.getItem("exp") / 10000) + 1}{" "}
+            {authCtx.nickname}
           </p>
         </Link>
         {/* 경험치 바 */}
@@ -64,7 +65,7 @@ const SideBar = (props) => {
         <div style={expBarStyle}></div>
         <div className={classes.exp}>
           <p style={{ margin: 0, marginRight: "5px" }}>
-            {Number(authCtx.exp) % 10000} / 10000
+            {Number(sessionStorage.getItem("exp")) % 10000} / 10000
           </p>
         </div>
       </div>

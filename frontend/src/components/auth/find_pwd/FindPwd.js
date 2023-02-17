@@ -106,13 +106,13 @@ const FindPwd = () => {
         toastOptions={{
           success: {
             style: {
-              background: "green",
-              color: "white",
+              // background: "green",
+              // color: "white",
             },
           },
           error: {
             style: {
-              background: "red",
+              // background: "red",
             },
           },
         }}

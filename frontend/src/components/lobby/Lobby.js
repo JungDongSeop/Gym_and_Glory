@@ -5,7 +5,7 @@ import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-// import Swal from "sweetalert";
+import Swal from "sweetalert";
 // import RestApi from "../api/RestApi";
 
 const Wrapper = styled.div`
@@ -71,9 +71,8 @@ const Lobby = () => {
       <Wrapper>
         <SearchWrapper>
           {/* <div className={classes.roomListText}> */}
-            <span className={classes.roomListText}>방 목록</span>
+          <span className={classes.roomListText}>방 목록</span>
           {/* </div> */}
-
         </SearchWrapper>
         <hr />
         <br />

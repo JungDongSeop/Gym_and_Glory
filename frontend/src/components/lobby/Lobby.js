@@ -3,7 +3,7 @@ import classes from "./Lobby.module.scss";
 import RoomList from "./room_list/RoomList";
 import WithNavBarAndSideBar from "../layout/WithNavBarAndSideBar";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Swal from "sweetalert";
 // import RestApi from "../api/RestApi";
@@ -21,7 +21,8 @@ const SearchWrapper = styled.div`
 
 const Lobby = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
+  
   const handleEvent = () => {
     history.pushState(null, "", location.href);
   };

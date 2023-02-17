@@ -13,6 +13,7 @@ import classes from "./ReportBoard.module.css";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
+import { maxWidth } from "@mui/system";
 
 // 신고게시판
 // 관리자 : 유저들의 신고 내역 조회 가능. 이후 확인 및 확정하기 버튼 누르기
@@ -102,7 +103,7 @@ const ReportBoard = () => {
         PaperProps={{
           style: {
             width: "1000px",
-            height: "1000px",
+            height: "100vh",
             margin: "auto",
             maxHeight: "none",
             maxWidth: "none",
@@ -120,11 +121,19 @@ const ReportBoard = () => {
               <p>스크린샷</p>
             </div>
             <div className={classes.checkImg}>
-              <img
-                src={imagePath}
-                alt=""
-                style={{ width: "auto", height: "500px" }}
-              />
+              {imagePath ? (
+                <img
+                  src={imagePath}
+                  alt=""
+                  style={{
+                    width: "auto",
+                    height: "300px",
+                    maxWidth: "900px",
+                  }}
+                />
+              ) : (
+                <p>첨부된 스크린샷이 없습니다.</p>
+              )}
             </div>
             <div className={classes.checkButton}>
               <button onClick={adminCheck} className={classes.checkConfirm}>
